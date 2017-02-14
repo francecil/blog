@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>游戏</title>
+		<script src="js/judgePhone.js"></script>
+		<script type="text/javascript">judgePhone("phone_frame.html");</script>
+		<!--
+        	作者：396324491@qq.com
+        	时间：2016-07-28
+        	描述：下面这个应该放到body中比较好
+        -->
+		<script src="js/jquery-1.11.1.min.js"></script>
+		<style type="text/css">
+			body {
+				font-family: Lucida Grande, sans-serif, Helvetica;
+				padding: 0;
+				background-color: #000;
+				overflow: hidden;
+				color: #fff;
+				width: 100%;
+				height: 100%;
+				margin: 0 auto;
+				position: relative;
+				display: block;
+			}
+			
+			#main {
+				top: 0px;
+				left: 0px;
+				width: 720px;
+				height: 643px;
+				margin-left: auto;
+				margin-right: auto;
+				display: block;
+				position: relative;
+			}
+			
+			#main #display {
+				display: block;
+				position: relative;
+				margin-left: auto;
+				margin-right: auto;
+				width: 358.884px;
+			}
+			
+			#mainScreen {
+				position: relative;
+				margin-left: auto;
+				margin-right: auto;
+				width: 360px;
+				height: 600px;
+				background-color: white;
+				color: #FFFFFF;
+			}
+		</style>
+		<script>
+			$(document).ready(function() {
+				console.log("我先加载完成");
+				//div 's relative position'
+				var offset;//可能会被用户给调整
+				var touchDown = false;
+				var mainScreen = $("#mainScreen");
+				mainScreen.mousemove(function(e) {
+					offset = $("#mainScreen").offset();
+					var relativeX = (e.pageX - offset.left);
+					var relativeY = (e.pageY - offset.top);
+					if(touchDown){
+						console.log("x:" + relativeX + " y:" + relativeY + " type:move");
+					}
+					
+				});
+				mainScreen.mouseout(function(e) {
+					console.log("move out");
+				});
+				//注意鼠标左键点击后事件的执行顺便 考虑到后面有可能有long click事件
+				//所以就不投机取巧在mousedown上触发click（虽然这样确实响应很快）
+				mainScreen.mousedown(function(e) {
+					offset = $("#mainScreen").offset();//获取<1ms 不打紧
+					touchDown = true;
+					var relativeX = (e.pageX - offset.left);
+					var relativeY = (e.pageY - offset.top);
+					console.log("x:" + relativeX + " y:" + relativeY + " type:down");
+				});
+				mainScreen.mouseup(function() {
+					touchDown = false;
+					console.log(" type:up");
+				});
+				
+//				mainScreen.click(function(e){
+//					var relativeX = (e.pageX - offset.left);
+//					var relativeY = (e.pageY - offset.top);
+//					console.log("x:" + relativeX + " y:" + relativeY + " type:click");
+//				});
+				
+				//set mainScress can't response mousewheel event
+				mainScreen.on('mousewheel', removeWheelEvent);
+
+				function removeWheelEvent(e) {
+					console.log('ssss');
+					e.stopPropagation();
+					e.preventDefault();
+					e.cancelBubble = false;
+					return false;
+				}
+			});
+		</script>
+	</head>
+
+	<body>
+		<div id="main">
+			<div id="display">
+				<div id="mainScreen">
+
+				</div>
+				<div id="ctrlScreen">
+
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>
