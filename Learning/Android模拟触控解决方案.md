@@ -763,54 +763,62 @@ else if(opt=touch_move){
 
 onTouch放在GameView的外层GameViewLayout上去监听
 
-if(opt=touch_down||touch_pointer_down){
-	if(!位于GameView)将该id放入灰名单
-	else 发送
-}
-else if(opt=touch_up||touch_pointer_up){
-	if(id处于灰名单){
-		if(已发送down_event)正常发送
-		灰名单中去除
-	}
-	else 发送
-}
-else if(opt=touch_move){
-	list grayList;
-	list whiteList;
-	for(){
-		if(ID处于灰名单){
-			if(位于GameView){
-				if(未发送过down_event){
-					将down_event(point=move_event)发送	
-				}
-			}else 不发送 
-		else 将event放入whiteList
-	}
-	for(event:grayList){
-		发送(event);
-	}
-	发送(whiteList);
-}
+				int opt = event.getAction();
+                Log.d(TAG, "onTouch: " + opt);
+                if (opt == 2) {
+                    List<TouchEvent> whiteList = new ArrayList();
+                    for (int i = 0; i < pointerCount; i++) {
+                        int id = event.getPointerId(i);
+                        float x = event.getX(i);
+                        float y = event.getY(i);
+                        //if id位于灰名单，如果move进GameView则需要补上down事件,并从灰名单中删除
+                        //else 放入白名单，最后list发送
+                        if (graySet.contains(id)) {
+                            //不位于GameView则不处理
+                            if (locateGameView(x, y)) {
+                                //之前未发过down则发送down事件
+                                receiveData(new TouchEvent(id, 0, x, y));
+                                graySet.remove(id);
+                                receiveData(new SyncEvent(pointerCount-graySet.size()));
+                            }
+                        } else {
+                            whiteList.add(new TouchEvent(id, 2, x, y));
+                        }
+                    }
+                    if (whiteList != null && whiteList.size() > 0) {
+                        receiveData(whiteList);
+                    }
+                } else if (opt == 0 || (opt - 5) % 256 == 0) {
+                    //为了简化，我们假设这过程不会进行MOVE
+                    //ind 指当前触摸序列的索引值，不一定连续
+                    //获取id还得通过getPointerId
+                    int ind = (event.getAction() - 5) / 256;
+                    int id = event.getPointerId(ind);
+                    float x = event.getX(ind);
+                    float y = event.getY(ind);
+                    if (!locateGameView(x, y)) {
+                        //将该id放入灰名单
+                        Log.d(TAG, "receiveData:graySet.add");
+                        graySet.add(id);
+                    } else {
+                        receiveData(new TouchEvent(id, 0, x, y));
+                        receiveData(new SyncEvent(pointerCount-graySet.size()));
+                    }
+                } else if (opt == 1 || (opt - 6) % 256 == 0) {
+                    int ind = (event.getAction() - 6) / 256;
+                    int id = event.getPointerId(ind);
+                    //if 处于灰名单 移除
+                    //else 发送up事件
+                    if (!graySet.contains(id)) {
+                        receiveData(new TouchEvent(id, 1, 0, 0));
+                        receiveData(new SyncEvent(pointerCount -graySet.size() - 1));
+                    }else{
+                        graySet.remove(id);
+                    }
+                }
+                
 
-void 发送(event){
-	归一化(event)；
-	if(down||up)发送sync_event
-	发送(event)
-}
-boolean 位于GameView(point){
-	return ...
-}
-void 将该id放入灰名单(id){
-	map.put(id,false);
-}
-boolean id处于灰名单(id){
-	return map.hasValue(id);
-}
-boolean 是否发送过down_event(id){
-	return map.getValue(id);
-}
-void 发送down_event(id){
-	发送;
-	return map[id]=true;
-}
+# 低版本的模拟器不支持Muiti-Touch
+
+只能升级模拟器版本了。
 
