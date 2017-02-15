@@ -822,3 +822,9 @@ onTouch放在GameView的外层GameViewLayout上去监听
 
 只能升级模拟器版本了。
 
+SYN_EVENT里面有
+
+	#define SYN_REPORT 0
+	#define SYN_CONFIG 1
+	/* SYN_MT_REPORT 与多点触控也有关系 不知道低版本是否兼容 */
+	#define SYN_MT_REPORT 2
