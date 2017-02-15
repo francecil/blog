@@ -80,3 +80,8 @@ module : 默认app 可添加多个，一般一个主工程 其他的为sdk
 
 出现冲突后，我方不能提交，此时只要将冲突文件标记解决冲突后，即可提交
 
+## 版本控制自动add 可以再setting里设置
+
+目前发现commit就直接push到远端svn了 而不是 等希望push commits的时候再push
+
+待解决

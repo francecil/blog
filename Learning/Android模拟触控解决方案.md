@@ -701,6 +701,8 @@ http://androidxref.com/4.4.4_r1/xref/system/core/toolbox/getevent.c
 当TOUCH_DOWN处于 纵坐标0.9-1.0区域时，将此时的事件放入buffer,
 接下来的操作，如果为TOUCH_MOVE,且其坐标在TOUCH_DOWN的坐标上方，都将放入buffer。
 
+**客户端去做不太可行 一些奇怪的手势不能过滤掉** 
+
 # 捕获基本知识
 
         //ACTION_POINTER_i_DOWN:5 261 517 773 存在触点的情况下 DOWN

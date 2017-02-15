@@ -666,3 +666,12 @@ api齐全 用时看下
 
 # JS & XML
 
+XPath XSLT E4X
+
+略  使用时看文档
+
+# JSON
+
+stringify：js对象转json字符串 默认不包括空格和缩进，函数 原型成员 undefined都被忽略
+
+parse: json字符串转js对象
