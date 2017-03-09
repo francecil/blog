@@ -697,12 +697,70 @@ http://androidxref.com/4.4.4_r1/xref/system/core/toolbox/getevent.c
 
 #防退出全屏
 
+1.状态栏
+
+## 纯客户端去做
+
 目前比较简单的定义是：
 当TOUCH_DOWN处于 纵坐标0.9-1.0区域时，将此时的事件放入buffer,
 接下来的操作，如果为TOUCH_MOVE,且其坐标在TOUCH_DOWN的坐标上方，都将放入buffer。
 
 **客户端去做不太可行 一些奇怪的手势不能过滤掉** 
 
+## 做一个系统应用，需要有系统签名
+
+       1   public static final void collapseStatusBar(Context ctx) {
+       2   Object sbservice = ctx.getSystemService("statusbar");
+       3   try {
+       4   Class<?> statusBarManager = Class.forName("android.app.StatusBarManager");
+       5   Method collapse;
+       6   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+       7   collapse = statusBarManager.getMethod("collapsePanels");
+       8   } else {
+       9   collapse = statusBarManager.getMethod("collapse");
+      10   }
+      11   collapse.invoke(sbservice);
+      12   } catch (Exception e) {
+      13   e.printStackTrace();
+      14   }
+      15   }
+
+collapse只是折叠状态栏，还是能强行拖动下拉，不能根本的屏蔽
+
+需要调用disable方法
+
+	@Override
+    protected void onResume() {
+        Toast.makeText(this,"onResume",Toast.LENGTH_LONG).show();
+        Object service = getSystemService("statusbar");
+        try {
+            Class <?> statusBarManager = Class.forName("android.app.StatusBarManager");
+            Method expand = statusBarManager.getMethod("disable",int.class);
+            expand.invoke (service,0x00010000);
+            Toast.makeText(this,"success",Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(this,e.toString(),Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+        super.onResume();
+    }
+    @Override
+    protected void onDestroy() {
+        //解除禁止，反射 mStatusBarManager.disable(StatusBarManager.DISABLE_NONE);0x00000000
+        super.onDestroy();
+    }
+
+
+	package="com.ws.tryplayservice" android:sharedUserId="android.uid.system">
+    <uses-permission android:name="android.permission.STATUS_BAR" />
+    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
+    
+   
+   
+2.底部导航栏
+
+需求是不让导航栏显示，也就是我们的虚拟按键按键不显示，那么在模拟器配置HardWare Profiel中开启硬件按钮（Has HardWare Button）
+   
 # 捕获基本知识
 
         //ACTION_POINTER_i_DOWN:5 261 517 773 存在触点的情况下 DOWN
@@ -820,9 +878,9 @@ onTouch放在GameView的外层GameViewLayout上去监听
                 }
                 
 
-# 低版本的模拟器不支持Muiti-Touch
+# 模拟器不支持Muiti-Touch
 
-只能升级模拟器版本了。
+一开始以为要升级模拟器版本，好像是不同模拟器默认的触控协议不一样，我们的方式的话要用B协议，A协议的话代码需要修改。
 
 SYN_EVENT里面有
 
@@ -830,3 +888,5 @@ SYN_EVENT里面有
 	#define SYN_CONFIG 1
 	/* SYN_MT_REPORT 与多点触控也有关系 不知道低版本是否兼容 */
 	#define SYN_MT_REPORT 2
+	
+

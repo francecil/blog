@@ -85,3 +85,29 @@ module : 默认app 可添加多个，一般一个主工程 其他的为sdk
 目前发现commit就直接push到远端svn了 而不是 等希望push commits的时候再push
 
 待解决
+
+## 获取当前应用的方向
+
+开个service,定时去获取或按需获取
+
+	int screenWidth = getWindowManager().getDefaultDisplay().getWidth();
+                        int screenHeight = getWindowManager().getDefaultDisplay().getHeight();
+                        Log.d("ori", "now the screen width is :" + screenWidth + "screen height is:" + screenHeight);
+                        if(screenWidth>screenHeight){
+                            Log.d("ori", "横屏 ");
+                        }else{
+                            Log.d("ori", "竖屏 ");
+                        }
+                        
+
+## 禁止状态栏下拉和导航栏上拉
+
+见 `Android模拟触控解决方案.md`
+
+## so包和Android系统
+
+http://www.jianshu.com/p/cb05698a1968
+
+## Inflate使用
+
+http://www.sxt.cn/info-9373-u-14124.html

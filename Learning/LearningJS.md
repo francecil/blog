@@ -1,3 +1,8 @@
+[TOC]
+
+
+#基础
+
 以下属性只适合外部脚本
 async="async" 立即下载脚本 异步，建议异步的脚本不要进行DOM修改 不能确定谁先谁后，一定会在load事件之前完成
 defer="defer" 等文档解析完再加载
@@ -61,7 +66,7 @@ name1与arguments[0]值一样，可以同时用，并保持单向同步
 ## instanceof 判断是什么类型的引用
 ## 作用域
 一般只有全局和局部
-### 没有块级作用域
+### 没有块级作用域(注：es6有)
 if(1){
 	var a="h"
 }
@@ -159,7 +164,19 @@ enCodeURLComponent 任何非标准字符（: / $npsb等 ）都会进行编码 :*
 
 ### eval 注意非严格模式下的注意点
 
-## 面向对象
+### Math
+
+	ceil()上界
+	floor()下界
+	round()四舍五入
+	random() 0~1间的随机数不包括0,1
+	
+
+得到[2,32]间的随机数
+
+	Math.floor(Math.random()*31+2)
+
+# 面向对象
 
 var person={
 	age:17,
@@ -346,7 +363,7 @@ IE 不可用
 
 ## DOM2级事件处理
 
-`dom元素.addEventListener("事件名如click",处理函数,冒泡处理还是捕获阶段处理[一般false冒泡])`;
+`dom元素.addEventListener("事件名如click",处理函数,boolean值：冒泡处理false还是捕获阶段处理true[一般是使用冒泡])`;
 
 如果处理函数是匿名函数，则无法通过`removeEventListener(,,)[参数一致]`移除
 
@@ -672,6 +689,232 @@ XPath XSLT E4X
 
 # JSON
 
-stringify：js对象转json字符串 默认不包括空格和缩进，函数 原型成员 undefined都被忽略
+## stringify
+js对象转json字符串 默认不包括空格和缩进，函数 原型成员 undefined都被忽略
 
-parse: json字符串转js对象
+有两个额外参数：
+> 1.过滤器(数组or函数)，结果只包含数组中的属性，或者根据函数的key value返回自定义的值
+> 2.保留缩进，传入一个数值or字符串：数值表示每个级别 缩进的空格数 最大数值为10；字符串将代替空格，最大字符串长度为10
+
+
+有时stringify不能满足需求的时候，可以通过对象上调用toJSON方法
+`toJSON()`:若存在该方法且能得到有效的值，则
+
+
+`parse`: json字符串转js对象
+
+有一个额外参数：
+
+是一个还原函数(key,value)，若还原函数返回undefined,则返回的js对象中不包括该键值
+
+可以基于键返回新的值，如属性中value含有的非常规值而是对象的时候就可通过此法返回对象
+
+# AJAX & 跨域
+
+## 用法 XHR-1级
+
+IE7之前XHR需要用ActiveX
+
+XHR 只能向同域中使用同端口和同协议的的URL发送请求
+
+	var xhr = new XMLHTTPRequest(); //IE7以下需要用ActiveXObject 见pdf
+	xhr.open("get"/"post",url,true/false);//待发送请求 true异步
+	
+	xhr.setRequestHeader("ZJXHeader","TEST");//设置自定义请求头部信息，代码需放两个方法之间
+	
+	xhr.send("search=abc&key=2" or null);//发null不是必须只是为了兼容某些浏览器需要参数
+
+	xhr.getResponseHeader("ZJXHeader");//可以取得相对应的响应信息
+
+	
+**同步**：
+
+responseText：响应文本，无论是什么类型
+
+responseXML: 若响应内容类型是`“text/xml”`or`application/xml` 返回XML DOM文档，否则为null
+
+status: 响应的HTTP状态
+
+statusText: HTTP状态说明，一般不用
+
+**异步**：
+
+	xhr.onreadystatechange = function(){
+	
+		if(xhr.readyState==4){
+			//接受到全部数据
+			//根据xhr.status来判断此次请求是否成功
+		}else{
+			//3:接受到部分数据
+			//2:已经调用send方法，但未接受到响应
+			//1:已经调用open方法，尚未调用send方法
+			//0:尚未调用open方法
+		}
+	}
+
+
+	xhr.abort()取消异步请求
+
+## XHR2级规范
+
+**1.FormData**
+
+表单的序列号，存k-v对，所有浏览器都有实现
+
+
+	var data = new FormData(form);
+	
+	xhr.send(data)
+
+**2.超时设定**
+
+	xhr.timeout = 1000;//仅适用于ie8+
+
+**3.overrideMimeType()方法**
+
+重写MIME类型
+
+如服务器返回的是`text/plain`但实际数据是XML
+
+responseXML 值为null 此时可以调用该方法
+
+该方法需要在send之前调用
+
+主流浏览器都支持
+
+## 进度事件
+
+以`loadstart`开始，中间若干`progress`，然后触发`abort/error/load`中的一个，最后以`loadend`结尾。
+
+`abort`:调用abort()方法而终止
+
+`load`:接收到完整响应
+
+`error`:请求发送错误
+
+`progress`：function(event){} event中包含进度信息是否可用(lengthComputable)，已接收字节数(position)和Content-Length响应头确定的预期字节数(totalSize)
+
+
+## 跨源资源共享CORS
+
+//XHR的一个限制就是跨域安全策略
+//
+//在请求中添加一个额外的Origin头部
+//
+//eq:
+//
+//	Origin： http://www.gahing.tech
+//
+//服务器会在`Access-Control-Allow-Origin`回发相同的源信息
+// eq:
+// 
+//	Access-Control-Allow-Origin: http://www.gahing.tech
+//	
+
+## 其他跨域技术
+
+### 1.图像Ping 
+
+之前有提到过，`img.src="http://xxx.com?search=abc";` 即可发起调用。
+
+常用于跟踪用户点击页面行为 及广告曝光次数
+
+缺点：只能发Get请求，不能获得响应文本
+
+### 2.JSONP
+
+...............
+
+# 离线存储
+
+见Diigo技术调研一文
+
+# 最佳实践
+
+## 可维护
+
+CSS 与 JS 的解耦合：
+
+修改元素的css类(需要创建更多类) 而不是修改css类中的属性，看情况采取该法。
+
+应用逻辑和事件处理的解耦：
+
+勿将event对象传给其他方法，只传event对象的部分值
+
+
+避免全局量，多个全局量可以用一个单一的全局量对象去封装
+
+然后其他的命名空间在该对象上创建.一般项目每个人维护自己的命名空间
+
+js中的if判断，一般是让其与应该值比，而不是与不符值比，
+
+如判断 一个对象是不是数组，不能判断`if(value!=null)`而是判断`if(value instanceof Array)`
+
+## 性能
+
+###1.作用域
+
+1.全局变量多次引用应该用一个局部变量代替
+
+2.避免with
+
+###2.避免双重解释
+
+如`setTimeout("alert('Hello world')",500)`
+
+###3.最小化语句数
+
+1.多变量声明
+
+	var a=5;
+	var b="blue";
+	var c=[1,2,3];
+	
+
+应该改为
+
+	var a=5,b="blue",c=[1,2,3];
+	
+
+2.使用数组和对象字面量
+
+	var person=new Object();
+	person.name="gahing";
+	person.age=14;
+	
+
+改为
+
+	var person={
+		name:"gahing",
+		age:14;
+	};
+	
+
+语句从3条变为1条
+
+### 4.优化DOM交互
+
+
+1.使用fragment
+
+`var fragment=document.createDocumentFragment()`
+
+先将item添加到fragment
+
+最后fragment被添加`list.appendChild(fragment)`
+
+代替每次直接`list.appendChild(item);`
+
+
+2.大DOM修改采取innerHTML
+
+3.使用事件代理，前面事件一章已提到
+
+
+## 部署
+
+压缩 调试 构建工具的选择
+
+# 新兴的API
+
