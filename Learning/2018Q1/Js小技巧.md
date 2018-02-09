@@ -102,3 +102,11 @@ const type = (obj)=> {
   return Object.getPrototypeOf(obj).constructor.name.toLowerCase()
 }
 ```
+
+# 正则 零宽断言 zero-width prediction，只拿想要的值
+
+let reg = /(?<=<tag>).*(?=<\/tag>)/
+
+let str= '<tag>ss</tag>'
+
+str.match(reg)[0] = 'ss'

@@ -1,4 +1,177 @@
+# let 和 const
+
+## let
+
+### 块作用域内有效 
+
+### 不存在变量提升
+
+### 暂时性死区（TDZ）
+
+
+```
+if (true) {
+  // TDZ开始
+  tmp = 'abc'; // ReferenceError
+  console.log(tmp); // ReferenceError
+
+  let tmp; // TDZ结束
+  console.log(tmp); // undefined
+
+  tmp = 123;
+  console.log(tmp); // 123
+}
+```
+
+### 块作用域内声明函数
+
+https://stackoverflow.com/questions/31419897/what-are-the-precise-semantics-of-block-level-functions-in-es6
+
+浏览器的实现无需按照标准
+
+在块级作用域中采用函数表达式代替函数声明
+
+## const
+
+const保证的不是变量的值不得改动，而是变量所指向的内存地址不得改变。
+
+举例：
+```
+const MIN = 1
+MIN = 0 //TypeError: Assignment to constant variable
+const obj = {}
+obj.a = 1 //1
+obj = {}  //TypeError: Assignment to constant variable
+```
+
+obj对象本身仍是可变的，只是所处内存地址不能改变
+
+如果真的想让对象冻结，采用`Object.freeze`方法
+
+```
+let a = {name:{first:'gahing'}}
+const foo = Object.freeze(a);
+
+// 常规模式时，下面一行不起作用；
+// 严格模式时，该行会报错
+foo.prop = 123;
+```
+
+但是对象其下的属性是不起作用的，比如
+
+```
+foo.name.last='z'
+foo.name //{first: "gahing", last: "z"}
+```
+
+## 获取顶层对象
+
+```
+(typeof window !== 'undefined'
+   ? window
+   : (typeof process === 'object' &&
+      typeof require === 'function' &&
+      typeof global === 'object')
+     ? global
+     : this);
+```
+
+# 正则的拓展
+
+## 增加构造函数
+
+## u修饰符
+
+用于四个字节的字符
+
+```
+/𠮷{2}/.test('𠮷𠮷') // false
+/𠮷{2}/u.test('𠮷𠮷') // true
+```
+
+## y修饰符
+
+和g一样也是全局匹配，只是匹配都是从剩余字符串的第一个字符开始匹配
+
+```
+var s = 'aaa_aa_a';
+var r1 = /a+/g;
+var r2 = /a+/y;
+
+r1.exec(s) // ["aaa"]
+r2.exec(s) // ["aaa"] 剩余_aa_a
+
+r1.exec(s) // ["aa"]
+r2.exec(s) // null
+```
+即 y 修饰符号隐含了头部匹配的标志 ^ 
+
+单单一个y修饰符对match方法，只能返回第一个匹配，必须与g修饰符联用，才能返回所有匹配。
+
+```
+'a1a2a3'.match(/a\d/y) // ["a1"]
+'a1a2a3'.match(/a\d/gy) // ["a1", "a2", "a3"]
+```
+
+
+## 具名组匹配
+
+ES2018引入
+
+```
+const RE_DATE = /(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/;
+
+const matchObj = RE_DATE.exec('1999-12-31');
+const year = matchObj.groups.year; // 1999
+const month = matchObj.groups.month; // 12
+const day = matchObj.groups.day; // 31
+```
+
+可以使用`\k<组名>`写法和`\1` 数字引用
+
+```
+const RE_TWICE = /^(?<word>[a-z]+)!\k<word>!\1$/;
+RE_TWICE.test('abc!abc!abc') // true
+RE_TWICE.test('abc!abc!ab') // false
+```
+
+# 函数拓展
+
+## 函数默认值
+
+利用函数默认值，可以指定某个参数不得省略否则抛出异常
+
+```
+function throwIfMissing() {
+  throw new Error('Missing parameter');
+}
+
+function foo(mustBeProvided = throwIfMissing()) {
+  return mustBeProvided;
+}
+
+foo()
+// Error: Missing parameter
+```
+
+## 严格模式
+
+只要函数参数使用了默认值、解构赋值、或者扩展运算符，那么函数内部就不能显式设定为严格模式
+
+解法有：1.设定全局严格 2.包在无参的立即执行函数中
+
+尾调用优化：严格模式不含以下参数，故可以采用
+
+```
+func.arguments：返回调用时函数的参数。
+func.caller：返回调用当前函数的那个函数。
+```
+
 # 数组拓展
+
+## ES5的一些常用用法
+
+`['a','b','c'].reduce((tot,cur)=>tot+cur) === 'abc'`
 
 ## 拓展运算符 ...
 
@@ -25,7 +198,7 @@ let map = new Map([
 
 let arr = [...map];
 ```
-Array.from接受第二个参数 类似于数组map方法 对每个元素进行处理，再放回数组
+`Array.from` 接受第二个参数 类似于数组map方法 对每个元素进行处理，再放回数组
 ```
 let arrayLike ={
     '0': 1,
@@ -36,8 +209,10 @@ let arrayLike ={
 Array.from(arrayLike , (x) => x * x)
 // [1, 4, 9]
 ```
-相比Array.from().map() 省略了一个步骤，测试显示节省一半时间
+相比`Array.from().map()` 省略了一个步骤，**测试显示节省一半时间**
+
 同理，map需要传this的话，Array.from可以传第三个参数
+
 ```
 [1,2,3].map(x=>x*x,window)
 //等价于
@@ -92,6 +267,27 @@ new Array(3).fill(7) //[7,7,7]
 ```
 ## keys() values() entries()
 
+# 对象的拓展
+
+## Object.is()
+
+与===相比 不同之处为：**一是+0不等于-0，二是NaN等于自身**
+
+es5可以用
+
+```
+function(x, y) {
+    if (x === y) {
+      // 针对+0 不等于 -0的情况
+      return x !== 0 || 1 / x === 1 / y;
+    }
+    // 针对NaN的情况
+    return x !== x && y !== y;
+  }
+```
+
+
+
 # async 函数
 
 ```
@@ -136,7 +332,7 @@ test();
 ```
 let foo = await getFoo();
 let bar = await getBar();
-=>
+//改为
 let [foo, bar] = await Promise.all([getFoo(), getBar()]);
 ```
 
@@ -187,13 +383,16 @@ Symbol 作为属性名，该属性不会出现在for...in、for...of循环，也
 
 重新使用同一个Symbol值。
 
-`Symbol.for('test')` 搜索是否有以`test`为参数的 Symbol 值，有则返回无则创建
+`Symbol.for('test')` 搜索是否有以`test`为参数的 Symbol 值，有则返回无则创建并登记到全局
 
-```
+```js
 let s1 = Symbol.for('foo');
 let s2 = Symbol.for('foo');
 
 s1 === s2 // true
+
+Symbol('foo') === Symbol.for('foo') //false
+//原因是Symbol()没有登记机制，后面Symbol.for()将搜索不到
 ```
 
 `Symbol.keyFor`方法返回一个已登记的 Symbol 类型值的`key`,无则返回undefined。
@@ -281,8 +480,10 @@ myReceiverObject.foo //3
 
 Unicode 码 大于 0xFFFF 的字符 ，由4个字节存储
 
+
 故
 ```
+"\u{20BB7}" //"𠮷"  用{}来包装 可以表示双字节。
 var s = "𠮷";
 
 s.length // 2
@@ -476,24 +677,21 @@ message
 // <p>&lt;script&gt;alert("abc")&lt;/script&gt; has sent you a message.</p>
 ```
 
-# 对象的拓展
 
-## Object.is()
 
-与===相比 不同之处为：**一是+0不等于-0，二是NaN等于自身**
+# Class
 
-es5可以用
+ES5的原型链继承
 
 ```
-function(x, y) {
-    if (x === y) {
-      // 针对+0 不等于 -0的情况
-      return x !== 0 || 1 / x === 1 / y;
-    }
-    // 针对NaN的情况
-    return x !== x && y !== y;
-  }
+function Parent(){
+  this.name = 'parent'
+}
+function Child(){
+  this.name = 'child'
+}
+// 用子类的原型对象等于父类的实例
+// 则子类原型拥有父类的所有实例属性和实例方法,即Child.prototype.name = 'parent'
+Child.prototype = new Parent()
+// 实例调用方法，先去找实例方法 再去找原型方法
 ```
-
-
-
