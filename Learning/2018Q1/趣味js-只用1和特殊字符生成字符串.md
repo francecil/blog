@@ -29,7 +29,7 @@
 []/[]+[] = "NaN"
 []+{} = "[object Object]"
 []+/^/[1] = "undefined" /* /^/是正则 */
-[]+/:@$/ = "/:@$/" /*特殊字符放其中获取*/
+[]+/\:@$/ = "/\:@$/" /*键盘可见特殊字符放/\ /其中(\用于转义)获取比如拿:就是[1]*/
 
 //可拿到的小写字母有=abcdef ijln orst uy
 ```
@@ -106,11 +106,11 @@ let $11 = (([]+{})[$1]+[])
 let $111 = ([]+![111])[1|1<<1|1]+[/=/,[]+[][11]][1|[]][1>>1]+([{}]+{})[1+!![1]]+[1,!1+/~/][1%11][1^1<<1]+(!!1+[])[1^1]+[!!/-/+/-/][11%11][+!!1]
 //$$="String"
 let $$ = $11[$111](11^1<<1,-~11>>1) //substr(9,6)
-//$$1="toString"
-let $$1=(!!1+[])[1^1]+([]+{}+[])[1]+$$
+//$_1="toString"
+let $_1=(!!1+[])[1^1]+([]+{}+[])[1]+$$
 //结果：(985072300)['toString'](36)
 (+([]+(11^(1<<1))+((1+1)<<(1+1))+(11>>>1)+(1^1)+((11>>1)+(1<<1))+(-~1)+(-~1+1)+(1^1)
-+(1^1)))[$$1](~1-~(11^1)<<1<<1)
++(1^1)))[$_1](~1-~(11^1)<<1<<1)
 ```
 
 
@@ -131,14 +131,16 @@ $1='constructor'
 A: [][$1]+[]="function Array() { [native code] }"
 B: (!!1)[$1]+[]="function Boolean() { [native code] }"
 I: 1/[]+[] = "Infinity"
+E: /\\/[$1]+[] = "function RegExp() { [native code] }"
 N: []/[]+[] = "NaN"
 O: []+{}="[object Object]"
 S: ''[$1]+[] = "function String() { [native code] }"
+R: /\\/[$1]+[] = "function RegExp() { [native code] }"
 ```
 
 **当然，我们可以用黑科技去获取。**
 
-String类有个方法`fromCodePoint`(不用`fromCharCode`因为其不能识别32位字符)
+String类有个方法`fromCodePoint`(不用`fromCharCode`因为其不能识别4字节字符)
 
 通过传入`Unicode` 值即可得到对应的字符，String类可以通过构造函数`''['constructor']`拿到。
 
@@ -146,7 +148,10 @@ String类有个方法`fromCodePoint`(不用`fromCharCode`因为其不能识别32
 
 `23433` 是 `安` 的unicode码，可以通过 `'安'.codePointAt(0)` 获得
 
-故我们可以事先得到`fromCodePoint`的36位编码。用一个临时变量保存，会经常用到
+故我们可以事先得到`fromCodePoint`的组合串。用一个临时变量保存，会经常用到
+
+**PS:实在是找不到怎么生成'C'的。。下文可以不用看了**
+
 ```
 let  fcp = 74719523963420330000 // 'fromCodePoint'的36位编码
 let $$ =(fcp)['toString'](36) //'fromCodePoint'
@@ -198,13 +203,13 @@ $1='constructor'
    
    2.2 处理小写字母串，若该串所有字符可直接获取(abcdefijlnorstuy),则直接获取，否则采用`toString(36)`实现，36进制通过 `parseInt方法` 获取
 
-   2.3 特殊字符、大写字母先看能否直接获取（ABINOS），否则走 2.4 流程
+   2.3 特殊字符、大写字母先看能否直接获取（ABEFINORS），否则走 2.4 流程
 
    2.4 利用`codePointAt`拿到`Unicode`码，再生成`String.fromCodePoint(unicode)` 的组合串
 
 3. 字符串拼接：将分割后替换完的组合串进行拼接
 
-**注：** 定义的变量，为保持拓展性，变量第一位都是$ 第二位为$表示后面的是替换方法 第二位为1表示后面将是替换具体字符
+**注：** 定义的变量，为保持拓展性，变量第一位都是$ 第二位为_表示后面的是替换方法 第二位为1表示后面将是替换具体字符
 
 ### 举个栗子
 
@@ -244,10 +249,10 @@ obj = {
 **/
 
 //对数组元素类型，用变量替换会用到的方法串
-let signObj = getSignOf(data.arr) //signObj={useConstructor:'$$$=xxx;';useFromCodePoint:'$$1=xxx;'}
-//otherLowercaseStr>0 初始化$$$=constructor的组合串
-//otherChar>0 初始化$$1=fromCodePoint的组合串
-//为保持拓展性。变量第一位都是$ 第二位为$表示后面的是替换方法 第二位为1表示后面将是替换具体字符
+let signObj = getSignOf(data.arr) //signObj={useConstructor:'$_$=xxx;';useFromCodePoint:'$_1=xxx;'}
+//otherLowercaseStr>0 初始化$_$=constructor的组合串
+//otherChar>0 初始化$_1=fromCodePoint的组合串
+//为保持拓展性。变量第一位都是$ 第二位为_表示后面的是替换方法 第二位为1表示后面将是替换具体字符
 let result = ''
 let ua = signObj.useConstructor
 let ub = signObj.useFromCodePoint
@@ -273,33 +278,233 @@ result+=data.arr.reduce((tot,cur)=>tot+cur.transStr)
 ### 方法代码
 
 ```js
-function init(){
+const numStr = Symbol.for('numStr')
+const commonLowercaseStr = Symbol.for('commonLowercaseStr')
+const otherLowercaseStr = Symbol.for('otherLowercaseStr')
+const commonCapital = Symbol.for('commonCapital')
+const useConstructorCapital = Symbol.for('useConstructorCapital')
+const commonSign = Symbol.for('commonSign')
+const otherChar = Symbol.for('otherChar')
+const string_null_error = Symbol.for('string_null_error')
+const string_multitype_error = Symbol.for('string_multitype_error')
 
-}
-function split(){
+var StringBuilder = (function () {
+  let instance
+  let builder = {}
+  let init = function (name) {
+    builder[0] = '1^1'
+    builder[1] = '1|1'
+    builder[2] = '-~1'
+    builder[3] = '-~1|1'
+    builder[4] = '-~1<<1'
+    builder[5] = '11>>1'
+    builder[6] = '(11+1)>>1'
+    builder[7] = '11>>1|-~1'
+    builder[8] = '11^(-~1|1)'
+    builder[9] = '11^(1<<1)'
+    builder[12] = '11+1'
+    builder['false'] = '!1+[]'
+    builder['true'] = '!!1+[]'
+    builder['Infinity'] = '1/[]+[]'
+    builder['NaN'] = '[]/[]+[]'
+    builder['[object Object]'] = '[]+{}'
+    builder['undefined'] = '[]+/^/[1]'
+    builder['a'] = `(${builder['false']})[${builder[1]}]`
+    builder['b'] = `(${builder['[object Object]']})[${builder[2]}]`
+    builder['c'] = `(${builder['[object Object]']})[${builder[5]}]`
+    builder['d'] = `(${builder['undefined']})[${builder[2]}]`
+    builder['e'] = `(${builder['true']})[${builder[3]}]`
+    builder['f'] = `(${builder['false']})[${builder[0]}]`
+    builder['i'] = `(${builder['undefined']})[${builder[5]}]`
+    builder['j'] = `(${builder['[object Object]']})[${builder[3]}]`
+    builder['l'] = `(${builder['false']})[${builder[2]}]`
+    builder['n'] = `(${builder['Infinity']})[${builder[1]}]`
+    builder['o'] = `(${builder['[object Object]']})[${builder[1]}]`
+    builder['r'] = `(${builder['true']})[${builder[1]}]`
+    builder['s'] = `(${builder['false']})[${builder[3]}]`
+    builder['t'] = `(${builder['true']})[${builder[0]}]`
+    builder['u'] = `(${builder['undefined']})[${builder[0]}]`
+    builder['y'] = `(${builder['Infinity']})[${builder[7]}]`
+    builder['I'] = `(${builder['Infinity']})[${builder[0]}]`
+    builder['N'] = `(${builder['NaN']})[${builder[0]}]`
+    builder['O'] = `(${builder['[object Object]']})[${builder[8]}]`
+    builder['constructor'] = handleStrByType('constructor')
+    //let $_$=builder['constructor']
+    builder['A'] = `([][$_$}]+[])[${builder[9]}]`
+    builder['B'] = `((!!1)[$_$]+[])[${builder[9]}]`
+    builder['E'] = `(/\\/[$_$]+[])[${builder[9]}]`
+    builder['F'] = `((()=>{})[$_$]+[])[${builder[9]}]`
+    builder['R'] = `(/\\/[$_$]+[])[${builder[12]}]`
+    builder['S'] = `(([]+1)[$_$]+[])[${builder[9]}]`
+    builder['fromCodePoint'] = handleStrByType('fromCodePoint')
+    return {
+      handleStr: function (str) {
+        let arr = split(str)
+        let source = packArrToSource(arr)
+        let result = getSign(source)
+      }
+    }
+  }
+  /**
+   * 
+   * 将字符串进行分割
+   * 
+   * @param {any} str 
+   * @returns 分割后的数组
+   */
+  function split(str) {
+    if (!str || str.length === 0) throw { type: string_null_error, message: '字符串为空' }
+    let arr = []
+    let last = ""
+    for (let c of str) {
+      try {
+        let curType = getTypeOf(c)
+        if (last.length === 0) {
+          if (curType === numStr || curType === commonLowercaseStr || curType === otherLowercaseStr) {
+            last = c
+          } else {
+            arr.push(c)
+          }
+        } else {
+          //last必为数字或小写字母串
+          let lastType = getTypeOf(last)
+          if (curType === lastType || (lastType !== numStr && (curType === commonLowercaseStr || curType === otherLowercaseStr))) {
+            last += c
+          } else {
+            arr.push(last)
+            last = ""
+            if (curType === numStr || curType === commonLowercaseStr || curType === otherLowercaseStr) {
+              last = c
+            } else {
+              arr.push(c)
+            }
+          }
+        }
+      } catch (error) {
+        console.error(`字符为${c}`)
+        throw error
+      }
+    }
+    if (last !== "") arr.push(last);
+    return arr
+  }
+  /**
+   * 将数组每个元素进行包装，生成数据源
+   * 
+   * @param {any} arr 
+   */
+  function packArrToSource(arr) {
+    let obj = {
+      [numStr]: 0,
+      [commonLowercaseStr]: 0,
+      [otherLowercaseStr]: 0,
+      [commonCapital]: 0,
+      [useConstructorCapital]: 0,
+      [commonSign]: 0,
+      [otherChar]: 0,
+      arr: []
+    }
+    arr.forEach((e) => {
+      let curTemp = getTypeOf(e)
+      obj[curTemp] += 1
+      obj.arr.push({
+        oriStr: e,
+        type: curTemp,
+        transStr: ''
+      })
+    }, this);
+    return obj
+  }
+  /**
+   * 获取字符串所属类型
+   * 
+   * @param {any} str 
+   * @returns 
+   */
+  function getTypeOf(str) {
+    if (!str || str.length === 0) throw { type: string_null_error, message: '字符串为空' }
+    if (/^\d+$/.test(str)) return numStr;
+    if (/^[abcdefijlnorstuy]+$/.test(str)) return commonLowercaseStr;
+    if (/^[a-z]+$/.test(str)) return otherLowercaseStr;
+    if (/^[INO]+$/.test(str)) return commonCapital;
+    if (/^[ABEFRS]+$/.test(str)) return useConstructorCapital;
+    if (/^((?=[\x21-\x7e])[^A-Za-z0-9])$/.test(str)) return commonSign;
+    //存在多个字符，报错：有多种类型，需要重新split
+    if (Array.from(str).length !== 1) throw { type: string_multitype_error, message: '存在多种类型' }
+    return otherChar;
+  }
+  /**
+   * 获取初始化字符串，并对source进行2个属性的设置
+   * otherLowercaseStr>0 初始化$_$=constructor的组合串
+   * otherChar>0 初始化$_1=fromCodePoint的组合串
+   * 
+   * @param {any} source 
+   */
+  function getSign(source) {
+    //otherLowercaseStr>0 初始化$_$=constructor的组合串
+    //otherChar>0 初始化$_1=fromCodePoint的组合串
+    let result = ""
+    if (source[otherLowercaseStr] > 0 || source[useConstructorCapital] > 0 || source[otherChar] > 0) {
+      source['useConstructor'] = '$_$=' + builder['constructor']
+      result += source['useConstructor'] + ';'
+    }
+    if (source[otherChar] > 0) {
+      source['useFromCodePoint'] = '$_1=' + builder['fromCodePoint']
+      result += source['useFromCodePoint'] + ';'
+    }
+    return result
+  }
+  /**
+   * 将原串根据类型生成返回组合串
+   * 
+   * @param {any} str 
+   * @param {any} type 
+   * @returns 
+   */
+  function handleStrByType(str, type) {
+    type = type || getTypeOf(str)
+    switch (type) {
+      case numStr: return handleNumStr(str);
+      case commonLowercaseStr: return handleCommonLowercaseStr(str);
+      case otherLowercaseStr: return handleOtherLowercaseStr(str);
+      case commonCapital: return handleCommonCapital(str);
+      case useConstructorCapital: return handleUseConstructorCapital(str);
+      case commonSign: return handleCommonSign(str);
+      case otherChar: return handleOtherChar(str);
+    }
+  }
+  function handleNumStr() {
 
-}
-function getSignOf(){
+  }
+  function handleCommonLowercaseStr(str) {
+    return Array.from(str, c => obj[c]).reduce((tot, cur) => tot + '+' + cur)
+  }
+  function handleOtherLowercaseStr() {
 
-}
-function handleNumStr(){
+  }
+  function handleCommonCapital() {
 
-}
-function handleCommonLowercaseStr(){
+  }
+  function handleUseConstructorCapital() {
 
-}
-function handleOtherLowercaseStr(){
-  
-}
-function handleCommonCapital(){
-  
-}
-function handleCommonSign(){
-  
-}
-function handleOtherChar(){
-  
-}
+  }
+  function handleCommonSign() {
+
+  }
+  function handleOtherChar() {
+
+  }
+  //修改源的
+  function setSourceBuilder(s,str){
+
+  }
+  return {
+    getInstance: function () {
+      return instance || (instance = init())
+    }
+  }
+})()
+export default StringBuilder
 ```
 
 ### 优化
@@ -319,7 +524,7 @@ function handleOtherChar(){
 
 对于长英文串，是否可以事先得到所有字母的组合串，用变量表示，后面直接使用变量。
 
-如 `$$$$$ = 'a'; $$$$1 = 'b'` 
+如 `$_$$$ = 'a'; $_$_1 = 'b'` 
 
 即把 `$` 看做 `0` ， 采用类似 `ASCII码` 的方式实现
 
