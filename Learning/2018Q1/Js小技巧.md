@@ -105,8 +105,44 @@ const type = (obj)=> {
 
 # 正则 零宽断言 zero-width prediction，只拿想要的值
 
+```
 let reg = /(?<=<tag>).*(?=<\/tag>)/
 
 let str= '<tag>ss</tag>'
 
 str.match(reg)[0] = 'ss'
+```
+
+# 利用symbol创建全局静态标识符
+
+```js
+var hasSymbol = typeof Symbol === 'function'
+var makeSymbol
+if (hasSymbol) {
+  makeSymbol = function (key) {
+    return Symbol.for(key)
+  }
+} else {
+  makeSymbol = function (key) {
+    return '_' + key
+  }
+}
+var MAX = makeSymbol('max')
+```
+
+# 对外接口用户实例化返回具体对象
+
+提供一个对外接口 Dog，用户实例化可能是 `let dog = Dog()` 也可能是 `let dog = new Dog()`
+
+对于前者，在Dog中访问的this是顶层上下文如window,要初始化属性的时候就不能通过this.name=xx设置
+
+所以一般我们都会做一次判断
+
+```js
+function Dog(){
+  if(!(this instanceof Dog)){
+    return new Dog()
+  }
+  this.name = 'xiaohei'
+}
+```

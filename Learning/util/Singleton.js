@@ -1,14 +1,13 @@
 //单例基础实现
 var Singleton = (function(){
   let instance
-  let init = function(name){
-    return {
-      name:name
-    }
+  let init = function(fn){
+    const one = new fn()
+    return one
   }
   return {
-    getInstance:function(name){
-      return instance||(instance=init(name))
+    getInstance:function(fn){
+      return instance||(instance=init(fn))
     }
   }
 })()
