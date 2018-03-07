@@ -179,3 +179,32 @@ resize:both;
 overflow:auto;
 }
 ```
+
+# 随意补充
+
+## pointer-events
+
+用于阻止元素成为鼠标事件目标。
+
+
+
+取值：
+
+1. auto: 默认值，不设置时就是auto的效果，但是存在父元素设置none时，要捕获就得设置成auto(感觉只是为了说明不是none而已)
+
+2. none: 元素不会成为鼠标事件的target。 但若后代元素的pointer-events指定其他值时，鼠标事件指向后代元素，该情况下鼠标事件会在捕获or冒泡阶段触发父代的事件监听器
+
+情况1： 
+
+`<div><button/></div>`
+
+div 设置 none , button设置auto，点击 button 位置，两者都会触发监听器。点击div 非button位置，都不触发。
+
+情况2：
+
+`<parent><child/><button/></parent>`
+
+child 是绝对定位，盖过button。
+
+欲实现触发button不触发child 则：child设置none,parent和button设置auto或不设置。反之什么都不设置即可。
+

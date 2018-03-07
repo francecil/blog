@@ -33,7 +33,9 @@ https://stackoverflow.com/questions/31419897/what-are-the-precise-semantics-of-b
 
 ## const
 
-const保证的不是变量的值不得改动，而是变量所指向的内存地址不得改变。
+const 定义常量后，其值不可变。
+
+const定义变量后，保证的不是变量的值不得改动，而是变量所指向的内存地址不得改变。
 
 举例：
 ```
