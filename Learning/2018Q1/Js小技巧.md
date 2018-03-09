@@ -71,7 +71,7 @@ new Function(...Object.keys(this.data), `return ${exp}`)(...Object.values(this.d
 
 可以用es6的 `Object.is(+0,-0) =false`
 
-# 返回一个随机不重复数字[2-32]的数组，长度为n
+# 返回一个随机不重复数字,范围在[2-32]的数组，长度为n
 
 ```
 const uniqueNums = (n) => 
@@ -81,7 +81,7 @@ const uniqueNums = (n) =>
     .slice(0, n)
 ```
 
-# js 数据类型判断
+# js 获取Object实际数据类型
 
 例：null 得到 null 而不是 object
 
@@ -113,7 +113,7 @@ let str= '<tag>ss</tag>'
 str.match(reg)[0] = 'ss'
 ```
 
-# 利用symbol创建全局静态标识符
+# 兼容es5利用symbol创建全局静态标识符
 
 ```js
 var hasSymbol = typeof Symbol === 'function'
@@ -146,3 +146,4 @@ function Dog(){
   this.name = 'xiaohei'
 }
 ```
+

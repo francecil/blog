@@ -50,9 +50,9 @@ obj对象本身仍是可变的，只是所处内存地址不能改变
 
 如果真的想让对象冻结，采用`Object.freeze`方法
 
-```
+```js
 let a = {name:{first:'gahing'}}
-const foo = Object.freeze(a);
+const foo = Object.freeze(a); //仍可以使用a={} 改变a的内存地址
 
 // 常规模式时，下面一行不起作用；
 // 严格模式时，该行会报错

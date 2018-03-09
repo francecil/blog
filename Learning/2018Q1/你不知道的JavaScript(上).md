@@ -12,6 +12,17 @@ foo = function(){}
 
 foo2() //ReferenceError
 let foo = function(){}
+
+if(!obj in window){
+	var obj = 3 
+}
+console.log(obj)
+//obj编译的时候会被提到全局,实际效果是：
+var obj
+if(!obj in window){
+	obj = 3 
+}
+console.log(obj)
 ```
 
 # 作用域闭包
