@@ -128,7 +128,7 @@
 
 `r`：替换当前字符,先按r再按其他字符可以替换当前字符,不进入替换模式
 `R`：进入替换模式
-`~`：更改当前光标下字符的大小写
+ ~ ：更改当前光标下字符的大小写
 
 `s`：删除当前光标字符，并进入插入模式
 `S`：删除当前行，并进入插入模式
@@ -329,3 +329,33 @@ read success,return 读到的字节数。若到文件结尾，则返回0.
 新文件的用户ID为当前进程的有效用户ID 组ID 可以是进程组ID or 所在目录的组ID
 
 
+## 解压缩
+
+tar
+
+# 传输
+
+> scp local_file remote_user@host:remote_folder
+
+> rz  //选择本地文件传输
+
+# 工具命令
+
+```sh
+## 查看端口使用情况
+netstat -tunlp | grep 3306
+## 查看端口被哪个进程占用
+lsof -i:80
+## 杀死指定进程名=shark
+killall shark
+## 杀死指定进程pid=666
+kill -9 666
+``` 
+
+## 查看软件安装情况
+
+1、rpm包安装的，可以用 rpm -qa 看到，如果要查找某软件包是否安装，用 rpm -qa | grep "软件或者包的名字"
+
+2、以deb包安装的，可以用 dpkg -l 看到。如果是查找指定软件包，用 dpkg -l | grep "软件或者包的名字"
+
+3、yum方法安装的，可以用 yum list installed 查找，如果是查找指定包，用 yum list installed | grep "软件名或者包名"
