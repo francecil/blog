@@ -10,7 +10,7 @@ foo() //TypeError
 foo = function(){}
 */
 
-foo2() //ReferenceError
+foo() //ReferenceError
 let foo = function(){}
 
 if(!obj in window){
