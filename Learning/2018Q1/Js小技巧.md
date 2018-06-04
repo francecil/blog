@@ -162,3 +162,9 @@ function Dog(){
 `/[a-z]+/.test(null)`操作时会将 null 转为 'null',导致出现错误的结果 true 
 
 故在判断前需要进行判空操作
+
+
+# 仅一次使用的方法，做到不命名
+```js
+(funciton(){})
+```

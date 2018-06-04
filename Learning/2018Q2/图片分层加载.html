@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <title>图片分层加载</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///C:\Users\zhengjx\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.5\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      <link rel="stylesheet" href="file:///C:\Users\zhengjx\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.5\node_modules\@shd101wyy\mume\dependencies\mermaid\mermaid.css">
+      
+      
+      
+      
+      <script type="text/javascript" src="file:///C:\Users\zhengjx\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.5\node_modules\@shd101wyy\mume\dependencies\mermaid\mermaid.min.js"></script>
+      
+      
+      
+      
+
+      <style> 
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+ 
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview   ">
+      <ul>
+<li><a href="#%E4%B8%80-%E5%BC%95%E8%A8%80">一、引言</a>
+<ul>
+<li><a href="#11-%E7%BC%96%E5%86%99%E7%9B%AE%E7%9A%84">1.1 编写目的</a></li>
+<li><a href="#12-%E9%A1%B9%E7%9B%AE%E8%83%8C%E6%99%AF">1.2 项目背景</a>
+<ul>
+<li><a href="#121-%E8%83%8C%E6%99%AF">1.2.1 背景</a></li>
+<li><a href="#122-%E4%B8%9A%E7%95%8C%E5%AE%A2%E6%88%B7%E7%8E%B0%E7%8A%B6">1.2.2 业界客户现状</a></li>
+<li><a href="#123-%E5%8F%8B%E5%95%86%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88">1.2.3 友商技术方案</a></li>
+</ul>
+</li>
+<li><a href="#13-%E6%9C%AF%E8%AF%AD%E5%AE%9A%E4%B9%89">1.3 术语定义</a></li>
+<li><a href="#14-%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">1.4 参考资料</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84">二、系统架构</a>
+<ul>
+<li><a href="#%E6%B5%81%E7%A8%8B%E5%9B%BE">流程图</a></li>
+<li><a href="#%E6%97%B6%E5%BA%8F%E5%9B%BE">时序图</a></li>
+<li><a href="#%E5%89%8D%E7%AB%AF%E6%B5%81%E7%A8%8B">前端流程</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">三、常见问题及解决方案</a>
+<ul>
+<li><a href="#31-%E6%BA%90%E7%AB%99%E6%9C%89%E5%81%9A%E6%87%92%E5%8A%A0%E8%BD%BD%E7%AD%96%E7%95%A5%E7%9A%84">3.1 源站有做懒加载策略的</a></li>
+<li><a href="#32-css%E5%92%8Cstyle%E4%B8%ADbackground-image%E6%98%AF%E5%90%A6%E8%BF%9B%E8%A1%8C%E5%A4%84%E7%90%86">3.2 css和style中background-image是否进行处理</a></li>
+<li><a href="#33-%E6%A0%B9%E6%8D%AE%E5%AA%92%E4%BD%93%E5%B1%9E%E6%80%A7%E7%9A%84%E6%B8%B2%E6%9F%93">3.3 根据媒体属性的渲染</a></li>
+<li><a href="#34-%E5%92%8C%E6%87%92%E5%8A%A0%E8%BD%BD%E7%BB%93%E5%90%88%E7%9A%84%E7%AD%96%E7%95%A5">3.4 和懒加载结合的策略</a></li>
+<li><a href="#35-%E5%8E%9F%E5%A7%8B%E5%9B%BE%E7%89%87%E8%BE%83%E5%B0%8F%E7%AC%AC%E4%BA%8C%E6%AC%A1%E4%B8%8D%E5%81%9A%E5%8A%A0%E8%BD%BD">3.5 原始图片较小，第二次不做加载</a></li>
+<li><a href="#36-%E6%A0%B9%E6%8D%AE%E7%BD%91%E7%BB%9C%E9%80%9F%E5%BA%A6%E5%9C%A8%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%8C%89%E7%85%A7%E4%B8%80%E5%AE%9A%E6%AF%94%E4%BE%8B%E5%8A%A0%E8%BD%BD%E9%AB%98%E6%B8%85%E5%9B%BE">3.6 根据网络速度，在第二次按照一定比例加载高清图</a></li>
+<li><a href="#37-%E5%9B%BE%E7%89%87%E5%90%88%E5%B9%B6%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%98%AF%E6%A8%A1%E7%B3%8A%E5%9B%BE%E7%89%87%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%98%AF%E8%A1%A5%E5%85%85%E4%BF%A1%E6%81%AF%E5%90%88%E5%B9%B6%E5%90%8E%E5%8F%98%E6%88%90%E5%8E%9F%E5%9B%BE">3.7 图片合并，第一次是模糊图片，第二次是补充信息，合并后变成原图</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9B%9B-%E8%AF%A6%E7%BB%86%E8%AE%BE%E8%AE%A1">四、详细设计</a>
+<ul>
+<li><a href="#41-%E8%8E%B7%E5%8F%96script%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE">4.1 获取script自定义数据</a></li>
+<li><a href="#42-%E6%B3%A8%E5%86%8Cwindowload%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC%E5%99%A8">4.2 注册window.load事件监听器</a></li>
+<li><a href="#43-%E8%AE%A1%E7%AE%97%E7%94%A8%E6%88%B7%E7%BD%91%E7%BB%9C%E7%8A%B6%E5%86%B5">4.3 计算用户网络状况</a></li>
+<li><a href="#44-%E8%8A%82%E7%82%B9%E8%8E%B7%E5%8F%96">4.4 节点获取</a>
+<ul>
+<li><a href="#441-%E8%8E%B7%E5%8F%96img%E5%85%83%E7%B4%A0">4.4.1 获取img元素</a></li>
+<li><a href="#442-%E8%8E%B7%E5%8F%96style%E4%B8%AD%E7%9A%84background">4.4.2 获取style中的background</a></li>
+<li><a href="#443-%E8%8E%B7%E5%8F%96css%E4%B8%AD%E7%9A%84background">4.4.3 获取css中的background</a></li>
+<li><a href="#444-%E8%8E%B7%E5%8F%96picture%E8%8A%82%E7%82%B9">4.4.4 获取picture节点</a></li>
+</ul>
+</li>
+<li><a href="#45-%E6%87%92%E5%8A%A0%E8%BD%BD">4.5 懒加载</a>
+<ul>
+<li><a href="#%E6%96%B9%E6%B3%951-intersectionobserver">方法1 IntersectionObserver</a></li>
+<li><a href="#%E6%96%B9%E6%B3%952-scrollwindowrequestanimationframe">方法2 scroll+window.requestAnimationFrame()</a></li>
+</ul>
+</li>
+<li><a href="#46-%E5%9B%BE%E7%89%87%E5%9C%B0%E5%9D%80%E6%9B%BF%E6%8D%A2">4.6 图片地址替换</a></li>
+</ul>
+</li>
+</ul>
+<h1 class="mume-header" id="%E4%B8%80-%E5%BC%95%E8%A8%80">一、引言</h1>
+
+<h2 class="mume-header" id="11-%E7%BC%96%E5%86%99%E7%9B%AE%E7%9A%84">1.1 编写目的</h2>
+
+<p>介绍图片分层加载系统架构及技术方案，结合懒加载后的总流程，梳理常见问题及相应解决方案。</p>
+<h2 class="mume-header" id="12-%E9%A1%B9%E7%9B%AE%E8%83%8C%E6%99%AF">1.2 项目背景</h2>
+
+<h3 class="mume-header" id="121-%E8%83%8C%E6%99%AF">1.2.1 背景</h3>
+
+<p>前端优化站的功能模块之一，属于图像优化范畴。</p>
+<h3 class="mume-header" id="122-%E4%B8%9A%E7%95%8C%E5%AE%A2%E6%88%B7%E7%8E%B0%E7%8A%B6">1.2.2 业界客户现状</h3>
+
+<p>大部分客户在图片加载上没做优化，页面直接加载原图，浏览器会发起大量原图请求，导致页面加载时间过长，网络带宽消耗大。</p>
+<p>因此，我们提出了一整套的图片优化解决方案，实现页面图片懒加载，加快客户页面加载速度，节省流量。</p>
+<h3 class="mume-header" id="123-%E5%8F%8B%E5%95%86%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88">1.2.3 友商技术方案</h3>
+
+<p>Akamai 在图像优化上提出了三个解决方案：</p>
+<ul>
+<li>自适应压缩</li>
+</ul>
+<blockquote>
+<p>基于网络条件分层加载,提供多种压缩级别的图像资源</p>
+</blockquote>
+<ul>
+<li>懒加载</li>
+</ul>
+<blockquote>
+<p>仅加载当前浏览器视区可见的图像，当用户向下滑动时加载新图像</p>
+</blockquote>
+<ul>
+<li>特定图像格式优化</li>
+</ul>
+<blockquote>
+<p>webp、jpeg2000等图像格式可以降低负载，而不影响图片质量,但只有特定浏览器兼容</p>
+</blockquote>
+<p><strong>目前本方案能实现以上功能</strong>，并在懒加载方案继续优化，结合了预加载的思想，当pageload后且scroll一定时间没有触发，会触发图像加载机制，用于满足某些客户需求。</p>
+<h2 class="mume-header" id="13-%E6%9C%AF%E8%AF%AD%E5%AE%9A%E4%B9%89">1.3 术语定义</h2>
+
+<p>小图： 分辨率不变，图像质量较低的图片资源<br>
+小小图： 后台又对小图做了压缩处理</p>
+<h2 class="mume-header" id="14-%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">1.4 参考资料</h2>
+
+<p><a href="https://www.akamai.com/cn/zh/web-and-mobile-performance.jsp">AKAMAI WEB 性能解决方案</a></p>
+<p><a href="https://github.com/tuupola/jquery_lazyload/tree/master">lazy_load开源库</a></p>
+<h1 class="mume-header" id="%E4%BA%8C-%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84">二、系统架构</h1>
+
+<p><em>本套系统分为前端和后台，本文侧重于介绍前端部分。</em></p>
+<p>当浏览器发起html文档请求时，后台会对该文档进行修改并返回。</p>
+<p>先介绍下后台的<strong>html文档改写规则</strong>(仅针对图像优化功能):</p>
+<blockquote>
+<p>在文档底部插入图片优化的js代码，配置项通过设置script节点的自定义属性来实现。</p>
+<p>主要配置项：散列域名，是否开启懒加载，懒加载策略，是否处理<code>background-image</code></p>
+</blockquote>
+<p>前端这边收到html文档之后，与后台交互流程如下：</p>
+<h2 class="mume-header" id="%E6%B5%81%E7%A8%8B%E5%9B%BE">流程图</h2>
+
+<div class="mermaid">graph TB
+  st(浏览器dom解析)-->op[浏览器发起图片请求]
+  op-->op2[后台处理并返回小图]
+  op2-->co{ pageload完成? }
+  co--no-->co
+  co--yes-->op3[扫描文档的图像资源]
+  op3-->op4[修改图像url地址的域名部分并作为图像新的src]
+  op4-->op5[浏览器发起新的图片请求]
+  op5-->co2{ 后台判断是否有缓存? }
+  co2--no-->op6[回源获取并缓存]
+  co2--yes-->op7[进行响应]
+  op6-->op7
+</div><h2 class="mume-header" id="%E6%97%B6%E5%BA%8F%E5%9B%BE">时序图</h2>
+
+<div class="mermaid">sequenceDiagram
+participant 浏览器
+participant shark
+participant 源站
+浏览器 ->> shark:请求图像资源
+Note right of shark:没有缓存，请求源站
+shark ->> 源站:请求图像资源
+Note right of shark:缓存图像
+shark ->> shark:压缩图像
+shark -->> 浏览器:返回压缩过的图像
+Note right of 浏览器:page load完毕<br>扫描文档
+浏览器 ->> shark:请求原图像资源
+shark ->> shark:根据用户网速判断是否继续压缩图像
+Note right of shark:缓存失效会继续请求源站
+shark -->>浏览器:返回原图
+</div><p><s>或者采用另外一个方案，修改html文档中img的src，原图放在data-src中，这样可以控制哪些图片需要做分层，可解决后面提到的 <strong><code>根据媒体属性的渲染</code></strong> 问题，但是改写文档的工作量和难度都比较大</s></p>
+<h2 class="mume-header" id="%E5%89%8D%E7%AB%AF%E6%B5%81%E7%A8%8B">前端流程</h2>
+
+<p>原图请求通过url替换的方式，不采用ajax</p>
+<div class="mermaid">graph TB
+  st(开始)-->init((初始化))
+  init-->obs[注册window.load事件监听器]
+  obs-->isload{window.load?}
+  isload--false-->isload
+  isload--true-->cal[计算用户网络状况]
+  cal-->scan((文档扫描url替换))
+  scan-->stop(结束)
+  init-.-evalElement(解析script标签中自定义属性)
+  evalElement-->company[根据属性值初始化客户功能开启项]
+  company-->setHost[设置可替换图片域名/散列域名/懒加载策略]
+  setHost-->initStop(初始化结束)
+  scan-.-scanInit(扫描文档)
+  scanInit-->recordDom[记录style*background,cssDiv,img,picture等节点]
+  recordDom-->islazyLoad{是否懒加载}
+  islazyLoad--true-->sort[按视距快排节点]
+  sort-->lazyload[启动懒加载策略]
+  lazyload-->replace
+  islazyLoad--false-->replace[找到满足条件节点,准备替换图片节点的url]
+  replace-->ismedia{是否为picture节点或含srcset属性节点}
+  ismedia--true-->reg[特殊处理,需要进行正则替换图片地址]
+  reg-->isneedre{是否为可替换图片域名}
+  ismedia--false-->isneedre
+  isneedre--true-->seturl[替换图片节点的url,带上网络状况标识]
+  seturl-->imgreq[浏览器发起图片请求]
+  imgreq-->scanStop(图片url替换结束)
+  isneedre--false-->scanStop
+</div><h1 class="mume-header" id="%E4%B8%89-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">三、常见问题及解决方案</h1>
+
+<h2 class="mume-header" id="31-%E6%BA%90%E7%AB%99%E6%9C%89%E5%81%9A%E6%87%92%E5%8A%A0%E8%BD%BD%E7%AD%96%E7%95%A5%E7%9A%84">3.1 源站有做懒加载策略的</h2>
+
+<p>默认情况下，会出现后续请求原图时，后台返回小图的问题。</p>
+<p>因为访问的域名没有做更改，后台默认小图处理。</p>
+<p>此外，还会发起更多的请求</p>
+<ul>
+<li>img中没有src</li>
+</ul>
+<p>pageload后扫描文档并拿不到src 故不会发起获取原图的异步请求</p>
+<ul>
+<li>img中src为源站的小图</li>
+</ul>
+<p>初次访问小图，后台会返回一张小小图，pageload之后我们扫描文档会去拿小图，加上懒加载策略触发又请求的图片，我们会发三次请求</p>
+<p><strong><code>这个由客户配置，客户自己有做懒加载可以不选择我们的分层加载功能，所以这边我们无需考虑</code></strong></p>
+<h2 class="mume-header" id="32-css%E5%92%8Cstyle%E4%B8%ADbackground-image%E6%98%AF%E5%90%A6%E8%BF%9B%E8%A1%8C%E5%A4%84%E7%90%86">3.2 css和style中background-image是否进行处理</h2>
+
+<p><strong><code>目前前端这边可以做到扫描文档获取到图片地址,对于伪类css（如 div:hover{background:xxx}）还得做额外处理</code></strong></p>
+<h2 class="mume-header" id="33-%E6%A0%B9%E6%8D%AE%E5%AA%92%E4%BD%93%E5%B1%9E%E6%80%A7%E7%9A%84%E6%B8%B2%E6%9F%93">3.3 根据媒体属性的渲染</h2>
+
+<ul>
+<li>
+<p><code>&lt;img&gt;</code>的srcset属性和css的image-set()</p>
+</li>
+<li>
+<p><code>&lt;picture&gt;</code> source、img子节点</p>
+</li>
+</ul>
+<p><s>初次返回小图，pageload之后前端这边不知道应该请求哪张图片，不知道有没有办法获取渲染的是哪张图</s><br>
+可以通过img节点的currentSrc拿到值。(注：picture的也是去拿img的currentSrc)</p>
+<p>但还是有新的问题，这个是响应式的，界面变化又会去拿新的图片地址了</p>
+<blockquote>
+<p>故需要做img节点currentSrc值变化监听</p>
+<p>目前没有找到直接监听currentSrc的方法，但是一般currentSrc的变化都是由窗口大小变化引起的，故需要节流监听下window.resize,判断currentSrc有变化没。</p>
+</blockquote>
+<p>后面发现，即使知道图片地址变化了，也并不能通过img改src的方式替换图片，因为srcset存在的时候src是无效的。</p>
+<p><strong><code>故解法只有在pageload的时候，把srcset中图片的地址做替换</code></strong></p>
+<h2 class="mume-header" id="34-%E5%92%8C%E6%87%92%E5%8A%A0%E8%BD%BD%E7%BB%93%E5%90%88%E7%9A%84%E7%AD%96%E7%95%A5">3.4 和懒加载结合的策略</h2>
+
+<ul>
+<li>
+<p>加载全部小图，pageload后加载全部大图，不做懒加载</p>
+</li>
+<li>
+<p>加载全部小图，滑动懒加载大图<br>
+<strong><code>目前默认该方式</code></strong></p>
+</li>
+<li>
+<p>加载首屏小图，滑动懒加载大图</p>
+</li>
+</ul>
+<h2 class="mume-header" id="35-%E5%8E%9F%E5%A7%8B%E5%9B%BE%E7%89%87%E8%BE%83%E5%B0%8F%E7%AC%AC%E4%BA%8C%E6%AC%A1%E4%B8%8D%E5%81%9A%E5%8A%A0%E8%BD%BD">3.5 原始图片较小，第二次不做加载</h2>
+
+<p>采用ajax请求，根据响应值长度判断，响应值长度小于某个值 说明是错误请求或者不做加载</p>
+<p>最后通过 window.URL.createObjectURL() 插入图片。但是该方案不能解决<code>问题3</code></p>
+<p><strong>新方案</strong>：<strong><code>第一次发过来若是原图，设置缓存策略，后续请求，返回307重定向到原来地址，这时候本地有缓存就不会再发请求了</code></strong></p>
+<h2 class="mume-header" id="36-%E6%A0%B9%E6%8D%AE%E7%BD%91%E7%BB%9C%E9%80%9F%E5%BA%A6%E5%9C%A8%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%8C%89%E7%85%A7%E4%B8%80%E5%AE%9A%E6%AF%94%E4%BE%8B%E5%8A%A0%E8%BD%BD%E9%AB%98%E6%B8%85%E5%9B%BE">3.6 根据网络速度，在第二次按照一定比例加载高清图</h2>
+
+<p>如何测速？</p>
+<p>利用<code>Resource Timing API</code> ，现代浏览器大部分支持，详见caniuse，</p>
+<p>若不支持(safari11以下)，则采用<code>navigation timing</code></p>
+<p>该api必须在<code>page load</code>后才能使用。</p>
+<p><strong><code>具体网络带宽估计算法需要一定策略来评判</code></strong></p>
+<h2 class="mume-header" id="37-%E5%9B%BE%E7%89%87%E5%90%88%E5%B9%B6%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%98%AF%E6%A8%A1%E7%B3%8A%E5%9B%BE%E7%89%87%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%98%AF%E8%A1%A5%E5%85%85%E4%BF%A1%E6%81%AF%E5%90%88%E5%B9%B6%E5%90%8E%E5%8F%98%E6%88%90%E5%8E%9F%E5%9B%BE">3.7 图片合并，第一次是模糊图片，第二次是补充信息，合并后变成原图</h2>
+
+<p>较难，目前不研究</p>
+<h1 class="mume-header" id="%E5%9B%9B-%E8%AF%A6%E7%BB%86%E8%AE%BE%E8%AE%A1">四、详细设计</h1>
+
+<h2 class="mume-header" id="41-%E8%8E%B7%E5%8F%96script%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE">4.1 获取script自定义数据</h2>
+
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">data-host</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>xxx<span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>speed<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript">
+  <span class="token keyword">let</span> ele <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">"speed"</span><span class="token punctuation">)</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>ele<span class="token punctuation">.</span>attributes<span class="token punctuation">[</span><span class="token string">"data-host"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>nodeValue<span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</pre><p>这样可以获取到本script节点的自定义数据</p>
+<h2 class="mume-header" id="42-%E6%B3%A8%E5%86%8Cwindowload%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC%E5%99%A8">4.2 注册window.load事件监听器</h2>
+
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">function</span> <span class="token function">addLoadEvent</span><span class="token punctuation">(</span>func<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>window<span class="token punctuation">.</span>addEventListener<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    window<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">"load"</span><span class="token punctuation">,</span> func<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token comment">//低版ie兼容</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>window<span class="token punctuation">.</span>attachEvent<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      window<span class="token punctuation">.</span><span class="token function">attachEvent</span><span class="token punctuation">(</span><span class="token string">"onload"</span><span class="token punctuation">,</span> func<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token function">addLoadEvent</span><span class="token punctuation">(</span>streamFunc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><h2 class="mume-header" id="43-%E8%AE%A1%E7%AE%97%E7%94%A8%E6%88%B7%E7%BD%91%E7%BB%9C%E7%8A%B6%E5%86%B5">4.3 计算用户网络状况</h2>
+
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//或者资源加载的时间数据</span>
+performance<span class="token punctuation">.</span><span class="token function">getEntries</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment">//按某个策略得到用户网络状况</span>
+</pre><h2 class="mume-header" id="44-%E8%8A%82%E7%82%B9%E8%8E%B7%E5%8F%96">4.4 节点获取</h2>
+
+<h3 class="mume-header" id="441-%E8%8E%B7%E5%8F%96img%E5%85%83%E7%B4%A0">4.4.1 获取img元素</h3>
+
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">let</span> imgDOMList <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementsByTagName</span><span class="token punctuation">(</span><span class="token string">"img"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">[</span><span class="token operator">...</span>imgDOMList<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span>dom<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token comment">//其他处理</span>
+    <span class="token comment">//含srcset属性做额外标识</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</pre><h3 class="mume-header" id="442-%E8%8E%B7%E5%8F%96style%E4%B8%AD%E7%9A%84background">4.4.2 获取style中的background</h3>
+
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">let</span> styleDOMList <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelectorAll</span><span class="token punctuation">(</span><span class="token string">"[style*=background]"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">[</span><span class="token operator">...</span>styleDOMList<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>v<span class="token operator">=></span>v<span class="token punctuation">.</span>nodeType <span class="token operator">==</span> <span class="token number">1</span> <span class="token operator">&amp;&amp;</span> v<span class="token punctuation">.</span>style<span class="token punctuation">.</span>backgroundImage<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span>dom<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token comment">//其他处理</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</pre><h3 class="mume-header" id="443-%E8%8E%B7%E5%8F%96css%E4%B8%AD%E7%9A%84background">4.4.3 获取css中的background</h3>
+
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//获取css中的background，需要测试下伪类是否有效果</span>
+document<span class="token punctuation">.</span>styleSheets<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>v<span class="token operator">=></span><span class="token punctuation">{</span>
+  <span class="token comment">//根据v.href过滤第三方css</span>
+  <span class="token keyword">return</span> 
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>v<span class="token operator">=></span><span class="token punctuation">{</span>
+  <span class="token keyword">let</span> rules <span class="token operator">=</span> v<span class="token punctuation">.</span>cssRules <span class="token operator">||</span> v<span class="token punctuation">.</span>rules
+  rules<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>v<span class="token operator">=></span><span class="token punctuation">{</span>
+    <span class="token keyword">let</span> sel <span class="token operator">=</span> v<span class="token punctuation">.</span>selectorText
+    <span class="token keyword">let</span> domList <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelectorAll</span><span class="token punctuation">(</span>sel<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>v<span class="token punctuation">.</span>style<span class="token punctuation">.</span>backgroundImage<span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token comment">//满足条件的操作</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</pre><h3 class="mume-header" id="444-%E8%8E%B7%E5%8F%96picture%E8%8A%82%E7%82%B9">4.4.4 获取picture节点</h3>
+
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">let</span> imgDOMList <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementsByTagName</span><span class="token punctuation">(</span><span class="token string">"picture"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+imgDOMList<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>v<span class="token operator">=></span>v<span class="token punctuation">.</span>childList<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>c<span class="token operator">=></span>c<span class="token punctuation">)</span><span class="token punctuation">)</span>
+</pre><h2 class="mume-header" id="45-%E6%87%92%E5%8A%A0%E8%BD%BD">4.5 懒加载</h2>
+
+<h3 class="mume-header" id="%E6%96%B9%E6%B3%951-intersectionobserver">方法1 IntersectionObserver</h3>
+
+<h3 class="mume-header" id="%E6%96%B9%E6%B3%952-scrollwindowrequestanimationframe">方法2 scroll+window.requestAnimationFrame()</h3>
+
+<p>预先计算每个元素offsetTop 并做排序。</p>
+<h2 class="mume-header" id="46-%E5%9B%BE%E7%89%87%E5%9C%B0%E5%9D%80%E6%9B%BF%E6%8D%A2">4.6 图片地址替换</h2>
+
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">// 判断是否为可替换域名</span>
+<span class="token keyword">function</span> <span class="token function">judgeHost</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+<span class="token punctuation">}</span>
+<span class="token comment">// 根据散列域名、网速替换url</span>
+<span class="token keyword">function</span> <span class="token function">replace</span><span class="token punctuation">(</span>originUrl<span class="token punctuation">,</span>hashHost<span class="token punctuation">,</span>networkSpeed<span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+<span class="token punctuation">}</span>
+</pre>
+      </div>
+      
+      
+    </body>
+    
+    <script>
+// config mermaid init call
+// http://knsv.github.io/mermaid/#configuration
+//
+// You can edit the 'MERMAID_CONFIG' variable below.
+MERMAID_CONFIG = {
+  startOnLoad: false
+}
+
+if (window['MERMAID_CONFIG']) {
+  window['MERMAID_CONFIG'].startOnLoad = false
+  window['MERMAID_CONFIG'].cloneCssStyles = false 
+}
+mermaidAPI.initialize(window['MERMAID_CONFIG'] || {})
+
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+
+  Reveal.addEventListener('slidechanged', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+} else {
+  mermaid.init(null, document.getElementsByClassName('mermaid'))
+}
+</script>
+    
+    
+    
+    
+    
+  </html>

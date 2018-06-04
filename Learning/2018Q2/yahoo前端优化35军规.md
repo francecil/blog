@@ -104,7 +104,7 @@ e.g: 邮箱web,请求通讯录数据，请求时返回结果带上通讯录最�
 
 请求不存在的脚本文件，即使返回404，仍会去解析响应内容，无疑多了很多处理时间
 
-# css部分
+# css 部分
 
 ## 11. 避免在css中使用表达式 
 
@@ -178,7 +178,7 @@ gif采用`<video>`实现
 
 图片继续压缩
 
-## 22. 优化CSS Sprite
+## 22. 优化 CSS Sprite
 
 在`1.尽量减少HTTP请求数`中提到的技术。
 
@@ -312,7 +312,20 @@ GET /i/yahoo.gif HTTP/1.1
 
 ## 35. 添上Expires或者Cache-Control HTTP头
 
-需要总结下缓存控制的用法。这边先留个坑
+~~需要总结下缓存控制的用法。这边先留个坑~~
+
+这两个都是用于强缓存(200 form cache)的，
+
+> Cache-Control:缓存时间值
+> Expires:绝对时间
+同时存在时，`Cache-Control` 优先于`Expires `，使用`Cache-Control`的一个好处是不用担心服务端时间和本地时间不一致
+
+这篇总结的还行：<a href="https://www.cnblogs.com/wonyun/p/5524617.html">http协商缓存VS强缓存<a/>
+
+这里补充两点：
+
+1. 浏览器开发者工具开启 **Disable cache**后，任何请求都不会走本地强缓存，但是会走304协商缓存（强制刷新除外）
+2. 未开启**Disable cache**的状态下，ctrl+F5强制刷新，对于`page load`前的请求，都是不走缓存(强缓存和协商缓存`cache-control:no-cache`)的，但是`page load`后的请求不受限制可以走缓存
 
 # 其他新技术
 

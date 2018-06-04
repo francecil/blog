@@ -108,6 +108,10 @@ google了一番，首先引入<a href="https://stackoverflow.com/questions/28155
 
 (: 感觉自己好像也只是在讲表象，没讲到根源
 
+### 问题来了，若只是想渲染小图，不想受缓存的大图影响，在不修改srcset的前提下该怎么做呢？
+
+试了下，没有办法，只有改srcset
+
 ## 参考资料：
 https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img
 http://www.zhangxinxu.com/wordpress/2014/10/responsive-images-srcset-size-w-descriptor/
