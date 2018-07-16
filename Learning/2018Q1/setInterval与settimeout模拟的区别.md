@@ -154,9 +154,9 @@ setTimeout=>次数：4   所用时间：4.160
 setTimeout=>次数：5   所用时间：5.210
 ```
 
-结论：setInterval先执行fn再放入timer堆，和setTimeout模拟是差不多效果的，故该场景下node无法做定时器
+>结论：setInterval先执行fn再放入timer堆，和setTimeout模拟是差不多效果的，故该场景下node无法做定时器
 
-PS:上面说差不多效果，但实际是setTimeout会更快点，因为在fn执行的时候就插入timer堆，而setInterval是执行完再插入。
+>PS:上面说差不多效果，但实际是setTimeout会更快点，因为在fn执行的时候就插入timer堆，而setInterval是执行完再插入。
 
 #### 浏览器环境下运行效果
 
@@ -175,7 +175,7 @@ setTimeout=>次数：3   所用时间：3.119
 setTimeout=>次数：4   所用时间：4.170
 setTimeout=>次数：5   所用时间：5.222
 ```
-结论：浏览器下setInterval是先放入timer堆再执行。故setInterval可以很好的执行定时器，而setTimeout与node效果一致
+> 结论：浏览器下setInterval是先放入timer堆再执行。故setInterval可以很好的执行定时器，而setTimeout与node效果一致
 
 ### 场景2：fn同步代码，代码执行时间大于timeout
 
@@ -220,11 +220,8 @@ setTimeout=>次数：5   所用时间：13.007
 
 ```
 
-结论：
-
-setInterval 周期变为max(timeout,代码执行时间)
-
-setTimeout模拟周期≈代码执行时间+timeout
+>结论：setInterval 周期变为max(timeout,代码执行时间)
+>setTimeout模拟周期≈代码执行时间+timeout
 
 ### 场景3：fn异步代码，代码执行时间小于timeout
 
@@ -291,7 +288,7 @@ setTimeout=>次数：4   所用时间：4.432
 setTimeout=>次数：5   所用时间：5.535
 ```
 
-结论：setInterval正常定时，setTimeout模拟周期≈异步代码执行时间+timeout
+>结论：setInterval正常定时，setTimeout模拟周期≈异步代码执行时间+timeout
 
 ### 场景4：fn异步代码，代码执行时间大于timeout
 
@@ -313,8 +310,8 @@ setTimeout=>次数：4   所用时间：16.203
 setTimeout=>次数：5   所用时间：20.211
 ```
 
-结论：setInterval正常定时，会同时执行多次异步代码。对于ajax类似的请求来说是不合理的，反而用setTimeout模拟合理
-setTimeout模拟周期≈异步代码执行时间+timeout
+>结论：setInterval正常定时，会同时执行多次异步代码。对于ajax类似的请求来说是不合理的，反而用setTimeout模拟合理
+>setTimeout模拟周期≈异步代码执行时间+timeout
 
 #### 浏览器下运行效果
 
@@ -376,11 +373,11 @@ setInterval 在 chrome这边效果是这样的：
 
 ### 总结：
 
-秒表这类的定时器（同步代码较快运行），采用setInterval,node的话两者都不合适需要采用其他方式实现
+秒表这类的定时器（同步代码较快运行），采用setInterval,node的话两者都不合适需要采用其他方式实现（补充：setTimeout+延迟补充）
 
 ajax请求重试次数，采用setTimeout模拟，用setInterval无法准确的控制次数（见补充，即使关闭定时器，仍可能存在请求在事件队列中），建议用settimeout
 
-
+setInterval先放timer再执行，可以用 先setTimeout再执行的方式模拟
 
 
 

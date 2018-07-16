@@ -320,7 +320,7 @@ GET /i/yahoo.gif HTTP/1.1
 > Expires:绝对时间
 同时存在时，`Cache-Control` 优先于`Expires `，使用`Cache-Control`的一个好处是不用担心服务端时间和本地时间不一致
 
-这篇总结的还行：<a href="https://www.cnblogs.com/wonyun/p/5524617.html">http协商缓存VS强缓存<a/>
+这篇总结的还行：<a href="https://www.cnblogs.com/wonyun/p/5524617.html">http协商缓存VS强缓存</a>
 
 这里补充两点：
 
@@ -331,15 +331,7 @@ GET /i/yahoo.gif HTTP/1.1
 
 ## DNS预解析-dns-prefetch
 
-默认情况下浏览器会对页面中与当前域名不一致的域进行预获取-- 隐式dns-prefetch。
-
-如果要对页面中没有出现的域进行域获取，需要使用显示的dns-prefetch
-
-<link rel="dns-prefetch" href="test.example.org">
-
-
-
-
+见 `W3C_DNS_Prefetching.md`
 
 
 # 后记

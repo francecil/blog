@@ -288,6 +288,13 @@ function(x, y) {
   }
 ```
 
+## Object.create
+
+>第一个参数为创建对象的原型对象
+>传入null时，返回的是一个没有原型的对象（控制台调试下，{}显示 No properties ）
+>而创建的{}会有原型
+
+`({}).__proto__ 为一个对象 ,Object.create(null).__proto__===undefined`
 
 
 # async 函数

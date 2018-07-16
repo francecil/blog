@@ -233,7 +233,14 @@ code.language-yaml {
 <ul>
 <li><a href="#%E6%B5%81%E7%A8%8B%E5%9B%BE">流程图</a></li>
 <li><a href="#%E6%97%B6%E5%BA%8F%E5%9B%BE">时序图</a></li>
-<li><a href="#%E5%89%8D%E7%AB%AF%E6%B5%81%E7%A8%8B">前端流程</a></li>
+<li><a href="#%E5%89%8D%E7%AB%AF%E6%B5%81%E7%A8%8B">前端流程</a>
+<ul>
+<li><a href="#%E6%80%BB%E6%B5%81%E7%A8%8B">总流程</a></li>
+<li><a href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B">初始化具体流程</a></li>
+<li><a href="#%E5%8E%9F%E5%9B%BE%E5%8A%A0%E8%BD%BD%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B">原图加载具体流程</a></li>
+<li><a href="#%E6%89%AB%E6%8F%8F%E6%96%87%E6%A1%A3%E8%8E%B7%E5%8F%96%E5%9B%BE%E7%89%87%E8%8A%82%E7%82%B9%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B">扫描文档，获取图片节点具体流程</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#%E4%B8%89-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">三、常见问题及解决方案</a>
@@ -243,8 +250,18 @@ code.language-yaml {
 <li><a href="#33-%E6%A0%B9%E6%8D%AE%E5%AA%92%E4%BD%93%E5%B1%9E%E6%80%A7%E7%9A%84%E6%B8%B2%E6%9F%93">3.3 根据媒体属性的渲染</a></li>
 <li><a href="#34-%E5%92%8C%E6%87%92%E5%8A%A0%E8%BD%BD%E7%BB%93%E5%90%88%E7%9A%84%E7%AD%96%E7%95%A5">3.4 和懒加载结合的策略</a></li>
 <li><a href="#35-%E5%8E%9F%E5%A7%8B%E5%9B%BE%E7%89%87%E8%BE%83%E5%B0%8F%E7%AC%AC%E4%BA%8C%E6%AC%A1%E4%B8%8D%E5%81%9A%E5%8A%A0%E8%BD%BD">3.5 原始图片较小，第二次不做加载</a></li>
-<li><a href="#36-%E6%A0%B9%E6%8D%AE%E7%BD%91%E7%BB%9C%E9%80%9F%E5%BA%A6%E5%9C%A8%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%8C%89%E7%85%A7%E4%B8%80%E5%AE%9A%E6%AF%94%E4%BE%8B%E5%8A%A0%E8%BD%BD%E9%AB%98%E6%B8%85%E5%9B%BE">3.6 根据网络速度，在第二次按照一定比例加载高清图</a></li>
+<li><a href="#36-%E6%A0%B9%E6%8D%AE%E7%BD%91%E7%BB%9C%E9%80%9F%E5%BA%A6%E5%9C%A8%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%8C%89%E7%85%A7%E4%B8%80%E5%AE%9A%E6%AF%94%E4%BE%8B%E5%8A%A0%E8%BD%BD%E9%AB%98%E6%B8%85%E5%9B%BE">3.6 根据网络速度，在第二次按照一定比例加载高清图</a>
+<ul>
+<li><a href="#%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B">算法流程</a></li>
+</ul>
+</li>
 <li><a href="#37-%E5%9B%BE%E7%89%87%E5%90%88%E5%B9%B6%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%98%AF%E6%A8%A1%E7%B3%8A%E5%9B%BE%E7%89%87%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%98%AF%E8%A1%A5%E5%85%85%E4%BF%A1%E6%81%AF%E5%90%88%E5%B9%B6%E5%90%8E%E5%8F%98%E6%88%90%E5%8E%9F%E5%9B%BE">3.7 图片合并，第一次是模糊图片，第二次是补充信息，合并后变成原图</a></li>
+<li><a href="#38-%E5%AD%98%E5%9C%A8%E7%BC%93%E5%AD%98%E8%BF%98%E6%98%AF%E4%BC%9A%E5%88%86%E5%B1%82%E5%8A%A0%E8%BD%BD%E4%BD%93%E9%AA%8C%E4%B8%8D%E5%A5%BD">3.8 存在缓存，还是会分层加载，体验不好</a></li>
+<li><a href="#39-%E5%B8%A6%E7%BD%91%E7%BB%9C%E5%8F%82%E6%95%B0%E4%B8%8D%E4%BC%9A%E5%91%BD%E4%B8%AD%E5%8E%9F%E5%9B%BE%E5%B7%B2%E6%9C%89%E6%9C%AC%E5%9C%B0%E7%BC%93%E5%AD%98">3.9 带网络参数，不会命中原图已有本地缓存</a></li>
+<li><a href="#310-%E5%8E%9F%E5%9B%BE%E8%AE%BF%E9%97%AE%E4%BC%9A%E5%81%9Aurl%E6%9B%BF%E6%8D%A2%E5%BD%93%E5%89%8D%E4%B8%8D%E6%98%AF%E7%94%A8h2-%E8%80%8C%E6%98%AF%E7%94%A8%E5%9F%9F%E5%88%86%E7%89%87%E5%BD%93%E4%B8%A4%E6%AC%A1%E5%9B%BE%E7%89%87%E8%AF%B7%E6%B1%82%E4%B8%8D%E6%98%AF%E5%90%8C%E4%B8%AA%E5%9F%9F%E6%97%B6%E4%BC%9A%E4%B8%8D%E8%B5%B0%E7%BC%93%E5%AD%98">3.10 原图访问会做url替换，当前不是用h2 而是用域分片，当两次图片请求不是同个域时会不走缓存</a></li>
+<li><a href="#311-javascript%E8%A2%AB%E7%A6%81%E7%94%A8-%E5%88%86%E5%B1%82%E5%8A%A0%E8%BD%BD%E6%8B%BF%E4%B8%8D%E5%88%B0%E5%8E%9F%E5%9B%BE">3.11 JavaScript被禁用 分层加载拿不到原图</a></li>
+<li><a href="#312-%E9%80%8F%E6%98%8E%E9%81%AE%E7%BD%A9%E5%8A%A8%E7%94%BB%E8%AE%A9%E5%9B%BE%E7%89%87%E5%88%87%E6%8D%A2%E5%8F%98%E5%BE%97%E8%87%AA%E7%84%B6">3.12 透明遮罩，动画让图片切换变得自然</a></li>
+<li><a href="#313-%E5%9B%BE%E7%89%87%E8%8A%82%E7%82%B9%E6%89%AB%E6%8F%8F%E5%AE%8C%E6%AF%95%E5%90%8E%E5%90%8E%E7%BB%AD%E9%80%9A%E8%BF%87js%E5%8A%A8%E6%80%81%E5%A2%9E%E5%8A%A0%E7%9A%84image%E8%8A%82%E7%82%B9%E8%8B%A5%E5%9B%BE%E7%89%87src%E6%BB%A1%E8%B6%B3%E5%88%86%E5%B1%82%E8%A7%84%E5%88%99%E5%90%8E%E5%8F%B0%E4%BC%9A%E8%BF%94%E5%9B%9E%E6%A8%A1%E7%B3%8A%E5%9B%BE%E7%89%87">3.13 图片节点扫描完毕后，后续通过js动态增加的Image节点，若图片src满足分层规则，后台会返回模糊图片</a></li>
 </ul>
 </li>
 <li><a href="#%E5%9B%9B-%E8%AF%A6%E7%BB%86%E8%AE%BE%E8%AE%A1">四、详细设计</a>
@@ -359,33 +376,104 @@ shark -->>浏览器:返回原图
 <h2 class="mume-header" id="%E5%89%8D%E7%AB%AF%E6%B5%81%E7%A8%8B">前端流程</h2>
 
 <p>原图请求通过url替换的方式，不采用ajax</p>
+<h3 class="mume-header" id="%E6%80%BB%E6%B5%81%E7%A8%8B">总流程</h3>
+
 <div class="mermaid">graph TB
   st(开始)-->init((初始化))
-  init-->obs[注册window.load事件监听器]
-  obs-->isload{window.load?}
-  isload--false-->isload
-  isload--true-->cal[计算用户网络状况]
-  cal-->scan((文档扫描url替换))
-  scan-->stop(结束)
-  init-.-evalElement(解析script标签中自定义属性)
-  evalElement-->company[根据属性值初始化客户功能开启项]
-  company-->setHost[设置可替换图片域名/散列域名/懒加载策略]
-  setHost-->initStop(初始化结束)
-  scan-.-scanInit(扫描文档)
-  scanInit-->recordDom[记录style*background,cssDiv,img,picture等节点]
-  recordDom-->islazyLoad{是否懒加载}
-  islazyLoad--true-->sort[按视距快排节点]
-  sort-->lazyload[启动懒加载策略]
-  lazyload-->replace
-  islazyLoad--false-->replace[找到满足条件节点,准备替换图片节点的url]
-  replace-->ismedia{是否为picture节点或含srcset属性节点}
-  ismedia--true-->reg[特殊处理,需要进行正则替换图片地址]
-  reg-->isneedre{是否为可替换图片域名}
-  ismedia--false-->isneedre
-  isneedre--true-->seturl[替换图片节点的url,带上网络状况标识]
-  seturl-->imgreq[浏览器发起图片请求]
-  imgreq-->scanStop(图片url替换结束)
-  isneedre--false-->scanStop
+  init-->obs[添加DOMContentLoaded,Load事件监听器]
+  obs-->DOMContentLoaded[DOMContentLoaded事件触发]
+  DOMContentLoaded-->cal[利用html文档下载速度来进行简单测速]
+  cal-->firstScreenPicSpeed[参照网速压缩比对照表得到首屏图片压缩比]
+  firstScreenPicSpeed-->firstScreen((扫描文档,获取图片节点))
+  firstScreen-->quicksort[按视距快排图片节点]
+  quicksort-->judgeCache[任取一模糊图的name,通过transferSize是否为0来判断本次加载是否为无缓存加载]
+  judgeCache-->firstScreenCal[获取视距处于首屏的图片节点]
+  firstScreenCal-->oripicload((进行原图加载))
+  oripicload-->load[Load事件触发]
+  load-->speedtest[采用测速算法测速,得到相应图像压缩比]
+  speedtest-->islazyLoad{是否懒加载}
+  islazyLoad--是-->lazyload[启动懒加载策略]
+  islazyLoad--否-->replaceOther[找到其他未进行原图加载的节点]
+  replaceOther-->oripicload1((进行原图加载))
+  lazyload-->islazycompleted{懒加载完毕?}
+  islazycompleted--是-->ed(结束)
+  islazycompleted--否-->scall{是否进行窗口滚动}
+  scall--是-->debounceCul[节流处理,获取满足视距条件的未进行原图加载的节点]
+  debounceCul-->oripicload2((进行原图加载))
+  oripicload2-->islazycompleted
+  scall--否-->mousetimeout{鼠标事件10s未触发}
+  mousetimeout--是-->replaceOther
+  mousetimeout--否-->scall
+  oripicload1-->ed
+</div><h3 class="mume-header" id="%E5%88%9D%E5%A7%8B%E5%8C%96%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B">初始化具体流程</h3>
+
+<div class="mermaid">graph LR
+  init(初始化开始)-->evalElement(解析script标签中自定义属性)
+  evalElement-->getHost[获取可替换图片域名]
+  evalElement-->getHashHost[获取散列域名]
+  evalElement-->getLazy[获取懒加载策略]
+  evalElement-->getSpeedZip[获取网速压缩比参照表]
+  evalElement-->getTTL[获取图片缓存时间]
+  getHost-->initStop(初始化结束)
+  getHashHost-->initStop
+  getLazy-->initStop
+  getSpeedZip-->initStop
+  getTTL-->initStop
+</div><h3 class="mume-header" id="%E5%8E%9F%E5%9B%BE%E5%8A%A0%E8%BD%BD%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B">原图加载具体流程</h3>
+
+<div class="mermaid">graph TB
+oripicstart(原图加载开始)-->judgeEle{判断节点类型}
+judgeEle--picture节点-->getpic[获取其子节点中source节点和img节点中src和srcset属性中的图片url]
+judgeEle--img节点-->getsrcset[获取节点的src和srcset属性中的图片url]
+judgeEle--video节点-->getposter[获取节点的poster属性中的图片url]
+judgeEle--其他节点-->getother[获取节点background-image的图片url]
+getpic-->getfinalurl((url替换))
+
+getsrcset-->getfinalurl1((url替换))
+getposter-->getfinalurl1((url替换))
+getother-->getfinalurl1((url替换))
+
+getfinalurl1-->newImg[new Image的方式加载资源,其url为替换后的url,可能需要设置srcset属性]
+newImg-->onload[Image的onload触发]
+onload-->updateEle
+
+getfinalurl-.-hashurl[将模糊图url地址通过一定算法映射到固定的散列域名,得到新的图片url-newUrl]
+hashurl-->findstorage{localstorage中是否有newUrl且压缩比一样或更低的记录}
+findstorage--是-->isExpired{是否过期}
+findstorage--否-->carrycur
+isExpired--否-->carryhigh[取未过期的压缩比最低的记录,newUrl后带上压缩比参数]
+isExpired--是-->carrycur[图片url后带上当前的压缩比]
+carryhigh-->replaceEnd(url替换完毕)
+carrycur-->replaceEnd
+getfinalurl-->updateEle[将节点属性的图片url进行替换]
+updateEle-->updatelocal[更新localstorage]
+updatelocal-->isnocache{无缓存加载或localstorage中没有命中缓存?}
+isnocache--否-->oripicstop[原图加载完毕]
+isnocache--是-->update[更新 url-压缩比-ttl 记录]
+update-->oripicstop
+</div><h3 class="mume-header" id="%E6%89%AB%E6%8F%8F%E6%96%87%E6%A1%A3%E8%8E%B7%E5%8F%96%E5%9B%BE%E7%89%87%E8%8A%82%E7%82%B9%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B">扫描文档，获取图片节点具体流程</h3>
+
+<div class="mermaid">graph LR
+init(初始化节点列表)-->scanOver{文档扫描完毕?}
+scanOver--否-->scan[扫描文档]
+scan-->getPicEle[获取picture节点]
+getPicEle-->getchild[获取子节点的src和srcset中所有图片的url]
+getchild-->ishost{节点图片url的域名存在可替换图片域名?}
+ishost--否-->skip[跳过该节点]
+ishost--是-->addList[节点列表加入该节点]
+scan-->getImgEle[获取父节点非picture的img节点]
+getImgEle-->getsrc[获取节点的src或srcset属性]
+getsrc-->ishost
+scan-->getstyleEle[获取style中含有background-image属性且值为图片url的节点]
+getstyleEle-->ishost
+scan-->getcss[扫描css文档,获取含有background-image属性且值为图片url的css规则]
+getcss-->getcssDom[匹配css规则得到相应节点]
+getcssDom-->ishost
+scan-->getvideo[获取含poster属性且值为图片url的video节点]
+getvideo-->ishost
+skip-->scanOver
+addList-->scanOver
+scanOver--是-->scanEnd(节点获取完毕)
 </div><h1 class="mume-header" id="%E4%B8%89-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">三、常见问题及解决方案</h1>
 
 <h2 class="mume-header" id="31-%E6%BA%90%E7%AB%99%E6%9C%89%E5%81%9A%E6%87%92%E5%8A%A0%E8%BD%BD%E7%AD%96%E7%95%A5%E7%9A%84">3.1 源站有做懒加载策略的</h2>
@@ -405,6 +493,8 @@ shark -->>浏览器:返回原图
 <h2 class="mume-header" id="32-css%E5%92%8Cstyle%E4%B8%ADbackground-image%E6%98%AF%E5%90%A6%E8%BF%9B%E8%A1%8C%E5%A4%84%E7%90%86">3.2 css和style中background-image是否进行处理</h2>
 
 <p><strong><code>目前前端这边可以做到扫描文档获取到图片地址,对于伪类css（如 div:hover{background:xxx}）还得做额外处理</code></strong></p>
+<p>需要测试下伪类</p>
+<p>对于 <code>background-image:inherit</code>（使用父节点的bg-image）不做处理</p>
 <h2 class="mume-header" id="33-%E6%A0%B9%E6%8D%AE%E5%AA%92%E4%BD%93%E5%B1%9E%E6%80%A7%E7%9A%84%E6%B8%B2%E6%9F%93">3.3 根据媒体属性的渲染</h2>
 
 <ul>
@@ -431,12 +521,18 @@ shark -->>浏览器:返回原图
 <p>加载全部小图，pageload后加载全部大图，不做懒加载</p>
 </li>
 <li>
-<p>加载全部小图，滑动懒加载大图<br>
-<strong><code>目前默认该方式</code></strong></p>
+<p>加载全部小图，滑动懒加载大图</p>
 </li>
 <li>
 <p>加载首屏小图，滑动懒加载大图</p>
 </li>
+</ul>
+<blockquote>
+<p>目前是加载全部小图和首屏大图</p>
+</blockquote>
+<ul>
+<li>loaded时开启懒加载，滑动懒加载大图，load前滑动不做处理</li>
+<li>domcontentloaded时开启懒加载，未load前都是加载的原图。</li>
 </ul>
 <h2 class="mume-header" id="35-%E5%8E%9F%E5%A7%8B%E5%9B%BE%E7%89%87%E8%BE%83%E5%B0%8F%E7%AC%AC%E4%BA%8C%E6%AC%A1%E4%B8%8D%E5%81%9A%E5%8A%A0%E8%BD%BD">3.5 原始图片较小，第二次不做加载</h2>
 
@@ -450,15 +546,188 @@ shark -->>浏览器:返回原图
 <p>若不支持(safari11以下)，则采用<code>navigation timing</code></p>
 <p>该api必须在<code>page load</code>后才能使用。</p>
 <p><strong><code>具体网络带宽估计算法需要一定策略来评判</code></strong></p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//计算浏览器加载该文档的时间</span>
+<span class="token keyword">var</span> nav <span class="token operator">=</span> performance<span class="token punctuation">.</span><span class="token function">getEntriesByType</span><span class="token punctuation">(</span><span class="token string">'navigation'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>nav<span class="token punctuation">.</span>responseEnd<span class="token operator">-</span>nav<span class="token punctuation">.</span>responseStart<span class="token punctuation">,</span>nav<span class="token punctuation">.</span>transferSize<span class="token punctuation">,</span>nav<span class="token punctuation">.</span>transferSize<span class="token operator">/</span><span class="token punctuation">(</span>nav<span class="token punctuation">.</span>responseEnd<span class="token operator">-</span>nav<span class="token punctuation">.</span>responseStart<span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">"KB/s"</span><span class="token punctuation">)</span>
+</pre><p>facebook的测速算法：</p>
+<p>前面资源还有做一定的过滤和排序（按responseEnd），</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript">performance<span class="token punctuation">.</span><span class="token function">getEntriesByType</span><span class="token punctuation">(</span><span class="token string">'resource'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>v<span class="token operator">=></span>v<span class="token punctuation">.</span>responseEnd<span class="token operator">-</span>v<span class="token punctuation">.</span>responseStart<span class="token operator">></span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span>sum<span class="token punctuation">,</span>cur<span class="token punctuation">)</span><span class="token operator">=></span><span class="token number">0.5</span><span class="token operator">*</span><span class="token punctuation">(</span>cur<span class="token punctuation">.</span>transferSize <span class="token operator">/</span> <span class="token punctuation">(</span>cur<span class="token punctuation">.</span>responseEnd <span class="token operator">-</span> cur<span class="token punctuation">.</span>responseStart <span class="token operator">||</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">0.5</span><span class="token operator">*</span>sum<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span>
+</pre><p>facebook带宽利用率：<code>所有响应时间和及响应间隔和/所有响应时间</code></p>
+<p><s>我们假设网络速度恒定（不抖动），给出以下数据（响应开始时间，响应结束时间，资源大小）。我们会计算每一段的响应速度，最后取最大值。这样解决了之前只计算html文档存在的问题，并且该方案的结果也兼容了html文档计算。<br>
+这边假设了网络不抖动。当出现网络抖动情况，会出现前面下载速度和后面不一致情况，但是由于我们后面也会做计算，在数据量足够的情况下是趋于稳定的。<br>
+推荐数据结构：线段树+扫描线 <code>O(nlogn)</code><br>
+暴力解法：<code>O(n²)</code></s></p>
+<h3 class="mume-header" id="%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B">算法流程</h3>
+
+<ol start="0">
+<li>数据结构体</li>
+</ol>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> v<span class="token punctuation">.</span>name<span class="token punctuation">,</span><span class="token comment">//标识而已</span>
+  start<span class="token punctuation">:</span> v<span class="token punctuation">.</span>responseStart<span class="token punctuation">,</span>
+  end<span class="token punctuation">:</span> v<span class="token punctuation">.</span>responseEnd<span class="token punctuation">,</span>
+  size<span class="token punctuation">:</span> v<span class="token punctuation">.</span>transferSize<span class="token punctuation">,</span>
+  <span class="token comment">//KB/S 新算法中不用该参数</span>
+  speed<span class="token punctuation">:</span> v<span class="token punctuation">.</span>transferSize <span class="token operator">/</span> <span class="token punctuation">(</span>v<span class="token punctuation">.</span>responseEnd <span class="token operator">-</span> v<span class="token punctuation">.</span>responseStart <span class="token operator">||</span> <span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</pre><ol>
+<li>过滤、按start值升序排序</li>
+</ol>
+<blockquote>
+<p>剔除小数据,保留满足以下条件数据--》小数据会导致出现过大的网速计算结果，剔除小数据后对总体结果影响小，<br>
+<code>v.transferSize &gt; 100 &amp;&amp; (v.responseEnd - v.responseStart) &gt; 10 &amp;&amp; v.responseStart &lt; loadTime</code></p>
+</blockquote>
+<ol start="2">
+<li>
+<p>分组，将响应时间无连续的分组</p>
+</li>
+<li>
+<p>计算每组的每条响应的速度（具体计算见如下），并计算整组均值、方差、最大值</p>
+</li>
+</ol>
+<ul>
+<li>3.1 将每条响应的start,end放入numArr</li>
+<li>3.2 numArr去重，升序排序</li>
+<li>3.3 将每条响应的时间区间按numArr值分割，当其他响应有重复的区间，该条响应的该时间区间会乘以重复的数量(包括自己)</li>
+<li>3.4 将每段时间区间相加，形成该响应的实际响应时间，用size处于该时间则为该响应的实际速度</li>
+<li>3.5 计算每条响应的速度</li>
+</ul>
+<ol start="4">
+<li>根据size做加权平均，得到每组带宽估算值。</li>
+<li>比较每组数据的结果，取最大值</li>
+</ol>
+<p>目前仍存在问题：小数据短时间，当×上一定并发时，会使数据过大。</p>
+<blockquote>
+<p>size加权平均，弱化小数据的影响</p>
+</blockquote>
+<p>算法效率过低O(n³)：需要改进</p>
+<blockquote>
+<p>目前O(n²)，仍可以剪枝优化</p>
+</blockquote>
 <h2 class="mume-header" id="37-%E5%9B%BE%E7%89%87%E5%90%88%E5%B9%B6%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%98%AF%E6%A8%A1%E7%B3%8A%E5%9B%BE%E7%89%87%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%98%AF%E8%A1%A5%E5%85%85%E4%BF%A1%E6%81%AF%E5%90%88%E5%B9%B6%E5%90%8E%E5%8F%98%E6%88%90%E5%8E%9F%E5%9B%BE">3.7 图片合并，第一次是模糊图片，第二次是补充信息，合并后变成原图</h2>
 
 <p>较难，目前不研究</p>
+<h2 class="mume-header" id="38-%E5%AD%98%E5%9C%A8%E7%BC%93%E5%AD%98%E8%BF%98%E6%98%AF%E4%BC%9A%E5%88%86%E5%B1%82%E5%8A%A0%E8%BD%BD%E4%BD%93%E9%AA%8C%E4%B8%8D%E5%A5%BD">3.8 存在缓存，还是会分层加载，体验不好</h2>
+
+<p>简单的将过程放在domcontentloaded时并不能解决问题，会导致初次加载或者无缓存加载，可能不触发分层机制（模糊的src未下完又直接被替换了）。</p>
+<p><strong>分层加载逻辑修改为</strong>：</p>
+<ol>
+<li>html的原始文档,img仅做占位</li>
+</ol>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token comment">&lt;!-- 初次加载的文档 --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>figure</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>noscript</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://pic4.zhimg.com/50/1355440786fffad694ed56130dbbc0bc_hd.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">data-rawheight</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>667<span class="token punctuation">"</span></span> <span class="token attr-name">data-rawwidth</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1000<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>origin_image zh-lightbox-thumb<span class="token punctuation">"</span></span>
+    <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1000<span class="token punctuation">"</span></span> <span class="token attr-name">data-original</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://pic4.zhimg.com/1355440786fffad694ed56130dbbc0bc_r.jpg<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>noscript</span><span class="token punctuation">></span></span>
+  &lt;img src="data:image/svg+xml;utf8,<span class="token entity" title="&lt;">&amp;lt;</span>svg%20xmlns='http://www.w3.org/2000/svg'%20width='1000'%20height='667'<span class="token entity" title="&gt;">&amp;gt;</span><span class="token entity" title="&lt;">&amp;lt;</span>    /svg<span class="token entity" title="&gt;">&amp;gt;</span>"data-rawheight="667" data-rawwidth="1000" class="origin_image zh-lightbox-thumb lazy" width="1000"           data-original="https://pic4.zhimg.com/1355440786fffad694ed56130dbbc0bc_r.jpg"
+      data-actualsrc="https://pic4.zhimg.com/50/1355440786fffad694ed56130dbbc0bc_hd.jpg" />
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>figure</span><span class="token punctuation">></span></span>
+</pre><ol start="2">
+<li>domcontentload后，js将img用div替换，并开始模糊和高清图片的加载</li>
+</ol>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>figure</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>noscript</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://pic4.zhimg.com/50/1355440786fffad694ed56130dbbc0bc_hd.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">data-rawheight</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>667<span class="token punctuation">"</span></span> <span class="token attr-name">data-rawwidth</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1000<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>origin_image zh-lightbox-thumb<span class="token punctuation">"</span></span>
+    <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1000<span class="token punctuation">"</span></span> <span class="token attr-name">data-original</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://pic4.zhimg.com/1355440786fffad694ed56130dbbc0bc_r.jpg<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>noscript</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">></span></span>
+    <span class="token comment">&lt;!--VagurImage中设置了背景色--></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>VagurImage<span class="token punctuation">"</span></span> <span class="token attr-name">data-src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://pic4.zhimg.com/50/1355440786fffad694ed56130dbbc0bc_hd.jpg<span class="token punctuation">"</span></span><span class="token style-attr language-css"><span class="token attr-name"> <span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value"><span class="token property">width</span><span class="token punctuation">:</span><span class="token number">654</span>px<span class="token punctuation">;</span><span class="token property">height</span><span class="token punctuation">:</span><span class="token number">980.51</span>px</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token comment">&lt;!--设置了高斯模糊和透明度--></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>VagueImage-mask is-active<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        ::before
+        ::after
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>figure</span><span class="token punctuation">></span></span>
+</pre><ol start="3">
+<li>模糊图片下载完毕,设置background-image</li>
+</ol>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token comment">&lt;!-- 文档其他地方不变不变--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>VagueImage-mask is-active<span class="token punctuation">"</span></span> <span class="token attr-name">background-image</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>url(<span class="token punctuation">'</span>https://pic4.zhimg.com/50/1355440786fffad694ed56130dbbc0bc_60w.jpg<span class="token punctuation">'</span>)<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  ::before
+  ::after
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+</pre><ol start="4">
+<li>高清图下载完毕</li>
+</ol>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>figure</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>noscript</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://pic4.zhimg.com/50/1355440786fffad694ed56130dbbc0bc_hd.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">data-rawheight</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>667<span class="token punctuation">"</span></span> <span class="token attr-name">data-rawwidth</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1000<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>origin_image zh-lightbox-thumb<span class="token punctuation">"</span></span>
+    <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1000<span class="token punctuation">"</span></span> <span class="token attr-name">data-original</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://pic4.zhimg.com/1355440786fffad694ed56130dbbc0bc_r.jpg<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>noscript</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://pic4.zhimg.com/1355440786fffad694ed56130dbbc0bc_hd.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">data-rawheight</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>667<span class="token punctuation">"</span></span> <span class="token attr-name">data-rawwidth</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1000<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>origin_image zh-lightbox-thumb lazy<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1000<span class="token punctuation">"</span></span>           <span class="token attr-name">data-original</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://pic4.zhimg.com/1355440786fffad694ed56130dbbc0bc_r.jpg<span class="token punctuation">"</span></span>
+  <span class="token attr-name">data-actualsrc</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://pic4.zhimg.com/50/1355440786fffad694ed56130dbbc0bc_hd.jpg<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>figure</span><span class="token punctuation">></span></span>
+</pre><p>js代码:</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//还是放在domcontentloaded执行</span>
+document<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">"DOMContentLoaded"</span><span class="token punctuation">,</span>func<span class="token punctuation">,</span><span class="token boolean">false</span><span class="token punctuation">)</span>
+<span class="token comment">//func</span>
+<span class="token comment">//采用两次Image，若img直接加载模糊图的话，只需imgLarge即可</span>
+<span class="token keyword">let</span> smallImage <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'small-img'</span><span class="token punctuation">)</span>
+<span class="token keyword">let</span> img <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Image</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+img<span class="token punctuation">.</span>src<span class="token operator">=</span>smallImage<span class="token punctuation">.</span>src
+<span class="token comment">//由于smallImage的已经load了，这边我们利用缓存再加载同个图，会去拿缓存触发onload</span>
+img<span class="token punctuation">.</span><span class="token function-variable function">onload</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token comment">//下图加载完毕</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">let</span> imgLarge <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Image</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+imgLarge<span class="token punctuation">.</span>src <span class="token operator">=</span> smallImage<span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span><span class="token string">"originSrc"</span><span class="token punctuation">)</span>
+imgLarge<span class="token punctuation">.</span><span class="token function-variable function">onload</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  smallImage<span class="token punctuation">.</span>src <span class="token operator">=</span> imgLarge<span class="token punctuation">.</span>src
+<span class="token punctuation">}</span>
+</pre><blockquote>
+<p>但是目前该做法有个问题，就是原图获取是在domcontentloaded的时候进行，此时还未进行测速，或者说此时进行测速用我们的测速算法是不准的（资源下载过程中<code>performance.getEntries</code>是拿不到该资源的）。<br>
+一个想法是对于未测速时，都加载原图</p>
+</blockquote>
+<h2 class="mume-header" id="39-%E5%B8%A6%E7%BD%91%E7%BB%9C%E5%8F%82%E6%95%B0%E4%B8%8D%E4%BC%9A%E5%91%BD%E4%B8%AD%E5%8E%9F%E5%9B%BE%E5%B7%B2%E6%9C%89%E6%9C%AC%E5%9C%B0%E7%BC%93%E5%AD%98">3.9 带网络参数，不会命中原图已有本地缓存</h2>
+
+<p>问题详细描述：本地已缓存原图<code>a.jpg</code>，本地通过网络计算需要去请求低清图片<code>a.jpg?q=50</code>,这样就浪费了原来的原图缓存了。</p>
+<p>解法：不同比例图片load后，将<code>url-TTL</code>放到localstorage中。每次网络计算完后，先查询缓存中有没有更高清的且未过期的图片，有的话选更高清的进行请求，不对localstorage做处理 ；否则请求相应网络状态的图片，onload后保存或更新localstorage。</p>
+<blockquote>
+<p>注1：每种清晰度图片的TTL可配置，通过script节点自定义属性设置。</p>
+</blockquote>
+<blockquote>
+<p>注2：本地只有低清缓存不考虑请求是因为我们当前网络状态算还行了，不需要用低清的，否则多次清晰度切换会对用户造成视觉上影响。</p>
+</blockquote>
+<p>当前这个问题也可以通过<code>blur+动画</code>解决，需要产品评估下。</p>
+<p>存在问题：强刷页面或者<code>disable cache</code>，请求图片得到响应后，<code>cache-control</code>本地缓存时间会重新计算。相应的我们localstorage的TTL也要进行修改</p>
+<p>解决方案：这边我们主要就是判断图片是否为无缓存请求，当为无缓存请求，img.onload后需要对localstorage进行更新。至于怎么判断是否为无缓存，就用<code>performance.getEntriesByName('模糊图url').transferSize===0</code>来判断</p>
+<h2 class="mume-header" id="310-%E5%8E%9F%E5%9B%BE%E8%AE%BF%E9%97%AE%E4%BC%9A%E5%81%9Aurl%E6%9B%BF%E6%8D%A2%E5%BD%93%E5%89%8D%E4%B8%8D%E6%98%AF%E7%94%A8h2-%E8%80%8C%E6%98%AF%E7%94%A8%E5%9F%9F%E5%88%86%E7%89%87%E5%BD%93%E4%B8%A4%E6%AC%A1%E5%9B%BE%E7%89%87%E8%AF%B7%E6%B1%82%E4%B8%8D%E6%98%AF%E5%90%8C%E4%B8%AA%E5%9F%9F%E6%97%B6%E4%BC%9A%E4%B8%8D%E8%B5%B0%E7%BC%93%E5%AD%98">3.10 原图访问会做url替换，当前不是用h2 而是用域分片，当两次图片请求不是同个域时会不走缓存</h2>
+
+<blockquote>
+<p>方法1： 将图片链接与域名做map映射<code>url-&gt;host</code>，保存在localstorage，下次访问会先查一遍，没有的话就随机访问并保存在localstorage</p>
+</blockquote>
+<blockquote>
+<p>方法2： 利用算法将图片url映射到某个MOD值(length为散列域名列表大小) 需要保证每个计算结果值不变且映射每个域名的概率一致<br>
+js 名称的每个字符的ascii码值相加再mod length</p>
+</blockquote>
+<h2 class="mume-header" id="311-javascript%E8%A2%AB%E7%A6%81%E7%94%A8-%E5%88%86%E5%B1%82%E5%8A%A0%E8%BD%BD%E6%8B%BF%E4%B8%8D%E5%88%B0%E5%8E%9F%E5%9B%BE">3.11 JavaScript被禁用 分层加载拿不到原图</h2>
+
+<p>目前不考虑</p>
+<h2 class="mume-header" id="312-%E9%80%8F%E6%98%8E%E9%81%AE%E7%BD%A9%E5%8A%A8%E7%94%BB%E8%AE%A9%E5%9B%BE%E7%89%87%E5%88%87%E6%8D%A2%E5%8F%98%E5%BE%97%E8%87%AA%E7%84%B6">3.12 透明遮罩，动画让图片切换变得自然</h2>
+
+<pre data-role="codeBlock" data-info="css" class="language-css"><span class="token selector"><span class="token class">.VagueImage-mask</span> </span><span class="token punctuation">{</span>
+    <span class="token property">z-index</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token property">opacity</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token property">background-size</span><span class="token punctuation">:</span> cover<span class="token punctuation">;</span>
+    <span class="token property">background-position</span><span class="token punctuation">:</span> <span class="token number">50%</span><span class="token punctuation">;</span>
+    <span class="token property">background-repeat</span><span class="token punctuation">:</span> no-repeat<span class="token punctuation">;</span>
+    <span class="token property">transition</span><span class="token punctuation">:</span> opacity <span class="token number">.3</span>s ease-in
+<span class="token punctuation">}</span>
+</pre><p>不过 由于我们不是提供的小分辨率图再放大，而是提供同分辨率的模糊图，这边就不进行透明遮罩处理了。</p>
+<h2 class="mume-header" id="313-%E5%9B%BE%E7%89%87%E8%8A%82%E7%82%B9%E6%89%AB%E6%8F%8F%E5%AE%8C%E6%AF%95%E5%90%8E%E5%90%8E%E7%BB%AD%E9%80%9A%E8%BF%87js%E5%8A%A8%E6%80%81%E5%A2%9E%E5%8A%A0%E7%9A%84image%E8%8A%82%E7%82%B9%E8%8B%A5%E5%9B%BE%E7%89%87src%E6%BB%A1%E8%B6%B3%E5%88%86%E5%B1%82%E8%A7%84%E5%88%99%E5%90%8E%E5%8F%B0%E4%BC%9A%E8%BF%94%E5%9B%9E%E6%A8%A1%E7%B3%8A%E5%9B%BE%E7%89%87">3.13 图片节点扫描完毕后，后续通过js动态增加的Image节点，若图片src满足分层规则，后台会返回模糊图片</h2>
+
+<p>通过<code>Object.defineProperty</code>去监听src的set</p>
+<p>下期再做</p>
 <h1 class="mume-header" id="%E5%9B%9B-%E8%AF%A6%E7%BB%86%E8%AE%BE%E8%AE%A1">四、详细设计</h1>
 
 <h2 class="mume-header" id="41-%E8%8E%B7%E5%8F%96script%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE">4.1 获取script自定义数据</h2>
 
 <pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">data-host</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>xxx<span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>speed<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript">
-  <span class="token keyword">let</span> ele <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">"speed"</span><span class="token punctuation">)</span>
+  <span class="token keyword">let</span> ele <span class="token operator">=</span> document<span class="token punctuation">.</span>currentScript
   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>ele<span class="token punctuation">.</span>attributes<span class="token punctuation">[</span><span class="token string">"data-host"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>nodeValue<span class="token punctuation">)</span>
 </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
 </pre><p>这样可以获取到本script节点的自定义数据</p>
@@ -477,9 +746,9 @@ shark -->>浏览器:返回原图
 <span class="token function">addLoadEvent</span><span class="token punctuation">(</span>streamFunc<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </pre><h2 class="mume-header" id="43-%E8%AE%A1%E7%AE%97%E7%94%A8%E6%88%B7%E7%BD%91%E7%BB%9C%E7%8A%B6%E5%86%B5">4.3 计算用户网络状况</h2>
 
-<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//或者资源加载的时间数据</span>
-performance<span class="token punctuation">.</span><span class="token function">getEntries</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token comment">//按某个策略得到用户网络状况</span>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//计算浏览器加载该文档的时间</span>
+<span class="token keyword">var</span> nav <span class="token operator">=</span> performance<span class="token punctuation">.</span><span class="token function">getEntriesByType</span><span class="token punctuation">(</span><span class="token string">'navigation'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>nav<span class="token punctuation">.</span>responseEnd<span class="token operator">-</span>nav<span class="token punctuation">.</span>responseStart<span class="token punctuation">,</span>nav<span class="token punctuation">.</span>transferSize<span class="token punctuation">,</span>nav<span class="token punctuation">.</span>transferSize<span class="token operator">/</span><span class="token punctuation">(</span>nav<span class="token punctuation">.</span>responseEnd<span class="token operator">-</span>nav<span class="token punctuation">.</span>responseStart<span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">"KB/s"</span><span class="token punctuation">)</span>
 </pre><h2 class="mume-header" id="44-%E8%8A%82%E7%82%B9%E8%8E%B7%E5%8F%96">4.4 节点获取</h2>
 
 <h3 class="mume-header" id="441-%E8%8E%B7%E5%8F%96img%E5%85%83%E7%B4%A0">4.4.1 获取img元素</h3>
@@ -497,7 +766,7 @@ performance<span class="token punctuation">.</span><span class="token function">
 <span class="token punctuation">}</span><span class="token punctuation">)</span>
 </pre><h3 class="mume-header" id="443-%E8%8E%B7%E5%8F%96css%E4%B8%AD%E7%9A%84background">4.4.3 获取css中的background</h3>
 
-<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//获取css中的background，需要测试下伪类是否有效果</span>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//获取css中的background，</span>
 document<span class="token punctuation">.</span>styleSheets<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>v<span class="token operator">=></span><span class="token punctuation">{</span>
   <span class="token comment">//根据v.href过滤第三方css</span>
   <span class="token keyword">return</span> 
@@ -515,7 +784,8 @@ document<span class="token punctuation">.</span>styleSheets<span class="token pu
 
 <pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">let</span> imgDOMList <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementsByTagName</span><span class="token punctuation">(</span><span class="token string">"picture"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 imgDOMList<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>v<span class="token operator">=></span>v<span class="token punctuation">.</span>childList<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>c<span class="token operator">=></span>c<span class="token punctuation">)</span><span class="token punctuation">)</span>
-</pre><h2 class="mume-header" id="45-%E6%87%92%E5%8A%A0%E8%BD%BD">4.5 懒加载</h2>
+</pre><p>为避免重复计算，先扫描<code>picture</code>,再扫描<code>img</code></p>
+<h2 class="mume-header" id="45-%E6%87%92%E5%8A%A0%E8%BD%BD">4.5 懒加载</h2>
 
 <h3 class="mume-header" id="%E6%96%B9%E6%B3%951-intersectionobserver">方法1 IntersectionObserver</h3>
 
@@ -528,6 +798,12 @@ imgDOMList<span class="token punctuation">.</span><span class="token function">f
 <span class="token keyword">function</span> <span class="token function">judgeHost</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">{</span>
 
 <span class="token punctuation">}</span>
+<span class="token comment">// 相对路径转绝对路径(IE6, IE7)无效</span>
+<span class="token keyword">function</span> <span class="token function">directlink</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token keyword">var</span> a <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  a<span class="token punctuation">.</span>href <span class="token operator">=</span> url<span class="token punctuation">;</span>
+  <span class="token keyword">return</span> a<span class="token punctuation">.</span>href<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token comment">// 根据散列域名、网速替换url</span>
 <span class="token keyword">function</span> <span class="token function">replace</span><span class="token punctuation">(</span>originUrl<span class="token punctuation">,</span>hashHost<span class="token punctuation">,</span>networkSpeed<span class="token punctuation">)</span><span class="token punctuation">{</span>
 

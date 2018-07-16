@@ -56,13 +56,13 @@
 
 ## dns-prefetch
 
-默认情况下浏览器会对页面中与当前域名不一致的域进行预获取（https下需要显示开启才行）
+见 `W3C_DNS_Prefetching.md`
 
 ## 尽早发送html部分响应
 
 > 缩短提供第一部分html响应的世界，使浏览器更早下载资源。
 >
-> akamai提供的EdgeStart功能。我理解应该是对服务端渲染网页的加速，可以探讨下
+> akamai 提供的 EdgeStart 功能。我理解应该是对服务端渲染网页的加速，可以探讨下
 
 <a href="https://developer.akamai.com/learn/FEO/edgestart.html">What is EdgeStart?</a>
 
@@ -94,6 +94,19 @@ Object.defineProperty(HTMLScriptElement.prototype, 'src', {
 对于`doument.write('<script src="a.js"/>')` 需要额外处理
 ## CSS-DataURI
 
+## 异步加载js不执行，按序执行
+
+上文，我们提出了js异步，让js在domcontentload之后再去加载，js加载的过程中，只是简单的插入`<script>`节点到文档中，不能保证script的执行顺序。
+
+未异步前，script是严格的按序执行的，而无论在浏览器的哪个节点，通过动态插入`script`的方式无法保证其执行顺序
+
+最粗暴的做法即：前一个脚本onload事件触发后(脚本执行完毕)，执行下一个脚本的下载的执行
+
+但是这样就变成顺序下载了，无法充分利用带宽。
+
+我们可以利用`<object>`进行预下载，并做一套控制
+
+(利用object tag 会生成blob,挺耗时的)
 
 # 移动端优化
 
