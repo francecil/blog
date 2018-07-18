@@ -54,3 +54,19 @@ git rebase —onto master aaaa^
 ```bash
 git push origin :dev
 ```
+
+## 4. 版本回退
+
+### 删除远程仓库的文件 并忽略提交
+
+当文件进入版本管理时，设置 gitignore 将没有效果，此时将提交push到远程仓库会发现远程仓库有这些文件
+
+举例：在`.gitignore`设置忽略test目录时，已进行test目录的git管理,此时我们不小心把test目录也push到远程分支了，怎么办？
+
+```bash
+git rm -r --cached test
+git commit -m "delete test/"
+git push origin master
+```
+
+此时可以把忽略规则写到gitignore中了。
