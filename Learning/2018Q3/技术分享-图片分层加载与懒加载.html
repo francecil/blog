@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <title>技术分享-图片分层加载与懒加载</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///C:\Users\zhengjx\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.5\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      <link rel="stylesheet" href="file:///C:\Users\zhengjx\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.5\node_modules\@shd101wyy\mume\dependencies\mermaid\mermaid.css">
+      
+      
+      
+      
+      <script type="text/javascript" src="file:///C:\Users\zhengjx\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.5\node_modules\@shd101wyy\mume\dependencies\mermaid\mermaid.min.js"></script>
+      
+      
+      
+      
+
+      <style> 
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+ 
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview   ">
+      <ul>
+<li><a href="#%E4%B8%80-%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D">一、技术介绍</a>
+<ul>
+<li><a href="#1-%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD">1. 图片懒加载</a>
+<ul>
+<li><a href="#%E6%95%88%E6%9E%9C">效果</a></li>
+<li><a href="#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86">实现原理</a></li>
+</ul>
+</li>
+<li><a href="#2-%E5%88%86%E5%B1%82%E5%8A%A0%E8%BD%BD">2. 分层加载</a>
+<ul>
+<li><a href="#%E6%95%88%E6%9E%9C-1">效果</a></li>
+<li><a href="#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86-1">实现原理</a></li>
+</ul>
+</li>
+<li><a href="#3-%E6%87%92%E5%8A%A0%E8%BD%BD%E5%88%86%E5%B1%82%E5%8A%A0%E8%BD%BD">3. 懒加载+分层加载</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84">二、技术架构</a>
+<ul>
+<li><a href="#%E6%97%B6%E5%BA%8F%E5%9B%BE">时序图</a></li>
+<li><a href="#%E6%80%BB%E6%B5%81%E7%A8%8B">总流程</a></li>
+<li><a href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B">初始化具体流程</a></li>
+<li><a href="#%E5%8E%9F%E5%9B%BE%E5%8A%A0%E8%BD%BD%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B">原图加载具体流程</a></li>
+<li><a href="#%E6%89%AB%E6%8F%8F%E6%96%87%E6%A1%A3%E8%8E%B7%E5%8F%96%E5%9B%BE%E7%89%87%E8%8A%82%E7%82%B9%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B">扫描文档，获取图片节点具体流程</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89-%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3">三、问题与解决</a>
+<ul>
+<li><a href="#1-%E5%93%8D%E5%BA%94%E5%BC%8F%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86">1. 响应式图片处理</a></li>
+<li><a href="#2-%E5%B8%A6%E5%AE%BD%E4%BC%B0%E7%AE%97">2. 带宽估算</a>
+<ul>
+<li><a href="#%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B">算法流程</a></li>
+</ul>
+</li>
+<li><a href="#3-%E5%A4%9A%E7%89%88%E6%9C%AC%E7%BC%93%E5%AD%98%E5%91%BD%E4%B8%AD%E7%AD%96%E7%95%A5">3. 多版本缓存命中策略</a>
+<ul>
+<li><a href="#transfersize-%E6%AF%94-encodedbodysize-%E5%B0%8F%E7%9A%84%E6%83%85%E5%86%B5">transferSize 比 encodedBodySize 小的情况：</a></li>
+<li><a href="#encodedbodysize-%E4%B8%BA0-%E7%9A%84%E6%83%85%E5%86%B5">encodedBodySize 为0 的情况：</a></li>
+</ul>
+</li>
+<li><a href="#4-%E5%8A%A8%E6%80%81%E5%9B%BE%E7%89%87%E8%8A%82%E7%82%B9%E6%89%AB%E6%8F%8F">4. 动态图片节点扫描</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9B%9B-%E6%80%BB%E7%BB%93">四、总结</a></li>
+</ul>
+<h1 class="mume-header" id="%E4%B8%80-%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D">一、技术介绍</h1>
+
+<h2 class="mume-header" id="1-%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD">1. 图片懒加载</h2>
+
+<p>按需加载，即用户滚动页面到一定位置（可视区域）时才触发图片的加载；</p>
+<p>常用于图片较多的网页，可以延迟网络请求，页面更快load</p>
+<h3 class="mume-header" id="%E6%95%88%E6%9E%9C">效果</h3>
+
+<p><a href="https://www.jd.com/">京东首页效果</a></p>
+<h3 class="mume-header" id="%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86">实现原理</h3>
+
+<ol>
+<li><code>&lt;img&gt;</code>节点不使用src属性，将图片地址放在其他自定义属性上</li>
+<li>当页面滚动到一定位置，将自定义属性上的图片地址赋值给src</li>
+</ol>
+<ul>
+<li>
+<p>IntersectionObserver</p>
+<blockquote>
+<p>一个用于判断 dom 节点是否处于视口的API</p>
+</blockquote>
+<p><img src="https://images2015.cnblogs.com/blog/604527/201610/604527-20161021180737935-494667792.gif"><br>
+<em>(引用网上图片)</em></p>
+<p><strong>简单代码：</strong></p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">var</span> intersectionObserver <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IntersectionObserver</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>entries<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  entries<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>entry<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//intersectionRatio：该元素的可见性比例</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>entry<span class="token punctuation">.</span>intersectionRatio <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">//对其dom节点（entry.target）进行下一步操作</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token punctuation">{</span>
+  <span class="token comment">// 用于计算相交区域的根元素，默认document顶层文档的视口</span>
+  root：<span class="token keyword">null</span><span class="token punctuation">,</span>
+  <span class="token comment">// 指定到root的距离，用于扩大或缩小交叉区域面积,一般用于提前/延迟懒加载</span>
+  <span class="token comment">// 与margin一样跨域用4个值，允许负值</span>
+  <span class="token comment">// 显示指定root时才可使用百分比值</span>
+  rootMargin<span class="token punctuation">:</span><span class="token string">"0px"</span><span class="token punctuation">,</span>
+  <span class="token comment">// 触发回调函数的临界值，用 0 ~ 1 的比率指定，也可以是一个数组。</span>
+  <span class="token comment">// 其值是被观测元素可视面积 / 总面积</span>
+  <span class="token comment">// 当可视比率经过这个值的时候，回调函数就会被调用。</span>
+  thresholds<span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+document<span class="token punctuation">.</span><span class="token function">querySelectorAll</span><span class="token punctuation">(</span><span class="token string">'img'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>v<span class="token operator">=></span>intersectionObserver<span class="token punctuation">.</span><span class="token function">observe</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">)</span>
+</pre><p>兼容性：<a href="https://caniuse.com/#search=intersectionObserver">较差，caniuse</a></p>
+</li>
+<li>
+<p>scroll+requestAnimationFrame+getBoundingClientRect</p>
+</li>
+</ul>
+<blockquote>
+<p>监听窗口滚动和大小变化事件<br>
+requestAnimationFrame 节流操作,<a href="https://caniuse.com/#search=requestAnimationFrame">兼容性</a><br>
+判断元素是否在视区中</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">function</span> <span class="token function">inViewport</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">//文档滚动距离</span>
+  <span class="token keyword">var</span> viewTop <span class="token operator">=</span> <span class="token function">getScrollY</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">var</span> viewBot <span class="token operator">=</span> viewTop <span class="token operator">+</span> windowHeight
+  <span class="token comment">//节点距离文档顶部的距离</span>
+  <span class="token keyword">var</span> nodeTop <span class="token operator">=</span> <span class="token function">getNodeTop</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span>
+  <span class="token keyword">var</span> nodeBot <span class="token operator">=</span> nodeTop <span class="token operator">+</span> <span class="token function">getNodeOffsetHeight</span><span class="token punctuation">(</span>wsnode<span class="token punctuation">)</span>
+
+  <span class="token keyword">var</span> offset <span class="token operator">=</span> <span class="token punctuation">(</span>settings<span class="token punctuation">.</span>lazyLoadStrategy<span class="token punctuation">.</span>threshold <span class="token operator">/</span> <span class="token number">100</span><span class="token punctuation">)</span> <span class="token operator">*</span> windowHeight
+
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>nodeBot <span class="token operator">>=</span> viewTop <span class="token operator">-</span> offset<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>nodeTop <span class="token operator">&lt;=</span> viewBot <span class="token operator">+</span> offset<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</pre><blockquote>
+<p>进行图片替换</p>
+</blockquote>
+<blockquote>
+<p>兼容性：IE7+测试通过，其他浏览器</p>
+</blockquote>
+<h2 class="mume-header" id="2-%E5%88%86%E5%B1%82%E5%8A%A0%E8%BD%BD">2. 分层加载</h2>
+
+<p>先显示一张模糊的图片，后面再换成原图</p>
+<h3 class="mume-header" id="%E6%95%88%E6%9E%9C-1">效果</h3>
+
+<p><a href="https://www.zhihu.com/question/20958648/answer/74805876">知乎（为观察测试效果请限制带宽）</a></p>
+<h3 class="mume-header" id="%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86-1">实现原理</h3>
+
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>img<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>small.jpg<span class="token punctuation">"</span></span> <span class="token attr-name">data-original</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>big.jpg<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+</pre><pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">let</span> smallImage <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'img'</span><span class="token punctuation">)</span>
+<span class="token keyword">let</span> imgLarge <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Image</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+imgLarge<span class="token punctuation">.</span>src <span class="token operator">=</span> smallImage<span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span><span class="token string">"data-original"</span><span class="token punctuation">)</span>
+imgLarge<span class="token punctuation">.</span><span class="token function-variable function">onload</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  smallImage<span class="token punctuation">.</span>src <span class="token operator">=</span> imgLarge<span class="token punctuation">.</span>src
+<span class="token punctuation">}</span>
+</pre><h2 class="mume-header" id="3-%E6%87%92%E5%8A%A0%E8%BD%BD%E5%88%86%E5%B1%82%E5%8A%A0%E8%BD%BD">3. 懒加载+分层加载</h2>
+
+<p><code>&lt;img src=&quot;small.jpg&quot;&gt;</code></p>
+<p>然后按懒加载的做法，在图片节点进入视区时，进行src的替换</p>
+<h1 class="mume-header" id="%E4%BA%8C-%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84">二、技术架构</h1>
+
+<h2 class="mume-header" id="%E6%97%B6%E5%BA%8F%E5%9B%BE">时序图</h2>
+
+<div class="mermaid">sequenceDiagram
+participant 浏览器
+participant 代理服务器
+participant 源站
+浏览器 ->> 代理服务器:请求模糊图
+Note right of 代理服务器:没有缓存，请求源站
+代理服务器 ->> 源站:请求原始图像资源
+Note right of 代理服务器:缓存图像
+代理服务器 ->> 代理服务器:图像模糊化
+代理服务器 -->> 浏览器:返回模糊图
+Note right of 浏览器:dom解析完毕<br>扫描文档
+浏览器 ->> 代理服务器:请求图片质量标识wsq对应图像
+代理服务器 ->> 代理服务器:根据wsq对原图做相应的压缩
+代理服务器 -->>浏览器:返回wsq对应图片
+</div><h2 class="mume-header" id="%E6%80%BB%E6%B5%81%E7%A8%8B">总流程</h2>
+
+<div class="mermaid">graph TB
+  st(开始)-->init((初始化))
+  init-->obs[添加DOMContentLoaded,Load事件监听器]
+  obs-->DOMContentLoaded[DOMContentLoaded事件触发]
+  DOMContentLoaded-->cal[利用html文档下载速度来进行简单测速]
+  cal-->firstScreenPicSpeed[参照网速压缩比对照表得到首屏图片压缩比]
+  firstScreenPicSpeed-->firstScreen((扫描文档,获取图片节点))
+  firstScreen-->quicksort[按视距快排图片节点]
+  quicksort-->judgeCache[任取一模糊图的name,通过transferSize是否为0来判断本次加载是否为无缓存加载]
+  judgeCache-->firstScreenCal[获取视距处于首屏的图片节点]
+  firstScreenCal-->oripicload((进行原图加载))
+  oripicload-->load[Load事件触发]
+  load-->speedtest[采用测速算法测速,得到相应图像压缩比]
+  speedtest-->islazyLoad{是否懒加载}
+  islazyLoad--是-->lazyload[启动懒加载策略]
+  islazyLoad--否-->replaceOther[找到其他未进行原图加载的节点]
+  replaceOther-->oripicload1((进行原图加载))
+  lazyload-->islazycompleted{懒加载完毕?}
+  islazycompleted--是-->ed(结束)
+  islazycompleted--否-->scall{是否进行窗口滚动}
+  scall--是-->debounceCul[节流处理,获取满足视距条件的未进行原图加载的节点]
+  debounceCul-->oripicload2((进行原图加载))
+  oripicload2-->islazycompleted
+  scall--否-->mousetimeout{鼠标事件10s未触发}
+  mousetimeout--是-->replaceOther
+  mousetimeout--否-->scall
+  oripicload1-->ed
+</div><h2 class="mume-header" id="%E5%88%9D%E5%A7%8B%E5%8C%96%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B">初始化具体流程</h2>
+
+<div class="mermaid">graph LR
+  init(初始化开始)-->evalElement(解析script标签中自定义属性)
+  evalElement-->getHost[获取可替换图片域名]
+  evalElement-->getHashHost[获取散列域名]
+  evalElement-->getLazy[获取懒加载策略]
+  evalElement-->getSpeedZip[获取网速压缩比参照表]
+  evalElement-->getTTL[获取图片缓存时间]
+  getHost-->initStop(初始化结束)
+  getHashHost-->initStop
+  getLazy-->initStop
+  getSpeedZip-->initStop
+  getTTL-->initStop
+</div><h2 class="mume-header" id="%E5%8E%9F%E5%9B%BE%E5%8A%A0%E8%BD%BD%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B">原图加载具体流程</h2>
+
+<div class="mermaid">graph TB
+oripicstart(原图加载开始)-->judgeEle{判断节点类型}
+judgeEle--picture节点-->getpic[获取其子节点中source节点和img节点中src和srcset属性中的图片url]
+judgeEle--img节点-->getsrcset[获取节点的src和srcset属性中的图片url]
+judgeEle--video节点-->getposter[获取节点的poster属性中的图片url]
+judgeEle--其他节点-->getother[获取节点background-image的图片url]
+getpic-->getfinalurl((url替换))
+
+getsrcset-->getfinalurl1((url替换))
+getposter-->getfinalurl1((url替换))
+getother-->getfinalurl1((url替换))
+
+getfinalurl1-->newImg[new Image的方式加载资源,其url为替换后的url,可能需要设置srcset属性]
+newImg-->onload[Image的onload触发]
+onload-->updateEle
+
+getfinalurl-.-hashurl[将模糊图url地址通过一定算法映射到固定的散列域名,得到新的图片url-newUrl]
+hashurl-->findstorage{localstorage中是否有newUrl且压缩比一样或更低的记录}
+findstorage--是-->isExpired{是否过期}
+findstorage--否-->carrycur
+isExpired--否-->carryhigh[取未过期的压缩比最低的记录,newUrl后带上压缩比参数]
+isExpired--是-->carrycur[图片url后带上当前的压缩比]
+carryhigh-->replaceEnd(url替换完毕)
+carrycur-->replaceEnd
+getfinalurl-->updateEle[将节点属性的图片url进行替换]
+updateEle-->updatelocal[更新localstorage]
+updatelocal-->isnocache{无缓存加载或localstorage中没有命中缓存?}
+isnocache--否-->oripicstop[原图加载完毕]
+isnocache--是-->update[更新 url-压缩比-ttl 记录]
+update-->oripicstop
+</div><h2 class="mume-header" id="%E6%89%AB%E6%8F%8F%E6%96%87%E6%A1%A3%E8%8E%B7%E5%8F%96%E5%9B%BE%E7%89%87%E8%8A%82%E7%82%B9%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B">扫描文档，获取图片节点具体流程</h2>
+
+<div class="mermaid">graph LR
+init(初始化节点列表)-->scanOver{文档扫描完毕?}
+scanOver--否-->scan[扫描文档]
+scan-->getPicEle[获取picture节点]
+getPicEle-->getchild[获取子节点的src和srcset中所有图片的url]
+getchild-->ishost{节点图片url的域名存在可替换图片域名?}
+ishost--否-->skip[跳过该节点]
+ishost--是-->addList[节点列表加入该节点]
+scan-->getImgEle[获取父节点非picture的img节点]
+getImgEle-->getsrc[获取节点的src或srcset属性]
+getsrc-->ishost
+scan-->getstyleEle[获取style中含有background-image属性且值为图片url的节点]
+getstyleEle-->ishost
+scan-->getcss[扫描css文档,获取含有background-image属性且值为图片url的css规则]
+getcss-->getcssDom[匹配css规则得到相应节点]
+getcssDom-->ishost
+scan-->getvideo[获取含poster属性且值为图片url的video节点]
+getvideo-->ishost
+skip-->scanOver
+addList-->scanOver
+scanOver--是-->scanEnd(节点获取完毕)
+</div><h1 class="mume-header" id="%E4%B8%89-%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3">三、问题与解决</h1>
+
+<h2 class="mume-header" id="1-%E5%93%8D%E5%BA%94%E5%BC%8F%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86">1. 响应式图片处理</h2>
+
+<ul>
+<li><code>&lt;img&gt;</code>的srcset属性和<s>css的image-set()</s></li>
+<li><code>&lt;picture&gt;</code> source、img子节点</li>
+</ul>
+<p>(1) 拿到srcset值，并获取srcset中的图片地址列表<br>
+(2) 将图片地址变成带质量标识的地址<br>
+(3) 将处理过的图片地址列表替换为原来的srcset值</p>
+<h2 class="mume-header" id="2-%E5%B8%A6%E5%AE%BD%E4%BC%B0%E7%AE%97">2. 带宽估算</h2>
+
+<p>利用 WebPerformanceApi 获取已加载资源的网络请求时间耗费</p>
+<h3 class="mume-header" id="%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B">算法流程</h3>
+
+<ol start="0">
+<li>数据结构体</li>
+</ol>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token punctuation">{</span>
+  name<span class="token punctuation">:</span> v<span class="token punctuation">.</span>name<span class="token punctuation">,</span><span class="token comment">//标识而已</span>
+  start<span class="token punctuation">:</span> v<span class="token punctuation">.</span>responseStart<span class="token punctuation">,</span>
+  end<span class="token punctuation">:</span> v<span class="token punctuation">.</span>responseEnd<span class="token punctuation">,</span>
+  size<span class="token punctuation">:</span> v<span class="token punctuation">.</span>transferSize<span class="token punctuation">,</span>
+  <span class="token comment">//KB/S 新算法中不用该参数</span>
+  speed<span class="token punctuation">:</span> v<span class="token punctuation">.</span>transferSize <span class="token operator">/</span> <span class="token punctuation">(</span>v<span class="token punctuation">.</span>responseEnd <span class="token operator">-</span> v<span class="token punctuation">.</span>responseStart <span class="token operator">||</span> <span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</pre><ol>
+<li>过滤、按start值升序排序</li>
+</ol>
+<blockquote>
+<p>剔除小数据,保留满足以下条件数据--》小数据会导致出现过大的网速计算结果，剔除小数据后对总体结果影响小，<br>
+<code>v.transferSize &gt; 100 &amp;&amp; (v.responseEnd - v.responseStart) &gt; 10 &amp;&amp; v.responseStart &lt; loadTime</code></p>
+</blockquote>
+<ol start="2">
+<li>
+<p>分组，将响应时间无连续的分组</p>
+</li>
+<li>
+<p>计算每组的每条响应的速度（具体计算见如下），并计算整组均值、方差、最大值</p>
+</li>
+</ol>
+<ul>
+<li>3.1 将每条响应的start,end放入numArr</li>
+<li>3.2 numArr去重，升序排序</li>
+<li>3.3 将每条响应的时间区间按numArr值分割，当其他响应有重复的区间，该条响应的该时间区间会乘以重复的数量(包括自己)</li>
+<li>3.4 将每段时间区间相加，形成该响应的实际响应时间，用size处于该时间则为该响应的实际速度</li>
+<li>3.5 计算每条响应的速度</li>
+</ul>
+<ol start="4">
+<li>根据size做加权平均，得到每组带宽估算值。</li>
+<li>比较每组数据的结果，取最大值</li>
+</ol>
+<h2 class="mume-header" id="3-%E5%A4%9A%E7%89%88%E6%9C%AC%E7%BC%93%E5%AD%98%E5%91%BD%E4%B8%AD%E7%AD%96%E7%95%A5">3. 多版本缓存命中策略</h2>
+
+<p>Q: 带网络参数，不会命中原图已有本地缓存</p>
+<p>详细描述：本地已缓存高质量图片<code>a.jpg?q=80</code>，本地通过网络计算需要去请求低清图片<code>a.jpg?q=50</code>,这样就浪费了原来的原图缓存了。</p>
+<p><strong>解法：引入localStorage的缓存控制策略</strong></p>
+<p>不同比例图片load后，将<code>url-TTL-q</code>放到 localstorage 中。<br>
+每次网络计算完后，先查询缓存中有没有更高清的且未过期的图片，有的话选更高清的进行请求，不对localstorage做处理 ；<br>
+否则请求相应网络状态的图片，onload后保存或更新localstorage。</p>
+<blockquote>
+<p>注1：每种清晰度图片的TTL可配置，通过script节点自定义属性设置。</p>
+</blockquote>
+<p><strong>注意：强刷页面或者<code>disable cache</code>，请求图片得到响应后，<code>cache-control</code>本地缓存时间会重新计算。</strong></p>
+<p>相应的我们localstorage的TTL也要进行修改</p>
+<p>这边我们主要就是判断图片是否为无缓存请求，当为无缓存请求，img.onload后需要对localstorage进行更新。</p>
+<p>至于怎么判断是否为无缓存，就用<code>performance.getEntriesByName('当前加载图片的url')</code>结果是否满足某些规则来判断</p>
+<h3 class="mume-header" id="transfersize-%E6%AF%94-encodedbodysize-%E5%B0%8F%E7%9A%84%E6%83%85%E5%86%B5">transferSize 比 encodedBodySize 小的情况：</h3>
+
+<blockquote>
+<p>It is possible for transferSize value to be lower than encodedBodySize: when a cached response is successfully revalidated the transferSize reports the size of the response HTTP headers incurred during the revalidation, and encodedBodySize reports the size of the previously retrieved payload body.</p>
+</blockquote>
+<p>缓存生效，transferSize 为响应HTTP头的大小，而encodedBodySize 为先前检索到的有效内容主体的大小。</p>
+<p>200 from cache. 且 transferSize 一般为0</p>
+<h3 class="mume-header" id="encodedbodysize-%E4%B8%BA0-%E7%9A%84%E6%83%85%E5%86%B5">encodedBodySize 为0 的情况：</h3>
+
+<blockquote>
+<p>The encodedBodySize may be zero depending on the response code - e.g. HTTP 204 (No Content), 3XX, etc.</p>
+</blockquote>
+<p>204,3XX 。</p>
+<h2 class="mume-header" id="4-%E5%8A%A8%E6%80%81%E5%9B%BE%E7%89%87%E8%8A%82%E7%82%B9%E6%89%AB%E6%8F%8F">4. 动态图片节点扫描</h2>
+
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">function</span> <span class="token function">wraptSet</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> attr<span class="token punctuation">,</span> interceptor<span class="token punctuation">,</span> callback<span class="token punctuation">,</span> useParent<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> desc <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">getOwnPropertyDescriptor</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> attr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> original <span class="token operator">=</span> desc<span class="token punctuation">.</span><span class="token keyword">set</span><span class="token punctuation">;</span>
+    desc<span class="token punctuation">.</span><span class="token function-variable function">set</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"inject to attr:"</span><span class="token punctuation">,</span> obj<span class="token punctuation">,</span> attr<span class="token punctuation">)</span>
+        <span class="token keyword">var</span> new_value <span class="token operator">=</span> <span class="token function">interceptor</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>callback<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">callback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> useParent<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+          <span class="token comment">//说明是元素的图片地址属性设置</span>
+          <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setAttribute</span><span class="token punctuation">(</span><span class="token string">"wsload"</span><span class="token punctuation">,</span> <span class="token string">"true"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> original<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> new_value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    Object<span class="token punctuation">.</span><span class="token function">defineProperty</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> attr<span class="token punctuation">,</span> desc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">function</span> <span class="token function">wrapInvoke</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> method<span class="token punctuation">,</span> callback<span class="token punctuation">,</span> useParent<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> original <span class="token operator">=</span> obj<span class="token punctuation">[</span>method<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    obj<span class="token punctuation">[</span>method<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"inject to method:"</span><span class="token punctuation">,</span> obj<span class="token punctuation">,</span> method<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>callback<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">callback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> useParent<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> original<span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> arguments<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">warn</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">var</span> <span class="token function-variable function">callback</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>node<span class="token punctuation">,</span> useParent<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      nodeList <span class="token operator">=</span> nodeList<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>Util<span class="token punctuation">.</span><span class="token function">queryImgNodeList</span><span class="token punctuation">(</span>useParent <span class="token operator">?</span> node<span class="token punctuation">.</span>parentNode <span class="token punctuation">:</span> node<span class="token punctuation">)</span><span class="token punctuation">)</span>
+      LazyLoad<span class="token punctuation">.</span><span class="token function">check</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</pre><p>进行处理的属性和方法</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript">NodeWriter<span class="token punctuation">.</span><span class="token function">wraptSet</span><span class="token punctuation">(</span>window<span class="token punctuation">.</span>HTMLImageElement<span class="token punctuation">.</span>prototype<span class="token punctuation">,</span> <span class="token string">'src'</span><span class="token punctuation">,</span> wrapSetSrc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    window<span class="token punctuation">.</span>HTMLSourceElement <span class="token operator">&amp;&amp;</span> NodeWriter<span class="token punctuation">.</span><span class="token function">wraptSet</span><span class="token punctuation">(</span>window<span class="token punctuation">.</span>HTMLSourceElement<span class="token punctuation">.</span>prototype<span class="token punctuation">,</span> <span class="token string">'src'</span><span class="token punctuation">,</span> wrapSetSrc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// ie8 设置srcset会报错：属性不能同时具有取值函数和值</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span><span class="token punctuation">(</span>gBrowser<span class="token punctuation">.</span>name <span class="token operator">===</span> <span class="token string">"IE"</span> <span class="token operator">||</span> gBrowser<span class="token punctuation">.</span>name <span class="token operator">===</span> <span class="token string">'MSIE'</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> gBrowser<span class="token punctuation">.</span>version <span class="token operator">===</span> <span class="token string">"8"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      NodeWriter<span class="token punctuation">.</span><span class="token function">wraptSet</span><span class="token punctuation">(</span>window<span class="token punctuation">.</span>HTMLImageElement<span class="token punctuation">.</span>prototype<span class="token punctuation">,</span> <span class="token string">'srcset'</span><span class="token punctuation">,</span> wrapSetSrcSet<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      NodeWriter<span class="token punctuation">.</span><span class="token function">wraptSet</span><span class="token punctuation">(</span>window<span class="token punctuation">.</span>HTMLSourceElement<span class="token punctuation">.</span>prototype<span class="token punctuation">,</span> <span class="token string">'srcset'</span><span class="token punctuation">,</span> wrapSetSrcSet<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    window<span class="token punctuation">.</span>HTMLVideoElement <span class="token operator">&amp;&amp;</span> NodeWriter<span class="token punctuation">.</span><span class="token function">wraptSet</span><span class="token punctuation">(</span>window<span class="token punctuation">.</span>HTMLVideoElement<span class="token punctuation">.</span>prototype<span class="token punctuation">,</span> <span class="token string">'poster'</span><span class="token punctuation">,</span> wrapSetSrc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">var</span> EleProto <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>gBrowser<span class="token punctuation">.</span>name <span class="token operator">===</span> <span class="token string">"IE"</span> <span class="token operator">||</span> gBrowser<span class="token punctuation">.</span>name <span class="token operator">===</span> <span class="token string">'MSIE'</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> window<span class="token punctuation">.</span>HTMLElement<span class="token punctuation">)</span> <span class="token operator">?</span> window<span class="token punctuation">.</span>HTMLElement<span class="token punctuation">.</span>prototype <span class="token punctuation">:</span> window<span class="token punctuation">.</span>Element<span class="token punctuation">.</span>prototype
+
+    NodeWriter<span class="token punctuation">.</span><span class="token function">wrapInvoke</span><span class="token punctuation">(</span>EleProto<span class="token punctuation">,</span> <span class="token string">'insertAdjacentHTML'</span><span class="token punctuation">,</span> callback<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    NodeWriter<span class="token punctuation">.</span><span class="token function">wraptSet</span><span class="token punctuation">(</span>EleProto<span class="token punctuation">,</span> <span class="token string">'innerHTML'</span><span class="token punctuation">,</span> wrapSetOrigin<span class="token punctuation">,</span> callback<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    NodeWriter<span class="token punctuation">.</span><span class="token function">wraptSet</span><span class="token punctuation">(</span>EleProto<span class="token punctuation">,</span> <span class="token string">'outerHTML'</span><span class="token punctuation">,</span> wrapSetOrigin<span class="token punctuation">,</span> callback<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    NodeWriter<span class="token punctuation">.</span><span class="token function">wraptSet</span><span class="token punctuation">(</span>EleProto<span class="token punctuation">,</span> <span class="token string">'className'</span><span class="token punctuation">,</span> wrapSetOrigin<span class="token punctuation">,</span> callback<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><h1 class="mume-header" id="%E5%9B%9B-%E6%80%BB%E7%BB%93">四、总结</h1>
+
+
+      </div>
+      
+      
+    </body>
+    
+    <script>
+// config mermaid init call
+// http://knsv.github.io/mermaid/#configuration
+//
+// You can edit the 'MERMAID_CONFIG' variable below.
+MERMAID_CONFIG = {
+  startOnLoad: false
+}
+
+if (window['MERMAID_CONFIG']) {
+  window['MERMAID_CONFIG'].startOnLoad = false
+  window['MERMAID_CONFIG'].cloneCssStyles = false 
+}
+mermaidAPI.initialize(window['MERMAID_CONFIG'] || {})
+
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+
+  Reveal.addEventListener('slidechanged', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+} else {
+  mermaid.init(null, document.getElementsByClassName('mermaid'))
+}
+</script>
+    
+    
+    
+    
+    
+  </html>

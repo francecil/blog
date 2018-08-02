@@ -168,3 +168,18 @@ function Dog(){
 ```js
 (funciton(){})
 ```
+
+# 高精度计时
+
+```js
+var start = performance.now()
+...
+var end = performance.now()
+console.log("耗时：",end-start,'ms')//带浮点数，有比ms更高的精度
+```
+
+```js
+console.time("test")
+...
+console.timeEnd("test")
+//系统自动打印  test: xxx.xxx ms

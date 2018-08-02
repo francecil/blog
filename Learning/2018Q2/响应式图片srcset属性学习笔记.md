@@ -31,7 +31,10 @@
 
 若srcset属性不存在或者不包括w描述符的值，sizes属性不起作用。
 
->举个栗子：`<img sizes=" (max-width: 360px) 200px,(max-width: 480px) 300px,400px" >srcset="a.jpg 400w,b.jpg 700w">` 
+>举个栗子：
+```html
+<img sizes=" (max-width: 360px) 200px,(max-width: 480px) 300px,400px" srcset="a.jpg 400w,b.jpg 700w">
+``` 
 >
 > 当视区宽度为375px时，满足`max-width: 480px`的媒体条件，故图像尺寸为300px. 假设当前设备的dpr为2.0,那么就会去srcset中寻找300*2=600w的宽度描述符，若没有找到，则寻找更大的，找到700w，图片显示b.jpg
 >
@@ -39,8 +42,9 @@
 
 >再举个栗子 dpr1.0 视口大小375 
 >
->`<img class="image" src="128px.jpg" srcset="128px.jpg 128w, 256px.jpg 256w,512px.jpg 512w" sizes="(max-width: 360px) 100px, 200px">`
->
+```html
+<img class="image" src="128px.jpg" srcset="128px.jpg 128w, 256px.jpg 256w,512px.jpg 512w" sizes="(max-width: 360px) 100px, 200px">
+```
 >最终呈现width=200px的256px.jpg
 
 ## 多图使用同一图像源的不同尺寸
