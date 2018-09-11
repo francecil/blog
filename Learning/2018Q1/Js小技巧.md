@@ -183,3 +183,8 @@ console.time("test")
 ...
 console.timeEnd("test")
 //系统自动打印  test: xxx.xxx ms
+
+
+# 正则 匹配素数个x
+
+`^(?!(xx+)\1+$)`
