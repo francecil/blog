@@ -242,7 +242,7 @@ function computeOverlay(pattern){
       while(k>0&&pattern[k]!==pattern[i]){
         k = overlay[k-1]
       }
-      overlay[i]=k
+      overlay[i]=pattern[k]===pattern[i]?k+1:0
     }
   }
   return overlay
@@ -270,6 +270,9 @@ function match(s1,s2){
   }
   return -1
 }
+```
+```js
+computeOverlay("abadabab")=[0,0,1,0,1,2,3,]
 ```
 
 ### 参考
