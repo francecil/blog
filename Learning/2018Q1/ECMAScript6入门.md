@@ -550,7 +550,7 @@ s.includes('Hello', 6) // false
 
 ## 实例：模板编译
 
-```
+```js
 const templateStr = `
 <ul class="users">
   <% users.forEach((user) => { %>
@@ -587,7 +587,7 @@ render(templateStr, data)
 */
 ```
 > **思路** 将其转成：
-```
+```js
 /*
 `
 ${
@@ -600,16 +600,16 @@ echo('<ul class="users">')
 </ul>
 }
 `
-定义echo函数
+*/
+//定义echo函数
 function echo(html){
   output += html;
 }
-*/
 ```
 
 > 代码实现
 
-```
+```js
 const render = (template, data) => /* TODO */
 {
   let exp0 = /<%=(.+)%>/g
@@ -631,7 +631,7 @@ const render = (template, data) => /* TODO */
 
 ## 标签模板
 
-```
+```js
 function tag(s, v1, v2) {
   console.log(s[0]);
   console.log(s[1]);

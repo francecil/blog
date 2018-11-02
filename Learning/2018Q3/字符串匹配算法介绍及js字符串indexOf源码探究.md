@@ -221,8 +221,31 @@ function computeOverlay(pattern){
       while(k>0&&pattern[k]!==pattern[i]){
         k = overlay[k-1]
       }
-      overlay[i]=k
+      if(pattern[k]===pattern[i]){
+        k=k+1
+      }
+      overlay[i] = k
     }
+  }
+  return overlay
+}
+```
+
+代码逻辑上做点小优化：
+```js
+function computeOverlay(pattern){
+  var overlay = []
+  var k = 0
+  overlay[0]=0
+  for(var i=1;i<pattern.length;i++){
+	  k = overlay[i-1]
+    while(k>0&&pattern[k]!==pattern[i]){
+      k = overlay[k-1]
+    }
+    if(pattern[k]===pattern[i]){
+      k=k+1
+    }
+    overlay[i] = k
   }
   return overlay
 }
@@ -236,14 +259,13 @@ function computeOverlay(pattern){
   overlay[0]=0
   for(var i=1;i<pattern.length;i++){
 	  k = overlay[i-1]
-    if(pattern[k]===pattern[i]){
-      overlay[i]=k+1
-    } else{
-      while(k>0&&pattern[k]!==pattern[i]){
-        k = overlay[k-1]
-      }
-      overlay[i]=pattern[k]===pattern[i]?k+1:0
+    while(k>0&&pattern[k]!==pattern[i]){
+      k = overlay[k-1]
     }
+    if(pattern[k]===pattern[i]){
+      k=k+1
+    }
+    overlay[i] = k
   }
   return overlay
 }
@@ -272,7 +294,7 @@ function match(s1,s2){
 }
 ```
 ```js
-computeOverlay("abadabab")=[0,0,1,0,1,2,3,]
+computeOverlay("abadabab")=[0,0,1,0,1,2,3,2]
 ```
 
 ### 参考

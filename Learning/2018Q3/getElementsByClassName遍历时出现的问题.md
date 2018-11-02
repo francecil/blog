@@ -67,3 +67,25 @@ for (var j = 0,len=eles.length; j < len; j++) {
 注意 len 需要用临时变量保存，否则每次获取将会得到不同的 length 导致提前结束。
 
 相比上一种写法更安全。
+
+## 补充
+
+上面写法有差异，在于NodeList对象的不同表现。
+
+>大多数情况下，NodeList 对象都是个实时集合。
+>
+>意思是说，如果文档中的节点树发生变化，则已经存在的 NodeList 对象也可能会变化。
+>
+>在另一些情况下，NodeList 是一个静态集合，也就意味着随后对文档对象模型的任何改动都不会影响集合的内容。document.querySelectorAll 返回一个静态的 NodeList。
+
+引用自：https://developer.mozilla.org/zh-CN/docs/Web/API/NodeList
+
+同时，这也解释了为何`getElementsByClassName`获取NodeList的速度比`querySelectorAll`快。
+
+因为前者仅返回**列表的引用地址**仅访问时才实时获取数据 , 而后者一开始就要获取和封装所有数据。
+
+>DynamicNodeList 对象通过在cache缓存中 注册它的存在 并创建。 从本质上讲, 创建一个新的 DynamicNodeList 是非常轻量级的, 因为不需要做任何前期工作。 每次访问 DynamicNodeList 时, 必须查询 document 的变化, length 属性 以及 item() 方法证明了这一点(使用中括号的方式访问也是一样的).
+
+>相比之下, StaticNodeList 对象实例由另一个文件创建,然后循环填充所有的数据 。 在 document 中执行静态查询的前期成本上比起 DynamicNodeList 要显著提高很多倍。
+
+参考：<a href="https://blog.csdn.net/renfufei/article/details/41088521">DOM中的动态NodeList与静态NodeList</a>
