@@ -165,6 +165,9 @@ function SnapshotHistory(){
   }
 }
 ```
+
+**快照的问题**
+1. 较占内存，每次操作要全量深拷贝，有一定时间消耗
 ## 相关开源项目
 ### 百度脑图中的实现
 > 源自kityminder-editor的history.js文件，为了利于理解有部分修改
@@ -286,6 +289,25 @@ function HistoryRuntime() {
 
 总的来说，该实现兼顾了快照式和命令式的缺点
 
+##　拓展： 基于 Immutable.js 的思想 实现快照式
+
+### Immutable 简介
+
+https://facebook.github.io/immutable-js/
+
+```js
+const { Map } = require('immutable');
+const map1 = Map({ a: 1, b: 2, c: 3 });
+const map2 = map1.set('b', 50);
+map1.get('b') + " vs. " + map2.get('b'); // 2 vs. 50
+```
+
+### Immutable 原理解析
+
+<img src="http://img.alicdn.com/tps/i2/TB1zzi_KXXXXXctXFXXbrb8OVXX-613-575.gif"/>
+
+### 实践
+
 ## 举例
 
 我们把例子举的简单点，即一个数组，我们对其进行如下操作
@@ -297,14 +319,19 @@ function HistoryRuntime() {
 这些操作都是可以进行撤销重做的。
 
 **代码如下，有注释：**
-
+ 
 ### 命令式
 ```
 
 ```
+
 ### 快照式
 ```
 
+```
+
+### Immutable
+```
 ```
 
 ## 参考

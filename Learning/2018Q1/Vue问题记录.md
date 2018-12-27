@@ -52,3 +52,19 @@ form的初始值是{},其值是通过http请求得到的。
 而对于`type="selection"`的 `el-table-column` 列，减少列不会出现问题而增加会有问题。
 
 源码需继续跟进，待续...
+
+# 3. 编辑详情时，一般会用一个temp 作为临时对象，防止取消保存时污染源数据
+
+Vue 不允许在已经创建的实例上动态添加新的根级响应式属性 (root-level reactive property)。然而它可以使用 Vue.set(object, key, value) 方法将响应属性添加到嵌套的对象上：
+```js
+Vue.set(vm.someObject, 'b', 2)
+```
+您还可以使用 vm.$set 实例方法，这也是全局 Vue.set 方法的别名：
+```js
+this.$set(this.someObject,'b',2)
+```
+有时你想向一个已有对象添加多个属性，例如使用` Object.assign() 或 _.extend()` 方法来添加属性。但是，这样添加到对象上的新属性不会触发更新。在这种情况下可以创建一个新的对象，让它包含原对象的属性和新的属性：
+```js
+// 代替 `Object.assign(this.someObject, { a: 1, b: 2 })`
+this.someObject = Object.assign({}, this.someObject, { a: 1, b: 2 })
+```

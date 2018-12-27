@@ -377,9 +377,9 @@ setInterval 在 chrome这边效果是这样的：
 
 ajax请求重试次数，采用setTimeout模拟，用setInterval无法准确的控制次数（见补充，即使关闭定时器，仍可能存在请求在事件队列中），建议用settimeout
 
-setInterval先放timer再执行，可以用 先setTimeout再执行的方式模拟
+setInterval 先放timer再执行，可以用 先 setTimeout 再执行的方式模拟
 
-
+2018/12/27 补充：setTimeout模拟比setInterval 更安全的原因在于：定时器执行的方法因为各种原因（比如切换了上下文）报错后，就不会再执行定时，而 setInterval 如果没有手动取消的 是会继续执行的
 
 
 [1]: https://cnodejs.org/topic/5a9108d78d6e16e56bb80882
