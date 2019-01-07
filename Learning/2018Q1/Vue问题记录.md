@@ -68,3 +68,13 @@ this.$set(this.someObject,'b',2)
 // 代替 `Object.assign(this.someObject, { a: 1, b: 2 })`
 this.someObject = Object.assign({}, this.someObject, { a: 1, b: 2 })
 ```
+
+# 4. axios 请求重发时 请求url不正确的问题
+
+首先，`const service = axios.create(xxx)` 创建实例的时候， baseURL 用的是相对路径，比如`/api`
+
+然后准备进行某个请求`如：GET /user` 时，发现 token 过期需要用refresh token去获取新的token；
+
+此时利用`axios.Cancel`取消该请求的发送，并在token重新获取后再次发送该请求`service(request.config)`，此时config里面的请求url是带上`/api`的。
+
+然后再次请求时，经 baseURL 又加上了`/api` ,此时请求是这样的 `GET /api/api/user` 导致响应失败
