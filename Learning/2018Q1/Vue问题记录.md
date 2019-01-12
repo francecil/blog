@@ -78,3 +78,100 @@ this.someObject = Object.assign({}, this.someObject, { a: 1, b: 2 })
 此时利用`axios.Cancel`取消该请求的发送，并在token重新获取后再次发送该请求`service(request.config)`，此时config里面的请求url是带上`/api`的。
 
 然后再次请求时，经 baseURL 又加上了`/api` ,此时请求是这样的 `GET /api/api/user` 导致响应失败
+
+
+# 5. element 弹窗+表单（新增/修改）的代码
+
+首先，data中定义：
+```js
+tempDialog: {
+  //弹窗标题
+  title: '',
+  //新增/修改
+  isEdit: false,
+  //是否显示弹框
+  show: false,
+  //表单实体内容；以往做法是把所有字段定义出来，实在麻烦，此处仅定义一个空对象
+  entity: {}
+},
+```
+
+在template中这样定义的弹框
+```html
+<el-dialog :title="tempDialog.title" :visible.sync="tempDialog.show" width="35%">
+      <el-form :model="tempDialog.entity" :rules="rules" ref="tempDialog" label-width="134px" label-position="left">
+        <el-form-item class="edit-form require-label" :label="table.relation_type" prop="type">
+          <el-input v-model="tempDialog.entity.type" :disabled="tempDialog.isEdit"></el-input>
+        </el-form-item>
+        <el-form-item class="edit-form require-label" :label="table.relation_entity" prop="lastName">
+          <el-row>
+            <el-col :span="8">
+              <el-input v-model="tempDialog.entity.firstName" :disabled="tempDialog.isEdit"></el-input>
+            </el-col>
+            <el-col :span="8">
+              <el-input v-model="tempDialog.entity.lastName" :disabled="tempDialog.isEdit"></el-input>
+            </el-col>
+          </el-row>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="tempSubmit">
+          {{ $t('save') }}
+        </el-button>
+        <el-button @click="tempDialog.show=false">
+          {{ $t('cancel') }}
+        </el-button>
+      </span>
+    </el-dialog>
+```
+
+可以看到，entity中主要有3个元素：`type,firstName,lastName`
+
+但是由于需求，prop中只有`type、lastName`
+
+当采用`this.$refs['tempDialog'].resetFields()` 时，仅会清空以上两个字段，`firstName`不会重置
+
+因此，在新增的初始化时，我们可以选择以下一种方式解决
+
+**推荐：**
+```js
+//先清空原表单关联字段和校验规则
+if (this.$refs['tempDialog']) {
+  this.$refs['tempDialog'].resetFields()
+}
+let temp = this.tempDialog
+//重新绑定一个新对象，并且含有所有属性，避免后面表单校验会出现各种bug
+temp.entity = {
+  type: '',
+  firstName:'',
+  lastName:''
+}
+```
+
+或者
+
+```js
+//先清空原表单关联字段和校验规则，
+if (this.$refs['tempDialog']) {
+  this.$refs['tempDialog'].resetFields()
+}
+let temp = this.tempDialog
+//重新绑定一个新对象，仅含不存在prop的属性，这样当往该字段写入值时，entity会自动增加元素
+// 需要注意的是，如果校验firstName的时候需要用到其他prop字段，将会出错，需要把用到的字段也定义在下面
+temp.entity = {
+  firstName:''
+}
+```
+
+修改的话，一般就这样
+```js
+handleEdit (row) {
+        if (this.$refs['tempDialog']) {
+          this.$refs['tempDialog'].resetFields()
+        }
+        this.tempDialog.title = 'table.update_property'
+        this.tempDialog.isEdit = true
+        this.tempDialog.entity = Object.assign({},row)
+        this.tempDialog.show = true
+      },
+```
