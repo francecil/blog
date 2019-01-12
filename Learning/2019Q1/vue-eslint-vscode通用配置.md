@@ -1,3 +1,18 @@
+## 前言
+
+在vscode的vue项目中，关于代码检查和格式化，遇到各种各样的问题，比如：
+1. 不清楚安装的拓展的功能，导致安装了重复功能的拓展
+2. 右键格式化文档的时候，不是按eslint的规则来格式化，导致需要我再次手动调整
+3. 保存时不能自动修复代码
+
+以下通过自己的实践，进行了相应配置，目前可以实现：
+- 仅安装2个推荐的拓展
+- 右键格式化文档按照eslint规则，不会产生错误
+- 保存时自动修复代码
+
+
+<!--more-->
+
 ## vscode 拓展安装
 
 ### eslint 拓展
@@ -27,6 +42,9 @@
         }
     ],
 ```
+
+
+
 
 ### vetur 拓展
 
@@ -157,6 +175,12 @@ module.exports = {
   }
 }
 ```
+
+`plugin:vue/recommended` 下 wrap_attributes 的规则是force-expand-multiline
+
+即按上述配置，格式化文档时，属性会变成一列（auto），但保存时的eslint 的autoFix会按 force-expand-multiline 多行展开。
+
+觉得麻烦的，可以配置为`plugin:vue/essential` 
 
 ## 配置分享
 
