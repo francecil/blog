@@ -183,8 +183,23 @@ console.time("test")
 ...
 console.timeEnd("test")
 //系统自动打印  test: xxx.xxx ms
-
+```
 
 # 正则 匹配素数个x
 
 `^(?!(xx+)\1+$)`
+
+# 数组转对象 `[{id:1,name:1},{id:2,name:2}] 变成 {1:{name:1},2:{name:2}}`
+
+```js
+let root = {
+  name:'root',
+  children:[{id:1,name:1},{id:2,name:2}]
+}
+let temp = root.children
+root.children = {}
+temp.forEach((v)=>{root.children[v.id]=v;delete v.id})
+```
+目前没找到什么比较好看的写法
+
+# chrome执行性能分析,要分析load处理，利用record即可（refresh是重刷页面并记录）

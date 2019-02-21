@@ -147,7 +147,7 @@ function SnapshotHistory(){
     cursor++;
     snapshots.push(snapshot)
     while(snapshots.length>MAX_HISTORY){
-      undoArr.shift()
+      snapshot.shift()
       cursor--;
     }
   }

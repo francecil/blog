@@ -175,3 +175,105 @@ handleEdit (row) {
         this.tempDialog.show = true
       },
 ```
+
+#6 i18n 在工具类的使用
+
+在vue里面可以用 `this.$t('key')`
+
+在工具类里不能这样用，因为此时的this不是vue
+
+可以采用
+```js
+//i18n 是一个 VueI18n 实例
+import i18n from '@/lang'
+// t是VueI18n的原型方法
+i18n.t('key')
+```
+的方式
+
+# 7 组件的props中对于B数据的校验需要用到A数据，有什么方法吗？
+
+<a href="https://github.com/vuejs/vue/issues/3495">Is there any possible to read other props in a specific validator function</a>
+
+1. 验证，就算不通过，后面vue还是照样继续处理，只是给个报错而已,直接在create中给报错好了
+
+
+# 8 element-ui 的tab控件，切换tab时显示不同的表格，在火狐和ie下el-table控件会有布局闪烁的bug
+
+分析：未配置的tab控件，采用v-show的做法去控制各个tab的显示，即给内容应用了`display：none`
+
+在ie和火狐下，el-table控件会闪烁下然后正常
+
+el-tab-pane 有个lazy属性延迟渲染，估计是初次渲染用的v-if，后面用的v-show,这样做初始不会闪烁 但后面还是会闪烁。
+
+目前的做法是给每个有el-table的el-tab-pane下面内容加一个`v-if="activeName==='tabPaneName'"`的判断，每次都重新渲染。
+
+但由于每次都重新渲染，每次都会进行表格数据的请求，
+
+https://github.com/ElemeFE/element/issues/13242
+
+https://github.com/ElemeFE/element/issues/14263
+
+最后的解决方案：
+
+利用el-tab-pane的lazy属性，和table的$ready属性解决。。
+
+# 9 v-on 对象语法 传参
+
+## event参数
+
+由于对象语法中，事件名对应的是方法而不是执行函数，那么在对应的处理方法中，唯一的参数就是event。
+
+```js
+<div v-on="listenersComputed"></div>
+
+computed:{
+  listenersComputed(){
+    return {
+      click:this.handleClick
+    }
+  }
+}
+
+handleClick (e) {
+  console.log(e)
+}
+```
+
+不写参数的话直接获取event的话，在非firefox的浏览器，也可以拿到event，因为window.event的原因
+```js
+handleClick () {
+  console.log(event)
+}
+```
+但是firefox没有window.event,这里event会是 undefined
+
+## 其他参数
+
+对于非对象语法，可以这么传
+
+```js
+<div v-on：click="handleClick(name,$event)"></div>
+
+
+handleClick (name,event) {
+  console.log(name,event)
+}
+```
+
+那对于对象语法，怎么传参呢
+```js
+<div v-on="listenersComputed"></div>
+
+computed:{
+  listenersComputed(){
+    return {
+      click:(event) => this.handleClick('gahing',event)
+    }
+  }
+}
+
+handleClick (name,event) {
+  console.log(name,event)
+}
+```
