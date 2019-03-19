@@ -26,7 +26,7 @@ vi /usr/local/nginx/conf/nginx.conf
 
 7. 修改 http -> server 节点下 localhost 为如下：
 location / {
-    root /usr/local/thingsBoard/public;
+    root /usr/local/thingsboard/public;
     index index.html index.html;
 }
 location /api/ {

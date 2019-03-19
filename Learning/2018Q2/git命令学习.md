@@ -1,3 +1,4 @@
+# git 命令学习
 ## 1. 分支切换
 
 ### 查看远程分支
@@ -70,3 +71,12 @@ git push origin master
 ```
 
 此时可以把忽略规则写到gitignore中了。
+
+### git reset 
+先用git log 查看commit记录，回车下一页，q退出查看
+
+git reset --hard commit_id 或者 HEAD^ 表示当前版本的上一个版本，10个前的版本就是 HEAD~10
+
+当前版本被重置后，想回到刚刚的版本，又找不到commit_id,刚刚的命令窗口被关闭，怎么办?
+
+可以通过 git reflog 里面记录了我们每次的命令 
