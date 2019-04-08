@@ -166,6 +166,9 @@ scroll.x 最大应该为1515， 当大于这个数，就可能会出现滚动条
 
 看下大小屏展示效果，不行再具体调列
 
+### 采用`word-break：break-all` 代替 style-maxWidth
+
+
 ## antd Modal 组件
 
 destroyOnClose 每次都重建，避免上次校验和数据的影响
@@ -198,3 +201,104 @@ validateTrigger: ['onChange', 'onBlur'],
 https://github.com/yiminghe/async-validator#type
 
 https://github.com/ant-design/ant-design/issues/731
+
+## InputNumber 组件
+
+### 只允许输入整数,大小在1~1000之间
+
+```js
+<InputNumber style={{ width: '100%' }}
+                            min={1}
+                            max={1000}
+                            formatter={value => value&&parseInt(value)}
+                            placeholder="请输入数量，仅限于阿拉伯数字"
+                        />
+```
+
+## react 高阶组件使用时遇到的问题
+
+layout组件render 遍历输出页面组件（Route包装），为了在页面组件上加一个鉴权，在输出页面组件的时候改成authHOC(页面组件)，使其变成高阶组件。
+
+但是layout每次render的时候根据diff会用重新authHOC(页面组件)，而不是复用原来的，导致挂载了多次页面组件。
+
+解决办法就是在layout引入页面组件时（import childRoutes from xx），该childRoutes 里的页面组件就是高阶组件的了。
+
+```js
+export const childRoutes = [
+  {
+    'path': '/',
+    'component': Home,
+    'exact': true,
+  },
+  {
+    'path': '/projects',
+    'component': ProjectList
+  }
+]
+childRoutes.forEach(route => route.component = authHOC(route.component))
+```
+
+## 列表查询 规范
+关于列表查询中 搜索项、筛选、排序、分页，我这边做个规范，你看下可行不。
+
+1. 点击查询按钮：带上 搜索项、筛选、排序参数，分页为第一页
+2. 增删改操作后的列表刷新：带上 搜索项、筛选、排序参数，分页为第一页
+3. 点击重置按钮：清空搜索项、筛选、排序参数，啥都不带，分页为第一页
+4. 修改筛选 排序 分页参数：带上 搜索项、筛选、排序参数，分页为当前页
+
+## 组件unmount时 仍对state进行操作造成的内存泄漏
+
+参考：https://segmentfault.com/a/1190000017186299
+
+拦截unmounted方法，触发时设置flag变量为true，并拦截setState方法，在触发时先判断是否unmounted
+
+同时学习了修饰器语法
+
+## antd 自定义表单控件
+
+https://ant.design/components/form-cn/#components-form-demo-customized-form-controls
+
+## antd form 在change和blur时做不同的校验
+
+https://github.com/react-component/form#option-object 
+
+```js
+<Form.Item label="私网DNS服务（首选）" {...formItemLayout}>
+            {form.getFieldDecorator('dns', {
+              validate: [
+                {
+                  trigger: 'onBlur',
+                  rules: [{
+                    required: true,
+                    validator: validateIpNotExistNull,
+                    message: '请输入私网DNS服务（首选）'
+                  }]
+                }, {
+                  trigger: ['onChange','onBlur'],
+                  rules: [{
+                    validator: validateIpArray,
+                    message: '格式错误'
+                  }]
+                }
+              ],
+            })(
+              <IpInput></IpInput>
+            )}
+          </Form.Item>
+```
+
+判空提示仅在 blur 时，
+格式校验在blur和change时都做
+
+## antd 覆盖组件默认样式
+
+只影响当前某个父节点下(.parant-div)的antd组件，
+
+less中这么写，无需配置css module
+```css
+.parant-div {
+  :global(.ant-input){
+    width:11px;
+  }
+}
+```

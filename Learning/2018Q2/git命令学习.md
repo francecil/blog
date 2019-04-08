@@ -80,3 +80,7 @@ git reset --hard commit_id 或者 HEAD^ 表示当前版本的上一个版本，1
 当前版本被重置后，想回到刚刚的版本，又找不到commit_id,刚刚的命令窗口被关闭，怎么办?
 
 可以通过 git reflog 里面记录了我们每次的命令 
+
+## git 文件改一半需要临时改个bug -commit上怎么写？
+
+https://www.cnblogs.com/wufangfang/p/6085617.html

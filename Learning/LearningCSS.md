@@ -86,6 +86,8 @@ input:focus
 提示：在 CSS 定义中，a:active 必须被置于 a:hover 之后，才是有效的。
 提示：伪类名称对大小写不敏感
 p:first-child p元素里面的第一个 
+
+p:nth-child(n+1)
 :lang 伪类 
 使你有能力为不同的语言定义特殊的规则。在下面的例子中，:lang 类为属性值为 no 的 q 元素定义引号的类型
 ```
