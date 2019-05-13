@@ -1,3 +1,5 @@
+js 小技巧
+========= 
 
 # 文件清空
 
@@ -203,3 +205,38 @@ temp.forEach((v)=>{root.children[v.id]=v;delete v.id})
 目前没找到什么比较好看的写法
 
 # chrome执行性能分析,要分析load处理，利用record即可（refresh是重刷页面并记录）
+
+# 箭头函数返回对象
+
+```js
+(v)=>{
+  return {
+    name : v
+  }
+}
+```
+=>
+```js
+(v)=>(
+  {
+    name : v
+  }
+)
+```
+
+
+# JavaScript如何简单快速生成包含前N个自然数的数组？
+
+`Array.from({length}, (v, k) => k)`
+
+`let f = length => [...Array.from({length}).keys()]`
+
+# 函数解构赋值，传null的时候
+
+```js
+let f=({a}={a:1})=>a
+f() //1
+f({}) //undefined
+f(undefined) //1
+f(null) //Uncaught TypeError: Cannot destructure property `a` of 'undefined' or 'null'.
+```

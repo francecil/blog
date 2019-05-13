@@ -375,6 +375,24 @@ IE 不可用
 
 `preventDefault(event)` 屏蔽默认方法
 
+```html
+<div class="test1"></div>
+<script>
+    document.querySelector('.test1').addEventListener('click', function () {
+        console.log(1)
+    })
+    document.querySelector('.test1').addEventListener('click', function () {
+        console.log(2)
+    }, true)
+</script>
+```
+Q：点击div.test1后，数字1和2的出现顺序是什么样的？
+
+A: 1,2 此时该元素处于目标元素，不存在什么冒泡或捕获阶段
+
+注意：点击label时，默认处理会focus对应的控件并执行点击操作（可以用preventDefault取消）
+
+所以对于`<label>Click me<input type="text"></label> ` 这类的，事件绑定在label时要额外注意
 ## 事件类型
 
 ### HTML5 事件类型

@@ -40,9 +40,15 @@ io线程池
 
 ## 非IO的异步API
 
-参考链接：https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/
+参考链接：
+
+https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/
+
+https://nodejs.org/zh-cn/docs/guides/event-loop-timers-and-nexttick/#what-is-the-event-loop 中文版
 
 http://www.ruanyifeng.com/blog/2018/02/node-event-loop.html 结合评论
+
+https://cnodejs.org/topic/5a9108d78d6e16e56bb80882
 
 异步任务分为
 
@@ -57,29 +63,123 @@ setTimeout、setInterval、setImmediate的回调函数，追加在次轮循环
 PS:上面说法不够准确，是否追加到次轮是看对应的阶段是否进行过，没有进行过的会放入本轮。比如这个例子
 ```js
 setTimeout(() => {
-console.log(1) //1
-setTimeout(() => console.log(4),0) //4
-setImmediate(() => console.log(2)) //2
-},0);
+  console.log(1) //1
+  setTimeout(() => console.log(4), 0) //4
+  setImmediate(() => console.log(2)) //2
+}, 0);
 setImmediate(() => console.log(3)); //3
 // 1 3 2 4
 ```
 在timer1的回调执行中，（4）就不会再追加到本轮循环的timer队列中了。而（2），由于check阶段（执行setImmediate()的回调函数）还没执行，会在本轮循环进行
 
-
+由于每个阶段的结束，都会执行`nextTickQueue（process.nextTick）`，我们进行验证
+```js
+setTimeout(() => {
+  console.log(1) //1
+  setTimeout(() => console.log(4), 0) //4
+  setImmediate(() => console.log(2)) //2
+  process.nextTick(()=>console.log('nextTick2'))
+}, 0);
+setImmediate(() => {console.log(3);process.nextTick(()=>console.log('nextTick1'))}); //3
+```
+Output:
+```
+1
+nextTick2
+3
+2
+nextTick1
+4
+```
 
 一轮事件循环的6个阶段,每个阶段都是把当前阶段的函数队列清空，才会执行下个阶段。
 
 ```
-timers
-I/O callbacks
+timers:执行setTimeout() 和 setInterval()中到期的callback
+I/O callbacks:上一轮循环中有少数的I/Ocallback会被延迟到这一轮的这一阶段执行?
 idle, prepare
-poll
-check
-close callbacks
+poll:执行I/O callback
+check: setImmediate
+close callbacks: 一些准备关闭的回调函数，如：socket.on('close', ...)
 ```
 
-每个阶段的结束，都会执行`nextTickQueue（process.nextTick）`和`microTaskQueue（Promise）`，6个阶段结束后，继续下轮循环。
+每个阶段的结束，都会执行`nextTickQueue（process.nextTick）`和`microTaskQueue（Promise）`（前者都执行完才执行后者），6个阶段结束后，继续下轮循环。
+
+上面这句话是实践加上参考：https://jsblog.insiderattack.net/event-loop-and-the-big-picture-nodejs-event-loop-part-1-1cb67a182810
+
+上面那句话在node v11以上不太对，见下面
+
+20190510补充：
+
+参考：https://jsblog.insiderattack.net/new-changes-to-timers-and-microtasks-from-node-v11-0-0-and-above-68d112743eb3
+
+node v11后，setTimeout, setImmediate, process.nextTick and Promises 的行为发生改变
+```js
+setTimeout(() => console.log('timeout1'));
+setTimeout(() => {
+    console.log('timeout2')
+    Promise.resolve().then(() => console.log('promise resolve'))
+});
+setTimeout(() => console.log('timeout3'));
+setTimeout(() => console.log('timeout4'));
+//setImmediate(() => console.log(3))
+```
+此时timer都到时间了，在timer阶段会执行所以到期的callback
+
+node v11以下是输出：
+```
+timeout1
+timeout2
+timeout3
+timeout4
+promise resolve
+```
+
+表示整个timer阶段结束，执行 microTaskQueue，与上面的说法一致
+
+在node.js v11以上，与浏览器保持一致，是输出
+```
+timeout1
+timeout2
+promise resolve
+timeout3
+timeout4
+```
+每个timer执行结束，都会去执行microTaskQueue，而不是等整个timer阶段结束
+
+
+
+
+
+### 浏览器端的事件循环：
+
+参考：https://juejin.im/post/5c337ae06fb9a049bc4cd218#heading-12
+
+有多个任务队列，只有一个微任务队列
+
+> macrotask(宏任务): script（整体代码）, setTimeout, setInterval, setImmediate, I/O, UI rendering等
+>
+>microtask(微任务): process.nextTick, Promises（这里指浏览器实现的原生 Promise）, Object.observe, MutationObserver等
+
+- 从macrotask队列中(task queue)取一个宏任务执行, 执行完后, 取出所有的microtask执行.
+- 重复回合
+
+当某个宏任务执行完后,会查看是否有微任务队列。如果有，先执行微任务队列中的所有任务，如果没有，会读取宏任务队列中排在最前的任务，执行宏任务的过程中，遇到微任务，依次加入微任务队列。当前宏任务执行栈空后，再次读取微任务队列里的任务，依次类推。
+
+特别提一下，Promise的内层嵌套
+```js
+new Promise(resolve => {
+    console.log(1);
+    resolve(3);
+    Promise.resolve().then(()=> console.log(4))
+}).then(num => {
+    console.log(num)
+});
+console.log(2)
+```
+答案是 1243 不是1234 的原因在于 **`里面的promise的then要比外面的promise的then先执行，也就是说它的nextTick更先注册，所以4是在3之前输出。`**
+
+详细可以看<a>Promise原理分析</a>一文
 
 # 4.异步编程
 

@@ -24,6 +24,8 @@ effects：Action 处理器，处理异步动作
 自定义的方法 用 `方法名 = function(){}`
 原生方法和渲染组件方法用 `方法名()`
 
+后记：其实是绑定上下文的关系，自定义的方法 用箭头函数，上下文属于该组件
+
 ## 启用css module
 
 https://www.jianshu.com/p/0246794ac0c3
@@ -168,6 +170,11 @@ scroll.x 最大应该为1515， 当大于这个数，就可能会出现滚动条
 
 ### 采用`word-break：break-all` 代替 style-maxWidth
 
+### 使用省略号 ellipsis
+
+https://github.com/ant-design/ant-design/issues/5753#issuecomment-451896473
+
+https://github.com/ant-design/ant-design/issues/5753#issuecomment-457319869
 
 ## antd Modal 组件
 
@@ -302,3 +309,109 @@ less中这么写，无需配置css module
   }
 }
 ```
+
+20190507后记：这个貌似只在css module中起作用，
+
+普通的话，其实只需要 外面包一层class就行了
+```css
+.parant-div {
+  > .ant-input {
+    width:11px;
+  }
+}
+```
+https://segmentfault.com/q/1010000012379541/a-1020000012392115
+
+## antd TreeSelect 自动获得焦点并展开列表
+
+使用Select中的属性 ：defaultOpen
+
+TreeSelect 的文档里没写。。
+
+## antd Pagination 修改 `每页显示多少条选择框` 中的文字描述
+
+中文默认是 ' 条/页'，即 `xx 条/页`
+
+配置 `locale:{ items_per_page: '行/页' } ` 可以变成 `xx 行/页`
+
+## select 组件：Option 值(id) 框中值(name) 下拉选项值（Icon+name）各不一样
+
+提交时使用id
+
+关键在于使用了自定义的属性temp(也可以使用其他的名字)
+
+```html
+<Select
+                showSearch
+                allowClear
+                placeholder="请输入，并选择"
+                optionLabelProp="temp"
+                optionFilterProp="temp"
+                filterOption={(input, option) => (option.props.temp||"").toLowerCase().indexOf(input.toLowerCase()) >= 0}
+              >
+                {labelList.map(d => <Select.Option key={d.id} value={d.id} temp={d.name}>{`Icon-${d.name}`}</Select.Option>)}
+              </Select>
+```
+
+## antd Select 焦点问题
+
+在设置 showSearch 的情况下，autofocus 或者 focus 方法没有效果
+
+> 其实是有效果的，这个组件还需要按 enter or ↓ 键 进入搜索模式,交互上好像没法避免
+
+issue:https://github.com/ant-design/ant-design/issues/8269
+
+不知道能不能找到最终显示的搜索框的input 让他获取焦点
+`this.selector.rcSelect.inputRef.focus()` 仍然没有效果
+
+采用Input+Dropdown实现同样效果，然后对Input做focus
+
+## antd Select dropdownRender 触发事件
+
+https://github.com/ant-design/ant-design/issues/14639
+
+https://github.com/ant-design/ant-design/issues/13448
+
+## antd select 大数据量的解决方案
+
+官方issue:open
+
+https://github.com/ant-design/ant-design/issues/3789
+
+## antd form 校验，使用getFieldDecorator 的校验 又有warning提示
+help=xxx?undefined:warningHelp
+## antd form 表单出现字段改变 则显示某个按钮
+
+## 何时使用非受控组件？
+受控：组件的值是从state或者props处获得，值的设置是通过onchange并更新state的值实现的
+一般情况下都用受控组件，在满足以下条件的情况下可以用非受控
+1. 无需validation
+2. 其他组件依赖该表单组件的值
+3. 数据格式化
+
+或者是file表单组件，大部分情况都是用非受控
+
+## antd tree-select 点击父节点只做展开-收缩处理
+
+https://github.com/ant-design/ant-design/issues/11013
+
+```css
+.ant-select-tree-switcher {
+  position: relative;
+}
+.ant-select-tree-switcher_open::before, .ant-select-tree-switcher_close::before {
+  content: '';
+  position: absolute;
+  right: -190px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+```
+用css扩大了左边箭头的点击范围，使得点击箭头右边的文字就相当于点在了箭头上
+
+## antd form 收起查询项再展开，查询条件消失
+
+getFieldDecorator里面有个配置选项`preserve`
+
+将其配置为true后，即便字段不再使用，也保留该字段的值，这样隐藏再展示值就还存在

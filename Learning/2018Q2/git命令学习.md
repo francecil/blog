@@ -84,3 +84,13 @@ git reset --hard commit_id 或者 HEAD^ 表示当前版本的上一个版本，1
 ## git 文件改一半需要临时改个bug -commit上怎么写？
 
 https://www.cnblogs.com/wufangfang/p/6085617.html
+
+1. git stash  存储工作区
+2. git checkout -b issue-xxx 复制当前分支到issue-xxx分支
+3. git commit -m "fix bug xxx"  修改bug并提交
+4. git checkout master 切换到master分支
+5. git merge issue-xxx 合并issue-xxx分支
+6. git branch -d issue-xxx 删除issue-xxx分支
+7. git stash list 展示刚才的工作区
+8. git stash pop 还原工作区并删除对应的stash
+9. git stash list 此时应该是空的

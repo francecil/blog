@@ -24,9 +24,9 @@ document.write 一段完整的html结构，必须是在一个script中进行的�
 
 延后了docwrite的时机，看下有没有办法实时
 
-解决：script onload时
+利用 script onload？
 
-问题 实现当前脚本运行时注册onload
+问题：在当前脚本运行时无法注册onload
 
 > 无法做的话 用原始document.write插入个自己的脚本实现，插入的内容在该`<script>`之前，最后把该scrite删除
 无法实现，write时 会先进行解析而不是运行剩余脚本，采用appendChild试试？
@@ -34,6 +34,8 @@ document.write 一段完整的html结构，必须是在一个script中进行的�
 对于firefox 可以采用 `document.addEventListener("afterscriptexecute",()=>{})`
 
 采用settimeout 0 ? 无法实现，不是每段js运行后运行 而是所有js运行完（一个事件周期内）才运行的
+
+解决方案1：后端修改html，将`<script/>`带上onload事件。
 
 ## script textarea内的内容不处理 其他的进行正则匹配
 
