@@ -415,3 +415,95 @@ https://github.com/ant-design/ant-design/issues/11013
 getFieldDecorator里面有个配置选项`preserve`
 
 将其配置为true后，即便字段不再使用，也保留该字段的值，这样隐藏再展示值就还存在
+
+## 页面离开拦截&提示
+
+```jsx
+import { Link, Prompt } from 'react-router-dom'
+this.state = {
+  isPrompt: true
+}
+render () {
+    const { isPrompt } = this.state
+    return (
+      <div>
+        <p>我是页面内容</p>
+        <Prompt
+          when={isPrompt}
+          message={(location) => {
+            if (!isPrompt) {
+              return true;
+            }
+            Modal.confirm({
+              title: '放弃编辑',
+              content: (
+                <div className="priNetSeg-remove-modal">
+                  <p className="priNetSeg-remove-modal-warn">以下操作将不可逆:</p>
+                  <p className="priNetSeg-remove-modal-warn">- 当前编辑内容将被丢失</p>
+                  <p className="priNetSeg-remove-modal-prompt">确定放弃本次编辑内容？</p>
+                </div>
+              ),
+              icon: <Icon type="exclamation-circle" theme="filled" />,
+              okText: '确认',
+              cancelText: '取消',
+              onOk: () => {
+                this.setState({
+                  isPrompt: false,
+                }, () => {
+                  this.props.history.push(location.pathname)
+                })
+              },
+              maskClosable: true,
+            });
+            return false;
+          }
+          }
+        />
+      </div>
+    )
+  }
+```
+
+## create-react-app 中使用css modules
+
+对于js环境，默认支持无需配置，css文件名改成 `*.module.css` 即可，项目中通过 `import styles from '*.module.css'` 使用即可。
+
+> 于此同时，对于 `*.module.css` 采用 `import '*.module.css'` 这种全局引入的方式是没有效果的
+
+对于ts环境
+
+创建项目的时候不要用 `create-react-app my-app --scripts-version=react-scripts-ts` 
+
+要用 `npx create-react-app antd-virtualized-select --typescript`
+
+这样 `*.module.css` 文件就是支持 css modules 的
+
+## react state 修改对象数组
+
+```js
+this.state = {
+  list:[{
+    al:[{a:1},{a:2}],
+    bl:[{b:1},{b:2}]
+  }]
+}
+```
+然后要修改list[0].a1中a=1的元素，应该怎么做?
+
+~~首先要明确的是 state 是 immuteable 的~~
+
+子先改，再父改
+
+
+## create-react-app 中 使用less/sass
+
+使用 sass/scss 的话，cra 默认支持，只是需要再`npm i node-sass -D`一样
+
+less 的话 参考 https://ant.design/docs/react/use-with-create-react-app#Customize-Theme 配置
+
+## 发布一个组件
+
+cra: 不适合
+
+nwb: 不支持ts，配置略坑（可能是我没弄对
+

@@ -83,7 +83,7 @@ git reset --hard commit_id 或者 HEAD^ 表示当前版本的上一个版本，1
 
 ## git 文件改一半需要临时改个bug -commit上怎么写？
 
-https://www.cnblogs.com/wufangfang/p/6085617.html
+[参考](https://www.cnblogs.com/wufangfang/p/6085617.html)
 
 1. git stash  存储工作区
 2. git checkout -b issue-xxx 复制当前分支到issue-xxx分支
@@ -94,3 +94,20 @@ https://www.cnblogs.com/wufangfang/p/6085617.html
 7. git stash list 展示刚才的工作区
 8. git stash pop 还原工作区并删除对应的stash
 9. git stash list 此时应该是空的
+
+## git tag
+[参考](https://www.jianshu.com/p/9e64bdf1e8f9)
+### 添加tag
+```bash
+git tag -a  <tag名> -m <注释文字>
+
+# git tag -a v0.1.0 -m v0.1.0
+```
+
+### push tag
+```bash
+git push origin <标签名>
+
+#一次推送本地所有 tags，使用 --tags选项：
+git push origin --tags
+```
