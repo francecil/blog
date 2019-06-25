@@ -111,3 +111,9 @@ git push origin <标签名>
 #一次推送本地所有 tags，使用 --tags选项：
 git push origin --tags
 ```
+
+## git clone
+```sh
+##最近一次提交
+git clone --depth 1 <remote-addr:repo.git>
+```
