@@ -53,7 +53,9 @@ git rebase —onto master aaaa^
 ## 3. push
 ### 推送到指定名称的远程分支
 ```bash
-git push origin :dev
+// 将local-dev推送到 origin-dev 分支
+git push origin local-dev:origin-dev
+// 当 local-dev 为空时，将删除 origin-dev 分支
 ```
 
 ## 4. 版本回退
