@@ -43,3 +43,5 @@ cd /usr/local/nginx/sbin/
 
 9. 若修改配置后，重启 nginx
 /usr/local/nginx/sbin/nginx -s reload
+
+3~5 步骤可以采用在线安装的方式，不用下载编译的方式
