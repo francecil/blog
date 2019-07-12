@@ -247,3 +247,30 @@ f(null) //Uncaught TypeError: Cannot destructure property `a` of 'undefined' or 
 var arr = [ [1, 2, 2], [3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14] ] ] ], 10];
 [...new Set(arr.flat(Infinity))].sort((a,b)=>+(a>b)||+(a===b)-1)
 ```
+
+# 获取 class 静态属性和方法 列表
+
+```js
+class Foo{
+    static one() {}
+    static num1 = 'Num 1';
+    notStatic = "I'm not static";
+    three() {}
+    static four() {}
+}
+// 获取静态属性列表
+Object.keys(Foo)
+// ["num1"]
+
+
+// 获取静态方法列表
+Object.getOwnPropertyNames(Foo)
+// ["length", "prototype", "one", "four", "name", "num1"]
+Object.getOwnPropertyNames(Foo).filter(prop => typeof Foo[prop] === "function");
+// ["one", "four"]
+
+// 综合
+Object.keys(Foo).concat(Object.getOwnPropertyNames(Foo).filter(prop => typeof Foo[prop] === "function"))
+//  ["num1", "one", "four"]
+```
+
