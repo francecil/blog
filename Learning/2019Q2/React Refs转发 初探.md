@@ -133,8 +133,10 @@ class InputChild extends React.Component{
 
 **注意：**函数式组件不能提供ref，否则对ref的访问将会失败，只能用`React.forwardRef()`传递 ref
 
-> 效果是一样，但是对于上层使用者（不知道子组件代码的）来说， 
-> 第一想法是用 ref 绑定子组件而不是其他额外prop (forwardRef)
+> 效果是一样，但是对于组件使用者（不知道子组件代码的）来说， ref是透明的
+> 第一想法是用 ref 绑定子组件而不是其他额外prop (forwardRef)，作为高阶组件封装时，这样做更加友好.
+
+参考 [浅谈 React Refs](https://imweb.io/topic/5b6136a06025939b125f45ff)
 
 ## 高阶组件上使用 refs 转发
 
@@ -227,4 +229,26 @@ export default logProps(InputChild);
 
 ## React.forwardRef 源码解析
 
-...
+```jsx
+export default function forwardRef<Props, ElementType: React$ElementType>(
+  render: (props: Props, ref: React$Ref<ElementType>) => React$Node,
+) {
+  // ... 一些检测代码
+  return {
+    $$typeof: REACT_FORWARD_REF_TYPE,
+    render,
+  };
+}
+```
+
+举个demo
+```jsx
+const InputChild = React.forwardRef((props, ref) => (
+  <input ref={ref}>
+  </input>
+));
+<InputChild ref={this.icRef}>Click me!</InputChild>;
+```
+那 InputChild 组件上的 icRef 是怎么传到 forwardRef 里面的呢？
+
+。。。待续
