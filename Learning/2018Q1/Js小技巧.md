@@ -241,6 +241,8 @@ f(undefined) //1
 f(null) //Uncaught TypeError: Cannot destructure property `a` of 'undefined' or 'null'.
 ```
 
+传 null 的时候 不会使用默认值，arguments 是有值的，可以用 babel 编译下看其实现
+
 # 将数组扁平化去并除其中重复部分数据，最终得到一个升序且不重复的数组
 
 ```js
@@ -269,8 +271,31 @@ Object.getOwnPropertyNames(Foo)
 Object.getOwnPropertyNames(Foo).filter(prop => typeof Foo[prop] === "function");
 // ["one", "four"]
 
-// 综合
+// 获取静态属性和方法
 Object.keys(Foo).concat(Object.getOwnPropertyNames(Foo).filter(prop => typeof Foo[prop] === "function"))
 //  ["num1", "one", "four"]
 ```
+
+# 实现 函数重载
+```js
+function addMethod(object, name, fn) {
+    var old = object[name];
+    object[name] = function(){
+        // console.log('fn',fn)
+        if (fn.length == arguments.length)
+           return fn.apply(this, arguments)
+        else if (typeof old == 'function')
+           return old.apply(this, arguments);
+    };
+}
+let obj = {}
+addMethod(obj,'say',(a)=>a)
+addMethod(obj,'say',(a,b,c)=>a+b+c)
+addMethod(obj,'say',(a,b)=>a-b)
+``` 
+每次重载后，都有属于自己的闭包
+
+old 为 上一次重载的方法，故当`fn.length == arguments.length` 不匹配时，会往上次的重载方法找
+
+from 《JavaScript 忍者秘籍》
 
