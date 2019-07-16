@@ -251,4 +251,94 @@ const InputChild = React.forwardRef((props, ref) => (
 ```
 那 InputChild 组件上的 icRef 是怎么传到 forwardRef 里面的呢？
 
-。。。待续
+InputChild 组件其实就是 ReactElement, 我们先看下 src/ReactElement.js 的代码
+
+实际上我们写的 jsx ，调用的是 createElement 方法，该方法最后又实例化一个 ReactElement 对象
+
+```jsx
+var InputChild = React.forwardRef(function (props, ref) {
+  return React.createElement("input", {
+    ref: ref
+  });
+});
+=>
+var InputChild = React.forwardRef(function (props, ref) {
+  return ReactElement(
+    "input",//ref
+    "",//key
+    ref,
+    null,//self
+    null,//source
+    ReactCurrentOwner.current,
+    {},//props
+  );
+});
+=>
+var InputChild = React.forwardRef(function (props, ref) {
+  return {
+    // This tag allows us to uniquely identify this as a React Element
+    $$typeof: REACT_ELEMENT_TYPE,
+
+    // Built-in properties that belong on the element
+    type: "input",
+    key: "",
+    ref: ref,
+    props: {},
+
+    // Record the component responsible for creating this element.
+    _owner: ReactCurrentOwner.current,
+  };
+});
+=>
+var InputChild = (function render(props, ref){
+    return {
+      $$typeof: REACT_ELEMENT_TYPE,
+      type: "input",
+      key: "",
+      ref: ref,
+      props: {},
+      _owner: ReactCurrentOwner.current,
+    };
+  })=>({
+  $$typeof: REACT_FORWARD_REF_TYPE,
+  render
+});
+```
+
+至于组件怎么渲染的，在 `react\packages\react-dom\src\server\ReactPartialRenderer.js`中定义，
+```js
+case REACT_FORWARD_REF_TYPE: {
+            const element: ReactElement = ((nextChild: any): ReactElement);
+            let nextChildren;
+            const componentIdentity = {};
+            prepareToUseHooks(componentIdentity);
+            nextChildren = elementType.render(element.props, element.ref);
+            nextChildren = finishHooks(
+              elementType.render,
+              element.props,
+              nextChildren,
+              element.ref,
+            );
+            nextChildren = toArray(nextChildren);
+            const frame: Frame = {
+              type: null,
+              domNamespace: parentNamespace,
+              children: nextChildren,
+              childIndex: 0,
+              context: context,
+              footer: '',
+            };
+            if (__DEV__) {
+              ((frame: any): FrameDev).debugElementStack = [];
+            }
+            this.stack.push(frame);
+            return '';
+          }
+```
+创建了一个frame，children就是 InputChild的render
+
+
+
+createElement 是怎么和dom联系在一起的？
+
+分析的有点乱。。未完待续。。
