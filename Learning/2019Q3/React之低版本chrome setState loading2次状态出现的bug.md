@@ -18,3 +18,18 @@ this.setState({
 chrome 59,高版本不会出现
 
 ## 原因分析
+
+## 解决方案
+
+```js
+this.setState({loading:true})
+let data = await getList()
+this.setState({
+  data:data
+})
+setTimeout(()=>{
+  this.setState({
+    loading:false,
+  })
+},0)
+```
