@@ -463,4 +463,9 @@ class App extends React.Component<any, any> {
 
 需求很简单，换个主题色。
 
-未完待续。。
+[React组件库主题设计](https://github.com/whinc/blog/issues/4) 的做法，主题色定义在js中，和上文一样，通过 Context 去设置或切换主题色
+
+同样的，主题色定义在 css 中，context 值保存 className，切换 className 实现主题切换
+
+（示例就不提供了，可以看上面的参考文献）
+
