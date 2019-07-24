@@ -299,3 +299,54 @@ old 为 上一次重载的方法，故当`fn.length == arguments.length` 不匹�
 
 from 《JavaScript 忍者秘籍》
 
+# 从一个数组N中随机抽取不重复的M(N>>M)个元素
+
+讲下标作为元素的key,
+
+1. Set while(true) 直到个数达到 N
+2. 洗牌算法 O(n)
+```js
+/* 洗牌算法：
+    1.生成一个0 - arr.length 的随机数
+    2.交换该随机数位置元素和数组的最后一个元素，并把该随机位置的元素放入结果数组
+    3.生成一个0 - arr.length - 1 的随机数
+    4.交换该随机数位置元素和数组的倒数第二个元素，并把该随机位置的元素放入结果数组
+    依次类推，直至取完所需的10k个元素
+*/
+
+function shuffle(arr, size) {
+    let result = []
+    for (let i = 0; i < size; i++) {
+        const randomIndex = Math.floor(Math.random() * (arr.length - i))
+        const item = arr[randomIndex]
+        result.push(item)
+        arr[randomIndex] = arr[arr.length - 1 - i]
+        arr[arr.length - 1 - i] = item
+    }
+    return result
+}
+```
+[洗牌算法](https://blog.csdn.net/qq_26399665/article/details/79831490)
+
+3. 蓄水池抽样算法
+当A足够大时，不能用数组存储
+
+[蓄水池抽样算法](https://blog.csdn.net/bitcarmanlee/article/details/52719202)
+
+```js
+function reservoir(n,m){
+  // 假设数据为0~n-1,抽 m 个元素
+  // 初始化池中数据为 0~m-1
+  let ret = Array.from({length: m}, (v, i) => i);
+  for(let i=m;i<n;i++){
+    // 第i个元素有 m/i 概率替换ret中任一元素
+   // 即 Math.random()*(i+1) <=m 表示命中
+    if(Math.random()*(i+1)<=m){
+      // 命中，选择ret一个元素进行替换
+      let index = Math.floor(Math.random()*m)
+      ret[index] = i
+    }
+  }
+  return ret
+}
+```
