@@ -19,6 +19,10 @@ chrome 59,高版本不会出现
 
 ## 原因分析
 
+Promise.prototype.finally chrome63 才支持 不知道会不会有关系，试一下。。
+
+
+
 ## 解决方案
 
 ```js
