@@ -11,3 +11,6 @@ docz-core/cli.ts
 
 命令再此处注册，此时走到 commands.dev(args)
 
+## 监听文件变动
+
+Q: chokidar 监听change事件会触发两次？ 
