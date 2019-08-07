@@ -26,6 +26,9 @@ export default {
 
 动态引入原理：
 
+1. Vue 仅在该组件被使用时才引入（一般配合 component的is 或者v-if等使用）。这里会被使用到，所以延时200ms(默认值)加载
+2. 父组件的 mounted 不会等待异步组件的 mounted 完成。
+
 ## 解决方案
 
 1. 动态引入改为静态引入
@@ -42,4 +45,10 @@ export default {
 }
 ```
 
-2. 
+2. 设置延时
+```js
+mounted () {
+  // 500ms大概是加载完成了
+  setTimeout(()=>console.log(this.$refs['child']),500)
+},
+```
