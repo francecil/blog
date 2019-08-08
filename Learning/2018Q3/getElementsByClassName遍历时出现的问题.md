@@ -82,7 +82,7 @@ for (var j = 0,len=eles.length; j < len; j++) {
 
 同时，这也解释了为何`getElementsByClassName`获取NodeList的速度比`querySelectorAll`快。
 
-因为前者仅返回**列表的引用地址**仅访问时才实时获取数据 , 而后者一开始就要获取和封装所有数据。
+因为前者仅返回 **列表的引用地址** 仅访问时才实时获取数据 , 而后者一开始就要获取和封装所有数据。
 
 >DynamicNodeList 对象通过在cache缓存中 注册它的存在 并创建。 从本质上讲, 创建一个新的 DynamicNodeList 是非常轻量级的, 因为不需要做任何前期工作。 每次访问 DynamicNodeList 时, 必须查询 document 的变化, length 属性 以及 item() 方法证明了这一点(使用中括号的方式访问也是一样的).
 
