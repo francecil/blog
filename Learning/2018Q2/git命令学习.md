@@ -57,6 +57,14 @@ git rebase —onto master aaaa^
 git push origin local-dev:origin-dev
 // 当 local-dev 为空时，将删除 origin-dev 分支
 ```
+### 将本地仓库转到远程仓库
+
+```bash
+# 添加远程仓库
+git remote add [name] [url]
+# 推送远程仓库：这里的场景 localBranchName 一般用master
+git push [remoteName] [localBranchName]
+```
 
 ## 4. 版本回退
 
