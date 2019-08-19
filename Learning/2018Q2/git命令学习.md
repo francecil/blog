@@ -127,3 +127,12 @@ git push origin --tags
 ##最近一次提交
 git clone --depth 1 <remote-addr:repo.git>
 ```
+
+## gh-pages
+
+```sh
+# 指定某个文件夹
+git subtree push --prefix=dist origin gh-pages
+# 整个项目都上传
+git symbolic-ref
+```
