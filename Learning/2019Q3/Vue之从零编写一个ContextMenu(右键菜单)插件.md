@@ -667,3 +667,75 @@ body 和 Dashbox 父容器 都可滚动的情况下，会出现菜单不在点�
 当 Dashbox 组件的父节点容器是限制高度且可以 scroll 的时候，若要求右键菜单（弹框等）不能超出容器，则不应该插入body,当前，我们右键菜单没有这样的要求
 
 参考 antd-select 例子 https://codesandbox.io/s/4j168r7jw0
+
+## 生成 vue-cli 插件
+
+有用过 `vue-cli 3` 和 `element-ui` 的，应该熟悉 [vue-cli-plugin-element](https://github.com/ElementUI/vue-cli-plugin-element)
+
+在我们的项目中，使用 `vue add element` 命令后，会自动去下载`vue-cli-plugin-element` 并在 plugins 文件夹中新增 element.js 最后在 main.js 中使用，省去了上面那些手动引入的过程。
+
+这里我们也尝试编写一个 [vue-cli-plugin-contextmenu](https://github.com/francecil/vue-cli-plugin-contextmenu)
+
+参考 
+
+1. [插件开发指南](https://cli.vuejs.org/zh/dev-guide/plugin-dev.html#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5)
+
+2. [vue-cli-plugin-element](https://github.com/ElementUI/vue-cli-plugin-element)
+
+3. [「Vue进阶」5分钟撸一个Vue CLI 插件](https://juejin.im/post/5cb59c4bf265da03a743e979)
+
+项目结构
+```
+.
+├── README.md
+├── generator.js  # generator (可选,这里采用 generator/index.js 的形式)
+├── prompts.js    # prompt 文件 (可选,本项目不使用)
+├── index.js      # service 插件
+└── package.json
+```
+
+代码的话主要是参考 [vue-cli-plugin-element](https://github.com/ElementUI/vue-cli-plugin-element) ，其中最主要的是 generator 的代码，如下
+```js
+module.exports = (api, opts, rootOptions) => {
+  const utils = require('./utils')(api)
+
+  api.extendPackage({
+    dependencies: {
+      '@gahing/vcontextmenu': '^1.0.0'
+    }
+  })
+
+  api.injectImports(utils.getMain(), `import './plugins/contextmenu.js'`)
+
+  api.render({
+    './src/plugins/contextmenu.js': './templates/src/plugins/contextmenu.js',
+  })
+}
+```
+
+当我们写完后，需要进行本地测试下
+
+
+```sh
+# 创建测试项目(全选默认设置)
+vue create test-app
+cd test-app
+# cd到项目文件夹并安装我们新创建的插件
+npm i file://E:/WebProjects/vue-cli-plugin-contextmenu -S
+# 调用该插件
+vue invoke vue-cli-plugin-contextmenu
+```
+查看test-app项目的main.js,将会看到新增这行代码：
+```js
+import './plugins/contextmenu.js'
+```
+
+plugins/contextmenu.js 中内容为
+```js
+import Vue from 'vue'
+import ContextMenu from '@gahing/vcontextmenu'
+import '@gahing/vcontextmenu/lib/vcontextmenu.css'
+Vue.use(ContextMenu)
+```
+
+至此，vue-cli-plugin-contextmenu 就开发完成，将其发布到 npm 上
