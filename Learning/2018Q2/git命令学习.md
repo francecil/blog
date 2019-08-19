@@ -134,5 +134,6 @@ git clone --depth 1 <remote-addr:repo.git>
 # 指定某个文件夹
 git subtree push --prefix=dist origin gh-pages
 # 整个项目都上传
-git symbolic-ref
+git symbolic-ref HEAD refs/heads/gh-pages
+git push origin gh-pages
 ```
