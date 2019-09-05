@@ -210,3 +210,6 @@ child 是绝对定位，盖过button。
 
 欲实现触发button不触发child 则：child设置none,parent和button设置auto或不设置。反之什么都不设置即可。
 
+## translateZ
+
+`transform: translateZ(0px)` 实现字体变模糊 

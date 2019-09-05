@@ -137,3 +137,22 @@ git subtree push --prefix=dist origin gh-pages
 git symbolic-ref HEAD refs/heads/gh-pages
 git push origin gh-pages
 ```
+
+## 切换仓库
+
+```sh
+git remote set-url origin url
+```
+
+注意，正常的话 切换完 pull 是没问题的（新的远程仓库也是原来本地仓库的记录）
+
+但如果新的仓库地址的记录与本地不相关的话，就会报
+```
+fatal: refusing to merge unrelated histories
+```
+
+此时应该放弃原来的git记录，采用代码覆盖重新提交的方式。。
+
+若采用 `git pull origin master --allow-unrelated-histories` 强制合并，会有各种冲突等等，
+
+其实最好的方法就是让同伴不要把不相关的记录直接传新的仓库。。

@@ -299,6 +299,28 @@ setInterval2=>次数：5    所用时间：5.005
 2. setInterval 与 setInterval2 效果相近，说明 setInterval 是先将自身 handle 放入timer堆，再执行回调函数
 3. 先执行回调函数再设置 settimeout 会导致下次执行实现等待时间大于 timeout+同步代码执行时间
 
+通过 [node-libuv](https://github.com/nodejs/node/blob/master/deps/uv/src/timer.c#L159) 源码可以证明
+
+```js
+void uv__run_timers(uv_loop_t* loop) {
+  struct heap_node* heap_node;
+  uv_timer_t* handle;
+
+  for (;;) {
+    heap_node = heap_min(timer_heap(loop));//取出timer堆上超时时间最小的元素
+    if (heap_node == NULL)
+      break;
+    //根据上面的元素，计算出handle的地址，head_node结构体和container_of的结合非常巧妙，值得学习
+    handle = container_of(heap_node, uv_timer_t, heap_node);
+    if (handle->timeout > loop->time)//如果最小的超时时间比循环运行的时间还要小，则表示没有到期的callback需要执行，此时退出timer阶段
+      break;
+
+    uv_timer_stop(handle);//将这个handle移除
+    uv_timer_again(handle);//如果handle是repeat类型的，重新插入堆里
+    handle->timer_cb(handle);//执行handle上的callback
+  }
+}
+```
 
 ### 2. handler 为异步处理函数
 - setInterval
@@ -334,30 +356,6 @@ setInterval=>次数：5    所用时间：5.005
 
 
 
-## A1
-
-看了[一篇文章][1]，里面讲到node中timers阶段的源码为
-
-```js
-void uv__run_timers(uv_loop_t* loop) {
-  struct heap_node* heap_node;
-  uv_timer_t* handle;
-
-  for (;;) {
-    heap_node = heap_min(timer_heap(loop));//取出timer堆上超时时间最小的元素
-    if (heap_node == NULL)
-      break;
-    //根据上面的元素，计算出handle的地址，head_node结构体和container_of的结合非常巧妙，值得学习
-    handle = container_of(heap_node, uv_timer_t, heap_node);
-    if (handle->timeout > loop->time)//如果最小的超时时间比循环运行的时间还要小，则表示没有到期的callback需要执行，此时退出timer阶段
-      break;
-
-    uv_timer_stop(handle);//将这个handle移除
-    uv_timer_again(handle);//如果handle是repeat类型的，重新插入堆里
-    handle->timer_cb(handle);//执行handle上的callback
-  }
-}
-```
 
 ### 场景3：fn异步代码，代码执行时间小于timeout
 
@@ -481,5 +479,6 @@ setInterval 先放timer再执行，可以用 先 setTimeout 再执行的方式�
 
 2018/12/27 补充：setTimeout模拟比setInterval 更安全的原因在于：定时器执行的方法因为各种原因（比如切换了上下文）报错后，就不会再执行定时，而 setInterval 如果没有手动取消的 是会继续执行的
 
+参考：
 
-[1]: https://cnodejs.org/topic/5a9108d78d6e16e56bb80882
+1. https://cnodejs.org/topic/5a9108d78d6e16e56bb80882

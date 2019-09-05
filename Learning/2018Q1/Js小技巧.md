@@ -223,7 +223,10 @@ temp.forEach((v)=>{root.children[v.id]=v;delete v.id})
   }
 )
 ```
-
+修改原对象值并返回
+```js
+(arr)=>(arr[0]=1,arr)
+```
 
 # JavaScript如何简单快速生成包含前N个自然数的数组？
 
