@@ -54,3 +54,6 @@ cd /usr/local/nginx/sbin/
 ```
 
 3~5 步骤可以采用在线安装的方式，不用下载编译的方式:
+```sh
+yum install nginx
+```
