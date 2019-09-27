@@ -187,156 +187,156 @@ function ArraySort(comparefn) {
 对类数组对象以及空洞数组进行特殊处理，然后进行排序
 ```js
 // comparefn 不可调用（未定义，非function等），设置默认函数
-  if (!IS_CALLABLE(comparefn)) {
-    comparefn = function (x, y) {
-      if (x === y) return 0;
-      if (%_IsSmi(x) && %_IsSmi(y)) {
-        return %SmiLexicographicCompare(x, y);
-      }
-      x = TO_STRING(x);
-      y = TO_STRING(y);
-      if (x == y) return 0;
-      else return x < y ? -1 : 1;
-    };
-  }
+if (!IS_CALLABLE(comparefn)) {
+  comparefn = function (x, y) {
+    if (x === y) return 0;
+    if (% _IsSmi(x) && % _IsSmi(y)) {
+      return % SmiLexicographicCompare(x, y);
+    }
+    x = TO_STRING(x);
+    y = TO_STRING(y);
+    if (x == y) return 0;
+    else return x < y ? -1 : 1;
+  };
+}
 if (length < 2) return array;
 
-  var is_array = IS_ARRAY(array);
-  var max_prototype_element;
-  if (!is_array) {
-    // 对 类数组对象（比如 {length:10,0:'c',10:'b'}） 进行排序，兼容 JSC标准
-    // 考虑了继承属性，所以效率可能不高，不过这种需要排序的情况较少
-    // e.g. 也可以看这个例子 https://github.com/v8/v8/blob/5.9.221/test/mjsunit/array-sort.js#L337
-    /*
-    let f1 = {1: "c", 3: "f"}
-    let f2 = {6: "a", length: 10}
-    f2.__proto__ = f1
-    f2 // {6: "a", length: 10,__proto__:{1: "c", 3: "f"}}
-    Array.prototype.sort.call(f2) // {0: "a", 1: "b", 2: "c", 3: "f", length: 10}
-    */
-    // 返回自身及原型链中所有属性的个数
-    max_prototype_element = CopyFromPrototype(array, length);
-  }
-  // 快速RemoveArrayHoles：从数组末尾复制已定义元素填充到前面的空洞（末尾变为空洞）
-  // 类数组对象等情况不支持快速RemoveArrayHoles，会返回 -1
-  // 否则 返回已定义元素的个数
-  var num_non_undefined = %RemoveArrayHoles(array, length);
-  // 处理类数组对象等情况
-  if (num_non_undefined == -1) {
-    // 返回 类数组对象的已定义实例属性的个数
-    num_non_undefined = SafeRemoveArrayHoles(array);
-  }
+var is_array = IS_ARRAY(array);
+var max_prototype_element;
+if (!is_array) {
+  // 对 类数组对象（比如 {length:10,0:'c',10:'b'}） 进行排序，兼容 JSC标准
+  // 考虑了继承属性，所以效率可能不高，不过这种需要排序的情况较少
+  // e.g. 也可以看这个例子 https://github.com/v8/v8/blob/5.9.221/test/mjsunit/array-sort.js#L337
+  /*
+  let f1 = {1: "c", 3: "f"}
+  let f2 = {6: "a", length: 10}
+  f2.__proto__ = f1
+  f2 // {6: "a", length: 10,__proto__:{1: "c", 3: "f"}}
+  Array.prototype.sort.call(f2) // {0: "a", 1: "b", 2: "c", 3: "f", length: 10}
+  */
+  // 返回自身及原型链中所有属性的个数
+  max_prototype_element = CopyFromPrototype(array, length);
+}
+// 快速RemoveArrayHoles：从数组末尾复制已定义元素填充到前面的空洞（末尾变为空洞）
+// 类数组对象等情况不支持快速RemoveArrayHoles，会返回 -1
+// 否则 返回已定义元素的个数
+var num_non_undefined = % RemoveArrayHoles(array, length);
+// 处理类数组对象等情况
+if (num_non_undefined == -1) {
+  // 返回 类数组对象的已定义实例属性的个数
+  num_non_undefined = SafeRemoveArrayHoles(array);
+}
 
-  QuickSort(array, 0, num_non_undefined);
+QuickSort(array, 0, num_non_undefined);
 
-  if (!is_array && (num_non_undefined + 1 < max_prototype_element)) {
-    // 处理 原型同名属性 等情况
-    ShadowPrototypeElements(array, num_non_undefined, max_prototype_element);
-  }
+if (!is_array && (num_non_undefined + 1 < max_prototype_element)) {
+  // 处理 原型同名属性 等情况
+  ShadowPrototypeElements(array, num_non_undefined, max_prototype_element);
+}
 
-  return array;
+return array;
 ```
 其他的特殊处理不在文本论述中，我们直接看排序实现
 
 - QuickSort
 
 ``` js
-  function QuickSort(a, from, to) {
-    // 基准选择第一个元素
-    var third_index = 0;
-    while (true) {
-      // 待排序数组长度 <= 10 采用插入排序
-      if (to - from <= 10) {
-        InsertionSort(a, from, to);
-        return;
+function QuickSort (a, from, to) {
+  // 基准选择第一个元素
+  var third_index = 0;
+  while (true) {
+    // 待排序数组长度 <= 10 采用插入排序
+    if (to - from <= 10) {
+      InsertionSort(a, from, to);
+      return;
+    }
+    if (to - from > 1000) {
+      // 每隔 200 ~ 215 （根据 length & 15的结果）个元素取一个值，
+      // 然后将这些值进行排序，取中间值的下标
+      // 这里的排序其实又是一个递归调用
+      third_index = GetThirdIndex(a, from, to);
+    } else {
+      // 将中间元素设为基准值
+      third_index = from + ((to - from) >> 1);
+    }
+    // 将第一个,中间元素（上面获取的基准值），最后一个元素三者中的中位数作为基准值
+    var v0 = a[from];
+    var v1 = a[to - 1];
+    var v2 = a[third_index];
+    var c01 = comparefn(v0, v1);
+    if (c01 > 0) {
+      // v1 < v0, so swap them.
+      var tmp = v0;
+      v0 = v1;
+      v1 = tmp;
+    } // v0 <= v1.
+    var c02 = comparefn(v0, v2);
+    if (c02 >= 0) {
+      // v2 <= v0 <= v1.
+      var tmp = v0;
+      v0 = v2;
+      v2 = v1;
+      v1 = tmp;
+    } else {
+      // v0 <= v1 && v0 < v2
+      var c12 = comparefn(v1, v2);
+      if (c12 > 0) {
+        // v0 <= v2 < v1
+        var tmp = v1;
+        v1 = v2;
+        v2 = tmp;
       }
-      if (to - from > 1000) {
-        // 每隔 200 ~ 215 （根据 length & 15的结果）个元素取一个值，
-        // 然后将这些值进行排序，取中间值的下标
-        // 这里的排序其实又是一个递归调用
-        third_index = GetThirdIndex(a, from, to);
-      } else {
-        // 将中间元素设为基准值
-        third_index = from + ((to - from) >> 1);
-      }
-      // 将第一个,中间元素（上面获取的基准值），最后一个元素三者中的中位数作为基准值
-      var v0 = a[from];
-      var v1 = a[to - 1];
-      var v2 = a[third_index];
-      var c01 = comparefn(v0, v1);
-      if (c01 > 0) {
-        // v1 < v0, so swap them.
-        var tmp = v0;
-        v0 = v1;
-        v1 = tmp;
-      } // v0 <= v1.
-      var c02 = comparefn(v0, v2);
-      if (c02 >= 0) {
-        // v2 <= v0 <= v1.
-        var tmp = v0;
-        v0 = v2;
-        v2 = v1;
-        v1 = tmp;
-      } else {
-        // v0 <= v1 && v0 < v2
-        var c12 = comparefn(v1, v2);
-        if (c12 > 0) {
-          // v0 <= v2 < v1
-          var tmp = v1;
-          v1 = v2;
-          v2 = tmp;
-        }
-      }
-      // 最终效果 v0 <= v1 <= v2
-      a[from] = v0;
-      a[to - 1] = v2;
-      var pivot = v1;
-      var low_end = from + 1;   // 比基准值小的元素的上界
-      var high_start = to - 1;  // 比基准值大的元素的下界
-      // 将基准值与 from + 1 位置的元素进行互换
-      // 此时 from + 1 位置的元素肯定是要排 form 位置后面的
-      a[third_index] = a[low_end];
-      a[low_end] = pivot;
-      
-      // 划分函数 将小于（假设升序排序）基准值的元素排在左边
-      partition: for (var i = low_end + 1; i < high_start; i++) {
-        var element = a[i];
-        var order = comparefn(element, pivot);
+    }
+    // 最终效果 v0 <= v1 <= v2
+    a[from] = v0;
+    a[to - 1] = v2;
+    var pivot = v1;
+    var low_end = from + 1;   // 比基准值小的元素的上界
+    var high_start = to - 1;  // 比基准值大的元素的下界
+    // 将基准值与 from + 1 位置的元素进行互换
+    // 此时 from + 1 位置的元素肯定是要排 form 位置后面的
+    a[third_index] = a[low_end];
+    a[low_end] = pivot;
+
+    // 划分函数 将小于（假设升序排序）基准值的元素排在左边
+    partition: for (var i = low_end + 1; i < high_start; i++) {
+      var element = a[i];
+      var order = comparefn(element, pivot);
+      if (order < 0) {
+        a[i] = a[low_end];
+        a[low_end] = element;
+        low_end++;
+      } else if (order > 0) {
+        // 当待排序元素大于基准值时，
+        // 与到右侧第一个小于基准值的元素互换
+        do {
+          high_start--;
+          if (high_start == i) break partition;
+          var top_elem = a[high_start];
+          order = comparefn(top_elem, pivot);
+        } while (order > 0);
+        a[i] = a[high_start];
+        a[high_start] = element;
+        // 该元素小于基准值，需要排在基准值左边
         if (order < 0) {
+          element = a[i];
           a[i] = a[low_end];
           a[low_end] = element;
           low_end++;
-        } else if (order > 0) {
-          // 当待排序元素大于基准值时，
-          // 与到右侧第一个小于基准值的元素互换
-          do {
-            high_start--;
-            if (high_start == i) break partition;
-            var top_elem = a[high_start];
-            order = comparefn(top_elem, pivot);
-          } while (order > 0);
-          a[i] = a[high_start];
-          a[high_start] = element;
-          // 该元素小于基准值，需要排在基准值左边
-          if (order < 0) {
-            element = a[i];
-            a[i] = a[low_end];
-            a[low_end] = element;
-            low_end++;
-          }
         }
       }
-      // 对左右两个子数组再进行排序
-      // 先处理待排序元素较少的
-      if (to - high_start < low_end - from) {
-        QuickSort(a, high_start, to);
-        to = low_end;
-      } else {
-        QuickSort(a, from, low_end);
-        from = high_start;
-      }
     }
-  };
+    // 对左右两个子数组再进行排序
+    // 先处理待排序元素较少的
+    if (to - high_start < low_end - from) {
+      QuickSort(a, high_start, to);
+      to = low_end;
+    } else {
+      QuickSort(a, from, low_end);
+      from = high_start;
+    }
+  }
+};
 ```
 - 以 `[1,2,13,14,5,6,17,18,9,10,11,12,31,14,51]` 、 `comparefn = (a,b)=>a-b` 为例
 
