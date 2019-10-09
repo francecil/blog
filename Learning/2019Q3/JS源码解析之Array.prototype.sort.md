@@ -98,7 +98,7 @@ function qsort(array){
     arr[i2] = tmp
   }
   function partition(arr, left, right){
-    let storeIndex = left
+    let storeIndex = left // 其值等于表示已找到的小于基准值的元素个数
     let pivot = arr[right] //基准
     for(let i=left;i<right;i++){
       if(arr[i]<pivot){
