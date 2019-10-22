@@ -372,3 +372,169 @@ Person("test") // Uncaught Error: 必须使用 new 命令生成实例
 _new(Person,"test") // Person {name: "test"}
 Person("test") // Uncaught Error: 必须使用 new 命令生成实例
 ```
+
+继续对 **模拟 new.target** 进行优化。
+
+考虑以下几点：
+1. new.target 只能用在函数内部 
+  > `var t = ()=>{ new.target }` 此外，箭头函数也会报语法错误
+2. new.target 是只读的
+3. 当前函数内的 new.target 值永远一致，即new 构造函数时再次 new 后不会变更当前函数中 new.target 的值 
+4. class 子类实例化时，父类构造函数中 `new.target` 的值是子类
+
+```js
+class Rectangle {
+  constructor(length, width) {
+    console.log(new.target === Rectangle);
+  }
+}
+
+class Square extends Rectangle {
+  constructor(length) {
+    super(length, width);
+  }
+}
+
+var obj = new Square(3); // 输出 false
+```
+
+对于第 1 点，需要判断当前执行环境，不好处理
+
+2、3 点我们采用 `Object.defineProperty` 的方式处理，并通过 `__stack` 栈保存构造函数
+
+```js
+if (!_new.hasOwnProperty('target')) {
+  // 调用函数栈，假装他是私有属性
+  _new.__stack = []
+  Object.defineProperty(_new, 'target', {
+    // 不可删除，不可修改配置
+    configurable: false,
+    enumerable: false,
+    get: function () {
+      return _new.__stack[_new.__stack.length - 1]
+    },
+    set: function () {
+      // 修改时会抛出异常
+      throw ReferenceError("Invalid left-hand side in assignment")
+    }
+  })
+}
+_new.__stack.push(F)
+//...
+_new.__stack.pop()
+```
+
+第 4 点暂不满足，因为 class 只能通过 new 实例化，我们上文的 `F.call(obj, ...args)` 会报错。后续再尝试解决
+
+
+完善后的代码如下：
+
+```js
+function _new (F, ...args) {
+  function is_constructor (f) {
+    // 特殊判断，Symbol 能通过检测
+    if (f === Symbol) return false;
+    try {
+      Reflect.construct(String, [], f);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+  var isFunction = typeof F === 'function'
+  if (!isFunction || !is_constructor(F)) {
+    throw TypeError(`${F.name || F} is not a constructor`)
+  }
+  if (!_new.hasOwnProperty('target')) {
+    // 调用函数栈，假装他是私有属性
+    _new.__stack = []
+    Object.defineProperty(_new, 'target', {
+      // 不可删除，不可修改配置
+      configurable: false,
+      enumerable: false,
+      get: function () {
+        return _new.__stack[_new.__stack.length - 1]
+      },
+      set: function () {
+        // 修改时会抛出异常
+        throw ReferenceError("Invalid left-hand side in assignment")
+      }
+    })
+  }
+  _new.__stack.push(F)
+  var obj = Object.create(F.prototype); // 相当于 ({}).__proto__ = F.prototype
+  var result = F.call(obj, ...args)
+  var isESObject = (typeof result === 'object' && result !== null) || typeof result === 'function'
+  _new.__stack.pop()
+  return isESObject ? result : obj
+}
+```
+
+测试用例
+
+```js
+function A () {
+  console.log(_new.target)
+}
+
+function B () {
+  console.log(_new.target); // B(){}
+  _new(A); // A(){}
+  A() // B(){} 注意这里， 用 new.target 的时候应该是
+  console.log(_new.target); // B(){}
+  try {
+    _new.target = 1
+  } catch (error) {
+    console.log(error) // Uncaught ReferenceError: Invalid left-hand side in assignment
+  }
+  console.log(_new.target); // B(){}
+}
+_new(B)
+```
+
+基本符合要求，但是 `A()` 处的输出是 `B(){}` ,用 `new.target` 的时候应该是 `undefined` 才对
+
+
+> 因为此时栈非空，说明用栈的方法不可靠
+
+以下提供一个新思路 [e.stack](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Error/Stack) 
+
+
+大概过程就是，利用 `throw catch e.stack` 获取访问 `_new.target` 的方法的 name ,与 _new 中的 F.name 进行比较
+
+尝试这个例子
+```js
+function _new () {
+  try {
+    throw Error("test")
+  } catch (e) {
+    console.log(e.stack)
+  }
+}
+function B(){
+  _new()
+}
+B()
+```
+chrome 上输出
+```
+Error: test
+    at _new (<anonymous>:3:11)
+    at B (<anonymous>:9:3)
+    at <anonymous>:11:1
+```
+ff 上输出
+```
+_new@debugger eval code:3:11
+B@debugger eval code:9:3
+@debugger eval code:11:1
+```
+
+我们可以根据正则获取 `B` 这个 func.name ，可以参考 [司徒正美-getCurrentScript的改进](https://www.cnblogs.com/rubylouvre/archive/2013/01/23/2872618.html) 上的操作。
+
+
+**由于这些都是 hack 操作，并不能实现 100% 正确，这里也就简单提供个思路，读者可以自行尝试**
+
+总的来说，完全模拟 `new.target` 是不可能的，在模拟的同时只是为了让自己熟知规范，切勿为了一些细节进行大量 hack, 除非你是 babel engineer ~
+
+`new.target` 大概这样，有兴趣的可以看下 es6 规范，自己进行实现
