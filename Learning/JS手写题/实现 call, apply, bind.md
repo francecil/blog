@@ -60,7 +60,7 @@ new Food('cheese').name // cheese
 
 ### 规范
 
-[Function.prototype.call (thisArg [ , arg1 [ , arg2, … ] ] )](https://www.ecma-international.org/ecma-262/6.0/#sec-function.prototype.call)
+[Function.prototype.call (thisArg , ...args)](https://www.ecma-international.org/ecma-262/6.0/#sec-function.prototype.call)
 
 当以 thisArg 和可选的 arg1, arg2 等等作为参数在 func 上调用 call 方法，采用如下步骤：
 
@@ -306,9 +306,9 @@ new Food('cheese').name // cheese
 
 apply 方法的 length 属性是 2。
 
-**NODE1** thisArg 传递到 this 的转换，同 call
+**NOTE1** thisArg 传递到 this 的转换，同 call
 
-**NODE2**  如果 func 是箭头函数或者绑定函数时，步骤 6 的 [[Call]] 方法将忽略 thisArg
+**NOTE2**  如果 func 是箭头函数或者绑定函数时，步骤 6 的 [[Call]] 方法将忽略 thisArg
 
 ### 实现
 
@@ -515,6 +515,297 @@ console.log(boundGetX()); // 42
 
 ### 快速实现
 
+bind 需要返回一个函数 bound ，每次执行 bound 的时候都是用最初给定的 this 值去执行被绑定函数。
+
+实现如下：
+
+```js
+Function.prototype._bind = function (thisArg, ...args) {
+  var callback = this
+  return function () {
+    return callback.apply(thisArg,args)
+  }
+}
+```
+测试效果和上面一致
+ 
+
 ### 规范
 
+[Function.prototype.bind ( thisArg , ...args)](https://www.ecma-international.org/ecma-262/6.0/#sec-function.prototype.bind)
+
+当使用参数 thisArg 和零置多个的 args 调用 bind 方法时，它将执行以下步骤：
+1. 令 Target 为 this 值
+2. IsCallable(Target) 为 false, 抛出 TypeError 异常
+3. 令 args 为一个新的（可能为空）列表，此列表依次包含 thisArg 之后提供的所有参数值
+4. 令 F 为 [BoundFunctionCreate](https://www.ecma-international.org/ecma-262/6.0/#sec-boundfunctioncreate)(Target, thisArg, args)
+5. ReturnIfAbrupt(F).
+6. 令 targetHasLength 为 HasOwnProperty(Target, "length")
+7. ReturnIfAbrupt(targetHasLength)
+8. 如果 targetHasLength 为 true
+   1. 令 targetLen 等于 Get(Target, "length").
+   2. ReturnIfAbrupt(targetLen).
+   3. 如果 Type(targetLen) 不是 Number，令 L = 0
+   4. 否则 令 targetLen =  ToInteger(targetLen)；L = max(0,targetLen - args个数)
+9. 否则令 L = 0
+10. 令 status = `DefinePropertyOrThrow(F, "length", PropertyDescriptor {[[Value]]: L, [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]: true})`.
+11. Assert: status is not an abrupt completion // 内部处理相关
+12. 令 targetName 为 Get(Target, "name").
+13. ReturnIfAbrupt(targetName).
+14. 如果 Type(targetName) 非 String，令 targetName  为 ""
+15. 设置函数名：SetFunctionName(F, targetName, "bound"). 
+16. 返回 F
+
+bind 方法的 length 属性是 1。
+
+**NOTE1**: 使用 `Function.prototype.bind` 创建的函数对象是奇异（exotic）对象，没有 prototype 属性
+
+**NOTE2**：如果 Target 是箭头函数或者绑定函数，随后的 F 调用不使用传递过来的 thisArg
+
+
+
 ### 实现
+
+③ 设置 args
+
+```js
+var args = [].slice.call(arguments, 1);
+```
+
+④ F = [BoundFunctionCreate](https://www.ecma-international.org/ecma-262/6.0/#sec-boundfunctioncreate)(Target, thisArg, args)
+
+创建一个 Bound 方法 F。 规范中此处的描述都是用的内部属性和方法，我们只能结果导向进行实现。
+
+注意以下几个要点：
+
+1. F 执行时的内部方法调用的参数为 args 并上本次执行时带的参数
+2. NOTE1
+3. NOTE2
+4. new F 的返回值是以 Target 原函数构造器生成的新对象
+
+其中 NOTE1 没有 es5 的解决方案，要想生成没有 prototype 属性的函数，只能是 bound 函数或 es6+ 新增的特定函数
+
+
+
+实现如下：
+```js
+function BoundFunctionCreate (targetFunction, boundThis, boundArgs) {
+  var bound = function () {
+    // 全部参数
+    var args = boundArgs.concat([].slice.call(arguments));
+
+    // 实例化调用
+    if (new.target !== void 0) {
+      // 特定函数不能实例化
+      if (!targetFunction.hasOwnProperty("prototype")) {
+        throw TypeError(`${targetFunction.name || F} is not a constructor`)
+      }
+      // new bound 过程：
+      // obj 以 bound.prototype 作为原型,
+      // obj 作为 this 调用 targetFunction，返回 result
+      // result 非 ESObject 时，返回 obj
+
+      // 此处 this 即 bound 正好为 obj
+      var result = targetFunction.apply(this, args)
+      var isESObject = (typeof result === 'object' && result !== null) || typeof result === 'function'
+      // 返回 result 让 new 不能
+      return isESObject ? result : this
+    } else {
+      // 普通调用
+
+      // 箭头函数和bound 函数没有 prototype 属性
+      // 这里把其他特定函数也都考虑进去了，比如简写函数
+      if (!targetFunction.hasOwnProperty("prototype")) {
+        return targetFunction.apply(this, args)
+      }
+      return targetFunction.apply(boundThis, args)
+    }
+  }
+  return bound
+}
+```
+
+⑥ `var targetHasLength = Target.hasOwnProperty("length")`
+
+⑧、⑨
+
+```js
+if(targetHasLength){
+  var targetLen = Target.length
+  if(typeof targetLen!=="number"){
+    var L = 0
+  } else {
+    var targetLen = ToInteger(targetLen)
+    var L = Math.max(0,targetLen - args.length)
+  }
+} else {
+  var L = 0
+}
+```
+
+⑩ 设置 F 的 length 属性
+```js
+Object.defineProperty(F, "length", {
+  value: L,
+  writable: false,
+  enumerable: false,
+  configurable: true
+})
+```
+
+12 `var targetName = Target.name`
+
+14 `if(typeof targetName !== "string")targetName = ""`
+
+15 SetFunctionName(F, targetName, "bound"). 
+
+```js
+var name = "bound" + " " + targetName
+Object.defineProperty(F, "name", {
+  value: name,
+  writable: false,
+  enumerable: false,
+  configurable: true
+})
+```
+
+16 返回 F
+
+完整代码如下：
+
+```js
+Function.prototype._bind = function (thisArg) {
+  var Target = this
+  if (typeof Target !== 'function') {
+    throw new TypeError(this + ' must be a function');
+  }
+  var args = [].slice.call(arguments, 1);
+  function BoundFunctionCreate (targetFunction, boundThis, boundArgs) {
+    var bound = function () {
+      // 全部参数
+      var args = boundArgs.concat([].slice.call(arguments));
+
+      // 实例化调用
+      if (new.target !== void 0) {
+        // 特定函数不能实例化
+        if (!targetFunction.hasOwnProperty("prototype")) {
+          throw TypeError(`${targetFunction.name || F} is not a constructor`)
+        }
+        // new bound 过程：
+        // obj 以 bound.prototype 作为原型,
+        // obj 作为 this 调用 targetFunction，返回 result
+        // result 非 ESObject 时，返回 obj
+
+        // 此处 this 即 bound 正好为 obj
+        var result = targetFunction.apply(this, args)
+        var isESObject = (typeof result === 'object' && result !== null) || typeof result === 'function'
+        // 返回 result 让 new 不能
+        return isESObject ? result : this
+      } else {
+        // 普通调用
+
+        // 箭头函数和bound 函数没有 prototype 属性
+        // 这里把其他特定函数也都考虑进去了，比如简写函数
+        if (!targetFunction.hasOwnProperty("prototype")) {
+          return targetFunction.apply(this, args)
+        }
+        return targetFunction.apply(boundThis, args)
+      }
+    }
+    return bound
+  }
+  var F = BoundFunctionCreate(Target, thisArg, args)
+  var targetHasLength = Target.hasOwnProperty("length")
+  function ToInteger (arg) {
+    var number = Number(arg)
+    if (Number.isNaN(number)) {
+      return +0
+    } else if (number === 0 || number === Infinity || number === -Infinity) {
+      return number
+    } else {
+      var abs = Math.floor(Math.abs(number))
+      return number < 0 ? -abs : abs
+    }
+  }
+  if (targetHasLength) {
+    var targetLen = Target.length
+    if (typeof targetLen !== "number") {
+      var L = 0
+    } else {
+      var targetLen = ToInteger(targetLen)
+      var L = Math.max(0, targetLen - args.length)
+    }
+  } else {
+    var L = 0
+  }
+  Object.defineProperty(F, "length", {
+    value: L,
+    writable: false,
+    enumerable: false,
+    configurable: true
+  })
+  var targetName = Target.name
+  if (typeof targetName !== "string") {
+    targetName = ""
+  }
+  var name = "bound" + " " + targetName
+  Object.defineProperty(F, "name", {
+    value: name,
+    writable: false,
+    enumerable: false,
+    configurable: true
+  })
+  return F
+}
+```
+
+测试用例
+
+```js
+var A = {
+  name: "test",
+  arrow: () => this.name,
+  shorthand (sex) { return this.name + sex },
+  cs: function (sex, age) { return this.name + sex + age }
+}
+
+var boundArrow = A.arrow.bind(A)
+console.log(boundArrow.name, boundArrow.length, boundArrow()) // bound arrow 0 undefined
+var boundArrow2 = A.arrow._bind(A)
+console.log(boundArrow2.name, boundArrow2.length, boundArrow2()) // bound arrow 0 undefined
+
+var boundCs = A.cs.bind(A, ",man")
+console.log(boundCs.name, boundCs.length, boundCs(",25")) // bound cs 1 test,man,25
+var boundCs2 = A.cs._bind(A, ",man")
+console.log(boundCs2.name, boundCs2.length, boundCs2(",25")) // bound cs 1 test,man,25
+
+
+var boundSh = A.shorthand.bind(A, ",man")
+console.log(boundSh.name, boundSh.length, boundSh(",25")) // bound shorthand 0 test,man
+var boundSh2 = A.shorthand._bind(A, ",man")
+console.log(boundSh2.name, boundSh2.length, boundSh2(",25")) // bound shorthand 0 undefined,man
+console.log(boundCs.prototype) // undefined
+console.log(boundCs2.prototype) // {constructor: ƒ}
+
+new boundCs // cs {}
+new boundCs2 // bound {}
+
+new boundArrow() // Uncaught TypeError: boundArrow is not a constructor
+new boundArrow2() // Uncaught TypeError: arrow is not a constructor
+
+new boundSh // Uncaught TypeError: boundSh is not a constructor
+new boundSh2 // Uncaught TypeError: shorthand is not a constructor
+```
+
+可以看到，当前实现还有一些问题，目前较难解决。
+
+1. 非构造函数实例化时报错信息中的 func.name 不一样
+2. 简写函数普通调用时，this 设置不正确
+3. 生成的 bound 函数不应该有 prototype 属性
+4. 实例化绑定函数时，返回的结果 `__proto__.constructor.name` 不一样. 不过作用域应该没差别
+
+总的来说，完全模拟是不可能的，我们通过分析规范，了解 bind 的内部过程才是王道 ~
+
+### 拓展阅读
+
+1. [面试官问：能否模拟实现JS的bind方法](https://juejin.im/post/5bec4183f265da616b1044d7)
