@@ -2,13 +2,14 @@
 
 要求实现 call, apply, bind。主要目的是熟悉 es5 的规范,以及 es6 上的修改。
 
-本文会以 `mdn 介绍 -> ecmascript5 规范 + 实现 ` 这个顺序来展开 
+本文会以 `mdn 介绍 -> es6 规范 -> 实现 ` 这个顺序来展开 
 
-## MDN
+其中 MDN 介绍用法，一些细节不会提到，在 `规范` 中再详细讲解
 
-本篇介绍各个方法的用法，一些细节这边不会提到，在 `规范` 中再详细讲解
 
-### call
+## call
+
+### MDN 介绍
 
 [Function.prototype.call()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
 
@@ -26,53 +27,12 @@ function Food(name) {
 
 new Food('cheese').name // cheese
 ```
-##  apply
 
-[Function.prototype.apply()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
-
-`apply()` 方法调用一个具有给定 `this` 值的函数，以及作为一个数组（或类似数组对象）提供的参数。
-
-```js
-
-Math.max.apply(null, [5, 6, 2, 3, 7]); // 7
-
-```
-
-与之类似的有 [Reflect.apply()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect/apply) 方法
-
-> Reflect.apply(target, thisArgument, argumentsList)
-
-要调用的方法指定在 target ，相比 `func.apply` ，行为更加统一了
-
-### bind
-[Function.prototype.bind()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
-
-`bind()` 方法创建一个新的函数，在 `bind()` 被调用时，这个新函数的 `this` 被 `bind` 的第一个参数指定，其余的参数将作为新函数的参数供调用时使用。
-
-```js
-var module = {
-  x: 42,
-  getX: function() {
-    return this.x;
-  }
-}
-
-var unboundGetX = module.getX;
-console.log(unboundGetX()); // 全局作用域下调用，输出 undefined
-
-var boundGetX = unboundGetX.bind(module);
-console.log(boundGetX()); // 42
-```
-
-## 规范及实现
+### 快速实现
 
 只看上面的介绍，我们先实现一个简单版本。 
 
 然后根据规范，继续优化~
-
-### call
-
-#### 简单版本
 
 要在指定的 `this` 上调用方法，那我们给该 `this` 增加该方法，并用指定的参数调用它，最后删除该方法。
 
@@ -98,7 +58,7 @@ new Food('cheese').name // cheese
 
 先不讨论上述代码有什么问题，看完规范后就知道了。
 
-#### 规范
+### 规范
 
 [Function.prototype.call (thisArg [ , arg1 [ , arg2, … ] ] )](https://www.ecma-international.org/ecma-262/6.0/#sec-function.prototype.call)
 
@@ -150,7 +110,7 @@ bound() // 1
 bound.call({}) // 1 {age: 1, getAge: ƒ}
 ```
 
-#### 实现
+### 实现
 
 ```js
 Function.prototype._call = function (thisArg) {
@@ -264,18 +224,35 @@ Function.prototype._call = function (thisArg) {
 注意严肃模式要在 _call 定义前声明
 
 
-#### 拓展阅读
+### 拓展阅读
 
 1. [JavaScript深入之call和apply的模拟实现](https://juejin.im/post/5907eb99570c3500582ca23c)
 2. [面试官问：能否模拟实现JS的call和apply方法](https://juejin.im/post/5bf6c79bf265da6142738b29)
 
-### apply
+## apply
 
-同样，先给出我们的简单实现
+### MDN 介绍
 
-#### 简单实现
+[Function.prototype.apply()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
 
-根据 MDN , 好像就只有参数不一样，有了前面 call 的铺垫，我们得到如下实现
+`apply()` 方法调用一个具有给定 `this` 值的函数，以及作为一个数组（或类似数组对象）提供的参数。
+
+```js
+
+Math.max.apply(null, [5, 6, 2, 3, 7]); // 7
+
+```
+
+与之类似的有 [Reflect.apply()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect/apply) 方法
+
+> Reflect.apply(target, thisArgument, argumentsList)
+
+要调用的方法指定在 target ，相比 `func.apply` ，行为更加统一了
+
+
+### 快速实现
+
+根据 MDN , 和 call 相比好像就只有参数不一样，有了前面 call 的铺垫，我们得到如下实现
 
 ```js
 Function.prototype._apply = function (thisArg,argArray) {
@@ -315,7 +292,7 @@ function Food(name) {
 new Food('cheese').name // cheese
 ```
 
-#### 规范
+### 规范
 
 [Function.prototype.apply ( thisArg, argArray )](https://www.ecma-international.org/ecma-262/6.0/#sec-function.prototype.apply)
 
@@ -333,7 +310,7 @@ apply 方法的 length 属性是 2。
 
 **NODE2**  如果 func 是箭头函数或者绑定函数时，步骤 6 的 [[Call]] 方法将忽略 thisArg
 
-#### 实现
+### 实现
 
 和 call 一样的步骤就不再重复了
 
@@ -513,3 +490,31 @@ Function.prototype._apply = function (thisArg, argArray) {
 Math.max._apply(null, {0:0,1:1,2:2,length:3}); // 2
 ```
 
+## bind
+
+### MDN 介绍
+
+[Function.prototype.bind()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
+
+`bind()` 方法创建一个新的函数，在 `bind()` 被调用时，这个新函数的 `this` 被 `bind` 的第一个参数指定，其余的参数将作为新函数的参数供调用时使用。
+
+```js
+var module = {
+  x: 42,
+  getX: function() {
+    return this.x;
+  }
+}
+
+var unboundGetX = module.getX;
+console.log(unboundGetX()); // 全局作用域下调用，输出 undefined
+
+var boundGetX = unboundGetX.bind(module);
+console.log(boundGetX()); // 42
+```
+
+### 快速实现
+
+### 规范
+
+### 实现
