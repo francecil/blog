@@ -275,4 +275,241 @@ Function.prototype._call = function (thisArg) {
 
 #### 简单实现
 
-看上去好像和
+根据 MDN , 好像就只有参数不一样，有了前面 call 的铺垫，我们得到如下实现
+
+```js
+Function.prototype._apply = function (thisArg,argArray) {
+  var func = this
+  if (typeof func !== "function") {
+    throw TypeError()
+  }
+  // 判断当前是否为 strict 模式
+  var strict = (function () { return !this; }())
+  // 获取全局对象
+  var globalObject = typeof window !== "undefined" ? window : global
+  // 非 strict 的处理
+  if (!strict) {
+    // undefined 或 null 时会被替换成全局对象
+    if (typeof thisArg === 'undefined' || thisArg === null) {
+      thisArg = globalObject
+    } else {
+      // ToObject
+      thisArg = new Object(thisArg);
+    }
+  }
+  var sym = Symbol('func')
+  thisArg[sym] = func
+  var result = thisArg[sym](...argArray)
+  delete thisArg[sym]
+  return result
+}
+
+function Product(name) {
+  this.name = name;
+}
+
+function Food(name) {
+  Product._apply(this, [name]);
+}
+
+new Food('cheese').name // cheese
+```
+
+#### 规范
+
+[Function.prototype.apply ( thisArg, argArray )](https://www.ecma-international.org/ecma-262/6.0/#sec-function.prototype.apply)
+
+当以 thisArg 和 argArray 参数在 func 对象上调用 apply 方法时，将执行如下步骤：
+1. 如果  IsCallable(func) 为 false，抛出 TypeError 异常
+2. 如果 argArray 为 null 或 undefined ，返回 [Call](https://www.ecma-international.org/ecma-262/6.0/#sec-call)(func, thisArg) 的调用结果
+3. 令 argList 为 [CreateListFromArrayLike](https://www.ecma-international.org/ecma-262/6.0/#sec-createlistfromarraylike)(argArray).
+4. 执行 ReturnIfAbrupt(argList).
+5. 执行 PrepareForTailCall
+6. 返回 Call(func, thisArg, argList) 调用结果
+
+apply 方法的 length 属性是 2。
+
+**NODE1** thisArg 传递到 this 的转换，同 call
+
+**NODE2**  如果 func 是箭头函数或者绑定函数时，步骤 6 的 [[Call]] 方法将忽略 thisArg
+
+#### 实现
+
+和 call 一样的步骤就不再重复了
+
+```js
+Function.prototype._call = function (thisArg) {
+  var func = this
+  if (typeof func !== "function") {
+    throw TypeError()
+  }
+  // 判断当前是否为 strict 模式
+  var strict = (function () { return !this; }())
+  // 获取全局对象
+  var globalObject = typeof window !== "undefined" ? window : global
+  // 非 strict 的处理
+  if (!strict) {
+    // undefined 或 null 时会被替换成全局对象
+    if (typeof thisArg === 'undefined' || thisArg === null) {
+      thisArg = globalObject
+    } else {
+      // ToObject
+      thisArg = new Object(thisArg);
+    }
+  }
+  var sym = Symbol('func')
+  thisArg[sym] = func
+  // ... 后续处理
+}
+```
+
+② 如果 argArray 为 null 或 undefined ，返回 `Call(func, thisArg)` 调用结果
+
+```js
+  var result;
+  if(argArray===null||argArray === void 0){
+    result = thisArg[sym]()
+  }
+```
+
+③ 令 argList 为 [CreateListFromArrayLike](https://www.ecma-international.org/ecma-262/6.0/#sec-createlistfromarraylike)(argArray).
+
+类数组对象转数组
+
+1. Type(argArray) 不是 Object，抛出 TypeError 
+2. 获取 argArray 的 length 属性： [ToLength](https://www.ecma-international.org/ecma-262/6.0/#sec-tolength),该阶段可能会抛出 TypeError
+3. 令 list 为空 List
+4. index 从0开始进行循环，获取 length 次 argArray 的元素，并插入 list。 argArray 元素的获取方法为 argArray[[ToString](https://www.ecma-international.org/ecma-262/6.0/#sec-tostring-applied-to-the-number-type)(index)]
+5. 返回 list
+
+```js
+  function CreateListFromArrayLike (argArray) {
+    if (typeof argArray !== "object") {
+      throw TypeError()
+    }
+    // 按 ToInteger 规范
+    function ToInteger (arg) {
+      var number = Number(arg)
+      if (Number.isNaN(number)) {
+        return +0
+      } else if (number === 0 || number === Infinity || number === -Infinity) {
+        return number
+      } else {
+        var abs = Math.floor(Math.abs(number))
+        return number < 0 ? -abs : abs
+      }
+    }
+    function ToLength (arg) {
+      var len = ToInteger(arg)
+      if (len <= +0) {
+        return +0
+      }
+      // es6 的定义是 2 ** 53-1, es5 是 2 ** 32 -1
+      var max = Math.pow(2, 53) - 1
+      if (len === Infinity) {
+        return max
+      }
+      return Math.min(len, max)
+    }
+    var len = ToLength(argArray.length)
+    // array 长度限制
+    if(len > 2 ** 32 -1){
+      throw RangeError("Invalid array length")
+    }
+    var list = []
+    for (var i = 0; i < len; i++) {
+      list[i] = argArray[i]
+    }
+    return list
+  }
+```
+
+当然，这其实就是模拟的 es6 的 `Array.from`
+
+④ 生成 argList 时候可能会抛异常
+
+上一步骤中会抛出各种异常
+
+⑥ 返回 Call(func, thisArg, argList) 调用结果
+
+```js
+var sym = Symbol('func')
+thisArg[sym] = func
+var result = thisArg[sym](...argList)
+```
+
+最后，给上完整的代码
+
+```js
+Function.prototype._apply = function (thisArg, argArray) {
+  var func = this
+  if (typeof func !== "function") {
+    throw TypeError()
+  }
+  // 判断当前是否为 strict 模式
+  var strict = (function () { return !this; }())
+  // 获取全局对象
+  var globalObject = typeof window !== "undefined" ? window : global
+  // 非 strict 的处理
+  if (!strict) {
+    // undefined 或 null 时会被替换成全局对象
+    if (typeof thisArg === 'undefined' || thisArg === null) {
+      thisArg = globalObject
+    } else {
+      // ToObject
+      thisArg = new Object(thisArg);
+    }
+  }
+  var sym = Symbol('func')
+  thisArg[sym] = func
+  var result;
+  function CreateListFromArrayLike (argArray) {
+    if (typeof argArray !== "object") {
+      throw TypeError()
+    }
+    // 按 ToInteger 规范
+    function ToInteger (arg) {
+      var number = Number(arg)
+      if (Number.isNaN(number)) {
+        return +0
+      } else if (number === 0 || number === Infinity || number === -Infinity) {
+        return number
+      } else {
+        var abs = Math.floor(Math.abs(number))
+        return number < 0 ? -abs : abs
+      }
+    }
+    function ToLength (arg) {
+      var len = ToInteger(arg)
+      if (len <= +0) {
+        return +0
+      }
+      if (len === Infinity) {
+        return Math.pow(2, 53) - 1
+      }
+      return Math.min(len, Math.pow(2, 53) - 1)
+    }
+    var len = ToLength(argArray.length)
+    var list = []
+    for (var i = 0; i < len; i++) {
+      list[i] = argArray[i]
+    }
+    return list
+  }
+  if (argArray === null || argArray === void 0) {
+    result = thisArg[sym]()
+  } else {
+    var argList = CreateListFromArrayLike(argArray)
+    result = thisArg[sym](...argList)
+  }
+  delete thisArg[sym]
+  return result
+}
+```
+
+简单测试一下
+
+```js
+Math.max._apply(null, {0:0,1:1,2:2,length:3}); // 2
+```
+
