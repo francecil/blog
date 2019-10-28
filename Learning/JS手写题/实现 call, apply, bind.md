@@ -579,11 +579,19 @@ var args = [].slice.call(arguments, 1);
 注意以下几个要点：
 
 1. F 执行时的内部方法调用的参数为 args 并上本次执行时带的参数
-2. NOTE1
-3. NOTE2
+2. 使用 `Function.prototype.bind` 创建的函数对象是奇异（exotic）对象，没有 prototype 属性
+3. 如果 Target 是箭头函数或者绑定函数，随后的 F 调用不使用传递过来的 thisArg
 4. new F 的返回值是以 Target 原函数构造器生成的新对象
+5. F 原型需要指向 targetFunction 原型以保持原型链
+```js
+var a = function () { this.name = 1 }
+var b = function () { this.age = 1 }
+b.prototype = new a()
+var bound = b.bind({ name: 2 })
+new bound() // {age: 1,__proto__:a{name:1}}`
+```
 
-其中 NOTE1 没有 es5 的解决方案，要想生成没有 prototype 属性的函数，只能是 bound 函数或 es6+ 新增的特定函数
+其中第二点没有 es5 的解决方案，要想生成没有 prototype 属性的函数，只能是 bound 函数或 es6+ 新增的特定函数
 
 
 
@@ -591,35 +599,33 @@ var args = [].slice.call(arguments, 1);
 ```js
 function BoundFunctionCreate (targetFunction, boundThis, boundArgs) {
   var bound = function () {
-    // 全部参数
+    // 1. F 执行时的内部方法调用的参数为 args 并上本次执行时带的参数
     var args = boundArgs.concat([].slice.call(arguments));
 
-    // 实例化调用
+    // 4. new F 的返回值是以 Target 原函数构造器生成的新对象
+    // 不用 new.target 可以采用 isPrototypeOf 的方法
     if (new.target !== void 0) {
       // 特定函数不能实例化
       if (!targetFunction.hasOwnProperty("prototype")) {
         throw TypeError(`${targetFunction.name || F} is not a constructor`)
       }
-      // new bound 过程：
-      // obj 以 bound.prototype 作为原型,
-      // obj 作为 this 调用 targetFunction，返回 result
-      // result 非 ESObject 时，返回 obj
-
-      // 此处 this 即 bound 正好为 obj
-      var result = targetFunction.apply(this, args)
-      var isESObject = (typeof result === 'object' && result !== null) || typeof result === 'function'
-      // 返回 result 让 new 不能
-      return isESObject ? result : this
+      // new 实例化调用时，本处的 this = Object.create(bound.prototype)
+      return targetFunction.apply(this,args)
     } else {
       // 普通调用
-
-      // 箭头函数和bound 函数没有 prototype 属性
-      // 这里把其他特定函数也都考虑进去了，比如简写函数
-      if (!targetFunction.hasOwnProperty("prototype")) {
-        return targetFunction.apply(this, args)
-      }
+      // 3. 如果 Target 是箭头函数或者绑定函数，随后的 F 调用不使用传递过来的 thisArg
+      // 箭头函数 或 绑定函数不会使用 boundThis 作为 this, 这里第一个参数传什么都无所谓
+      // 但简写函数就需要用 boundThis 作为 this
       return targetFunction.apply(boundThis, args)
     }
+  }
+  // 5. F 原型需要指向 targetFunction 原型以保持原型链
+  // 注意这里的实现，bound.prototype 不直接指向 targetFunction.prototype
+  // 而是指向一个空对象，该空对象以 targetFunction.prototype 作为原型
+  // 这么写是因为绑定函数是没有 prototype 的，所以不会通过 prototype 改到原型的东西，
+  // 但我们这里的实现一定会有 prototype，为了不影响到原型，我们采用指向空对象的方式
+  if(targetFunction.prototype){
+    bound.prototype = Object.create(targetFunction.prototype)
   }
   return bound
 }
@@ -682,35 +688,33 @@ Function.prototype._bind = function (thisArg) {
   var args = [].slice.call(arguments, 1);
   function BoundFunctionCreate (targetFunction, boundThis, boundArgs) {
     var bound = function () {
-      // 全部参数
+      // 1. F 执行时的内部方法调用的参数为 args 并上本次执行时带的参数
       var args = boundArgs.concat([].slice.call(arguments));
-
-      // 实例化调用
+  
+      // 4. new F 的返回值是以 Target 原函数构造器生成的新对象
+      // 不用 new.target 可以采用 isPrototypeOf 的方法
       if (new.target !== void 0) {
         // 特定函数不能实例化
         if (!targetFunction.hasOwnProperty("prototype")) {
           throw TypeError(`${targetFunction.name || F} is not a constructor`)
         }
-        // new bound 过程：
-        // obj 以 bound.prototype 作为原型,
-        // obj 作为 this 调用 targetFunction，返回 result
-        // result 非 ESObject 时，返回 obj
-
-        // 此处 this 即 bound 正好为 obj
-        var result = targetFunction.apply(this, args)
-        var isESObject = (typeof result === 'object' && result !== null) || typeof result === 'function'
-        // 返回 result 让 new 不能
-        return isESObject ? result : this
+        // new 实例化调用时，本处的 this = Object.create(bound.prototype)
+        return targetFunction.apply(this,args)
       } else {
         // 普通调用
-
-        // 箭头函数和bound 函数没有 prototype 属性
-        // 这里把其他特定函数也都考虑进去了，比如简写函数
-        if (!targetFunction.hasOwnProperty("prototype")) {
-          return targetFunction.apply(this, args)
-        }
+        // 3. 如果 Target 是箭头函数或者绑定函数，随后的 F 调用不使用传递过来的 thisArg
+        // 箭头函数 或 绑定函数不会使用 boundThis 作为 this, 这里第一个参数传什么都无所谓
+        // 但简写函数就需要用 boundThis 作为 this
         return targetFunction.apply(boundThis, args)
       }
+    }
+    // 5. F 原型需要指向 targetFunction 原型以保持原型链
+    // 注意这里的实现，bound.prototype 不直接指向 targetFunction.prototype
+    // 而是指向一个空对象，该空对象以 targetFunction.prototype 作为原型
+    // 这么写是因为绑定函数是没有 prototype 的，所以不会通过 prototype 改到原型的东西，
+    // 但我们这里的实现一定会有 prototype，为了不影响到原型，我们采用指向空对象的方式
+    if(targetFunction.prototype){
+      bound.prototype = Object.create(targetFunction.prototype)
     }
     return bound
   }
@@ -783,9 +787,9 @@ console.log(boundCs2.name, boundCs2.length, boundCs2(",25")) // bound cs 1 test,
 var boundSh = A.shorthand.bind(A, ",man")
 console.log(boundSh.name, boundSh.length, boundSh(",25")) // bound shorthand 0 test,man
 var boundSh2 = A.shorthand._bind(A, ",man")
-console.log(boundSh2.name, boundSh2.length, boundSh2(",25")) // bound shorthand 0 undefined,man
+console.log(boundSh2.name, boundSh2.length, boundSh2(",25")) // bound shorthand 0 test,man
 console.log(boundCs.prototype) // undefined
-console.log(boundCs2.prototype) // {constructor: ƒ}
+console.log(boundCs2.prototype) // cs {}
 
 new boundCs // cs {}
 new boundCs2 // bound {}
@@ -795,14 +799,21 @@ new boundArrow2() // Uncaught TypeError: arrow is not a constructor
 
 new boundSh // Uncaught TypeError: boundSh is not a constructor
 new boundSh2 // Uncaught TypeError: shorthand is not a constructor
+
+var a = function () { this.name = 1 }
+var b = function () { this.age = 1 }
+b.prototype = new a()
+var boundB1 = b.bind({ name: 2 })
+var boundB2 = b._bind({ name: 2 })
+console.log((new boundB1()).name)//1
+console.log((new boundB2()).name)//1
 ```
 
 可以看到，当前实现还有一些问题，目前较难解决。
 
 1. 非构造函数实例化时报错信息中的 func.name 不一样
-2. 简写函数普通调用时，this 设置不正确
-3. 生成的 bound 函数不应该有 prototype 属性
-4. 实例化绑定函数时，返回的结果 `__proto__.constructor.name` 不一样. 不过作用域应该没差别
+2. 生成的 bound 函数不应该有 prototype 属性
+3. 实例化绑定函数时，返回的结果会多一层 `{__proto__}`
 
 总的来说，完全模拟是不可能的，我们通过分析规范，了解 bind 的内部过程才是王道 ~
 
