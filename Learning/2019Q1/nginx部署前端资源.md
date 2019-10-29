@@ -53,8 +53,42 @@ cd /usr/local/nginx/sbin/
 /usr/local/nginx/sbin/nginx -s reload
 ```
 
+## 注意
+
 3~5 步骤可以采用在线安装的方式，不用下载编译的方式:
 ```sh
 yum install nginx
 ```
 采用此法默认的配置文件位置在 `./etc/nginx/nginx.conf`  或者通过 `find . -name "nginx.conf"` 找到
+
+## 使用 [systemctl](https://www.cnblogs.com/sparkdev/p/8472711.html) 管理nginx
+
+- 开机自启动
+
+```sh
+systemctl enable nginx
+```
+
+- 启动
+
+```sh
+systemctl start nginx
+```
+
+- 关闭
+
+```sh
+systemctl stop nginx
+```
+
+- 重启:关闭再启动
+
+```sh
+systemctl restart nginx
+```
+
+- 重载配置：`nginx.conf` 更新后，使用该命令更新
+
+```sh
+systemctl reload nginx
+```
