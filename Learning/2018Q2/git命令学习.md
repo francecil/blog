@@ -156,3 +156,17 @@ fatal: refusing to merge unrelated histories
 若采用 `git pull origin master --allow-unrelated-histories` 强制合并，会有各种冲突等等，
 
 其实最好的方法就是让同伴不要把不相关的记录直接传新的仓库。。
+
+**方式2**
+
+具体迁移步骤
+
+在新地址上新建对应项目
+```bash
+git clone --bare $url  //拷贝一份旧GIT裸版本的代码
+cd xxx.git             //进入到目录底下
+git push --mirror $newurl   //推送到新的仓库地址
+cd ../ && rm -rf xxx.git     //删除拷贝
+```
+
+git remote add 和 set-url 区别

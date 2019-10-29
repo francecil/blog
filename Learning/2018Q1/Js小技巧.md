@@ -353,3 +353,12 @@ function reservoir(n,m){
   return ret
 }
 ```
+
+# 判断当前为 strict 模式
+
+```js
+var strict = (function(){ return !this;}())
+```
+
+控制台上每一次回车运行后，会清空 strict 设置
+

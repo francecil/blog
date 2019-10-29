@@ -385,3 +385,19 @@ find   path   -option   [   -print ]   [ -exec   -ok   command ]   {} \;
 ## 查看系统
 
 `cat /etc/redhat-release` 例如显示：`CentOS release 6.8 (Final)`
+
+## 设置环境变量
+
+- 临时
+
+```sh
+export PATH=xxx
+
+# 输出 xxx
+echo $PATH 
+```
+
+- 永久
+
+## 重启系统
+
