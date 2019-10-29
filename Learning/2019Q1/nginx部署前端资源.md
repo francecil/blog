@@ -57,3 +57,4 @@ cd /usr/local/nginx/sbin/
 ```sh
 yum install nginx
 ```
+采用此法默认的配置文件位置在 `./etc/nginx/nginx.conf`  或者通过 `find . -name "nginx.conf"` 找到

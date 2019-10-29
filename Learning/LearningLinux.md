@@ -373,6 +373,14 @@ kill -9 666
 
 3、yum方法安装的，可以用 yum list installed 查找，如果是查找指定包，用 yum list installed | grep "软件名或者包名"
 
+## 查找文件 [find](https://www.runoob.com/linux/linux-comm-find.html)
+
+```sh
+find   path   -option   [   -print ]   [ -exec   -ok   command ]   {} \;
+```
+
+`find . -name "*.c"` 查找当前目录及子孙目录中拓展名为 c 的文件
+
 # 特殊
 ## 查看系统
 
