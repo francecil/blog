@@ -373,6 +373,12 @@ kill -9 666
 
 3、yum方法安装的，可以用 yum list installed 查找，如果是查找指定包，用 yum list installed | grep "软件名或者包名"
 
+### 查看安装目录
+
+```sh
+whereis 软件名
+```
+
 ## 查找文件 [find](https://www.runoob.com/linux/linux-comm-find.html)
 
 ```sh
