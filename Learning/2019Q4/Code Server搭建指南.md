@@ -484,13 +484,3 @@ docker-compose up -d
 
 ```
 此时我们通过 https://code.test.com/ 就可以访问了
-
-### 指定cert启动容器
-
-由于内部代理走的是 http ，因此我们外部的 https 请求在转发的过程中会变成 http 请求
-
-安全性上和一开始是一样的，只是外面域名挂了个 https 的名
-
-我们在 code server 的文档中找到如下配置
-
-TODO
