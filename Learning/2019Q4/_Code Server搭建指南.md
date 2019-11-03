@@ -293,9 +293,54 @@ drwxr-xr-x 4 coder coder 4096 Nov  1 19:31 User
 
 ## docker-compose 的使用
 
-是不是觉得 docker run 的命令太长了，配置太多了，我们可以采用 docker-compose 技术
+是不是觉得 docker run 的命令太长了，还有容器挂了怎么办。
 
-TODO
+我们可以采用 docker-compose 技术
+
+```sh
+#安装docker-compose
+curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+#查看安装情况
+docker-compose --version
+```
+
+然后找个目录（如 `/usr/local/code-server`）创建 docker-compose.yml , 内容如下
+
+```yml
+version: "2"
+
+services:
+  code-server:
+    container_name: code-server
+    image: codercom/code-server:v2
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - "coder_project:/home/coder/project"
+      - "coder_config:/home/coder/.local/share/code-server"
+    environment:
+      PASSWORD: "xxxx"
+volumes:
+  coder_project:
+    external: true
+  coder_config:
+    external: true
+```
+注意这里配置了 `restart: always` 当容器挂掉,或 docker 启动的时候， code-server 会进行启动（重启）
+
+命名数据卷需要在外层使用 volumes 指定。这里增加 `external: true` 配置表示使用外部已经定义的数据卷，不存在则会报错，提示我们需要先用 `docker volume create --name=coder_project` 创建
+
+那不配置的话呢，会创建数据卷，名为 code-server_coder_project 和 code-server_coder_config ，即 `<service-name>_<volume-name>`
+
+和我们之前已创建的数据卷不一致，另外还有可能出现之前的 Permission denied 问题。因此这里直接用的原数据卷
+
+然后在 docker-compose.yml 同级目录下执行
+```
+docker-compose up -d
+```
+即可启动服务
 
 ## 域名配置和转发
 
