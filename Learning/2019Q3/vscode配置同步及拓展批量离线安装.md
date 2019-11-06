@@ -144,6 +144,12 @@ echo 'dbaeumer.vscode-eslint@1.6.0' |  sed -r 's/(.*?)\.(.*?)@(.*)/\1.\2-\3.vsix
 
 参考 [sed介绍](https://www.cnblogs.com/jcli/p/4088514.html)
 
+**单文件下载的 sh 命令即**
+```sh
+echo 'dbaeumer.vscode-eslint@1.6.0' | sed -r 's/(.*?)\.(.*?)@(.*)/curl https:\/\/marketplace.visualstudio.com\/_apis\/public\/gallery\/publishers\/\1\/vsextensions\/\2\/\3\/vspackage -o tmp\/\1.\2-\3.vsix/' | sh
+
+```
+
 结合步骤一
 
 ```sh
@@ -155,3 +161,8 @@ mkdir tmp;
 ```
 
 
+## 后续
+
+发现有的文件下载下来安装不了，提示 `end of central directory record signature not found`
+
+暂时未知原因，只能手动去[官网](https://marketplace.visualstudio.com)下载
