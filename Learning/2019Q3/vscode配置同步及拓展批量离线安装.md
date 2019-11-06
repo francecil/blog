@@ -172,6 +172,18 @@ mkdir tmp;
 
 发现有的文件下载下来安装不了，提示 `end of central directory record signature not found`
 
-应该是当前插件所依赖的 vscode 版本较高，要么升级 vscode 要么下载旧版插件
+可能是当前插件所依赖的 vscode 版本较高，要么升级 vscode 要么下载旧版插件
 
-可以去 `https://marketplace.visualstudio.com/items/${publisher}.${name}/changelog` 查看版本记录
+> 可以去 `https://marketplace.visualstudio.com/items/${publisher}.${name}/changelog` 查看版本记录下载旧版本
+
+也有可能需要去 `gallery.vsassets.io` 下载
+```sh
+https://${publisher}.gallery.vsassets.io/_apis/public/gallery/publisher/${publisher}/extension/${extension name}/${version}/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage
+```
+
+sh 命令
+```sh
+echo 'dbaeumer.vscode-eslint@1.6.0' | sed -r 's/(.*?)\.(.*?)@(.*)/curl https:\/\/\1.gallery.vsassets.io\/_apis\/public\/gallery\/publisher\/\1\/extension\/\2\/\3\/assetbyname\/Microsoft.VisualStudio.Services.VSIXPackage -o \1.\2-\3.vsix/' | sh
+```
+
+注意，如果用命令行下载的时候提示：`curl:(92) HTTP/2 stream 1 was not closed cleanly: HTTP_1_1_REQUIRED (err 13)`,需要重新下
