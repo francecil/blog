@@ -13,6 +13,14 @@
 
 [简单的 VSCode 插件离线安装方法](https://blog.csdn.net/u012814856/article/details/80684376)
 
+安装指令
+```sh
+# vscode安装目录/bin
+# 注意拓展的路径
+
+./code --install-extension xxx/octref.vetur-0.22.6.vsix
+```
+
 ## 批量下载离线安装包
 
 这个需求的来源是：云桌面不能访问外网但是可以访问宿主机，想要同步宿主机的 vscode 拓展到云桌面环境
@@ -146,8 +154,7 @@ echo 'dbaeumer.vscode-eslint@1.6.0' |  sed -r 's/(.*?)\.(.*?)@(.*)/\1.\2-\3.vsix
 
 **单文件下载的 sh 命令即**
 ```sh
-echo 'dbaeumer.vscode-eslint@1.6.0' | sed -r 's/(.*?)\.(.*?)@(.*)/curl https:\/\/marketplace.visualstudio.com\/_apis\/public\/gallery\/publishers\/\1\/vsextensions\/\2\/\3\/vspackage -o tmp\/\1.\2-\3.vsix/' | sh
-
+echo 'dbaeumer.vscode-eslint@1.6.0' | sed -r 's/(.*?)\.(.*?)@(.*)/curl https:\/\/marketplace.visualstudio.com\/_apis\/public\/gallery\/publishers\/\1\/vsextensions\/\2\/\3\/vspackage -o \1.\2-\3.vsix/' | sh
 ```
 
 结合步骤一
@@ -165,4 +172,6 @@ mkdir tmp;
 
 发现有的文件下载下来安装不了，提示 `end of central directory record signature not found`
 
-暂时未知原因，只能手动去[官网](https://marketplace.visualstudio.com)下载
+应该是当前插件所依赖的 vscode 版本较高，要么升级 vscode 要么下载旧版插件
+
+可以去 `https://marketplace.visualstudio.com/items/${publisher}.${name}/changelog` 查看版本记录
