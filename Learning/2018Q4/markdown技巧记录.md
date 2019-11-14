@@ -79,3 +79,19 @@ test2</s>
 > test2
 
 ps: 有些md解析器没有效果
+
+## 3. 点击展开效果
+
+```
+<details>
+<summary>title</summary>
+content
+</details>
+```
+效果如下:
+
+<details>
+<summary>点击展开</summary>
+我是内容详情
+</details>
+
