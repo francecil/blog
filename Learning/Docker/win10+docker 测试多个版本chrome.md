@@ -86,6 +86,11 @@ google-chrome
 ```
 直接启动浏览器进行测试~
 
+## 后记
+
+可以在 [这里](https://hub.docker.com/r/baozhida/selenium-node-chrome-debug/tags) 找到 `baozhida/selenium-node-chrome-debug` 的所有版本，目前最新版本为 58 ，作者已不再维护
+
+若想使用其他版本的浏览器，参考我的另一篇文章 -- [通过docker-selenium进行浏览器测试](./通过docker-selenium进行浏览器测试.md)
 
 ## 参考
 
