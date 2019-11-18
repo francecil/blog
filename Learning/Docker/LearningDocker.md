@@ -24,3 +24,5 @@
 前端项目本地开发，使用docker，如何避免每次 run dev 都要 npm install，过程略久
 
 采用 -d 参数，又想查看输出
+
+多个 docker-compose 服务，每个都会连接公共的容器？
