@@ -80,4 +80,19 @@ new Promise(resolve => {
 });
 console.log(2)
 ```
+
+<details>
+<summary>答案及解析</summary>
+
 答案是 1243 不是1234 的原因在于 **`里面的promise的then要比外面的promise的then先执行，也就是说它的nextTick更先注册，所以4是在3之前输出。`**
+</details>
+
+```js
+Promise.resolve().then(() => {
+  console.log(1);
+  Promise.resolve().then(()=> console.log(4))
+}).then(() => {
+    console.log(3)
+});
+console.log(2)
+```
