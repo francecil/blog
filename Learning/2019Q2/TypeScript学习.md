@@ -54,3 +54,34 @@ const t:t3 = {
 ```
 
 用法1，2经常组合起来使用
+
+## T | T[] => T[]
+
+有个对象，其类型为 Option 或 Option 数组
+
+现在需要将其强制转为 Option 数组类型，即如果他是 Option 则放入数组中
+
+```js
+interface Option {
+  [key: string]: React.ReactNode;
+}
+type A = Option | Option[]
+const a:A = {name:"111"}
+// 实现 toArray 函数，使得 b 的类型为 Option[]
+const b = toArray(a)
+```
+
+```js
+export function toArray<T>(value: T | T[] | undefined): T[] {
+  let ret = value;
+  if (value === undefined) {
+    ret = [];
+  } else if (!Array.isArray(value)) {
+    ret = [value as T];
+  }
+  return ret as T[];
+}
+// 本例还需要带上类型，其他的简单接口就不用了
+toArray<Option>(a)
+
+```
