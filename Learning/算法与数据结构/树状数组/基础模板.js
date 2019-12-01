@@ -1,14 +1,12 @@
 // <= n 的最大的 2^x
 function power2le (n) {
   let sum = 1
-  let tmp = 1
-  while (true) {
-    tmp = sum << 1
-    if (tmp > n) {
-      return sum
-    }
+  let tmp = 2
+  while (tmp <= n) {
     sum = tmp
+    tmp = sum << 1
   }
+  return sum
 }
 class BinaryIndexedTree {
   constructor(nums) {
