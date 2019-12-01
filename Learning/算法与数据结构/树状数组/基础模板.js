@@ -29,7 +29,7 @@ class BinaryIndexedTree {
   }
   // 更改第 i 项的, 1<=i<this.tree.length
   // O(logn)
-  updata (i, val) {
+  update (i, val) {
     while (i < this.tree.length) {
       this.tree[i] += val;
       i = i + (i & -i);
