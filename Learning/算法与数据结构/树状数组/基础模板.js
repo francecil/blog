@@ -27,7 +27,7 @@ class BinaryIndexedTree {
     }
     this.bitMask = power2le(nums.length - 1)
   }
-  // 更改第 i 项的, 1<=i<this.tree.length
+  // 更新第 i 项，增加差值 val, 1<=i<this.tree.length
   // O(logn)
   update (i, val) {
     while (i < this.tree.length) {
