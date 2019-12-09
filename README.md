@@ -1,4 +1,4 @@
-这是 gahing 的个人博客，记载开始工作后的所有笔记
+这是 gahing 的个人博客，记载开始学生时代和工作后的所有笔记
 
 Learning: 学习笔记
 
@@ -10,3 +10,14 @@ Learning: 学习笔记
 
 Daily-life: 日常、杂谈
 
+-----
+
+用过的其他博客平台，以前写的文章可能没有同步过来
+
+[CSDN](https://blog.csdn.net/u011644423/)
+
+[cnblogs](https://www.cnblogs.com/france/)
+
+[掘金](https://juejin.im/user/59818c62f265da3e3a0bdbf0)
+
+[west2online](https://www.hongweipeng.com/)
