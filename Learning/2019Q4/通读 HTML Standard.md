@@ -408,8 +408,8 @@ WorkerGlobalScope includes WindowOrWorkerGlobalScope;
 
 <img width="300" src="https://whatwg-cn.github.io/html/images/parsing-model-overview.svg"/>
 
-从图中也可看错 html 解析和脚本执行的关系
-
+从图中也可看出 html 解析和脚本执行的关系
+> 脚本执行会阻塞 DOM 的解析，试想下，不阻塞的话，脚本中修改了 DOM 那还得调整原来构建的 DOM 树
 
 描述了 HTML 片段的序列化和解析
 
