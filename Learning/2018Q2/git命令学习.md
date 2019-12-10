@@ -87,6 +87,8 @@ git push origin master
 
 git reset --hard commit_id 或者 HEAD^ 表示当前版本的上一个版本，10个前的版本就是 HEAD~10
 
+> 不指定 --hard 的话会进行内容合并
+
 当前版本被重置后，想回到刚刚的版本，又找不到commit_id,刚刚的命令窗口被关闭，怎么办?
 
 可以通过 git reflog 里面记录了我们每次的命令 

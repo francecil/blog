@@ -26,3 +26,9 @@
 采用 -d 参数，又想查看输出
 
 多个 docker-compose 服务，每个都会连接公共的容器？
+
+进入容器查看配置
+
+```
+docker exec -it container_id sh
+```
