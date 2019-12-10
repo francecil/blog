@@ -19,4 +19,6 @@
 
 快速使用
 
+https://github.com/SeleniumHQ/docker-selenium/wiki/Building-your-own-images
+
 ## 改造
