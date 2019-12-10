@@ -502,15 +502,18 @@ onClick21 onClick23 onClick3 会输出
 
 location 跳转
 
-看表现好像是异步执行？即等待后面的同步代码执行完毕才执行。
+location 是同步执行的，后台线程等解析完文档就会跳转，不会等后面的同步代码。通常我们后面的同步代码很快执行，所以会误以为 location 是异步执行的
 
-其实不是，location 是同步执行的，后台线程等解析完文档才做了跳转？
+详见 [stackoverflow](https://stackoverflow.com/questions/37521172/is-javascript-location-href-call-is-asynchronous) 和 [设置location.href，为什么不会立即跳转? - 知乎](https://www.zhihu.com/question/42268360/answer/207444712)
 
-https://stackoverflow.com/questions/37521172/is-javascript-location-href-call-is-asynchronous
+> PS: 还没详细看规范，不知道是不是这样处理
 
 history 跳转是一个 Task，因此它会在本次同步代码执行完毕后才执行
 > 这个看运行时环境实现，可能其他任务还会先与该 Task 前执行
 
-未完待续...
+总结： `window.open` 和 `location.href` 不属于 Web API 的范畴，也就不走 event loop 那一套
+
+
 </details>
 
+未完待续...
