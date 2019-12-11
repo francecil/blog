@@ -23,7 +23,7 @@
 
 [掘金](https://juejin.im/user/59818c62f265da3e3a0bdbf0)
 
-[West2Online](https://www.hongweipeng.com/)
+[West2Online](https://www.hongweipeng.com/index.php/author/8/)
 
 ## 微信公众号
 
