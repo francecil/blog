@@ -12,10 +12,6 @@
 
 为了方便在线阅览，正在采用 hexo 改造，主题来自 *屠夫9441* 的 [大道至简](https://www.haomwei.com/technology/maupassant-hexo.html)
 
-## 分支
-
-- master -- 文档原稿
-- hexo -- hexo 博客目录，source_dir 指向 Learning 目录
 
 ## 其他博客平台
 
