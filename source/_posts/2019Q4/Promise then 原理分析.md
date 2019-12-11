@@ -1,6 +1,15 @@
+---
+title: Promise then 原理分析
+date: 2019/12/10 00:00:00
+categories:
+- 随笔
+---
+
 ## 前言
 
 先谈规范，再分析 polyfill 源码，最后实例解析。
+
+<!-- more -->
 
 ## 规范
 
