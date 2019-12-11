@@ -28,3 +28,4 @@
 
 ## 微信公众号
 
+![WeChat](https://upload-images.jianshu.io/upload_images/9277731-591f9a53b8acf2c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/620)
