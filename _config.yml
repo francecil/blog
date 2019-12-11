@@ -4,16 +4,16 @@
 
 # Site
 title: gahing 的博客
-subtitle: ''
+subtitle: 'gahing.top'
 description: ''
 keywords:
 author: gahing
-language: en
+language: zh-CN
 timezone: ''
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://francecil.github.io
+url: https://gahing.top
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -27,8 +27,26 @@ tag_dir: tags
 archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
-i18n_dir: :lang
-skip_render:
+i18n_dir: zh-CN
+skip_render: 
+  - "_posts/2016*/**/*"
+  - "_posts/2018*/**/*"
+  - "_posts/2019Q1/**/*"
+  - "_posts/2019Q2/**/*"
+  - "_posts/2019Q3/**/*"
+  - "_posts/JS手写题/*"
+  - "_posts/Daily-life/**/*"
+  - "_posts/Docker/*"
+  - "_posts/nginx/*"
+  - "_posts/node模块源码解析/*"
+  - "_posts/util/*"
+  - "_posts/Vue源码解析/*"
+  - "_posts/常用样式组件/*"
+  - "_posts/数据库/*"
+  - "_posts/算法与数据结构/**/*"
+  - "**/tmp.*"
+  - "_posts/*.md"
+
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -85,14 +103,14 @@ pagination_dir: page
 
 # Include / Exclude file(s)
 ## include:/exclude: options only apply to the 'source/' folder
-include:
-exclude:
-ignore:
+include: 
+exclude: 
+ignore: 
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: maupassant
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html

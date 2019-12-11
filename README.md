@@ -10,7 +10,7 @@
 文档名称开头带 `_` 的表示处于草稿状态（持续更新的文章比如 `git命令学习.md` 等不会加 `_`）
 
 
-为了方便在线阅览，正在采用 hexo 改造，主题来自 *屠夫9441* 的 [大道至简](https://www.haomwei.com/technology/maupassant-hexo.html)
+为了方便在线阅览，正在采用 hexo 改造，主题使用 [next](https://github.com/theme-next/hexo-theme-next)
 
 
 ## 其他博客平台
