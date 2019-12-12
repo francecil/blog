@@ -1,8 +1,9 @@
 ---
 title: 通读 HTML Standard
 date: 2019/12/11 01:00:00
-categories:
-- 随笔
+categories: 大前端
+tags: 
+  - HTML
 ---
 
 ## 前言

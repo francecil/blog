@@ -2,8 +2,9 @@
 ---
 title: 精读 Event loops 规范
 date: 2019/12/10 00:00:00
-categories:
-- 随笔
+categories: 大前端
+tags: 
+  - HTML
 ---
 
 ## 前言

@@ -1,8 +1,9 @@
 ---
 title: Promise then 原理分析
 date: 2019/12/10 00:00:00
-categories:
-- 随笔
+categories: 大前端
+tags: 
+  - ECMAScript
 ---
 
 ## 前言
