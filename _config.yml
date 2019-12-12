@@ -118,3 +118,10 @@ deploy:
   type: git
   repo: https://github.com/francecil/francecil.github.io.git
   branch: master
+
+# Local search
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
