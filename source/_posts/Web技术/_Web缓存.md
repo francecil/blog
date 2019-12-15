@@ -3,7 +3,9 @@
 
 expires 到了则发送 if-modified-since 
 
-如果 last-modified 后改了，请求新资源没有的话返回 304 告诉浏览器可以用浏览器中的缓存，会不会更新 expires？
+如果 last-modified 后改了，请求新资源没有的话返回 304 告诉浏览器可以用浏览器中的缓存，并更新 expires
+
+expires = 设置的 max-age + 请求时间
 
 
 last-modified 只精确到秒，内容没变但是最后修改时间变了，还是会重新请求
