@@ -74,7 +74,8 @@ export default {
 }
 </style>
 ```
-> 先不考虑显示的位置，通过 show prop 的值来显示/隐藏该菜单，当前实现 菜单将会显示在左上角
+
+先不考虑显示的位置，通过 show prop 的值来显示/隐藏该菜单，当前实现 菜单将会显示在左上角
 
 Dashbox.vue
 ```html
@@ -102,7 +103,7 @@ export default {
 }
 </style>
 ```
-> 绝对定位在页面中，右键时会向上层传递事件
+绝对定位在页面中，右键时会向上层传递事件
 
 Home.vue
 ```html
@@ -158,9 +159,10 @@ export default {
 };
 </script>
 ```
-> 此时可以看到页面中有2个矩形框，右键的时候，左上角能出现菜单
-> 
-> 当然，此时并没有办法将该菜单隐藏
+
+此时可以看到页面中有2个矩形框，右键的时候，左上角能出现菜单
+
+当然，此时并没有办法将该菜单隐藏
 
 下面，我们将一步步进行优化
 
@@ -320,7 +322,7 @@ export default {
 </style>
 ```
 
-到这里，我们就可以实现`菜单处于右键点击位置`的效果了，每次右键点击，context-menu 会显示在对应位置
+到这里，我们就可以实现 **菜单处于右键点击位置** 的效果了，每次右键点击，context-menu 会显示在对应位置
 
 
 
@@ -587,7 +589,7 @@ style 样式 改为
 
 ## 插件注册
 
-参考了 [element-ui 的代码](https://github.com/ElemeFE/element/blob/master/src/index.js) 和 [README](https://github.com/ElemeFE/element#quick-start)
+参考了 [element-ui](https://github.com/ElemeFE/element/blob/master/src/index.js) 的代码和 [README](https://github.com/ElemeFE/element#quick-start)
 
 以及 [vue 官方文档-插件](https://cn.vuejs.org/v2/guide/plugins.html) 
 
@@ -680,17 +682,10 @@ body 和 Dashbox 父容器 都可滚动的情况下，会出现菜单不在点�
 
 有用过 `vue-cli 3` 和 `element-ui` 的，应该熟悉 [vue-cli-plugin-element](https://github.com/ElementUI/vue-cli-plugin-element)
 
-在我们的项目中，使用 `vue add element` 命令后，会自动去下载`vue-cli-plugin-element` 并在 plugins 文件夹中新增 element.js 最后在 main.js 中使用，省去了上面那些手动引入的过程。
+在我们的项目中，使用 `vue add element` 命令后，会自动去下载 `vue-cli-plugin-element` 并在 plugins 文件夹中新增 element.js 最后在 main.js 中使用，省去了上面那些手动引入的过程。
 
 这里我们也尝试编写一个 [vue-cli-plugin-contextmenu](https://github.com/francecil/vue-cli-plugin-contextmenu)
 
-参考 
-
-1. [插件开发指南](https://cli.vuejs.org/zh/dev-guide/plugin-dev.html#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5)
-
-2. [vue-cli-plugin-element](https://github.com/ElementUI/vue-cli-plugin-element)
-
-3. [「Vue进阶」5分钟撸一个Vue CLI 插件](https://juejin.im/post/5cb59c4bf265da03a743e979)
 
 项目结构
 ```
@@ -747,3 +742,11 @@ Vue.use(ContextMenu)
 ```
 
 至此，vue-cli-plugin-contextmenu 就开发完成，将其发布到 npm 上
+
+## 参考 
+
+1. [插件开发指南](https://cli.vuejs.org/zh/dev-guide/plugin-dev.html#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5)
+
+2. [vue-cli-plugin-element](https://github.com/ElementUI/vue-cli-plugin-element)
+
+3. [「Vue进阶」5分钟撸一个Vue CLI 插件](https://juejin.im/post/5cb59c4bf265da03a743e979)
