@@ -15,13 +15,13 @@ this.setState({
 
 控件用的 antd
 
-chrome 59,高版本不会出现
+chrome 59 出现，高版本不会出现
 
 ## 原因分析
 
 Promise.prototype.finally chrome63 才支持 不知道会不会有关系，试一下。。
 
-
+目前没有找到原因
 
 ## 解决方案
 
