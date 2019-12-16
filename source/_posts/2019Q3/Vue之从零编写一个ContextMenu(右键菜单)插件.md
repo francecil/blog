@@ -1,3 +1,11 @@
+---
+title: Vue之从零编写一个ContextMenu(右键菜单)插件
+date: 2019/07/03 03:00:00
+categories: 大前端
+tags: 
+  - Vue
+---
+
 ## 前言
 
 ContextMenu 即右键菜单，当前的需求是：右键点击某些组件时，根据所点击组件的信息，展示不同的菜单。

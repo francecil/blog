@@ -1,6 +1,17 @@
+---
+title: React Context及换肤功能实现
+date: 2019/07/01 01:00:00
+categories: 大前端
+tags: 
+  - React
+  - 换肤
+---
+
 ## 前言
 
 通过讲解 React Context 的用法，引出 React 换肤功能的实现
+
+<!-- more -->
 
 ## Context 概念
 
@@ -8,7 +19,6 @@
 
 我们经常遇到这样的场景，数据需要传到子组件的子组件更甚至更下层组件，用props逐层传递的代码如下：
 
-<!-- more -->
 
 ```jsx
 class App extends React.Component {

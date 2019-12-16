@@ -1,7 +1,27 @@
+---
+title: JS源码解析之Array.prototype.sort
+date: 2019/07/04 00:00:00
+categories: 大前端
+tags: 
+  - ECMAScript
+  - V8
+---
 
 ## 前言
 
-今天有个小伙伴( chrome v59 )遇到一个这样的问题，
+先问个问题，以下代码输出什么？
+
+```js
+[1,2,13,14,5,6,17,18,9,10,11,12,31,41].sort(()=>0)
+```
+
+<!--more-->
+
+聪明的你可以会认为，这不是返回元素顺序不变的数组么？
+
+
+emmm 正常来说，的确如此，然后有个小伙伴(chrome v59 环境)遇到一个这样的问题
+
 ```js
 [1,2,13,14,5,6,17,18,9,10,11,12,31,41].sort(()=>0)
 // [18,1,13,14,5,6,17,2,9,10,11,12,31,41]
@@ -15,14 +35,16 @@
 [1,2,13,14,5,6,17,18,9,10].sort(()=>0)
 // [1,2,13,14,5,6,17,18,9,10]
 ```
+
 我们知道，给一个 sort 的比较函数中返回0，表示当前比较的两个元素相等
 
 照理说，`sort(()=>0)` 后数组的元素顺序是不变的，和我的测试效果一致，
 
 那为什么在 低版本的 chrome 上，不同长度的数组运用 `sort(()=>0)` 后效果不一样呢？
 
-
-<!--more-->
+本文就来做个解析。通过本文，你可以了解到：
+- Array.prototype.sort 的实现细节与遗留问题
+- 如何看 JS 源码
 
 
 ## 定义
@@ -30,7 +52,7 @@
 ```
 arr.sort([compareFunction])
 ```
-这里我们引用MDN的一段话：
+这里我们引用 MDN 的一段话：
 > 如果 compareFunction(a, b) 小于 0 ，那么 a 会被排列到 b 之前；
 > 
 > 如果 compareFunction(a, b) 大于 0 ， b 会被排列到 a 之前。
@@ -39,7 +61,7 @@ arr.sort([compareFunction])
 
 也就是说，有些浏览器不遵循 `compareFunction(a, b) 等于 0时， a 和 b 的相对位置不变` 的规则
 
-这里我们看出来了，chrome v59 就是不遵循该规则的。 但是 数组长度较小时好像又遵循了？
+这里我们看出来了，chrome v59 就是不遵循该规则的。 但是数组长度较小时好像又遵循了？
 
 这里我们猜测不同长度的数组会运用不同的排序算法
 
@@ -55,9 +77,15 @@ comparefn = (a,b)=> a-b
 ### 1. 插入排序
 > 遍历数组，将每个待排序元素插入到前面已排序的适当位置
 
-插入排序分为 直接插入排序、二分查找插入排序、希尔排序
+插入排序分为直接插入排序、二分查找插入排序、希尔排序
 
-由于v8也只是用了直接插入排序，这里我们只实现它,其他几种不进行讨论，想要了解的可以参考[这里](https://www.cnblogs.com/heyuquan/p/insert-sort.html),
+由于 v8 也只是用了直接插入排序，这里我们只实现它,其他几种不进行讨论，想要了解的可以参考--[优化的直接插入排序](https://www.cnblogs.com/heyuquan/p/insert-sort.html)
+
+
+![引用自 wikipedia](https://upload-images.jianshu.io/upload_images/9277731-e6e3d03ebc90be7b.gif?imageMogr2/auto-orient/strip)
+
+实现代码如下：
+
 ```js
 function InsertionSort(array) {
   for (let i = 1; i < array.legnth; i++) {
@@ -77,7 +105,9 @@ function InsertionSort(array) {
   }
 };
 ```
+
 ### 2. 快速排序
+
 > 设定一个基准，利用该基准值大小将数组分为左右两部分
 > 
 > 此时左右两部分可以独立排序，分别对左右两部分进行上面的操作
@@ -89,6 +119,8 @@ function InsertionSort(array) {
 关于原地算法，参看 https://en.wikipedia.org/wiki/In-place_algorithm
 
 下面有两者实现，基准值取左边的或者右边，效果差不多
+
+![引用自 wikipedia](https://upload-images.jianshu.io/upload_images/9277731-fde423214816b518.gif?imageMogr2/auto-orient/strip)
 
 ```js
 function qsort(array){
@@ -338,35 +370,51 @@ function QuickSort (a, from, to) {
   }
 };
 ```
-- 以 `[1,2,13,14,5,6,17,18,9,10,11,12,31,14,51]` 、 `comparefn = (a,b)=>a-b` 为例
+
+在基准选择上做了各种处理，详细看注释
+
+以正常的升序排序为例
+```
+array = [1,2,13,14,5,6,17,18,9,10,11,12,31,14,51]
+comparefn = (a,b)=>a-b
+```
+
+第一轮执行过程如下：
 
 1. third_index = 7, from = 0, to = 15, pivot = a[7] = 18, low_end = 1, high_start = 14, a[7] = a[1] = 2, a[1] = 18
-  > [1,18,13,14,5,6,17,2,9,10,11,12,31,14,51]
+    > [1,18,13,14,5,6,17,2,9,10,11,12,31,14,51]
 2. 进入 partition 循环，从 i=2开始比较
 3. i=2,由于 a[i] < pivot, 此时 a[2] = a[low_end] = a[1] = 18, low_end = 2
-  > [1,13,18,14,5,6,17,2,9,10,11,12,31,14,51]
+    > [1,13,18,14,5,6,17,2,9,10,11,12,31,14,51]
 4. 直到 i=12 才出现 a[i]=31 > pivot, 这段过程结束后 low_end = 11
-  > [1,13,14,5,6,17,2,9,10,11,12,18,31,14,51]
+    > [1,13,14,5,6,17,2,9,10,11,12,18,31,14,51]
 5. i=12,由于 a[12] = 31 > pivot,high_start = 13,由于 a[13] < pivot,a[i=12]=a[13]=14,a[13]=31
-  > [1,13,14,5,6,17,2,9,10,11,12,18,14,31,51]
+    > [1,13,14,5,6,17,2,9,10,11,12,18,14,31,51]
 6. 同时由于 a[13] < pivot，a[12] = a[low_end] = a[11] = 18,a[11] = 31, low_end = 12
-  > [1,13,14,5,6,17,2,9,10,11,12,14,18,31,51]
+    > [1,13,14,5,6,17,2,9,10,11,12,14,18,31,51]
 7. i < high_start 不成立，循环中断
-8. to - high_start = 14-13=1，low_end - from = 12，故先进行 QuickSort(a,13,14) 再进入循环判断 QuickSort(a,0,12)
+8. to - high_start = 14-13=1，low_end - from = 12，分别进行 QuickSort(a,13,14) 和 QuickSort(a,0,12)
+9. 继续新一轮的执行
 
+看上去没有什么问题，这次采用开头的例子
 
-- 以 `[1,2,13,14,5,6,17,18,9,10,11,12,31,14,51]` 、 `comparefn = (a,b)=>0` 为例
+```
+array = [1,2,13,14,5,6,17,18,9,10,11,12,31,14,51]
+comparefn = (a,b)=>0
+```
+
+第一轮执行过程如下：
 
 1. third_index = 7, from = 0, to = 15, v0=a[0]=1,v[1]=a[14]=51,v[2]=a[7]=18,
 2. 由于 comparefn(v0, v2)>=0,表示 v2 <= v0 <= v1,v0=18,v1=1,v2=51, a[0]=18,a[14]=51,pivot = v1 = 1, low_end = 1, high_start = 14, a[7] = a[1] = 2, a[1] = 1
-  > [18,1,13,14,5,6,17,2,9,10,11,12,31,14,51]
+    > [18,1,13,14,5,6,17,2,9,10,11,12,31,14,51]
 2. 进入 partition 循环，从 i=2开始比较,由于 comparefn(element, pivot)=0 不进行处理直至循环结束
 3. to - high_start = 14-14=0，low_end - from = 0，故先进行 QuickSort(a,0,0) 再进入循环判断 QuickSort(a,14,14)
 4. 判断结束，返回 [18,1,13,14,5,6,17,2,9,10,11,12,31,14,51]
 
 可以看出来，v8源码有两个问题
 
-一、v0,v1,v2 的交换处理代码
+#### ① v0,v1,v2 的交换处理代码
 ```js
 comparefn = (a,b)=>0
 function swap ([v0, v1, v2]) {
@@ -403,7 +451,7 @@ function swap ([v0, v1, v2]) {
 ```
 主要是 c02 的判断上改为 `>` ,保证 v0与v2相同时 不会进行交换
 
-二、重新赋值
+#### ② 重新赋值
 
 原来代码在交换后，做了这些操作，没有考虑相等的情况
 
@@ -625,7 +673,7 @@ chrome 76
 
 1. 根据部分文件名快速查找文件：https://help.github.com/en/articles/finding-files-on-github
 2. 在搜索栏中输入 "Array.prototype.sort" in:file 即可搜索含有全匹配 Array.prototype.sort 内容的文件
-3. js方法实现一般在 /src/js/ 和 /src/runtime/ 目录中 https://www.zhihu.com/question/59792274/answer/169671660
+3. js方法实现一般在 /src/js/ 和 /src/runtime/ 目录中，参考自 https://www.zhihu.com/question/59792274/answer/169671660
 4. 结合 test/mjsunit 一起看源码效果更佳
 
 ## 参考
