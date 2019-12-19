@@ -23,8 +23,10 @@
 通过设置 Referrer Policy 进行同源监测
 没有 referrer 的设置不可信（部分浏览器会无法使用
 
-
-使用 CSRF Token
+解决：
+1. 增加验证码
+2. 添加自定义请求头，值为第三方页面无法获取或猜测的随机值
+> 如果鉴权用的 token 且存于 localstorage ，可以将该 token 作为随机值 -- CSRF Token
 
 # 重放攻击
 
