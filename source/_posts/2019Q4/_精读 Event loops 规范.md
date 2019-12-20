@@ -106,6 +106,15 @@ JavaScript 执行引擎只会一直执行栈顶的函数，它根本不知道什
 
 ① The DOM manipulation task source
 
+a/area标签的导航
+
+history 部分操作
+
+某些条件的iframe加载
+
+img的启动和数据更新动画
+
+BroadcastChannel
 
 ### 总结
 
