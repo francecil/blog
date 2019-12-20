@@ -61,3 +61,7 @@ settimeout ，promise，async/await 区别
 后端项目，用的什么框架
   express 的中间件原理，源码 （本质就是回调队列，next 执行）
 egg 用过么
+
+## vue 原理
+
+创建渲染函数，挂载在观察者 Watcher 中，执行渲染函数时，触发了响应式数据的getter方法，对观察者进行依赖收集，响应式数据变动时通知所有观察者进行更新，此时观察者 Watcher 会触发组件重新渲染，生成一个新的 VDOM Tree，然后 Diff，更新到真实 DOM
