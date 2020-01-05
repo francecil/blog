@@ -29,7 +29,7 @@
    其他：cdn，预解析，预加载，http2）
 
 - csrf 是什么？不是说 cookie 隔离的么，为什么其他页面发请求会带上
-  > （浏览器Cookie策略针对的是同源页面可以获取，没有说非同源页面发请求不能带上，如果不能带的话，像单点登录就做不了了）
+  > 同源策略仅仅阻止了脚本读取来自其他站点的内容．但是却没有防止脚本向其他站点发出请求。
 
 - settimeout ，promise，async/await 区别
   - 追问：事件循环有哪些任务源 （网络，定时器，history，用户交互事件，DOM 操作）
@@ -82,3 +82,28 @@
 - 最近关注的新技术
 - 项目上的问题
 - 一道转驼峰的笔试题
+
+## shopee 
+
+- 模拟 instanceOf
+- 讲讲原型
+- 讲讲中间人攻击
+
+
+## ringcenter 2020/1/2
+
+- 什么地方用到过 shouldComponentUpdate 
+- css 基线
+- css 盒模型 嵌套块元素最终 marginTop 的值
+- vue 和 react 的比较
+- https 仅用非对称加密的可行性
+- 词法环境
+- 事件循环，回调由哪个线程处理
+- 编程习惯相关
+
+## 阿里政企 一面 2020/1/3
+
+- 某个列表组件有大量 dom 节点，如何优化
+- 虚拟 dom
+- 301 和 302 的使用场景
+> 以输入 http://taobao.com 为例，先 302 到 http://www.taobao.com 再 301 到 https://www.taobao.com
