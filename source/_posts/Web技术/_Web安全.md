@@ -26,8 +26,35 @@
 解决：
 1. 增加验证码
 2. 添加自定义请求头，值为第三方页面无法获取或猜测的随机值
-> 如果鉴权用的 token 且存于 localstorage ，可以将该 token 作为随机值 -- CSRF Token
+> CSRF Token 方案，服务端维护一个用 session 或 Redis 记录这些 token ，下次根据请求头中信息进行校验
+3. 双重 cookie，可以减轻服务端的压力，不过不能隔离子域，要是子域被xss攻击,本域 cookie 将被获取
+
+## Q1: 何时获取到 token
+
+通过 token 鉴权的，有个请求白名单，登录请求和鉴权请求不验证 csrfToken
+
+发起 xhr 请求时，会带上值为 token 的自定义头
+
+对于后端渲染的，表单则添加 hidden input； a 链接则将 token 参数写在 href 链接后
+
+如果是不进行后端渲染，登录后不刷新，需要遍历 dom 树插入 hidden input ，不过这种场景比较少
+
+服务端用 session 或 Redis 保存这个值，提交时先根据 cookie 识别对应的用户，再去找到对应的值判断是否一致
+
+如果是通过 cookie 鉴权的，写入某个标签，用的时候去读
+
+
+## Q2： 能否用 Access-Control-Allow-Origin 防范？
+
+Access-Control-Allow-Origin 本质上和 CSRF 没有关系，本来就是跨域请求，且服务端能够进行处理，只是响应拿不到
+
+
+## Q3: 不是说 cookie 隔离的么，为什么其他页面发请求会带上
+
+同源策略仅仅阻止了脚本读取来自其他站点的内容．但是却没有防止脚本向其他站点发出请求。
 
 # 重放攻击
 
-使用 https
+使用 https 避免数据被拦截； https 抓包只能看到 域名端口
+
+url 中加唯一id 请求的时候校验该id是否用过
