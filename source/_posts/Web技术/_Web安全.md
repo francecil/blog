@@ -31,17 +31,23 @@
 
 ## Q1: 何时获取到 token
 
-通过 token 鉴权的，有个请求白名单，登录请求和鉴权请求不验证 csrfToken
+通过 token 鉴权的，token 存在 storage 中。
 
-发起 xhr 请求时，会带上值为 token 的自定义头
+有个请求白名单，登录请求和鉴权请求不验证 csrfToken
 
-对于后端渲染的，表单则添加 hidden input； a 链接则将 token 参数写在 href 链接后
+如果是 xhr 异步请求，发起请求时会带上值为 token 的请求头
 
-如果是不进行后端渲染，登录后不刷新，需要遍历 dom 树插入 hidden input ，不过这种场景比较少
+对于后端渲染的页面，表单中添加 hidden input； a 链则将 token 参数写在 href 链接后
+
+如果是不进行后端渲染，登录后不刷新（接口返回token），需要遍历 dom 树插入 hidden input ，不过这种场景比较少
+
+---
+
+对于 cookie 鉴权的，后端渲染的方式就是在返回页面时将随机值插入页面，包括 form 表单和 a ，发 xhr 请求的时候通过标签去拿到随机值
+
+如果是不进行后端渲染，登录后不刷新（接口返回随机值），需要遍历 dom 树插入 hidden input ，不过这种场景比较少
 
 服务端用 session 或 Redis 保存这个值，提交时先根据 cookie 识别对应的用户，再去找到对应的值判断是否一致
-
-如果是通过 cookie 鉴权的，写入某个标签，用的时候去读
 
 
 ## Q2： 能否用 Access-Control-Allow-Origin 防范？
