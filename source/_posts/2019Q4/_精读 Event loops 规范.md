@@ -116,6 +116,12 @@ img的启动和数据更新动画
 
 BroadcastChannel
 
+### UI Render 阶段
+
+rAF 在 ui render 阶段执行
+
+但是 ui render 的执行时机是不可控的
+
 ### 总结
 
 每个 event loop 有多个任务队列，每轮 event loop 会根据某种规则去选择一个 task queues，从该 task queues 中取出队头 task 进行执行，而后执行 microTask queue ，再进行页面渲染
