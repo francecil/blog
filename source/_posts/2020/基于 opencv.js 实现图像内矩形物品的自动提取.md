@@ -14,12 +14,12 @@ tags:
 
 有两张照片，第一张照片带白纸，通过合成会将第二张照片转换到第一张照片的白纸处
 
-![物品替换.png](https://upload-images.jianshu.io/upload_images/9277731-f4c330edac89029a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![物品替换](https://upload-images.jianshu.io/upload_images/9277731-f4c330edac89029a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 正好最近看到 OpenCV 在前端有对应的实现库，就想着做个纯前端版本，这次我们实现反向效果，将合成图中的矩形图像提取出来
 
 
-![rectangle-extract.png](https://upload-images.jianshu.io/upload_images/9277731-a65795c8ec1f9735.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![rectangle-extract](https://upload-images.jianshu.io/upload_images/9277731-a65795c8ec1f9735.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
 已开源，详见 [rectangle-extract-opencvjs](https://github.com/francecil/rectangle-extract-opencvjs) 
@@ -45,11 +45,11 @@ tags:
 
 ### 二、算法流程
 
-![矩形抽离流程图.png](https://upload-images.jianshu.io/upload_images/9277731-7f8c188b0b79fbdf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![矩形抽离流程图](https://upload-images.jianshu.io/upload_images/9277731-7f8c188b0b79fbdf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-我们下面原图为例
+我们以下面原图为例
 
-![q1](https://user-gold-cdn.xitu.io/2020/1/21/16fc6b8a3bef2cb0?w=1334&h=1000&f=jpeg&s=156315)
+![原图](https://user-gold-cdn.xitu.io/2020/1/21/16fc6b8a3bef2cb0?w=1334&h=1000&f=jpeg&s=156315)
 
 #### 预处理
 
@@ -61,7 +61,7 @@ tags:
 
 滤波可以用 双边滤波 或者 meanshift 滤波
 
-![q2.png](https://upload-images.jianshu.io/upload_images/9277731-996a1fdd15be6a67.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![预处理](https://upload-images.jianshu.io/upload_images/9277731-996a1fdd15be6a67.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
 #### 提取前景图
@@ -70,11 +70,11 @@ tags:
 
 即通过应用 floodFill 算法得到灰度图
 
-![q3.png](https://upload-images.jianshu.io/upload_images/9277731-b168ca6699ab95a5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![漫水填充](https://upload-images.jianshu.io/upload_images/9277731-b168ca6699ab95a5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 应用中值滤波去噪
 
-![q4.png](https://upload-images.jianshu.io/upload_images/9277731-38ac88389cd3472e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![中值去噪](https://upload-images.jianshu.io/upload_images/9277731-38ac88389cd3472e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 这样我们就得到一个二值图像了
 
@@ -84,12 +84,12 @@ tags:
 
 先利用 Canny 算子进行边缘检测
 
-![q5.png](https://upload-images.jianshu.io/upload_images/9277731-367c71d9b042722b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![边缘检测](https://upload-images.jianshu.io/upload_images/9277731-367c71d9b042722b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
 然后通过 HoughLines 变换得到直线
 
-![q6.png](https://upload-images.jianshu.io/upload_images/9277731-31257448062a25fa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![直线检测](https://upload-images.jianshu.io/upload_images/9277731-31257448062a25fa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 这里不选用 HoughLinesP 检测线段，主要原因是得到的线段都是短线段且方向变化较大，不利于后续的计算；还有一个原因是不能处理图像部分缺失的情况
 
@@ -117,7 +117,7 @@ tags:
 
 最后再横纵缩放一半（压缩），得到最后的结果
 
-![q7.png](https://upload-images.jianshu.io/upload_images/9277731-a1ebc28e8965fd62.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![结果](https://upload-images.jianshu.io/upload_images/9277731-a1ebc28e8965fd62.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 三、界面布局
 
