@@ -58,5 +58,28 @@ function searchLast (nums, target) {
     }
   }
   // left 左边均 <= target 右边均 > target
-  return nums[left-1] === target ? left-1 : -1
+  return nums[left - 1] === target ? left - 1 : -1
+}
+
+/**
+ * 在排序数组中查找最后一个小于于等于目标元素的项的索引位置
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ * @example searchLastLe([0,2,4,6],3) === 1
+ */
+function searchLastLe (nums, target) {
+  let left = 0
+  let right = nums.length //左闭右开
+  while (left < right) {
+    let mid = left + right >> 1
+    if (nums[mid] < target) {
+      left = mid + 1
+    } else if (nums[mid] > target) {
+      right = mid
+    } else {
+      return mid
+    }
+  }
+  return left - 1
 }
