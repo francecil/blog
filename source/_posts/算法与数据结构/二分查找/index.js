@@ -83,3 +83,27 @@ function searchLastLe (nums, target) {
   }
   return left - 1
 }
+
+/**
+ * 在排序数组中查找第一个大于于等于目标元素的项的索引位置
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ * @example searchFirstGe([0,2,4,6],7) === -1
+ * @example searchFirstGe([0,2,4,6],-1) === 0
+ */
+function searchFirstGe (nums, target) {
+  let left = 0
+  let right = nums.length //左闭右开
+  while (left < right) {
+    let mid = left + right >> 1
+    if (nums[mid] < target) {
+      left = mid + 1
+    } else if (nums[mid] > target) {
+      right = mid
+    } else {
+      return mid
+    }
+  }
+  return left === nums.length ? - 1 : left - 1
+}
