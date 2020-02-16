@@ -105,5 +105,5 @@ function searchFirstGe (nums, target) {
       return mid
     }
   }
-  return left === nums.length ? - 1 : left - 1
+  return left === nums.length ? - 1 : left
 }
