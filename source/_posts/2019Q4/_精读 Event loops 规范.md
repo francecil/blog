@@ -116,6 +116,10 @@ img的启动和数据更新动画
 
 BroadcastChannel
 
+### 微任务检查点
+
+多个地方，并不只是在任务结束后执行
+
 ### UI Render 阶段
 
 rAF 在 ui render 阶段执行
