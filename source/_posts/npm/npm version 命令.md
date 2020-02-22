@@ -1,3 +1,11 @@
+---
+title: npm version 命令
+date: 2019/05/01 00:00:00
+categories: 随笔
+tags: 
+  - npm
+---
+
 ## 前言
 
 对于 NodeJS 项目中，我们经常需要变更 package.json 中的版本信息。
