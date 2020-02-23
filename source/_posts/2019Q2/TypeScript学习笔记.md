@@ -1,3 +1,12 @@
+---
+title: TypeScript学习笔记
+date: 2019/05/01 01:00:00
+categories: 大前端
+tags: 
+  - TypeScript
+---
+
+<!--more-->
 ## Partial
 
 ```ts
