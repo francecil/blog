@@ -1,3 +1,11 @@
+---
+title: Antd Table 自适应和省略号
+date: 2019/04/20 01:00:00
+categories: 大前端
+tags: 
+  - ant-design
+---
+
 ## 前言
 
 之前写了一篇文章<a href="https://www.hongweipeng.com/index.php/archives/1724/">Antd Table组件 配置规范</a>
