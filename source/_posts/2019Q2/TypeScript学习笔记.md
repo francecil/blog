@@ -6,7 +6,11 @@ tags:
   - TypeScript
 ---
 
+## 前言
+
+
 <!--more-->
+
 ## Partial
 
 ```ts

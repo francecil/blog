@@ -16,6 +16,8 @@ tags:
 
 实际上，我们可以使用 `npm version <newversion>` 命令
 
+<!-- more -->
+
 ## 使用
 
 ```bash
