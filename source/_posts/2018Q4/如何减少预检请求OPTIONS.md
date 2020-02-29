@@ -1,9 +1,21 @@
+---
+title: 如何减少预检请求OPTIONS
+date: 2018-12-16 10:18:32
+categories: 大前端
+tags:
+  - HTTP
+  - 跨域
+---
+
+## 前言
+
 先说结论，只能将复杂请求改造为简单请求
 
 常见的做法是：
 1. token放原生的请求头：Authorization 
-2. Content-Type改为text/plain 然后后端统一处理
+2. Content-Type 改为text/plain 然后后端统一处理
 
+<!--more-->
 
 若无法修改请求，那么可以设置 `Access-Control-Max-Age` 响应
 
@@ -15,3 +27,10 @@
 
 注意：若设置了 `disable-cache` 那么每次复杂请求都会发OPTIONS
 
+## 后记
+
+写这篇博客的背景是原来有个项目的前后端分离做的不对
+
+前端资源(包括index.html)单独一台服务器，然后访问其他服务器的接口
+
+实际这种应该在前端服务器这边做个转发，避免跨域。或者 index.html 放在后端服务器，其他资源放前端服务器，没有跨域问题
