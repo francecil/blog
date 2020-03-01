@@ -1,3 +1,11 @@
+---
+title: vue-eslint-vscode 通用配置
+date: 2019/01/20 01:00:00
+categories: 大前端
+tags: 
+  - VSCode
+---
+
 ## 前言
 
 在vscode的vue项目中，关于代码检查和格式化，遇到各种各样的问题，比如：

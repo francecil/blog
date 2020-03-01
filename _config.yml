@@ -31,7 +31,6 @@ i18n_dir: zh-CN
 skip_render: 
   - "_posts/2016*/**/*"
   - "_posts/2018*/**/*"
-  - "_posts/2019Q1/**/*"
   - "_posts/JS手写题/*"
   - "_posts/Daily-life/**/*"
   - "_posts/Docker/*"
