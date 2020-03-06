@@ -10,6 +10,8 @@ tags:
 
 本篇将介绍常用的概念及工作流程，达到快速入门的效果
 
+<!-- more -->
+
 ## 程序运行流程
 
 先简单描述一下编写 WebGL 程序的流程
@@ -39,7 +41,7 @@ tags:
 
 着色器语言，内建的数据类型有：
 
-- vec2, vec3和 vec4分别代表两个值，三个值和四个值
+- vec2, vec3和 vec4分别代表两个值，三个值和四个值，可以理解为列矩阵
 
 - mat2, mat3 和 mat4 分别代表 2x2, 3x3 和 4x4 矩阵
 
@@ -54,6 +56,96 @@ v.w 和 v.q 以及 v.a ， v[3] 表达的是同一个分量。
 ```
 
 `v.yyyy` 等价于 `vec4(v.y, v.y, v.y, v.y)`
+
+多个属性，如何从 buffer 读取数据？
+
+
+```js
+var vertexShaderSource = `
+  attribute vec2 a_position;
+  attribute vec2 a_offset;
+
+  void main() {
+    gl_Position = vec4(a_position + a_offset, 0, 1);
+  }
+`
+```
+
+可以分次设置 buffer
+> 每次执行 bufferData 上一次的 buffer 将被清空
+
+```js
+var positionAttributeLocation = gl.getAttribLocation(program, "a_position");
+var offsetAttributeLocation = gl.getAttribLocation(program, "a_offset");
+
+gl.enableVertexAttribArray(positionAttributeLocation);
+var positionBuffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+var positions = [
+  0, 0,
+  0, 0.5,
+  0.7, 0,
+];
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+var size = 2;          // 每次迭代运行提取两个单位数据
+var type = gl.FLOAT;   // 每个单位的数据类型是32位浮点型
+var normalize = false; // 不需要归一化数据
+var stride = 0;
+var offset = 0;
+gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset);
+
+gl.enableVertexAttribArray(offsetAttributeLocation);
+var offsetBuffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, offsetBuffer);
+var offsets = [
+  0.1, 0.1,
+  0, 0,
+  0, 0.1,
+];
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(offsets), gl.STATIC_DRAW);
+gl.vertexAttribPointer(offsetAttributeLocation, size, type, normalize, stride, offset);
+```
+
+或者一次设置 buffer 每次指定 buffer 偏移量 offset
+
+```js
+var buffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+
+var buffer = [
+  0, 0,
+  0, 0.5,
+  0.7, 0,
+  0.1, 0.1,
+  0, 0,
+  0, 0.1,
+];
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(buffer), gl.STATIC_DRAW);
+
+gl.enableVertexAttribArray(positionAttributeLocation);
+var size = 2;          // 每次迭代运行提取两个单位数据
+var type = gl.FLOAT;   // 每个单位的数据类型是32位浮点型
+var normalize = false; // 不需要归一化数据
+var stride = 0;        // 0 = 移动单位数量 * 每个单位占用内存（sizeof(type)）
+var offset = 0;        // 从缓冲起始位置开始读取
+gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset);
+gl.enableVertexAttribArray(offsetAttributeLocation);
+var size = 2;          // 每次迭代运行提取两个单位数据
+var type = gl.FLOAT;   // 每个单位的数据类型是32位浮点型
+var normalize = false; // 不需要归一化数据
+var stride = 0;        // 0 = 移动单位数量 * 每个单位占用内存（sizeof(type)）
+var offset = 3*2*4;        // 从缓冲第三组开始读取
+gl.vertexAttribPointer(offsetAttributeLocation, size, type, normalize, stride, offset);
+```
+
+注意，如果是两个 vec4 变量相加，如 `[1,1,0,1]+[0,1,0,1]=[1,2,0,2]` 等价于 `[0.5,1,0,1]`
+
+如果想要得到 `[1,2,0,1]`，可以手动设置 vec4 变量的 w 为 1 ：
+```c
+vec4 tmp = a_position + a_offset;
+tmp.w = 1.0;
+gl_Position = tmp;
+```
 
 ### 数据
 
