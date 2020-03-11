@@ -16,6 +16,24 @@ tags:
 
 先简单描述一下编写 WebGL 程序的流程
 
+初始化阶段
+
+- 创建所有着色器和程序并寻找参数位置
+- 创建缓冲并上传顶点数据
+- 创建纹理并上传纹理数据
+
+渲染阶段
+
+- 清空并设置视图和其他全局状态（开启深度检测，剔除等等）
+- 对于想要绘制的每个物体
+  - 调用 gl.useProgram 使用需要的程序
+  - 设置物体的属性变量
+    - 为每个属性调用 gl.bindBuffer, gl.vertexAttribPointer, gl.enableVertexAttribArray
+  - 设置物体的全局变量
+    - 为每个全局变量调用 gl.uniformXXX
+    - 调用 gl.activeTexture 和 gl.bindTexture 设置纹理到纹理单元
+  - 调用 gl.drawArrays 或 gl.drawElements
+
 1. 编写顶点着色器，该着色器用于获取顶点位置，进而生成点， 线和三角形在内的一些图元
 2. 编写片段着色器，该着色器将对图元进行光栅化处理，得到绘制图元中每个像素的颜色值
 3. 对两个着色器进行编译得到着色器对象
