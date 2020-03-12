@@ -8,7 +8,7 @@ tags:
 
 # 前言
 
-通过文本，可以了解 WebGL 中平移、旋转、缩放、视角的矩阵运算，最终实现一个立方体变换的效果
+通过本文，可以了解 WebGL 中平移、旋转、缩放、视角的矩阵运算，最终实现一个立方体变换的效果
 
 <!--more-->
 
@@ -20,7 +20,7 @@ tags:
 
 采用右手定理确定笛卡尔坐标系的位置，见下图右边
 
-![](https://farm8.staticflickr.com/7117/7419361874_f5d16fb101.jpg)
+![](https://upload-images.jianshu.io/upload_images/9277731-54d1c3d28a49ec09.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 所以我们的立方体顶点坐标为
 
@@ -816,7 +816,7 @@ gl.polygonOffset(1.0, 1.0);
 gl.drawArrays(gl.TRIANGLES, n/2, n/2);
 ```
 
-## 示例
+# 示例
 
 采用最开始定义的顶点数据，并进行以下矩阵变换
 
@@ -833,7 +833,7 @@ lookAt(3, 3, 7, 0, 0, 0, 0, 1, 0);
 
 ![cube-demo](https://upload-images.jianshu.io/upload_images/9277731-7d3ac250d5321f85.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-## 参考文献
+# 参考文献
 
 1. [视图矩阵推导过程](https://blog.csdn.net/weixin_37683659/article/details/79830278)
 2. 《WebGL编程指南》
