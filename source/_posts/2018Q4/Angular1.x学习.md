@@ -1,6 +1,16 @@
+---
+title: Angular1.x学习
+date: 2018-11-10 10:18:32
+categories: 大前端
+tags:
+  - Angular1.x
+---
+
 ## 简介
 
-ng-app 指令告诉 AngularJS，<div> 元素是 AngularJS 应用程序 的"所有者"。
+ng-app 指令告诉 AngularJS，`<div>` 元素是 AngularJS 应用程序 的"所有者"。
+
+<!--more-->
 
 ng-model 指令把输入域的值绑定到应用程序变量 name。
 
@@ -521,3 +531,25 @@ module.run(function(...){
 ``` 
 
 ## 第三方插件
+
+略
+
+## vs Vue2
+
+以下的相当，只是说明做技术栈迁移时的考虑方向。肯定有些细节不一样
+
+directive 相当于 vue 的 props
+
+controller 相当于 vue 的 method 
+
+数据相当于 vue 的 data 和 prop
+
+html 相当于 vue 的 template
+
+directive 中的 link: function(scope, element)
+
+scope 相当于 vue 的当前作用域 this
+
+ng1.x 中 element 表示带有类似 jquery 方法的 dom 节点；在 vue 中通过 ref 拿到的是实际 dom 节点
+
+
