@@ -257,7 +257,11 @@ app.controller('myCtrl', function($scope,$rootScope) {
 - orderBy 根据某个表达式排列数组。
 - uppercase 格式化字符串为大写。
 
-在表达式中使用：`{{ 变量 | 过滤器}}`
+在表达式中使用：
+
+```
+{{ 变量 | 过滤器}}
+```
 
 在输入中使用
 
