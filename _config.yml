@@ -30,7 +30,9 @@ code_dir: downloads/code
 i18n_dir: zh-CN
 skip_render: 
   - "_posts/2016*/**/*"
-  - "_posts/2018*/**/*"
+  - "_posts/2018Q1/**/*"
+  - "_posts/2018Q2/**/*"
+  - "_posts/2018Q3/**/*"
   - "_posts/JS手写题/*"
   - "_posts/Daily-life/**/*"
   - "_posts/Docker/*"
