@@ -1,9 +1,17 @@
-## 前言
+---
+title: css与js的阻塞关系
+date: 2018-10-1 10:18:32
+categories: 大前端
+tags:
+  - HTML
+---
 
-在html的解析过程中，样式文件和脚本文件之间是否有依赖关系呢？
+在 html 的解析过程中，样式文件和脚本文件之间是否有依赖关系呢？
 
 我们经常看到这样一句话
 > 浏览器将延迟脚本执行和 DOM 构建，直至其完成 CSSOM 的下载和构建
+
+<!--more-->
 
 (引自:<a href="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript?hl=zh-cn">使用 JavaScript 添加交互</a>
 
@@ -57,7 +65,7 @@
 83
 ```
 
-说明script的执行需要等待前面css的执行。
+说明 script 的执行需要等待前面 css 的执行。
 
 
 又看到这样一句话：
@@ -66,3 +74,5 @@
 (引自:<a href="https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/#Tree_construction_algorithm">浏览器的工作原理</a>
 
 但测试了ios safari 12(WebKit),发现还是会禁用脚本，脚本还是会被样式阻塞
+
+假设能实现，引擎是如何判断脚本中访问的样式会受未加载的样式表影响？欢迎探讨
