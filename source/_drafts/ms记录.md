@@ -113,7 +113,7 @@
 笔试题：找到字符串中出现次数最多的字母
 
 java 怎么实现单例
-> 恶汉，懒汉
+> 饿汉，懒汉
 
 为什么 js 中没有单例
 > 单线程的原因，每个创建的对象其实就是单例
@@ -174,7 +174,7 @@ v8 的分代垃圾回收
 - fiber hooks
 - vue3 的改进
 - websocket 协议，轮询，长连接
-- canvas,svg 对比
+- canvas,svg 对比。canvas 转图片，canvas 污染
 - 流媒体相关
 - JSBridge
 - h5 开发相关
