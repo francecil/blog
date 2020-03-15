@@ -1,3 +1,11 @@
+---
+title: ECMAScript6入门
+date: 2018-01-07 11:12:40
+categories: 大前端
+tags: 
+  - JavaScript
+---
+
 # let 和 const
 
 ## let
@@ -8,8 +16,9 @@
 
 ### 暂时性死区（TDZ）
 
+<!--more-->
 
-```
+```js
 if (true) {
   // TDZ开始
   tmp = 'abc'; // ReferenceError
@@ -704,3 +713,57 @@ function Child(){
 Child.prototype = new Parent()
 // 实例调用方法，先去找实例方法 再去找原型方法
 ```
+
+# Set & Map 
+
+## Set
+
+用于去重，可以存储任意类型的值
+
+Set 存储对象，会存在一个引用，导致该对象无法被垃圾回收，使用时需要注意手动删除引用(从 set 中delete)
+
+## WeakSet 
+
+只能存储对象
+```js
+const ws = new WeakSet();
+ws.add(1)
+// TypeError: Invalid value used in weak set
+ws.add(Symbol())
+// TypeError: invalid value used in weak set
+```
+垃圾回收机制不考虑 WeakSet 对该对象的引用
+
+WeakSet 内部有多少个成员，取决于垃圾回收机制有没有运行，运行前后很可能成员个数是不一样的，而垃圾回收机制何时运行是不可预测的，因此 ES6 规定 WeakSet **不可遍历**
+
+使用场景：
+- 存储 DOM 节点
+
+举例
+```js
+const weakSet = new WeakSet()
+const set = new Set()
+class Foo {
+}
+let foo1 = new Foo()
+let foo2 = new Foo()
+weakSet.add(foo1)
+set.add(foo2)
+foo1 = null
+foo2 = null
+
+// 观察输出的结果
+// set 中有元素， weakSet 中没有元素
+console.log(weakSet)
+console.log(set)
+
+// 如果 weakSet 中也有元素，应该是还没有触发垃圾回收
+// 手动触发 GC -- Chrome Performance 标签页点击 Collect garbage
+```
+
+## Map & WeakMap
+
+与 Set/WeakSet 类似，只是变成存储 k-v
+
+垃圾回收机制不考虑 WeakSet 对 key 对象的引用 
+
