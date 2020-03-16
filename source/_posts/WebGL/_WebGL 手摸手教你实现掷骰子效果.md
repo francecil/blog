@@ -1,5 +1,5 @@
 ---
-title: [WebGL]手摸手教你实现掷骰子效果
+title: WebGL 手摸手教你实现掷骰子效果
 date: 2020/03/11 11:00:00
 categories: 大前端
 tags: 
