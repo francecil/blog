@@ -1,3 +1,11 @@
+---
+title: 深入 Immutable 原理
+date: 2020/03/16 15:00:00
+categories: 大前端
+tags: 
+  - 随笔
+---
+
 ## 前言
 
 推荐文章。。[深入探究immutable.js的实现机制（二）](https://juejin.im/post/5ba4a6b75188255ca1537b19)
@@ -10,9 +18,19 @@
 
 ### [Trie](https://en.wikipedia.org/wiki/Trie)
 
+前缀树，又称字典树
+
+可以共用节点
+
 ### Vector trie
 
+Trie 没有修改能力，引入 Vector Head 进行结构共享
+
+![](https://user-gold-cdn.xitu.io/2018/9/14/165d635ebb85e04d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
 每次修改操作的时候， 我们复制从根到叶子节点的路径而不是直接修改它们，这样从两个根我们就可以访问到对数据不同时刻的两个快照。
+
+![](https://pic4.zhimg.com/v2-2b4c801a7b40eefcd4ee6767fb984fdf_b.webp)
 
 ### [Hash array mapped trie](https://en.wikipedia.org/wiki/Hash_array_mapped_trie)
 
@@ -20,7 +38,7 @@
 
 Vector trie 会出现空值，将占用空间，我们需要采用新的数据机构
 
-1. 压缩树宽
+#### 1. 压缩树宽
 
 4 bit 的 mask 子节点长度为4
 
@@ -33,13 +51,15 @@ Vector trie 会出现空值，将占用空间，我们需要采用新的数据�
 
 增加属性的话，会调整数组的节点顺序，并重新计算 mask （或操作）
 
-2. 压缩树高
+#### 2. 压缩树高
 
 单链的话，去除中间节点。
 
-如果新增节点，需要增加中间节点保证一样
+如果新增节点，需要增加中间节点，其实就是还原之前被去除的中间节点
 
-3. trie 优化
+最终保持单链只有一级即可
+
+#### 3. trie 优化
 
 
 记录当前 trie 的高度
