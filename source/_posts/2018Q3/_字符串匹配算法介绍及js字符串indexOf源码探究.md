@@ -294,7 +294,7 @@ function match(s1,s2){
 }
 ```
 ```js
-computeOverlay("abadabab")=[0,0,1,0,1,2,3,2]
+computeOverlay("abadabab") // [0,0,1,0,1,2,3,2]
 ```
 
 ### 参考

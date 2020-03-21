@@ -1,3 +1,11 @@
+---
+title: 浅谈 preload 预加载
+date: 2018-7-10 10:18:32
+categories: 大前端
+tags:
+  - 优化
+---
+
 # preload简介
 
 一种资源预加载的方式。用于提高性能，方便开发人员控制资源加载。
@@ -79,6 +87,7 @@ const preloadSupported = () => {
 };
 ```
 
+
 # 与 prefetch 的异同点
 
 ## 区别
@@ -116,9 +125,21 @@ Prefetch的优先级为 Lowest
 
 图片预加载之前：`script节点`在dom解析时处于图片节点之前
 
+
+# DNS prefetch
+
+预解析 DNS
+
+默认情况下 `dns prefetch` 只对href属性的url地址进行dns预解析，但若当该网站处于https时则不会进行处理
+
+可以通过`<meta http-equiv="x-dns-prefetch-control" content="on">`手动开启，此时https也可正常处理，可通过设置off来进行关闭，当设置off关闭后，再设置on就没有效果了。
+
+利用 `<link rel="dns-prefetch" href="//host_name_to_prefetch.com">`手动预解析，一般用来预解析以下场景：请求重定向后的地址，js代码中的异步请求地址，图片请求地址，较晚被dom解析的script节点地址
+
 # 参考文档
 
 1. <a href="https://www.w3.org/TR/preload/">W3C preload 文档</a>
 2. <a href="https://www.smashingmagazine.com/2016/02/preload-what-is-it-good-for/">Preload: What is it Good For?</a>
 3. <a href="http://dev.chromium.org/developers/design-documents/dns-prefetching">chromium DNS Prefetching</a>
 4. <a href="https://www.w3cplus.com/performance/reloading/preload-prefetch-and-priorities-in-chrome.html">Preload，Prefetch 和它们在 Chrome 之中的优先级</a> 
+4. <a href="http://dev.chromium.org/developers/design-documents/dns-prefetching">DNS Prefetching</a>

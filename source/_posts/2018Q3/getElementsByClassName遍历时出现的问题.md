@@ -1,6 +1,14 @@
+---
+title: getElementsByClassName遍历时出现的问题
+date: 2018-7-15 10:18:32
+categories: 大前端
+tags:
+  - HTML
+---
+
 ## 前言
 
-我们需要遍历`.lyad`的元素,并将其`className`中的`lyad`删掉。 
+我们需要遍历 `.lyad` 的元素,并将其 `className` 中的 `lyad` 删掉。 
 
 
 <!--more-->
@@ -16,7 +24,7 @@ for (var j = 0,len=eles.length; j < len; j++) {
 }
 ```
 
-> 没有任何问题。
+**没有任何问题。**
 
 查询文档以及自测，发现 `getElementsByClassName` 的速度比 `querySelectorAll` 快很多，5倍以上。
 
@@ -29,11 +37,11 @@ for (var j = 0,len=eles.length; j < len; j++) {
 }
 ```
 
-不出意外，会报`Cannot read property 'className' of undefined` 错误。
+不出意外，会报 `Cannot read property 'className' of undefined` 错误。
 
-观察发现，一开始 eles 为四个，在访问`eles[2]`的时候出错,说明此时`eles.length===2`，访问了一个空元素。
+观察发现，一开始 eles 为四个，在访问 `eles[2]` 的时候出错,说明此时 `eles.length===2` ，访问了一个空元素。
 
-即， getElementsByClassName 得到的元素其对应className 被删掉的话，eles 会自动删去其元素。
+即， getElementsByClassName 得到的元素其对应 className 被删掉的话，eles 会自动删去其元素。
 
 做个测试：
 
@@ -88,4 +96,6 @@ for (var j = 0,len=eles.length; j < len; j++) {
 
 >相比之下, StaticNodeList 对象实例由另一个文件创建,然后循环填充所有的数据 。 在 document 中执行静态查询的前期成本上比起 DynamicNodeList 要显著提高很多倍。
 
-参考：<a href="https://blog.csdn.net/renfufei/article/details/41088521">DOM中的动态NodeList与静态NodeList</a>
+## 参考
+
+<a href="https://blog.csdn.net/renfufei/article/details/41088521">DOM中的动态NodeList与静态NodeList</a>

@@ -1,12 +1,19 @@
-## 前言
+---
+title: adblockplus.js源码解析
+date: 2018-9-15 10:18:32
+categories: 大前端
+---
 
-本次分析的是`adblockplus`的3.3.2_0版本，
+# 前言
 
-与 <a href="https://github.com/adblockplus/adblockpluschrome">adblockplus</a> 
+本次分析的是 `adblockplus` 的 3.3.2_0 版本，
 
-## 分析方法
+源码见 <a href="https://github.com/adblockplus/adblockpluschrome">adblockplus</a> 
 
-## 说明
+<!--more-->
+
+
+# 说明
 
 每个模块的写法大致都是以下这样的
 ```js
@@ -24,15 +31,13 @@ require.scopes.xxx = function(){
 var xxx = require("xxx").Xxx
 ```
 
-## 总体结构
+# 模块解析
 
-## 模块解析
+## 过滤器模块
 
-### 过滤器模块
+核心代码，从 fromText 入手
 
-核心代码，从fromText入手
-
-在fromText中，对规则进行分类，构造相应的过滤器
+在 fromText 中，对规则进行分类，构造相应的过滤器
 
 ```js
 /**
@@ -113,7 +118,7 @@ Filter.fromText = function(text)
 };
 ```
 
-#### 内容过滤器-ContentFilter
+### 内容过滤器-ContentFilter
 
 ```js
 match = /^([^/*|@"!]*?)#([@?$])?#(.+)$/.exec(text)
@@ -175,16 +180,16 @@ ContentFilter.fromText = function(text, domains, type, body)
 };
 ```
 
-#### 注释过滤器-CommentFilter
+### 注释过滤器-CommentFilter
 
 不做处理
 
-#### 正则过滤器-RegExpFilter
+### 正则过滤器-RegExpFilter
 
-#### 无效过滤器-InvalidFilter
+### 无效过滤器-InvalidFilter
 
 
-### 匹配器 Matcher
+## 匹配器 Matcher
 
 规则匹配过滤器的过程
 
@@ -286,3 +291,5 @@ _checkEntryMatch(keyword, location, typeMask, docDomain, thirdParty, sitekey, sp
 - 关键字添加过滤器过程
 
 > 下载规则库，url分析，初始化
+
+未完待续...
