@@ -2,7 +2,8 @@
 title: H5视频直播—JSMPEG源码解析、视频压缩编码、MPEG-1标准
 date: 2016/08/17 11:00:00
 categories: 流媒体
-    - HTML
+tags: 
+  - HTML
 ---
 
 # jsmpeg是什么？

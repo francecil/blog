@@ -2,8 +2,9 @@
 title: WebSocket 与 WebRTC 直播方案对比分析
 date: 2016/08/24 11:00:00
 categories: 流媒体
-	- WebRTC
-	- ffmpeg
+tags: 
+  - WebRTC
+  - ffmpeg
 ---
 
 # WebSocket

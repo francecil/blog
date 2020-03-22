@@ -1,4 +1,9 @@
-# git 命令学习
+---
+title: git命令学习
+date: 2018/06/14 01:00:00
+categories: Git
+---
+
 ## 1. 分支切换
 
 ### 查看远程分支
@@ -19,6 +24,8 @@ Switched to a new branch 'v0.9rc1'
 ```
 
 -b :创建并切换，相当于 git branch dev;git checkout dev
+
+<!--more-->
 
 ## 2. 分支合并
 

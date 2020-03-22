@@ -3,7 +3,7 @@ title: 浅谈 preload 预加载
 date: 2018-7-10 10:18:32
 categories: 大前端
 tags:
-  - 优化
+  - 前端优化
 ---
 
 # preload简介

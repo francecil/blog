@@ -2,8 +2,9 @@
 title: video标签下触摸坐标归一化
 date: 2016/08/24 11:00:00
 categories: 大前端
-	- 多点触控
-	- HTML
+tags: 
+  - 多点触控
+  - HTML
 ---
 
 # 基本知识
