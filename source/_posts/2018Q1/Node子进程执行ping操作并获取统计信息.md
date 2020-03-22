@@ -1,29 +1,26 @@
-## 1.使用exec命名，中文输出乱码
+---
+title: Node子进程执行ping操作并获取统计信息
+date: 2018-03-09 11:12:40
+categories: 大前端
+tags: 
+  - nodejs
+---
 
-使用 `iconv-lite`
 
-demo:
+## 需求
 
-```js
-var exec = require('child_process').exec;
-var iconv = require('iconv-lite');
-exec('ping 127.0.0.1',{encoding:'binary'},function(err,stdout,stderr){
-    let str = iconv.decode(new Buffer(stdout,'binary'),'GBK')
-    console.log(str)
-});
-```
+采用`ping -t`方式不断进行ping操作，直到收到关闭信号or某个超时时间时结束操作，获取统计信息。
 
-## 2.Node子进程执行ping操作，获取统计信息
+<!--more-->
 
-### 需求：采用`ping -t`方式不断进行ping操作，直到收到关闭信号or某个超时时间时结束操作，获取统计信息。
+## 分析
 
-### 分析：
+在cmd窗口进行`ping -t`操作，会一直进行ping，直到输入`ctrl+C` 会输出ping统计信息。
 
-> 在cmd窗口进行`ping -t`操作，会一直进行ping，直到输入`ctrl+C`会输出ping统计信息。
->
-> kill('SIGINT') 即模拟`ctrl+C`终止进程
+`kill('SIGINT')` 即模拟 `ctrl+C` 终止进程
 
-### 编码:
+
+## 编码
 
 这里我自己手动进行统计信息，原因见下面分析。
 
@@ -66,13 +63,15 @@ setTimeout(function () {
 }, 5 * 1000);
 
 ```
+
 想通过`ping.kill('SIGINT')`去关闭exec子进程。
 
-测试结果是：输出了`close by null`后，程序依然再运行，并且没有输出统计信息。
+测试结果是：输出了 `close by null` 后，程序依然再运行，并且没有输出统计信息。
 
-<!--more-->
 
-### 问题解决
+
+
+## 问题解决
 
 **思路1**：在`setTimeout`中增加`process.kill(ping.pid,'SIGINT');process.exit(0)`
 
@@ -150,36 +149,7 @@ module.exports = function (pid, signal, callback) {
 很简单。就是调用了系统指令强行关闭进程，而不是原来程序中去做关闭。做了不同平台的兼容。
 
 
+
+
 [1]:https://cnodejs.org/topic/5664f61e374362a006a1a572
 [2]:https://github.com/pkrumins/node-tree-kill
-
-## 3. sql批量插入
-
-```js
-this.connection.query('INSERT INTO user(id,name) VALUES ?',[[[1,'a'],[2,'b']]])
-```
-
-注意的是params参数外面包了一层[],sql语句 VALUES后面只带`?`
-
-## 下载文件，文件名乱码
-
-```js
-try {
-    var filePath = path.join(__dirname, '../') + '/files/xls/demo.xlsx'
-    // 定位到具体文件
-    var stats = fs.statSync(filePath)
-    if (stats.isFile()) {
-      // 对指定的中文名进行utf8编码，否则直接filename=中文名 将不生效还是使用原来文件名
-      res.set({
-        'Content-Type': 'application/octet-stream',
-        'Content-Disposition': "attachment; filename*=UTF-8''" + encodeURI('App提交模板.xlsx'),
-        'Content-Length': stats.size
-      })
-      res.send(stats)
-    } else {
-      res.status(404).end()
-    }
-  } catch (error) {
-    res.status(404).end()
-  }
-```

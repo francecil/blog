@@ -1,4 +1,14 @@
+---
+title: puppeteer初探-测试webrtc
+date: 2018-02-07 11:12:40
+categories: 大前端
+tags: 
+  - puppeteer
+  - 前端测试
+---
+
 # 介绍
+
 puppeteer是什么?
 
 它是一个nodejs的库，支持调用Chrome的API来操纵Web 它的dom操作可以完全在内存中进行模拟而不打开浏览器
@@ -6,6 +16,7 @@ puppeteer是什么?
 功能强大，可用于截图、pdf生成、UI测试、表单提交、数据爬取、性能诊断...
 
 官方接口地址：https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md
+<!--more-->
 
 # 安装
 
@@ -30,7 +41,7 @@ puppeteer是什么?
 
 新建index.js,代码
 
-```
+```js
 const puppeteer = require('puppeteer');
 
 (async () => {
@@ -67,7 +78,7 @@ const puppeteer = require('puppeteer');
 
 完整测试代码：
 
-```
+```js
 const puppeteer = require('puppeteer');
 function timeout(ms) {
   return new Promise((resolve) => {

@@ -3,7 +3,7 @@ title: ECMAScript6入门
 date: 2018-01-07 11:12:40
 categories: 大前端
 tags: 
-  - JavaScript
+  - ECMAScript
 ---
 
 # let 和 const
