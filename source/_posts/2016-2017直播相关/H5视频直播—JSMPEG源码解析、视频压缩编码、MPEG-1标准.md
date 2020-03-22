@@ -1,8 +1,18 @@
+---
+title: H5视频直播—JSMPEG源码解析、视频压缩编码、MPEG-1标准
+date: 2016/08/17 11:00:00
+categories: 流媒体
+    - HTML
+---
+
 # jsmpeg是什么？
 
     https://github.com/phoboslab/jsmpeg
 
 一个[mpeg-1][1] video的js解码库
+
+<!--more-->
+
 # jsmpeg可以用来干什么？
 
 利用ffmpeg采集视频源并推送到node.js服务器

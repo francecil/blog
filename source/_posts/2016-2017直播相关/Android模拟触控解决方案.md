@@ -1,56 +1,73 @@
-[TOC]
+---
+title: Android模拟触控解决方案
+date: 2016/11/18 11:00:00
+categories: Android
+tags: 
+  - 多点触控
+---
+
+# 前言
+
+如何捕获用户触控信息？如何模拟？
+
+<!--more-->
 
 # 数据采集
-## Android端
-重写onTouchEvent,收集event数据,以一定的编码传输
 
-	public boolean onTouchEvent(MotionEvent event){
-		String rec="";
-        int pointerCount = event.getPointerCount();
-        if (pointerCount > MAX_TOUCHPOINTS) {
-            pointerCount = MAX_TOUCHPOINTS;
+## Android端
+
+
+重写 onTouchEvent ,收集 event 数据,以一定的编码传输
+```java
+public boolean onTouchEvent(MotionEvent event){
+	String rec="";
+    int pointerCount = event.getPointerCount();
+    if (pointerCount > MAX_TOUCHPOINTS) {
+        pointerCount = MAX_TOUCHPOINTS;
+    }
+    int opt=event.getAction();
+    boolean isFirst=true;
+    if(opt==2){
+        for (int i = 0; i < pointerCount; i++) {
+            int id = event.getPointerId(i);
+            int x = (int) event.getX(i);
+            int y = (int) event.getY(i);
+            if(isFirst){isFirst=false;}
+            else rec+=";";
+            rec+=id+",2,"+x+","+y;
         }
-        int opt=event.getAction();
-        boolean isFirst=true;
-        if(opt==2){
-            for (int i = 0; i < pointerCount; i++) {
+    }else if(opt==0||(opt-5)%256==0){
+        //为了简化，我们假设这过程不会进行MOVE
+        int ind=(event.getAction()-5)/256;
+        for (int i = 0; i < pointerCount; i++) {
+            if(i==ind){
                 int id = event.getPointerId(i);
                 int x = (int) event.getX(i);
                 int y = (int) event.getY(i);
                 if(isFirst){isFirst=false;}
                 else rec+=";";
-                rec+=id+",2,"+x+","+y;
-            }
-        }else if(opt==0||(opt-5)%256==0){
-            //为了简化，我们假设这过程不会进行MOVE
-            int ind=(event.getAction()-5)/256;
-            for (int i = 0; i < pointerCount; i++) {
-                if(i==ind){
-                    int id = event.getPointerId(i);
-                    int x = (int) event.getX(i);
-                    int y = (int) event.getY(i);
-                    if(isFirst){isFirst=false;}
-                    else rec+=";";
-                    rec+=id+",0,"+x+","+y;
-                    break;
-                }
-            }
-        }else if(opt==1||(opt-6)%256==0){
-            int ind=(event.getAction()-6)/256;
-            for (int i = 0; i < pointerCount; i++) {
-                if(i==ind){
-                    int id = event.getPointerId(i);
-                    if(isFirst){isFirst=false;}
-                    else rec+=";";
-                    rec+=id+",1";
-                    break;
-                }
+                rec+=id+",0,"+x+","+y;
+                break;
             }
         }
-		return true;
-	}
+    }else if(opt==1||(opt-6)%256==0){
+        int ind=(event.getAction()-6)/256;
+        for (int i = 0; i < pointerCount; i++) {
+            if(i==ind){
+                int id = event.getPointerId(i);
+                if(isFirst){isFirst=false;}
+                else rec+=";";
+                rec+=id+",1";
+                break;
+            }
+        }
+    }
+	return true;
+}
+```
 
 ## Web
+
 见另一篇文章[video标签下触摸坐标归一化](http://hongweipeng.com/index.php/archives/838/)
 
 ## 嵌入式设备
@@ -58,10 +75,12 @@
 待研究
 
 # 数据编码
+
 最后数据以`ID,OPTION,X,Y`这样的字符串传输,多指操作通过`;`隔开
-**OPTION:**`0:DOWN`; `1:UP`;` 2:MOVE`
-**ID:**触点ID 通过`event.getPointerId` 获取， 对应服务器的`0x2f`
-**X,Y**按道理范围应该在`[0,1]`;即本机分辨率的百分比。服务端再以该系数模拟。这边我们先假设两边机器一样，直接传实际int
+
+- **OPTION:** `0:DOWN`; `1:UP`;` 2:MOVE`
+- **ID:** 触点ID 通过`event.getPointerId` 获取， 对应服务器的`0x2f`
+- **X,Y** 按道理范围应该在`[0,1]`;即本机分辨率的百分比。服务端再以该系数模拟。这边我们先假设两边机器一样，直接传实际int
 
 # 数据传输
 ## socket
@@ -71,7 +90,7 @@
 3.`Looper`在子线程的`mHandler`将会回调`handleMessage`，在这里进行socket传输
 
 代码：
-
+```java
 	Socket socket = null;
 	private static BufferedWriter writer = null;
 	private static BufferedReader reader = null;
@@ -151,9 +170,9 @@
         };
      
     }
-
+```
 ### 服务端
-
+```java
 	public class ServerListener extends Thread {  
     	@Override  
     	public void run() {  
@@ -175,6 +194,7 @@
     	}  
 	}
 	
+```
 
 ## DataChannel
 
@@ -184,26 +204,27 @@
 
 # 数据解码
 
-	void decodeData(String json) {
-		String ls[] = json.split(";");
-		for (String s : ls) {
-			String cs[] = s.split(",");
-			int id = Integer.valueOf(cs[0]);
-			int opt = Integer.valueOf(cs[1]);
-			switch (opt) {
-			case 0:
-				sendDown(id, cs[2], cs[3]);
-				break;
-			case 1:
-				sendUp(id);
-				break;
-			case 2:
-				sendMove(id, cs[2], cs[3]);
-				break;
-			}
+```java
+void decodeData(String json) {
+	String ls[] = json.split(";");
+	for (String s : ls) {
+		String cs[] = s.split(",");
+		int id = Integer.valueOf(cs[0]);
+		int opt = Integer.valueOf(cs[1]);
+		switch (opt) {
+		case 0:
+			sendDown(id, cs[2], cs[3]);
+			break;
+		case 1:
+			sendUp(id);
+			break;
+		case 2:
+			sendMove(id, cs[2], cs[3]);
+			break;
 		}
 	}
-
+}
+```
 # 数据模拟
 
 以下方式凡是利用sendevent的，都可以通过getevent回去到对应的指令
@@ -213,62 +234,70 @@
 
 ## 1. adb shell
 
-在`system/core/include/private/android_filesystem_config.h`中定义了Android的用户和组
-
-	#define AID_SHELL 2000 /* adb and debug shell user UID=2000*/
-	即
-	root uid 0 gid0 
-	system uid 1000 gid1000
-	shell uid 2000 gid2000
-	app uid >10000 gid >10000
-
+在 `system/core/include/private/android_filesystem_config.h` 中定义了Android的用户和组
+```sh
+#define AID_SHELL 2000 /* adb and debug shell user UID=2000*/
+#即
+root uid 0 gid0 
+system uid 1000 gid1000
+shell uid 2000 gid2000
+app uid >10000 gid >10000
+```
 同时我们执行以下命令（[ls -l命令详解](http://www.linuxidc.com/Linux/2012-09/70492.htm)
 
+```sh
+shell@android:/dev/input $ ls -l
+crw-rw---- root     	input     	13,  64 2016-11-18 08:17 event0
+crw-rw---- root     	input     	13,  65 2016-11-18 08:17 event1
+crw-rw---- root     	input     	13,  66 2016-11-18 08:17 event2
+crw-rw---- root     	input     	13,  67 2016-11-18 08:17 event3
+文件属性	   文件拥有者     拥有者所在主组							    文件名
+```
 
-	shell@android:/dev/input $ ls -l
-	crw-rw---- root     	input     	13,  64 2016-11-18 08:17 event0
-	crw-rw---- root     	input     	13,  65 2016-11-18 08:17 event1
-	crw-rw---- root     	input     	13,  66 2016-11-18 08:17 event2
-	crw-rw---- root     	input     	13,  67 2016-11-18 08:17 event3
-	文件属性	   文件拥有者     拥有者所在主组							    文件名
-
-我们发现input组是拥有rw-权限的。
+我们发现input组是拥有 `rw-` 权限的。
 
 通过运行id命令得到如下：
-
-	shell@android:/ $ id
-	uid=2000(shell) gid=2000(shell) groups=1003(graphics),1004(input),1007(log),1009
-	(mount),1011(adb),1015(sdcard_rw),1028(sdcard_r),3001(net_bt_admin),3002(net_bt)
-	,3003(inet),3006(net_bw_stats)
-
+```
+shell@android:/ $ id
+uid=2000(shell) gid=2000(shell) groups=1003(graphics),1004(input),1007(log),1009
+(mount),1011(adb),1015(sdcard_rw),1028(sdcard_r),3001(net_bt_admin),3002(net_bt)
+,3003(inet),3006(net_bw_stats)
+```
 shell属于input组，那么shell也就拥有`rw-`的权限,意思就是说shell用户(or其运行的程序)可以对eventX文件进行读写
 
 那么读写的形式就有以下两种了：
  
 ### 1.1 server端执行shell脚本
+
 #### **大致流程：**
+
 Java的话可采用Runtime
+```java
+process = Runtime.getRuntime().exec("adb shell");
+// 获取输出流
+outputStream = process.getOutputStream();
+dataOutputStream = new DataOutputStream(outputStream);
+// 执行cmd指令，例： cmd="sendevent /dev/input/event3 0 0 0";
+dataOutputStream.writeBytes(cmd + "\n");
+```
 
-			process = Runtime.getRuntime().exec("adb shell");
-			// 获取输出流
-			outputStream = process.getOutputStream();
-			dataOutputStream = new DataOutputStream(outputStream);
-			// 执行cmd指令，例： cmd="sendevent /dev/input/event3 0 0 0";
-			dataOutputStream.writeBytes(cmd + "\n");
-			
-
-####**实现难度：5/5**
+#### **实现难度：5/5**
 实现简单，代码量少。多种语言均支持执行shell命令
-####**维护拓展： 1/5** 
+
+#### **维护拓展： 1/5** 
 Runtime会间接性出问题(原因未明)
 
 dataOutputStream操作会堵塞本地IO通道，不适合多开。
 
 Java执行跨平台，易迁移，给1星。
-####**需要root？**否
-####**效率延迟：1/5**
+
+#### **需要root？** 否
+
+#### **效率延迟：1/5**
 效率极差，**`指令组`**（单指move,down,up等操作称为指令组，包含多条sendevent基础指令）**`响应时间`**(指令执行时间间隔)>200ms
-####**推荐指数：**1/5
+
+#### **推荐指数：** 1/5
+
 ### 1.2 android端执行adb shell用户启动的程序
 #### **大致流程：**
 1.编写C socket程序`minitouch`，并放到`/data/local/tmp/` 目录(`user,group=shell`)下
@@ -276,9 +305,9 @@ Java执行跨平台，易迁移，给1星。
 2.chmod 777该文件后，run它
 
 3.执行以下命令：
-
-	adb forward tcp:1111 localabstract:minitouch
-
+```sh
+adb forward tcp:1111 localabstract:minitouch
+```
 表示server本地的1111端口会映射到minitouch上
 
 4.本地利用socket通信发送数据到1111端口，minitouch进一步处理
@@ -289,24 +318,27 @@ Java执行跨平台，易迁移，给1星。
 
 [minitouch使用流程，minitap开源项目类似 也可采用](https://testerhome.com/topics/4400)
 
-####**实现难度：4/5**
+#### **实现难度：4/5**
 需要编写两端程序：放于android的socket程序，本地发送数据程序。
 
 相对简单，且有开源实现。
-####**维护拓展： 4/5** 
+#### **维护拓展： 4/5** 
 分配本地端口并转发到android socket程序上，端口是足够用的，只要设置规范不会产生冲突
 
-####**需要root？**否
+#### **需要root？** 否
 `sdk 10-21` 无需root,`21+`需要root,`sdk 20 Android Wear` 需要root
 
-####**效率延迟：5/5**
+#### **效率延迟：5/5**
 **`指令组响应时间`**<10ms
 
-####**推荐指数：**4.5/5
+#### **推荐指数：** 4.5/5
 
 ## 2. Android端 root sendevent
-###2.1 Runtime.getRuntime().exec("su")
-####大致流程：
+
+### 2.1 Runtime.getRuntime().exec("su")
+
+#### 大致流程：
+
 Android端获取su权限后，利用Runtime执行sendevent命令
 
 这里的cmds 可以是`sendevent` 也可以是`input swipe` 
@@ -318,30 +350,30 @@ Android端获取su权限后，利用Runtime执行sendevent命令
 与其这样 还不如用sendevent 优化move间隔
 
 getevent获取不到触控信息。
-
-	private void execShellCmd(String[] cmds) throws Exception {
-        Process process = Runtime.getRuntime().exec("su");
-        DataOutputStream os = new DataOutputStream(process.getOutputStream());
-        for (String tmpCmd : cmds) {
-            os.writeBytes(tmpCmd + "\n");
-        }
-        os.writeBytes("exit\n");
-        os.flush();
-        os.close();
-        process.waitFor();
+```java
+private void execShellCmd(String[] cmds) throws Exception {
+    Process process = Runtime.getRuntime().exec("su");
+    DataOutputStream os = new DataOutputStream(process.getOutputStream());
+    for (String tmpCmd : cmds) {
+        os.writeBytes(tmpCmd + "\n");
     }
-
-####**实现难度：5/5**
+    os.writeBytes("exit\n");
+    os.flush();
+    os.close();
+    process.waitFor();
+}
+```
+#### **实现难度：5/5**
 实现简单，代码量少。
-####**维护拓展：1/5** 
+#### **维护拓展：1/5** 
 同1.1,区别只是程序运行与Android端。
 
-####**需要root？**是
+#### **需要root？** 是
 
-####**效率延迟：1/5**
+#### **效率延迟：1/5**
 **`指令组响应时间`**>200ms
 
-####**推荐指数：**1/5
+#### **推荐指数：** 1/5
 
 ### 2.2 linux c 
 
@@ -350,7 +382,7 @@ getevent获取不到触控信息。
 linux C socket编程这边不提及，我们假设取得解码的值了
 
 编写如下文件
-
+```c
 	#include <string>
 	#include <jni.h>
 	#include <android/log.h>
@@ -420,9 +452,9 @@ linux C socket编程这边不提及，我们假设取得解码的值了
     	}
     	sendEvent( EV_SYN, SYN_REPORT, 0);
 	}
-
+```
 在main写个测试
-
+```c
 	void main(){
 		fd_touch = open("/dev/input/event3", O_RDWR);
     	if(fd_touch<=0) {
@@ -444,7 +476,7 @@ linux C socket编程这边不提及，我们假设取得解码的值了
     	close(fd_touch);
 		
 	}
-	
+```
 
 
 > 这边我们是一接受到socket传来的值后，就进行处理，那么需要给inpue_event赋值time属性吗？
@@ -471,23 +503,23 @@ linux C socket编程这边不提及，我们假设取得解码的值了
 
 所以不要因为测试的时候画板画出来的不是我们想要的路线就以为是数据被丢掉了- -
 
-####**实现难度：4.5/5**
+#### **实现难度：4.5/5**
 实现简单，代码量少。只要懂C Socket编程就可以了。
 
-####**维护拓展：3.5/5** 
+#### **维护拓展：3.5/5** 
 需要在自编译的android系统上，以input组用户运行
 
 或者在非自编译系统采用1.2的做法
 
-####**需要root？**不确定
+#### **需要root？** 不确定
 自编译的系统，可以以shell用户写eventX文件
 
 当然最方便还是直接用root啦
 
-####**效率延迟：5/5**
+#### **效率延迟：5/5**
 **`指令组响应时间`**<10ms
 
-####**推荐指数：**4.7/5
+#### **推荐指数：** 4.7/5
 
 ### 2.3  jni
 
@@ -547,20 +579,20 @@ TEST:
 按解决问题的想法，不用root的方法我们用adb shell不会出现这问题，需要root的我们直接linux C，这方法没有什么价值。
 
 
-####**实现难度：5/5**
+#### **实现难度：5/5**
 实现简单，代码量少。
 
-####**维护拓展：4/5** 
+#### **维护拓展：4/5** 
 5.X 的 权限受限问题，正在研究解决方案。。
 
-####**需要root？**需要
+#### **需要root？** 需要
 
 需要root用户先将eventX文件属性改为777
 
-####**效率延迟：5/5**
+#### **效率延迟：5/5**
 **`指令组响应时间`**≈10ms
 
-####**推荐指数：**4.7/5
+#### **推荐指数：** 4.7/5
 
 ### 2.4  RootTools
 
@@ -575,17 +607,17 @@ RootTools是一个用于执行linux指令的[开源工具](https://github.com/St
 大致研究了下，是通过线程池顺序执行指令，效率又比Rumtime高那么一点点
 
 
-####**实现难度：5/5**
+#### **实现难度：5/5**
 实现简单，代码量少。
 
-####**维护拓展：5/5** 
+#### **维护拓展：5/5** 
 
-####**需要root？**是
+#### **需要root？** 是
 
-####**效率延迟：2/5**
+#### **效率延迟：2/5**
 **`指令组响应时间`** :指令组中指令数量：1条100ms 2条120-200ms 3+:200+ms
 
-####**推荐指数：**2/5
+#### **推荐指数：** 2/5
 
 ## 3. MotionEvent.obtain
 ### 3.1 Instrumentation
@@ -645,24 +677,24 @@ monkey，Robotium就是基于它做的
 
 如何跳出进程间限制？[该篇译文给出了链接](http://blog.csdn.net/zhubaitian/article/details/40430053)
 
-####**实现难度：4/5**
+#### **实现难度：4/5**
 
 主要是多指的代码会比较多和复杂，不易封装。
 
 没有提供内部接口的问题解决方案也给出了，或者直接用`Instrumentation`。
 
-####**维护拓展：4/5** 
+#### **维护拓展：4/5** 
 
 研究的不深，可能有些坑存在
 
-####**需要root？**否
+#### **需要root？** 否
 
 但是应用需要拥有system权限
 
-####**效率延迟：3.5/5**
+#### **效率延迟：3.5/5**
 **`指令组响应时间`**20~50ms
 
-####**推荐指数：**4/5
+#### **推荐指数：** 4/5
 
 ## Accessibilityservice
 
@@ -690,12 +722,12 @@ monkey，Robotium就是基于它做的
 
 以后有空再研究
 
-#附录
+# 附录
 sendevent.c 
 http://www.netmite.com/android/mydroid/system/core/toolbox/sendevent.c
 http://androidxref.com/4.4.4_r1/xref/system/core/toolbox/getevent.c
 
-#防退出全屏
+# 防退出全屏
 
 1.状态栏
 
@@ -781,7 +813,7 @@ collapse只是折叠状态栏，还是能强行拖动下拉，不能根本的屏
         //2.MOVE  按ID得到新的位置 与之前进行比较
 
 
-#捕获时异常
+# 捕获时异常
 
 单指下：
 在GameView中滑动时(DOWN在GameView中) 能够捕获到touch信息，滑动到GameView外也能捕获到MOVE,UP信息。

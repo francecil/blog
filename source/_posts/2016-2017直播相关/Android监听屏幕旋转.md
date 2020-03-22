@@ -1,12 +1,22 @@
-需求：监听屏幕旋转，不重建Activity
+---
+title: Android监听屏幕旋转
+date: 2016/10/18 11:00:00
+categories: Android
+---
 
-大前提：Activity已经限定屏幕竖屏
+## 需求
 
-	android:screenOrientation="portrait"
+监听屏幕旋转，不重建Activity
 
+大前提：Activity 已经限定屏幕竖屏
 
+```xml
+android:screenOrientation="portrait"
+```
+<!--more-->
+## 方案
 
-方法一【结论不可行】：
+### 方法一【结论不可行】
 
 要想监听屏幕旋转，需要：
 
@@ -47,78 +57,79 @@ keyboardHidden表示键盘辅助功能隐藏，如果你的开发API等级等于
 
 与大前提不符
 
-做法二：
+### 方案二 利用重力传感器
 
-利用重力传感器【可拓展性好】
+可拓展性好
 
-	package com.ws.tryplay.util;
-	
-	import android.content.Context;
-	import android.content.pm.ActivityInfo;
-	import android.util.Log;
-	import android.view.OrientationEventListener;
-	
-	/**
-	 * Created by zhengjx on 2016/12/14.
-	*/
-	
-	public class ScreenOrientationUtil {
-    private OrientationEventListener mOrientationListener;
-    private boolean mScreenPortrait = true;
-    private boolean mCurrentOrient = false;
-    private static final String TAG = "ScreenOrientationUtil";
-    private OrientationEvent event;
-    private Context mContext;
-    public interface OrientationEvent{
-        void orientationChanged(int orientation);
-    }
-    public ScreenOrientationUtil(OrientationEvent event, Context mContext) {
-        this.event = event;
-        this.mContext = mContext;
-    }
-    public void startOrientationChangeListener() {
-        mOrientationListener = new OrientationEventListener(this.mContext) {
-            @Override
-            public void onOrientationChanged(int rotation) {
-                if (((rotation >= 0) && (rotation <= 45)) || (rotation >= 315)||((rotation>=135)&&(rotation<=225))) {//portrait
-                    mCurrentOrient = true;
-                    if(mCurrentOrient!=mScreenPortrait)
-                    {
-                        mScreenPortrait = mCurrentOrient;
-                        event.orientationChanged(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                        Log.d(TAG, "Screen orientation changed from Landscape to Portrait!");
-                    }
-                }
-                else if (((rotation > 45) && (rotation < 135))||((rotation>225)&&(rotation<315))) {//landscape
-                    mCurrentOrient = false;
-                    if(mCurrentOrient!=mScreenPortrait)
-                    {
-                        mScreenPortrait = mCurrentOrient;
-                        event.orientationChanged(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                        Log.d(TAG, "Screen orientation changed from Portrait to Landscape!");
-                    }
-                }
-            }
-        };
-        mOrientationListener.enable();
-    }
-	}
-	
+```java
+package com.ws.tryplay.util;
+
+import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.util.Log;
+import android.view.OrientationEventListener;
+
+/**
+ * Created by zhengjx on 2016/12/14.
+*/
+
+public class ScreenOrientationUtil {
+   private OrientationEventListener mOrientationListener;
+   private boolean mScreenPortrait = true;
+   private boolean mCurrentOrient = false;
+   private static final String TAG = "ScreenOrientationUtil";
+   private OrientationEvent event;
+   private Context mContext;
+   public interface OrientationEvent{
+       void orientationChanged(int orientation);
+   }
+   public ScreenOrientationUtil(OrientationEvent event, Context mContext) {
+       this.event = event;
+       this.mContext = mContext;
+   }
+   public void startOrientationChangeListener() {
+       mOrientationListener = new OrientationEventListener(this.mContext) {
+           @Override
+           public void onOrientationChanged(int rotation) {
+               if (((rotation >= 0) && (rotation <= 45)) || (rotation >= 315)||(rotation>=135)&&(rotation<=225))) {//portrait
+                   mCurrentOrient = true;
+                   if(mCurrentOrient!=mScreenPortrait)
+                   {
+                       mScreenPortrait = mCurrentOrient;
+                       event.orientationChanged(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                       Log.d(TAG, "Screen orientation changed from Landscape to Portrait!");
+                   }
+               }
+               else if (((rotation > 45) && (rotation < 135))||((rotation>225)&&(rotation<315))) {//landscape
+                   mCurrentOrient = false;
+                   if(mCurrentOrient!=mScreenPortrait)
+                   {
+                       mScreenPortrait = mCurrentOrient;
+                       event.orientationChanged(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                       Log.d(TAG, "Screen orientation changed from Portrait to Landscape!");
+                   }
+               }
+           }
+       };
+       mOrientationListener.enable();
+   }
+}
+```
 	
 
 
 Activity中去注册监听
 
-    private ScreenOrientationUtil.OrientationEvent orientationEvent=new ScreenOrientationUtil.OrientationEvent() {
-        @Override
-        public void orientationChanged(int orientation) {
-            Log.d(TAG, "orientationChanged() called with: orientation = [" + orientation + "]");
-        }
-    };
+```java
+private ScreenOrientationUtil.OrientationEvent orientationEvent=new ScreenOrientationUtil.OrientationEvent() {
+    @Override
+    public void orientationChanged(int orientation) {
+        Log.d(TAG, "orientationChanged() called with: orientation = [" + orientation + "]");
+    }
+};
 
-
-	new ScreenOrientationUtil(orientationEvent,GameActivity.this).startOrientationChangeListener();
-
+new ScreenOrientationUtil(orientationEvent,GameActivity.this).startOrientationChangeListener();
+```
 
 
 

@@ -1,4 +1,14 @@
+---
+title: adb控制avd
+date: 2016/07/13 11:00:00
+categories: Android
+tags: 
+  - adb
+---
+
 ## 1.显示所有avd
+
+<!--more-->
 
     android list avd
     示例输出
@@ -53,7 +63,7 @@
     adb -s emulator-5554 shell input swipe 250 250 400 400 500//模拟滑动<p1,p2,滑动的时间ms>
 
 ### 题外话
-ffmpeg 通过gdigrab 无法直接录制avd
+ffmpeg 通过 gdigrab 无法直接录制avd
 
     ffmpeg -f gdigrab -i desktop out.mpg
 
