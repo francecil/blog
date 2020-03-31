@@ -347,3 +347,10 @@ var strict = (function(){ return !this;}())
 
 控制台上每一次回车运行后，会清空 strict 设置
 
+## 一行代码实现排序的比较函数
+
+```js
+array.sort(function(a, b) {
+  return +(a > b) || +(a === b) - 1;
+});
+```
