@@ -94,7 +94,11 @@ git push origin master
 
 git reset --hard commit_id 或者 HEAD^ 表示当前版本的上一个版本，10个前的版本就是 HEAD~10
 
-> 不指定 --hard 的话会进行内容合并
+将 commit 信息和文件都进行回退
+
+> 不指定 --hard 的话即默认的 --mixed 模式, 回退 commit 信息，文件处于工作区（待 add）
+
+还可以指定为 --soft ，回退 commit 信息，文件处于 staged 状态（待 commit）
 
 当前版本被重置后，想回到刚刚的版本，又找不到commit_id,刚刚的命令窗口被关闭，怎么办?
 
@@ -179,3 +183,11 @@ cd ../ && rm -rf xxx.git     //删除拷贝
 ```
 
 git remote add 和 set-url 区别
+
+## 克隆仓库
+
+https 与 ssh 的区别
+
+前者每次 push 时都需要输入账号密码
+
+后者会利用已经配置的 key 进行登陆，要求自身为克隆的仓库的拥有者或者加入者
