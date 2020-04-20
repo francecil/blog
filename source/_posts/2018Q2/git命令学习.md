@@ -63,6 +63,7 @@ git rebase —onto master aaaa^
 // 将local-dev推送到 origin-dev 分支
 git push origin local-dev:origin-dev
 // 当 local-dev 为空时，将删除 origin-dev 分支
+git push origin :origin-dev
 ```
 ### 将本地仓库转到远程仓库
 
@@ -117,6 +118,18 @@ git reset --hard commit_id 或者 HEAD^ 表示当前版本的上一个版本，1
 7. git stash list 展示刚才的工作区
 8. git stash pop 还原工作区并删除对应的stash
 9. git stash list 此时应该是空的
+
+## git commit
+
+--amend : 用来修改上次提交时的 message
+
+## git rebase
+
+### -i [start_point] [end_point] 可交互变基
+
+常用来调整 commit 记录的顺序， 进行 commit 合并等。
+
+首条 pick or edit(修改 message 用)，其他的用 s or f(丢弃该 commit 的 message)
 
 ## git tag
 [参考](https://www.jianshu.com/p/9e64bdf1e8f9)
