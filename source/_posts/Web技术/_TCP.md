@@ -39,7 +39,7 @@
 
 第四次挥手(ACK=1，ACKnum=y+1) A 向 B 发送一个 ACK 包，表明自己收到了 B 的关闭请求。 B 收到 ACK 包后关闭连接
 
-A 在等待 2MSL 之后，没有收到 B 的 ACK 表明 B 已正常关闭，则自己也关闭连接
+A 在等待 2MSL 之后，没有收到 B 重传的 FIN 表明 B 已正常关闭，则自己也关闭连接
 
 Q1: 如果 B 马上可以关闭，可以合并第2,3次挥手，直接向 A 发送 ACK,FIN 么？
 
@@ -62,9 +62,9 @@ Q2: 第四次挥手后，为什么还得等待，直接关闭不行么，什么�
   
   不可以，如果第四次挥手 A 发往 B 的 ACK 包丢失了，那 B 什么时候关闭？如果说 B 发完 FIN 包直接关闭，那要是 FIN 包丢了呢？那 A 也不知道自己什么时候关闭
 
-  所以 B 在发完 FIN 包之后会进入 LAST-ACK 状态，在一定时间内没收到 A 的回复，要么 FIN 丢了，要么 ACK 丢了，所以 B 会发 ACK 给 A 告诉 A 自己没收到其发过来的 ACK
+  所以 B 在发完 FIN 包之后会进入 LAST-ACK 状态，在一定时间内没收到 A 的回复，要么 FIN 丢了，要么 ACK 丢了，所以 B 不断的重发 FIN 给 A 告诉 A 自己没收到其发过来的 ACK
 
-  因此 A 在需要等待一段时间，根据 B 有没有重发 ACK 来判断自己的 ACK 有没有发送成功
+  因此 A 在需要等待一段时间，根据 B 有没有重发 FIN 来判断自己的 ACK 有没有发送成功
 </details>
 
 Q3: 为什么是 2MSL，具体时间是多少？ 
@@ -83,9 +83,14 @@ https://www.zhihu.com/question/67013338/answer/510241374
 
   如果第一次的 fin 比最后一次快，A 将收不到 FIN 就断开了，而 B 也会重试几次达到上限然后断开
 
-  感觉不太对？以后理解了再更新
+  <s>感觉不太对？以后理解了再更新
 
-  还有一个避免连接混用的功能，暂时不分析了
+  还有一个避免连接混用的功能，暂时不分析了</s>
+
+  B 在发完 FIN 后其实是会不断重传 FIN 包直至超时。我们设想这样一个场景， A 向 B 回了 ack 包了，假设花了 1 MSL 后 B 收到了(此后B就关闭了)，于此同时的前一刻，B 重传了一个 FIN ，花了 1 MSL 给了 A。这时候 A 需要重新计时（在 2MSL 范围内），因为不确定 ACK 是否被 B 收到。由于 B 关闭了不会再重传 FIN，所以重新计时的 2MSL 后 A 也关闭了。
+  
+  还是上面的例子，假设 A 花了 0.99 MSL 后丢了，于此同时的前一刻，B 重传了一个 FIN ，需要花 1MSL 才能到 A 。如果 A 不等 2MSL 比如等 1.5MSL 就关闭了，则收不到 B 重传的 FIN 。进而导致 B 无法关闭。
+
 </details>
 
 ### 拓展阅读
@@ -93,3 +98,4 @@ https://www.zhihu.com/question/67013338/answer/510241374
 1. [TCP面试题](https://github.com/Advanced-Interview-Question/front-end-interview/blob/dev/docs/guide/tcp.md)
 2. [面试官，请别再问我 3 次握手与 4 次挥手了！
 ](https://juejin.im/post/5d9c284b518825095879e7a5)
+3. [为什么tcp的TIME_WAIT状态要维持2MSL](https://cloud.tencent.com/developer/article/1450264)
