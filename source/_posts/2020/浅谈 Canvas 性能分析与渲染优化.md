@@ -66,6 +66,31 @@ context.drawImage(canvasOffscreen, x, y);
 ```
 > 摘自 《Canvas 最佳实践（性能篇）》
 
+还可以借助 worker 进行优化
+```js
+// main.js
+const offscreenCanvas = document.getElementById("c").transferControlToOffscreen();
+worker.postMessage(offscreenCanvas, [offscreenCanvas]);
+
+
+// worker.js 
+let ctx, pos = 0;
+function draw(dt) {
+  ctx.clearRect(0, 0, 100, 100);
+  ctx.fillRect(pos, 0, 10, 10);
+  pos += 10 * dt;
+  requestAnimationFrame(draw);
+}
+
+self.onmessage = function(ev) {
+  const transferredCanvas = ev.data;
+  ctx = transferredCanvas.getContext("2d");
+  draw();
+};
+```
+
+> 引自 https://html.spec.whatwg.org/multipage/imagebitmap-and-animations.html#animation-frames
+
 ## 合理使用 API
 
 减少耗时 api 的使用
