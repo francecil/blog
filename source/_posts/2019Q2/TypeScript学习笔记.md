@@ -98,3 +98,24 @@ export function toArray<T>(value: T | T[] | undefined): T[] {
 toArray<Option>(a)
 
 ```
+
+## 数组过滤 null
+
+```js
+const list = ["a",null,"b"]
+const list2 = list.filter(v=>v)
+```
+
+然后 list2 的推导类型还是 `string | null []`
+
+需要对 filter 方法进行声明
+
+```js
+// 箭头函数 TODO
+function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
+  return value !== null && value !== undefined;
+}
+const list2 = list.filter(notEmpty) // string[]
+```
+
+
