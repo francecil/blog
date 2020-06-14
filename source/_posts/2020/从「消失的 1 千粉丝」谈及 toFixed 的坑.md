@@ -414,7 +414,94 @@ round(999999999955.2376236232, 6) // 999999999955.2378
 
 PS: 处理时发现的一个方法 `Math.trunc` 可以直接拿到整数部分，不管正负，不像 `Math.floor` 对于负数会向下取整
 
-PS: 感觉这个可以拿来当笔试题 ：）
+### 回到问题，平台如何修复这个bug
+
+平台上的粉丝数显示遵从这样几个原则：
+1. 小于 1 万，直接显示
+2. 小于 1 亿，四舍五入保留一位小数，若小数部分为 0 ，则不显示
+3. 大于等于 1 亿，四舍五入保留一位小数，若小数部分为 0 ，则不显示
+
+利用刚刚写的 round 函数操作一波
+
+```js
+function round(number, precision = 0, flag = false) {
+    if (flag && number < 0) {
+        return -round(Math.abs(number), precision)
+    }
+    return Math.round(+number + 'e' + precision) / (10 ** precision)
+}
+const formatNumForAvatar = num => {
+    if (num >= 1e+8) {
+        return {
+            num: round(num / 1e+8, 1),
+            unit: '亿'
+        }
+    }
+    if (num >= 1e+4) {
+        return {
+            num: round(num / 1e+4, 1),
+            unit: "万"
+        }
+    }
+    return {
+        num: num <= 0 ? 0 : num
+    }
+}
+/**
+ * 测试用例
+ */
+
+formatNumForAvatar(9999) // {num: 9999}
+formatNumForAvatar(99999) // {num: 10, unit: "万"}
+formatNumForAvatar(995500) // {num: 99.6, unit: "万"}
+formatNumForAvatar(99999900) // {num: 10000, unit: "万"}
+formatNumForAvatar(109999900) // {num: 1.1, unit: "亿"}
+```
+
+还是有问题，没有处理好 `10000 万` 这种 case
+
+目前想到的就是增加判断条件，或者硬编码
+
+```js
+function round(number, precision = 0, flag = false) {
+    if (flag && number < 0) {
+        return -round(Math.abs(number), precision)
+    }
+    return Math.round(+number + 'e' + precision) / (10 ** precision)
+}
+const formatNumForAvatar = num => {
+    // 处理 99995000+ 的情况
+    if (num >= 1e+8 - 5000) {
+        return {
+            num: round(num / 1e+8, 1),
+            unit: '亿'
+        }
+    }
+    if (num >= 1e+4) {
+        return {
+            num: round(num / 1e+4, 1),
+            unit: "万"
+        }
+    }
+    return {
+        num: num <= 0 ? 0 : num
+    }
+}
+/**
+ * 测试用例
+ */
+
+formatNumForAvatar(9999) // {num: 9999}
+formatNumForAvatar(99999) // {num: 10, unit: "万"}
+formatNumForAvatar(995500) // {num: 99.6, unit: "万"}
+formatNumForAvatar(99994999) // {num: 9999.5, unit: "万"}
+formatNumForAvatar(99999900) // {num: 1, unit: "亿"}
+formatNumForAvatar(109999900) // {num: 1.1, unit: "亿"}
+```
+
+如果有其他更好的方式欢迎评论~
+
+
 
 ## 最后
 
