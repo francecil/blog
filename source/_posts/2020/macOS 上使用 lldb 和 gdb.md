@@ -1,20 +1,24 @@
 ---
-title: macOS 上使用 gdb
-date: 2020-06-03 11:12:40
+title: macOS 上使用 lldb 和 gdb
+date: 2020-06-22 11:12:40
 categories: 随笔
 tags: 
-  - gcc
+  - V8
 ---
 
 ## 背景
 
-在尝试调试 V8 的时候，发现需要用到这个工具
+在尝试调试 JS 引擎的时候，发现需要用到这些工具
+
+其中 v8 用 gdb, JavaScriptCore 用 lldb
 
 macOS 版本： 10.15 
 
+先来说说 gdb 的使用吧
+
 <!--more-->
 
-## 安装与签名
+## gdb 安装与签名
 
 ```sh
 brew install gdb
@@ -47,8 +51,12 @@ Unable to find Mach task port for process-id 28885: (os/kern) failure (0x5).
 
 可以看上面输出的地址 -- https://sourceware.org/gdb/wiki/BuildingOnDarwin ，里面讲了如何解决这个问题。
 
+```sh
+sudo killall taskgated
+codesign -fs gdb_codesign "$(which gdb)"
+```
 
-## 调试命令
+## gdb 调试命令
 
 权当记录
 
@@ -83,10 +91,89 @@ enable 断点编号 #启用断点
 #观察点是当程序访问某个存储单元时中断
 watch arr[4] # 访问arr[4] 时中断
 ```
-## 实例分析
+
+## gdb 调试-实例分析
  
+ ```sh
+gcc test.c -g -o test
+gdb test
+```
+
 [GDB调试工具总结](https://www.jianshu.com/p/30ffc01380a0) 这篇文章举了几个例子，并一步步教命令怎么使用，建议阅读，这里就不重复了。
 
+## gdb 与 vscode
+
+利用命令进行调试，对于新手来说有点麻烦，那么用 vscode 来进行调试就是一个不错的选择
+
+需要先安装 c/c++ 插件
+
+启动调试，此时需要一个启动的 json 文件
+
+```json
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "gcc - 生成和调试活动文件",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/test",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "build"
+        }
+    ]
+}
+```
+
+等价于 `gdb test`
+
+test 是我们要调试的程序，再执行之前我们需要先编译链接生成它，所以又创了一个任务 build
+
+版本不一样，配置也不一样，根据系统提示的进行创建
+
+```json
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "gcc test.c -g -o test.o"
+        }
+    ]
+}
+```
+
+## peda 插件：增强 gdb 的显示
+
+```sh
+git clone https://github.com/longld/peda.git ~/peda
+echo "source ~/peda/peda.py" >> ~/.gdbinit
+```
+
+## lldb 使用
+
+https://lldb.llvm.org/
+
+[与 gdb 命令的映射](https://lldb.llvm.org/use/map.html)
+
+### chisel 插件：增强 lldb 的显示
+
+```sh
+brew install chisel
+echo "command script import /usr/local/opt/chisel/libexec/fblldb.py" >> ~/.lldbinit
+```
 
 
 ## 参考文档
