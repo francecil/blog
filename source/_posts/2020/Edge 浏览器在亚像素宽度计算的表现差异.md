@@ -152,7 +152,7 @@ css 2.2 和 css 3 对 「值」 都有相应的定义
 还是上面的 [demo](https://j2ldg.csb.app/)，我们可以发现
 ```js
 document.querySelector("#root > div > div:nth-child(1)").offsetWidth // 175
-document.querySelector("#root > div > div:nth-child(1)").offsetWidth // 176
+document.querySelector("#root > div > div:nth-child(2)").offsetWidth // 176
 ...
 ```
 
