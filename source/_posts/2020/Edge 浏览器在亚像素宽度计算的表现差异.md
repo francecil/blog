@@ -347,13 +347,29 @@ calc(14.2857% - 0px)  = 175.36
 ## 根据 13~16 组可以得到以下结论
 
 同 3~5 组结论：
-- 显示百分比数值项会先向下舍入处理
-- 当个数值项，计算结果按向下舍入处理
+- 显式百分比数值项会先向下舍入处理
+- 单个数值项，计算结果按向下舍入处理
 - 多个数值项，计算结果按四舍五入处理
 
 ## 根据 17~18 组可以得到以下结论
 
 隐式百分比的舍入规则仅与像素数值项有关，与显式百分比个数无关。
+
+## 20200906 后续补充
+
+偶然想到，如果对多个像素数值项通过括号结合的话，在处理「计算值」阶段，会将其进一步处理，应该当成一个数值项来考虑。
+
+结果也验证了我的想法
+```js
+calc(100% / 7 - (0px - 0px))
+第 20 组： getComputedStyle 取值：175.43px;
+getBoundingClientRect 取值：175.42999267578125
+描述：1228 * 0.142857 = 175.428396 ~= 175.43
+```
+
+也就是说，用括号括起来后，像素数值项间的运算，统一算一个像素数值项
+
+重新定义像素数值项：与隐式百分比间有运算关系的
 
 ## Edge 综合结论
 
@@ -408,7 +424,6 @@ const getDifference = (width, cols, margins, numCounts) => {
     }
 }
 
-
 ```
 
 根据上述值，我们可以得到
@@ -425,21 +440,144 @@ calc(100%/7 -0px -0.06px)
 175.42 * 7 = 1227.94 < 1228
 ```
 
+## 20200906 后记
+
+我们通过加括号，让像素数值项个数 numCounts 变成 1 ，这样算出来的 difference 会比较小
+
+```js
+getDifference(1228,7,0,1)
+// {calcWidth: 175.42857142857142, realWidth: 175.43, difference: -0.0014285714285904305}
+```
+
+```js
+calc(100%/7 -(0px -0.01px))
+=>
+(1228 * 0.142857).toFixed(2) - 0.01  = 175.42000000000002
+175.42000000000002 * 7 = 1227.94 < 1228
+```
+
+看起来 0.01px 能够满足所有情况？我们进行验证：
+
+```js
+const getRealWidth = (width, cols, margins, numCounts) => {
+    const fixed = numCounts === 1 ? 6 : 4 //一个数值型保留四位小数否则保留2位小数
+    const tmp = width * (1 / cols).toFixed(fixed) - floor(margins / cols, 2)
+    return Number(tmp.toFixed(2))
+}
+```
+margins 向下取值，导致扣掉的值变少了，我们假设取极限值 0.0099
+
+隐式百分比计算，算上百分比，宽度为四舍五入保留 6 位小数，即极限值为 width * 0.0000005
+
+按照 width=5120 来算，极限值也就 0.00256
+
+最后是四舍五入，由于我们可能让原来的结果多了 0.01xx ，最终结果可以是 0.02px 的偏移
+
+结论：
+- 正常 0.01px 就够用了，如果不够用，是 magins 的问题，可以自己进行 floor 计算看会少掉多少
+- 如果想稳定，一直设置 0.02px 即可
+
 # 最佳实践
 
+我们项目中都是进行响应式处理的，即不同分辨率下展示不同个数的卡片。
 
-当然，我们项目中都是进行响应式处理的，不同分辨率下展示不同个数的卡片。
+如果有两个像素数值项，我们需要对每个分辨率进行差值计算，取最大的 difference
 
-因此需要对每个分辨率进行差值计算，取最大的 difference
+```js
+// 假设不同分辨率对应的列数分别为：
+$narrowItemRowCounts = {
+  '1024px': 4,
+  '1280px': 5,
+  '1440px': 5,
+  '1680px': 6,
+  '1920px': 6,
+  max: 7
+}
+// 列间隔为 12px
+```
+最大的 difference 可以这么计算(4,5 列的不用算，因为可以整除， difference 必定为 0)
+```js
+const floor = (num, decimal = 0) => {
+    const expand = 10 ** decimal
+    return Math.floor(num * expand) / expand
+}
+const getRealWidth = (width, cols, margins, numCounts) => {
+    const fixed = numCounts === 1 ? 6 : 4 //一个数值型保留四位小数否则保留2位小数
+    const tmp = width * (1 / cols).toFixed(fixed) - floor(margins / cols, 2)
+    return Number(tmp.toFixed(2))
+}
 
-本文最开始说了， YouTube 在某些分辨率下是有问题的，这是因为它里面的代码为
+/**
+ * 
+ * @param {*} width 
+ * @param {*} cols 
+ * @param {*} margins 
+ * @param {*} numCounts 像素数值项个数，用来确定隐式百分比的舍入规则
+ */
+const getDifference = (width, cols, margins, numCounts) => {
+    const calcWidth = (width - margins) / cols
+    const realWidth = getRealWidth(width, cols, margins, numCounts)
+    return {
+        calcWidth,
+        realWidth, // 浏览器实际渲染的值
+        difference: calcWidth - realWidth
+    }
+}
+
+$narrowItemRowCounts = {
+    '1024px': 4,
+    '1280px': 5,
+    '1440px': 5,
+    '1680px': 6,
+    '1920px': 6,
+    max: 7
+}
+
+let max = 0
+let width = 0
+for (let i = 1025; i <= 1440; i++) {
+    let result = Math.abs(getDifference(i, 5, 4 * 12, 2).difference)
+    if (result > max) {
+        max = result
+        width = i
+    }
+}
+console.log(`1025~1440 cols:5,max difference: ${max} ,width:${width}`)
+// 1025~1440 cols:5,max difference: 0 ,width:0
+for (let i = 1441; i <= 1920; i++) {
+    let result = Math.abs(getDifference(i, 6, 5 * 12, 2).difference)
+    if (result > max) {
+        max = result
+        width = i
+    }
+}
+console.log(`1441~1920 cols:6,max difference: ${max} ,width:${width}`)
+for (let i = 1921; i <= 5120; i++) {
+    let result = Math.abs(getDifference(i, 7, 6 * 12, 2).difference)
+    if (result > max) {
+        max = result
+        width = i
+    }
+}
+console.log(`1921~5120 cols:7,max difference: ${max} ,width:${width}`)
+
+// 1025~1440 cols:5,max difference: 0 ,width:0
+// 1441~1920 cols:6,max difference: 0.06666666666666288 ,width:1853
+// 1921~5120 cols:7,max difference: 0.2300000000000182 ,width:5119
+```
+
+可以发现后后面 difference 有点大了，如果都扣除 difference 的话，最终会有 1 像素的差距（0.23*7）
+
+我们最好应该采用**单像素数值项的解决方案**，经过上面的验证， `-0.01px` 满足了绝大部分情况
+
+最后说说 YouTube 的问题。本文最开始说了， YouTube 在某些分辨率下是有问题的，这是因为它里面的代码为
 ```
 calc(100%/7 - 6*12px/7 - 0.01px)
 ```
 
-减 0.01 在有些时候是不够用的，还是会出现问题，因此应该采用本文的解决方案。
-
-另外，Chrome 等浏览器采用 1/64 亚像素向下舍入处理，不需要去扣除 `-0.01px` ，扣除后可能会少掉一个亚像素。不够考虑到 Edge 的兼容，少掉的这些亚像素无关紧要
+直接减 0.01px 在有些时候是有问题的，还是会出现问题，因此应该采用本文的解决方案。
+- 不对像素数值项进行结合，需要扣除一个较大的偏差值
+- 对像素数值项进行结合，仅需要扣除 `0.01px` 即可
 
 # 结论
 
