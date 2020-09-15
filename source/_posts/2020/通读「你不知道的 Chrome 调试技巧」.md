@@ -115,6 +115,12 @@ window.copy = (val) => {
 
 ![](https://sf1-dycdn-tos.pstatp.com/obj/eden-cn/nupohneh7nupehpqnulog/img/disableJS2.gif)
 
+
+**20200915 更新：** 这个方案处理不了需要点击的情况（比如点击选择框后展现下拉列表）。后经同事指点，提供了其他方案：
+1. settimeout debugger
+2. 父元素断点调试：Elements 面板 -> 父元素右键 Break on -> subtree modifications 
+
+
 ### (2) Screentshot 指令截图
 
 输入 screentshot ，可以看到有以下指令：
