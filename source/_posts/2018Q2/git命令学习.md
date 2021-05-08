@@ -105,6 +105,12 @@ git reset --hard commit_id 或者 HEAD^ 表示当前版本的上一个版本，1
 
 可以通过 git reflog 里面记录了我们每次的命令 
 
+### 回退某个文件到指定版本
+
+```
+git checkout HEAD my-file.txt
+```
+
 ## git 文件改一半需要临时改个bug -commit上怎么写？
 
 [参考](https://www.cnblogs.com/wufangfang/p/6085617.html)
@@ -219,6 +225,8 @@ https 与 ssh 的区别
 
 因此前者适用于后面不再追溯某个子提交的情况，大部分情况用这个足够了。
 
+
+如果一个 MR 里面需要有保留多个提交记录而原来的 commit 又太多太乱时，就需要用「交互变基』
 ## 撤销线上提交
 
 ```
@@ -232,3 +240,23 @@ release 分支里带有很多功能分支的 mr
 此时 release 合到 master 的时候，会带有这些 mr 记录
 
 需要先 rebase 下 master ，这样 master 里就不会带这些功能分支合到 release 的 mr 记录
+
+## 单项目用户信息 config 配置
+
+调整 commit 里面用户的个人信息，不使用全局的（防止暴露个人信息和公司邮箱）
+
+```sh
+git config user.name "francecil"
+git config user.email "396324491@qq.com"
+```
+
+## WIP: git merge 的方式解决冲突
+
+https://www.freecodecamp.org/news/an-introduction-to-git-merge-and-rebase-what-they-are-and-how-to-use-them-131b863785f/
+
+## 删除 git 控制
+
+进入相应项目，执行以下命令
+```sh
+rm -rf .git
+```

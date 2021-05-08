@@ -56,3 +56,9 @@ npm unpublish 包名
 并且有要求：
 1. 24小时内上传的
 2. 即使撤回了，也不能再发这个版本的包
+
+## 发布 beta 包
+
+```sh
+npm publish --tag beta
+```

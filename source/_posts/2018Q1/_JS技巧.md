@@ -274,7 +274,7 @@ var arr = [ [1, 2, 2], [3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14] ] ] ], 
 
 ## Object.getOwnPropertyNames(obj)
 
-返回 obj 自身拥有的枚举或不可枚举属性名称字符串
+返回 obj 自身拥有的可枚举或不可枚举的属性名称字符串
 
 不包括原型链的属性
 
@@ -286,7 +286,7 @@ var arr = [ [1, 2, 2], [3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14] ] ] ], 
 
 
 
-# 获取 class 静态属性和方法列表
+# 获取 class 静态属性、静态方法、原型方法、实例方法列表
 
 类的内部所有定义的方法，都是不可枚举的
 
@@ -297,6 +297,7 @@ class Foo{
     notStatic = "I'm not static";
     three() {}
     static four() {}
+    five = ()=>{}
 }
 // 获取静态属性列表
 Object.keys(Foo)
@@ -304,14 +305,18 @@ Object.keys(Foo)
 
 
 // 获取静态方法列表
-Object.getOwnPropertyNames(Foo)
-// ["length", "prototype", "one", "four", "name", "num1"]
 Object.getOwnPropertyNames(Foo).filter(prop => typeof Foo[prop] === "function");
 // ["one", "four"]
+// Object.getOwnPropertyNames(Foo) 返回自身所有属性
+// ["length", "prototype", "one", "four", "name", "num1"]
+
 
 // 获取静态属性和方法
 Object.keys(Foo).concat(Object.getOwnPropertyNames(Foo).filter(prop => typeof Foo[prop] === "function"))
 //  ["num1", "one", "four"]
+
+// 获取原型方法列表
+Object.getOwnPropertyNames(Foo.prototype).filter(prop => typeof Foo.prototype[prop] === "function")
 ```
 
 # 实现 函数重载
@@ -354,3 +359,18 @@ array.sort(function(a, b) {
   return +(a > b) || +(a === b) - 1;
 });
 ```
+
+## 动态增加属性值
+
+
+```js
+{
+  a: 1,
+  b: 2,
+  ...(c !== 1 && {
+    c,
+  })
+}
+```
+
+当 c 不为 1 时才会有 c 这个属性

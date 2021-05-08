@@ -119,3 +119,105 @@ const list2 = list.filter(notEmpty) // string[]
 ```
 
 
+## 已有一个默认对象，需要得到该对象的 interface
+
+我们定义了一个默认对象
+```js
+const obj = {
+  name: 'gahing',
+  age: 18
+}
+```
+
+现在用将该默认对象赋值或传递到其他地方，其他地方对变量需要有个定义。
+
+但是又不想重新定义
+```js
+interface Obj {
+  name: string,
+  age: number
+}
+```
+
+其实直接用 `type Obj = typeof obj` 就行了，在 ts 里能拿到 obj 的完整定义
+
+## 部分枚举值作为 key 组成的新对象，访问如何访问该对象
+```js
+enum Action {
+  A = 'A',
+  B = 'B',
+  C = 'C',
+  D = 'D',
+}
+const { action:Action } = param
+const handles = {
+  [action.A]: ()=>{},
+  [action.B]: ()=>{},
+}
+
+if(action){
+  handles[action]?.()
+}
+```
+
+会提示  action 的其他类型 C/D 不在 handles key 中，此时需要做下过滤
+=》
+```js
+type PartAction = keyof(typeof handles)
+if(action){
+  handles[action as PartAction]?.()
+}
+```
+
+## const 与 enum 的区别
+
+```ts
+const APP = {
+  XIGUA : "xigua",
+  TOUTIAO : "toutiao",
+  LITE : "lite",
+}
+enum APP2 {
+  XIGUA = "xigua",
+  TOUTIAO = "toutiao",
+  LITE = "lite",
+}
+```
+
+1. Object.values 的差异
+
+前者得到的值是一个 string 数组，于是可以继续进行 include 的判断，但是不方便其他地方校验类型
+
+而后者得到的是一个 APP2 数组，进行 include 判断时会报类型错误，需要进行类型转换
+```ts
+(Object.values(APP) as string[]).includes
+```
+需要注意的是，如果枚举的值是字符串，编译的时候不会像数字那样，设置 `APP2['xigua']='XIGUA'` 
+
+## 开启 strictNullChecks 时变量报 Variable 'assertion' is used before being assigned
+
+```js
+let a:number
+try {
+  a = 1
+} catch(){
+  if(a) { // 编译报错
+
+  }
+}
+```
+
+需要手动加上 undefined 声明
+
+```js
+let a:number|undefined;
+try {
+  a = 1
+} catch(){
+  if(a) { 
+
+  }
+}
+```
+
+参考 [TypeScript中的怪语法](https://cloud.tencent.com/developer/article/1125664)

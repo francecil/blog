@@ -76,6 +76,13 @@ clear 属性的值可以是 left、right、both 或 none，它表示框的哪些
 采用 +
 可选择紧接在另一元素后的元素，且二者有相同父元素
 h1 + p {margin-top:50px;} 选择紧接在 h1 元素后出现的段落，h1 和 p 元素拥有共同的父元素
+
+## 一般兄弟选择器
+
+~
+
+https://developer.mozilla.org/zh-CN/docs/Web/CSS/General_sibling_combinator
+
 ## 伪类
 采用 ：
 用于向某些选择器添加特殊的效果。
