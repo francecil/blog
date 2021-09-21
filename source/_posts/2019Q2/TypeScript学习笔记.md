@@ -221,3 +221,88 @@ try {
 ```
 
 参考 [TypeScript中的怪语法](https://cloud.tencent.com/developer/article/1125664)
+
+## ts-node tsc typescript 等 npm 包的区别
+
+ts-node 需要跟一个入口，用来执行
+
+tsc 将根据 tsconfig 转换所有文件
+
+## 条件类型
+
+```ts
+type Extract<T,U> = T extends U ? T : never ;
+Extract<"a" | "b" | "c", "a"> // "a"  
+```
+
+分发条件类型的前置要求是存在范型:
+```ts
+type a = 'a' | 'b' | 'c' extends 'a' ? 'a' : never; // never, 这里并没有做类型分发，所以输出是 never 
+```
+
+https://juejin.cn/post/6976247111394263053
+
+## 对象的 key 是限定的，不应该使用 interface 而应该用 type
+
+```ts
+enum Option {
+  ONE = 'one',
+  TWO = 'two',
+  THREE = 'three'
+}
+
+interface OptionRequirement {
+  someBool: boolean;
+  someString: string;
+}
+
+interface OptionRequirements {
+  [key: Option]: OptionRequirement;
+}
+// 提示错误
+// An index signature parameter type cannot be a union type. Consider using a mapped object type instead
+
+```
+需要改为
+```ts
+enum Options {
+  ONE = 'one',
+  TWO = 'two',
+  THREE = 'three',
+}
+interface OptionRequirement {
+  someBool: boolean;
+  someString: string;
+}
+type OptionRequirements = {
+  [key in Options]: OptionRequirement; // Note that "key in".
+}
+```
+见： https://stackoverflow.com/questions/54438012/an-index-signature-parameter-type-cannot-be-a-union-type-consider-using-a-mappe
+
+### 部分属性属于某个集合
+
+结合上面的，采用 interface 继承
+```ts
+interface AA extends OptionRequirements {
+  b: boolean;
+}
+```
+
+
+## 将字符串数组转为联合类型
+
+```ts
+const arr = ["a", "b" , "c"]
+// 期望转为下面这种
+type arrType = "a" | "b" | "c"
+```
+
+解决方案
+
+```ts
+const arr = ['performance', 'accessibility', 'best-practices', 'seo', 'pwa'] as const;
+type A = typeof arr[number]; // 'performance' | 'accessibility' | 'best-practices' | 'seo' | 'pwa';
+```
+
+另外，不推荐**联合类型**转**字符串数组**

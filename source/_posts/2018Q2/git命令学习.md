@@ -260,3 +260,23 @@ https://www.freecodecamp.org/news/an-introduction-to-git-merge-and-rebase-what-t
 ```sh
 rm -rf .git
 ```
+
+## 文件大小写不敏感问题
+
+```sh
+# 配置大小写敏感
+git config core.ignorecase false
+# 删掉对应的文件或目录
+git rm --cached  /xxx/x
+```
+
+https://www.jianshu.com/p/420d38913578
+
+## 批量删除本地分支
+
+删除当前分支外的所有分支
+
+```sh
+git branch | xargs git branch -d
+```
+https://blog.csdn.net/u012719153/article/details/81136081
