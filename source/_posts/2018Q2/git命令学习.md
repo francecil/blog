@@ -139,6 +139,12 @@ git checkout HEAD my-file.txt
 
 ## git tag
 [参考](https://www.jianshu.com/p/9e64bdf1e8f9)
+
+### 查看 tag 列表
+
+```bash
+git tag
+```
 ### 添加tag
 ```bash
 git tag -a  <tag名> -m <注释文字>
@@ -280,3 +286,13 @@ https://www.jianshu.com/p/420d38913578
 git branch | xargs git branch -d
 ```
 https://blog.csdn.net/u012719153/article/details/81136081
+
+## 显示最新操作的几个分支
+
+编辑 shell 脚本提供这个功能
+
+```sh
+git config --global alias.recent "\!f() { count=\$1; git for-each-ref --count=\${count:=10} --sort=-committerdate refs/heads/ --format='%(authordate:short) %(color:red)%(objectname:short) %(color:blue)%(subject) %(color:yellow)%(refname:short)%(color:reset) (%(color:green)%(committerdate:relative)%(color:reset))';}; f"
+```
+
+然后使用 `git recent 3` 可以使用最近的三条分支名

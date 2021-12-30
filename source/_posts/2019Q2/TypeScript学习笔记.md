@@ -306,3 +306,127 @@ type A = typeof arr[number]; // 'performance' | 'accessibility' | 'best-practice
 ```
 
 另外，不推荐**联合类型**转**字符串数组**
+
+## interface vs type Alias
+
+### 相同点
+
+- 都可以拓展，且可以拓展对方
+```ts
+interface I1 {
+    name: string
+}
+interface I2 extends I1 {
+    age: number
+}
+type T1 = {
+    name: string
+}
+type T2 = T1 & {
+    age: number
+}
+interface I3 extends T1 {
+    age: number
+}
+type T3 = I1 & {
+    age: number
+}
+let a: T3 = {
+    name: '',
+    age: 1
+}
+```
+- 都可以描述一个对象或函数
+### type 可以 interface 不行的
+
+- type 还可以作用于其他类型
+- type 能使用 in 关键字生成映射类型，但 interface 不行
+```ts
+type P = 'a' | 'b' 
+type User = {
+  [k in P]?: string
+}
+interface I1 {
+    // 只能是 string 或 number ，使用其他类似会提示用 type
+    [name: string|number]: string
+}
+let user: User = {
+    a: '2',
+}
+```
+- type 可以使用 typeof 获取实例的类型进行赋值
+```ts
+let user = {
+  name: 'hh'
+}
+type User = typeof user
+/**
+type User = {
+    name: string;
+}
+*/
+```
+
+### interface 支持而 type 不支持
+
+- 声明合并，较少用，详见 https://www.tslang.cn/docs/handbook/declaration-merging.html
+
+### 总结
+
+- 用 interface 描述 **数据结构**，用 type 描述 **类型关系**
+- type 基本上可以代替 interface 
+- 日常开发中，先尝试使用 interface 来表示数据结构，语义上更符合；实在无法实现再用 type
+
+
+### 拓展阅读
+
+- https://juejin.cn/post/6844903749501059085
+- https://blog.csdn.net/sinat_17775997/article/details/97102583?ivk_sa=1024320u
+
+## 覆盖父接口的某个属性的类型
+
+```ts
+type Diff<T extends keyof any, U extends keyof any> =
+    ({ [P in T]: P } & { [P in U]: never } & { [x: string]: never })[T];
+type Overwrite<T, U> = Pick<T, Diff<keyof T, keyof U>> & U;
+
+interface Base {
+  id: string
+  name: string
+}
+
+interface Extension {
+    id?: number | string;
+}
+export interface IUser extends Overwrite<Base, Extension> {
+    gender: string
+}
+
+// IUser 等同于
+export interface IUser  {
+    id?: number | string;
+    gender: string
+    name: string
+}
+
+```
+
+## 枚举的键转为联合类型
+
+例如
+```ts
+enum ReportStatus {
+    default,
+    running,
+    success,
+    failed
+}
+
+// 希望得到某个类型，其值为
+type ReportStatusKey = "default" | "running" | "success" | "failed"
+```
+
+解决方案：
+```ts
+type ReportStatusKeys = keyof typeof ReportStatus
+```

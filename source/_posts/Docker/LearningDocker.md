@@ -1,13 +1,4 @@
 
-
-
-
-
-
-
-
-
-
 ## Q
 1. control group 限制资源，使用场景
 2. -d 参数 和 守护态 区别
@@ -31,4 +22,25 @@
 
 ```
 docker exec -it container_id sh
+```
+
+## 防止容器自动退出
+
+```sh
+docker run xxx /bin/sh -c "while true; do echo hello world; sleep 1; done"
+
+docker run xxx /bin/sh -c "tail -f /dev/null"
+```
+
+## 一条龙
+
+```sh
+# 构建镜像
+docker build -t [image_name] .
+# 启动运行
+docker run -dit [image_name]  /bin/sh -c "tail -f /dev/null"
+# 展示容器
+docker container ls
+# 进入容器
+docker exec -it [container_id] bash
 ```
