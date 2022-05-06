@@ -45,6 +45,10 @@ SPDY 也是支持头部压缩的
 
 如果有一端不支持 http2 会回退到 preload 预加载
 
+## vs http3
+
+http3 使用的 udp ；解决 http2 因为丢包导致滑动窗口堵塞的问题  
+
 # 参考
 
 https://juejin.im/post/5a4dfb2ef265da43305ee2d0#heading-14
