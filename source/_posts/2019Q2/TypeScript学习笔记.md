@@ -617,3 +617,28 @@ fn2({
 Flow 支持这种特性，称之为 Exact Types ，ts 社区上的相关讨论：https://github.com/microsoft/TypeScript/issues/12936
 
 在线示例：https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgILIN4FgBQzkDWEAngFzIDOYUoA5rviHALYTlU0j04C+uokWIhQAhTA0Il21OhIBucADYBXNpRldcfHAgD2IKshghkAXmQAKAA5RdViuXQAfZCICUZgHyZtxi9jxJMmQAcjgQgBoJJlZyMJCtN1w-APwiYJCAI0j5JVU47MTkkH8JdLjwqMCYtXiq-AUVWuzkAHpW5EBCm0BIc0ANbUAKdUAPt0AUvUAs7UBJOUAQtzRkQDQjV2RAUuNAY+VAGH-AGnNhwFPowFKjQExU1cAxeUB6Mx79opwwYisUADEQACYzcUDrW3tHN3I5XWAAEwkbzsDlcX2QP3+WlwegMYCMj3I9ye5iB9g8pm8GF8j1KgXKoUq0RYtXCF2MD1xaSkoWy9XBeWaCV4SRw5MpQQqOWqxM5dMa+RpITaHUAWPLnZlAA
+
+
+## 使用 Parameters 将调用的方法名和参数抽离
+
+```ts
+class Demo {
+  say(name: string){
+    console.log(name)
+  }
+  add(a: number){
+    return a+1
+  }
+}
+const d = new Demo()
+d.say('gg')
+
+
+// 希望改成如下调用时，第一个参数为方法名，第二个参数为对应方法的参数
+// 依然有类型提示
+callMethod('say', a)
+
+function callMethod<T >(method: T extends keyof Demo, ...params: Parameters<Demo[T]>) {
+  return d[prop](...params)
+}
+```
