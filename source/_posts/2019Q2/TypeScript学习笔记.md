@@ -402,6 +402,30 @@ const t: t3 = {
 
 用法 1，2 经常组合起来使用
 
+## Infer 推断类型
+
+可以使用 infer 关键字推断条件类型中的某一个条件类型，将该类型赋值给一个临时的变量类型
+
+```ts
+// 自动推断 Array 中元素的类型，并赋值给 Item 类型变量
+type Flatten<Type> = Type extends Array<infer Item> ? Item : Type;
+
+type T = Flatten<string[]>; 
+/* T = string, 因为推断出 string[] = Array<string>，所以 Item = string，类型返回 Item */
+```
+
+## 条件联合类型
+
+联合类型的每一个类型都会计算一次 extends ，然后将最终的结果做联合， never 在联合的过程中去除
+
+```ts
+// 这里等价于 (string exetends any ? string[] : never) | (number exetends any ? number[] : never)
+type ToArray<Type> = Type extends any ? Type[] : never;
+
+// 计算结果是 string[] | number[]
+type StrArrOrNumArr = ToArray<string | number>; 
+```
+
 # 常用技巧
 
 ## 覆盖父接口的某个属性的类型
@@ -642,3 +666,18 @@ function callMethod<T >(method: T extends keyof Demo, ...params: Parameters<Demo
   return d[prop](...params)
 }
 ```
+
+# 常用 TS 类型工具库
+## ts-toolbelt
+
+https://github.com/millsp/ts-toolbelt
+
+
+封装常用的 TS 类型操作
+
+## typetype
+
+https://github.com/mistlog/typetype
+
+
+用于自动生成 TS 的类型
