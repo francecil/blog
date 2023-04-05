@@ -296,3 +296,17 @@ git config --global alias.recent "\!f() { count=\$1; git for-each-ref --count=\$
 ```
 
 然后使用 `git recent 3` 可以使用最近的三条分支名
+
+## 所 rebase 的原分支提交重新变化，当前分支应该如何快速重新 rebase
+
+### 举例：
+release 分支增加了几个提交，然后 checkout 出 feature 分支并进行开发；
+
+后面 release 分支有人改动过，内容基本不变但是 commit 记录不一样了，比如 release 分支 rebase 了 master 分支，或者有人强改强推。
+
+此时 feature 分支重新 rebase release 会出现较多的冲突，有什么好的解决方案？
+
+### 解决方案：
+
+解法1：在 feature 分支上使用 `git merge release` 命令，进行一个合并，缺点就是 feature 分支上会留下一个 git 提交记录，如果不想要该记录的话需要额外去除。
+

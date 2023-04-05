@@ -36,4 +36,4 @@ module.exports = {
 
 ## 3. 处理 message 等组件的样式丢失问题
 
-见官方 faq , https://ant.design/docs/react/faq-cn
+见官方 faq , https://ant.design/docs/react/faq-cn#ConfigProvider-%E8%AE%BE%E7%BD%AE-prefixCls-%E5%90%8E%EF%BC%8Cmessage/notification/Modal.confirm-%E7%94%9F%E6%88%90%E7%9A%84%E8%8A%82%E7%82%B9%E6%A0%B7%E5%BC%8F%E4%B8%A2%E5%A4%B1%E4%BA%86%EF%BC%9F
