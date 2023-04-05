@@ -7,3 +7,6 @@ node_modules/
 public/
 .deploy*/
 *.lock
+pnpm-lock.yaml
+.temp
+.cache

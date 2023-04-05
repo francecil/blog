@@ -1,31 +1,14 @@
 {
-  "name": "hexo-site",
+  "name": "blog",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "prebuild": "npm run clean",
-    "build": "hexo generate",
-    "clean": "hexo clean",
-    "predeploy": "npm run build",
-    "deploy": "hexo deploy",
-    "preserver": "npm run build",
-    "server": "hexo server"
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
-  "hexo": {
-    "version": "4.1.0"
-  },
-  "dependencies": {
-    "hexo": "^4.0.0",
-    "hexo-deployer-git": "^2.1.0",
-    "hexo-generator-archive": "^1.0.0",
-    "hexo-generator-category": "^1.0.0",
-    "hexo-generator-index": "^1.0.0",
-    "hexo-generator-searchdb": "^1.2.0",
-    "hexo-generator-tag": "^1.0.0",
-    "hexo-renderer-ejs": "^1.0.0",
-    "hexo-renderer-marked": "^2.0.0",
-    "hexo-renderer-sass": "^0.4.0",
-    "hexo-renderer-stylus": "^1.1.0",
-    "hexo-server": "^1.0.0"
+  "devDependencies": {
+    "@vuepress/client": "2.0.0-beta.61",
+    "vue": "^3.2.47",
+    "vuepress": "2.0.0-beta.61"
   }
 }
