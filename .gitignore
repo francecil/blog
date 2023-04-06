@@ -10,3 +10,8 @@ public/
 pnpm-lock.yaml
 .temp
 .cache
+# vuepress
+docs/.vuepress/dist
+
+# 百度链接推送
+urls.txt
