@@ -12,32 +12,31 @@ const os = require('os');
 const PREFIX = '/pages/'
 
 /**
- * 给.md文件设置frontmatter(标题、日期、永久链接等数据)
+ * 给 .md 文件设置 frontmatter(标题、日期、永久链接等数据)
  */
 function setFrontmatter(sourceDir, themeConfig) {
-  const { category: isCategory, tag: isTag, categoryText = '随笔', extendFrontmatter } = themeConfig
-  const files = readFileList(sourceDir) // 读取所有md文件数据
+  const { category: isCategory, tag: isTag, categoryText = '随笔', extendFrontmatter, patterns, ignoreCategories = [] } = themeConfig
+  const files = readFileList(sourceDir, patterns) // 读取所有md文件数据
   // 扩展自定义生成frontmatter
   const extendFrontmatterStr = extendFrontmatter ?
     jsonToYaml.stringify(extendFrontmatter)
       .replace(/\n\s{2}/g, "\n")
       .replace(/"|---\n/g, "")
     : '';
-
   files.forEach(file => {
     let dataStr = fs.readFileSync(file.filePath, 'utf8');// 读取每个md文件内容
-
-    // fileMatterObj => {content:'剔除frontmatter后的文件内容字符串', data:{<frontmatter对象>}, ...}
     const fileMatterObj = matter(dataStr, {});
 
     if (Object.keys(fileMatterObj.data).length === 0) { // 未定义FrontMatter数据
       const stat = fs.statSync(file.filePath);
+      // 文件的创建时间
       const dateStr = dateFormat(
         getBirthtime(stat)
-      ); // 文件的创建时间
+      ); 
       const categories = getCategories(
         file,
-        categoryText
+        categoryText,
+        ignoreCategories
       );
 
       let cateLabelStr = '';
@@ -51,20 +50,15 @@ function setFrontmatter(sourceDir, themeConfig) {
       };
 
       // 注意下面这些反引号字符串的格式会映射到文件
-      const tagsStr = isTag === false ? '' : `
-tags:
-  - `;
+      const tagsStr = isTag === false ? '' : `${os.EOL}tags:${os.EOL}  - ${os.EOL}`;
 
-      const fmData = `---
-title: ${file.name}
-date: ${dateStr}
-permalink: ${getPermalink()}${file.filePath.indexOf('_posts') > -1 ? os.EOL + 'sidebar: auto' : ''}${cateStr}${tagsStr}
-${extendFrontmatterStr}---`;
+      const fmData = `---${os.EOL}title: ${file.name}${os.EOL}date: ${dateStr}${os.EOL}permalink: ${getPermalink()}${file.filePath.indexOf('_posts') > -1 ? os.EOL + 'sidebar: auto' : ''}${cateStr}${tagsStr}${extendFrontmatterStr}${os.EOL}---`;
 
       fs.writeFileSync(file.filePath, `${fmData}${os.EOL}${fileMatterObj.content}`); // 写入
       log(chalk.blue('tip ') + chalk.green(`write frontmatter(写入frontmatter)：${file.filePath} `))
 
-    } else { // 已有FrontMatter
+    } else {
+      // 已有FrontMatter
       let matterData = fileMatterObj.data;
       let hasChange = false;
 
@@ -92,7 +86,7 @@ ${extendFrontmatterStr}---`;
 
       if (!matterData.hasOwnProperty('pageComponent') && matterData.article !== false) { // 是文章页才添加分类和标签
         if (isCategory !== false && !matterData.hasOwnProperty('categories')) { // 分类
-          matterData.categories = getCategories(file, categoryText)
+          matterData.categories = getCategories(file, categoryText, ignoreCategories)
           hasChange = true;
         }
         if (isTag !== false && !matterData.hasOwnProperty('tags')) { // 标签
@@ -125,9 +119,8 @@ ${extendFrontmatterStr}---`;
 }
 
 // 获取分类数据
-function getCategories(file, categoryText) {
+function getCategories(file, categoryText, ignoreCategories) {
   let categories = []
-
   if (file.filePath.indexOf('_posts') === -1) {
     // 不在_posts文件夹
     let filePathArr = file.filePath.split(path.sep) // path.sep用于兼容不同系统下的路径斜杠
@@ -139,7 +132,6 @@ function getCategories(file, categoryText) {
         const item = filePathArr[ind]
         const firstDotIndex = item.indexOf('.');
         categories.push(item.substring(firstDotIndex + 1) || '') // 获取分类
-        // categories.push(filePathArr[ind].split('.').pop()) // 获取分类
       }
     }
   } else {
@@ -154,7 +146,7 @@ function getCategories(file, categoryText) {
       categories.push(categoryText)
     }
   }
-  return categories
+  return categories.filter((cg=> !ignoreCategories.some(ignReg => ignReg.test(cg))))
 }
 
 // 获取文件创建时间

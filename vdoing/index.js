@@ -21,14 +21,14 @@ module.exports = (options, ctx) => {
   // base路径
   base = siteConfig.base || ''
 
-  // TODO: 自动设置front matter
-  // setFrontmatter(sourceDir, themeConfig)
+  // 自动设置front matter
+  setFrontmatter(sourceDir, themeConfig)
 
   // 自动生成结构化侧边栏
   const sidebar = themeConfig.sidebar
   if (sidebar === 'structuring' || sidebar && sidebar.mode === 'structuring') {
     const collapsable = themeConfig.sidebar.collapsable === false ? false : true
-    const sidebarData = getSidebarData(sourceDir, collapsable)
+    const sidebarData = getSidebarData(path.join(sourceDir, themeConfig.sidebarDir || ''), collapsable)
     if (sidebarData) {
       themeConfig.sidebar = sidebarData
       log(chalk.blue('tip ') + chalk.green('add sidebar data. 成功生成侧边栏数据。'))

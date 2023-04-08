@@ -23,8 +23,6 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
     }
   },
   // base: '/', // 默认'/'。如果你想将你的网站部署到如 https://foo.github.io/bar/，那么 base 应该被设置成 "/bar/",（否则页面将失去样式等文件）
-
-  patterns: ['**/*.md', '**/*.vue', '!**/_*.md'],
   // 主题配置
   themeConfig: {
     // 导航配置
@@ -87,15 +85,18 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
         ],
       },
     ],
+    patterns: ['**/!(_)*/!(_)*.md'], // 需要解析的文件
     sidebarDepth: 2, // 侧边栏显示深度，默认1，最大2（显示到h3标题）
     logo: '/img/logo.png', // 导航栏logo
     repo: 'francecil/blog', // 导航栏右侧生成Github链接
     searchMaxSuggestions: 10, // 搜索结果显示最大数
     lastUpdated: '上次更新', // 开启更新时间，并配置前缀文字   string | boolean (取值为git提交时间)
     docsDir: 'docs', // 编辑的文件夹
+    sidebarDir: 'source', // 侧边栏文档目录 add by gahing
     // docsBranch: 'master', // 编辑的文件所在分支，默认master。 注意：如果你的分支是main则修改为main
     editLinks: true, // 启用编辑
     editLinkText: '编辑',
+    ignoreCategories: [/^\d+$/, /(source)/], // 忽略自动生成的分类名
 
     //*** 以下是Vdoing主题相关配置，文档：https://doc.xugaoyi.com/pages/a20ce8/ ***//
 
@@ -172,12 +173,12 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
     },
 
     // 扩展自动生成frontmatter。（当md文件的frontmatter不存在相应的字段时将自动添加。不会覆盖已有的数据。）
-    extendFrontmatter: {
-      author: {
-        name: 'gahing',
-        link: 'https://github.com/francecil'
-      }
-    },
+    // extendFrontmatter: {
+    //   author: {
+    //     name: 'gahing',
+    //     link: 'https://github.com/francecil'
+    //   }
+    // },
 
     // 自定义hmtl(广告)模块
     htmlModules

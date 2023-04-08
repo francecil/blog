@@ -15,22 +15,17 @@ function createSidebarData(sourceDir, collapsable) {
   const sidebarData = {};
   const tocs = readTocs(sourceDir);
   tocs.forEach(toc => { // toc是每个目录的绝对路径
-
-    if (toc.substr(-6) === '_posts') { // 碎片化文章
-
-      // 注释说明：碎片化文章不需要生成结构化侧边栏 2020.05.01
-      // const sidebarArr = mapTocToPostSidebar(toc);
-      // sidebarData[`/${path.basename(toc)}/`] = sidebarArr
-
-    } else {
-      const sidebarObj = mapTocToSidebar(toc, collapsable);
-      if (!sidebarObj.sidebar.length) {
-        log(chalk.yellow(`warning: 该目录 "${toc}" 内部没有任何文件或文件序号出错，将忽略生成对应侧边栏`))
-        return;
-      }
-      sidebarData[`/${path.basename(toc)}/`] = sidebarObj.sidebar
-      sidebarData.catalogue = sidebarObj.catalogueData
+    // 碎片化文章不生成侧边栏
+    if (toc.endsWith('_posts')) {
+      return
     }
+    const sidebarObj = mapTocToSidebar(toc, collapsable);
+    if (!sidebarObj.sidebar.length) {
+      log(chalk.yellow(`warning: 该目录 "${toc}" 内部没有任何文件或文件序号出错，将忽略生成对应侧边栏`))
+      return;
+    }
+    sidebarData[`/${path.basename(toc)}/`] = sidebarObj.sidebar
+    sidebarData.catalogue = sidebarObj.catalogueData
   })
 
   return sidebarData
@@ -40,7 +35,7 @@ module.exports = createSidebarData;
 
 
 /**
- * 读取指定目录下的文件绝对路径
+ * 读取指定目录下的文件绝对路径目录
  * @param {String} root 指定的目录
 */
 function readTocs(root) {
@@ -48,7 +43,7 @@ function readTocs(root) {
   const files = fs.readdirSync(root); // 读取目录,返回数组，成员是root底下所有的目录名 (包含文件夹和文件)
   files.forEach(name => {
     const file = path.resolve(root, name); // 将路径或路径片段的序列解析为绝对路径
-    if (fs.statSync(file).isDirectory() && name !== '.vuepress' && name !== '@pages') { // 是否为文件夹目录，并排除.vuepress文件夹
+    if (fs.statSync(file).isDirectory() && !['.vuepress', '@pages'].includes(name)) {
       result.push(file);
     }
   })
@@ -102,7 +97,7 @@ function mapTocToPostSidebar(root) {
 
 
 /**
- * 将目录映射为对应的侧边栏配置数据
+ * 将指定目录映射为对应的侧边栏配置数据
  * @param {String} root
  * @param {Boolean} collapsable
  * @param {String} prefix
@@ -110,39 +105,21 @@ function mapTocToPostSidebar(root) {
 
 function mapTocToSidebar(root, collapsable, prefix = '') {
   let sidebar = []; // 结构化文章侧边栏数据
-  const files = fs.readdirSync(root); // 读取目录（文件和文件夹）,返回数组
+  const files = fs.readdirSync(root); // 读取目录（文件和文件夹）, 返回数组
 
-  files.forEach(filename => {
+  // 遍历目录下的文章列表
+  files.forEach((filename, fileIndex) => {
     const file = path.resolve(root, filename); // 方法：将路径或路径片段的序列解析为绝对路径
     const stat = fs.statSync(file); // 文件信息
     if (filename === '.DS_Store') { // 过滤.DS_Store文件
       return
     }
-    // let [order, title, type] = filename.split('.');
 
     const fileNameArr = filename.split('.')
     const isDir = stat.isDirectory()
-    let order = '', title = '', type = '';
-    if (fileNameArr.length === 2) {
-      order = fileNameArr[0];
-      title = fileNameArr[1];
-    } else {
-      const firstDotIndex = filename.indexOf('.');
-      const lastDotIndex = filename.lastIndexOf('.');
-      order = filename.substring(0, firstDotIndex);
-      type = filename.substring(lastDotIndex + 1);
-      if (isDir) {
-        title = filename.substring(firstDotIndex + 1);
-      } else {
-        title = filename.substring(firstDotIndex + 1, lastDotIndex);
-      }
-    }
-
-    order = parseInt(order, 10);
-    if (isNaN(order) || order < 0) {
-      log(chalk.yellow(`warning: 该文件 "${file}" 序号出错，请填写正确的序号`))
-      return;
-    }
+    const order = /^\d+$/.test(fileNameArr[0]) ? Number(fileNameArr.shift()) : fileIndex;
+    const type = isDir ? '' : fileNameArr.pop();
+    let title = fileNameArr.join('.')
     if (sidebar[order]) { // 判断序号是否已经存在
       log(chalk.yellow(`warning: 该文件 "${file}" 的序号在同一级别中重复出现，将会被覆盖`))
     }
@@ -171,9 +148,10 @@ function mapTocToSidebar(root, collapsable, prefix = '') {
         title = data.title
       }
       const item = [prefix + filename, title, permalink]
-      if (titleTag) item.push(titleTag)
+      if (titleTag) {
+        item.push(titleTag)
+      }
       sidebar[order] = item;  // [<路径>, <标题>, <永久链接>, <?标题标签>]
-
     }
   })
 
