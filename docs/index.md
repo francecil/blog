@@ -15,7 +15,7 @@ features: # 可选的
     link: /server/
     imgUrl: /img/server.png
   - title: 通用技术
-    details: Git 等通用技术教程、算法与数据结构等
+    details: 技术文档、教程、技巧、总结等文章
     link: /technology/
     imgUrl: /img/other.png
 
