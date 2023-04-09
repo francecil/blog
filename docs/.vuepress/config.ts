@@ -19,7 +19,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
     '/': {
       lang: 'zh-CN',
       title: "Gahing's blog",
-      description: 'Web 前端技术博客',
+      description: 'Web 前端技术博客。包括大前端、服务端、通用技术',
     }
   },
   // base: '/', // 默认'/'。如果你想将你的网站部署到如 https://foo.github.io/bar/，那么 base 应该被设置成 "/bar/",（否则页面将失去样式等文件）
@@ -143,7 +143,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
 
     // 博主信息 (显示在首页侧边栏)
     blogger: {
-      avatar: '',
+      avatar: '/img/avatar.jpeg',
       name: 'Gahing',
       slogan: 'To be best',
     },
