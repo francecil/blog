@@ -1,10 +1,12 @@
 ---
 title: React Context及换肤功能实现
 date: 2019/07/01 01:00:00
-categories: 大前端
 tags: 
   - React
   - 换肤
+permalink: /pages/bc4496/
+categories: 
+  - 随笔
 ---
 
 ## 前言

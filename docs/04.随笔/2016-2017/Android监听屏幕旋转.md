@@ -1,7 +1,12 @@
 ---
 title: Android监听屏幕旋转
 date: 2016/10/18 11:00:00
-categories: Android
+permalink: /pages/347b8f/
+categories: 
+  - 随笔
+  - 2016-2017
+tags: 
+  - 
 ---
 
 ## 需求

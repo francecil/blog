@@ -1,9 +1,11 @@
 ---
 title: 面试官问：如何利用 random 计算 π
 date: 2020/05/07 20:00:00
-categories: 大前端
 tags: 
   - HTML
+permalink: /pages/e19a57/
+categories: 
+  - 随笔
 ---
 
 ## 前言

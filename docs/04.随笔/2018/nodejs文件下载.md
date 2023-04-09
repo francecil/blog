@@ -1,9 +1,11 @@
 ---
 title: nodejs文件下载
 date: 2018/04/03 01:00:00
-categories: 大前端
 tags: 
   - nodejs
+permalink: /pages/fe1c77/
+categories: 
+  - 随笔
 ---
 
 本文来谈谈 nodejs 文件下载的细节

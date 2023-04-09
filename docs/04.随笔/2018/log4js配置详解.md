@@ -1,9 +1,11 @@
 ---
 title: log4js配置详解
 date: 2018/04/14 01:00:00
-categories: 大前端
 tags: 
   - nodejs
+permalink: /pages/b950eb/
+categories: 
+  - 随笔
 ---
 
 ## 前言

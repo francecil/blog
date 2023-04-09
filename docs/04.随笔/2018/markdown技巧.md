@@ -1,9 +1,11 @@
 ---
 title: markdown技巧
 date: 2018-10-16 12:18:32
-categories: 随笔
-tags:
+tags: 
   - markdown
+permalink: /pages/d3622e/
+categories: 
+  - 随笔
 ---
 
 ## 1. 文本删除线效果

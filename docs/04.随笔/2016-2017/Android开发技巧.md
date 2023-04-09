@@ -1,7 +1,12 @@
 ---
 title: Android开发技巧
 date: 2016/04/13 11:00:00
-categories: Android
+permalink: /pages/b34eef/
+categories: 
+  - 随笔
+  - 2016-2017
+tags: 
+  - 
 ---
 
 ## 单步调试

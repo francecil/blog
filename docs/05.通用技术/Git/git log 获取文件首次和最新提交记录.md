@@ -1,3 +1,14 @@
+---
+title: git log 获取文件首次和最新提交记录
+date: 2023-04-09 22:57:12
+permalink: /pages/090a90/
+categories:
+  - 通用技术
+  - Git
+tags:
+  - 
+
+---
 # 需求背景
 
 我们在 git 仓库编写了一些 Markdown 文档，并将这些文档生成了博客，现在需要知道这些文档的创建时间的最新修改时间。

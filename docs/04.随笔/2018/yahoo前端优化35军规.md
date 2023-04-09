@@ -1,9 +1,11 @@
 ---
 title: yahoo前端优化35军规
 date: 2018/05/10 01:00:00
-categories: 大前端
 tags: 
   - 前端优化
+permalink: /pages/de4baf/
+categories: 
+  - 随笔
 ---
 
 # 前言

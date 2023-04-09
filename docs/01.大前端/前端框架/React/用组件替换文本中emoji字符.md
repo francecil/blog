@@ -1,8 +1,12 @@
 ---
 title: 用组件替换文本中emoji字符
 date: 2020-07-14 20:12:40
-categories: 大前端
 tags: 
+  - React
+permalink: /pages/b4d8a3/
+categories: 
+  - 大前端
+  - 前端框架
   - React
 ---
 

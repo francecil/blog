@@ -1,7 +1,12 @@
 ---
 title: git命令学习
 date: 2018/06/14 01:00:00
-categories: Git
+permalink: /pages/703e88/
+categories: 
+  - 通用技术
+  - Git
+tags: 
+  - 
 ---
 
 ## 1. 分支切换

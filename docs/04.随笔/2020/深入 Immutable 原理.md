@@ -1,8 +1,10 @@
 ---
 title: 深入 Immutable 原理
 date: 2020/03/16 15:00:00
-categories: 大前端
 tags: 
+  - 随笔
+permalink: /pages/651653/
+categories: 
   - 随笔
 ---
 

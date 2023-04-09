@@ -1,10 +1,13 @@
 ---
-title: 流媒体直播—WebRTC native 2 browser 
+title: 流媒体直播—WebRTC native 2 browser
 date: 2016/08/24 12:00:00
-categories: 流媒体
 tags: 
   - WebRTC
   - ffmpeg
+permalink: /pages/55fbcc/
+categories: 
+  - 通用技术
+  - 流媒体
 ---
 
 ## 前言

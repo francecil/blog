@@ -1,9 +1,11 @@
 ---
 title: 浅谈 preload 预加载
-date: 2018-7-10 10:18:32
-categories: 大前端
-tags:
+date: 2018-07-10 10:18:32
+tags: 
   - 前端优化
+permalink: /pages/f2d605/
+categories: 
+  - 随笔
 ---
 
 # preload简介

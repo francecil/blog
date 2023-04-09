@@ -1,8 +1,12 @@
 ---
 title: WebGL 矩阵处理
 date: 2020/03/11 13:00:00
-categories: 大前端
 tags: 
+  - WebGL
+permalink: /pages/7411b5/
+categories: 
+  - 大前端
+  - 前端领域
   - WebGL
 ---
 

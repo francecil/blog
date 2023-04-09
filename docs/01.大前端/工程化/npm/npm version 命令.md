@@ -1,8 +1,12 @@
 ---
 title: npm version 命令
 date: 2019/05/01 00:00:00
-categories: 随笔
 tags: 
+  - npm
+permalink: /pages/b57f9e/
+categories: 
+  - 大前端
+  - 工程化
   - npm
 ---
 

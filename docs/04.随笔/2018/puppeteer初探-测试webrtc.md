@@ -1,10 +1,12 @@
 ---
 title: puppeteer初探-测试webrtc
 date: 2018-02-07 11:12:40
-categories: 大前端
 tags: 
   - puppeteer
   - 前端测试
+permalink: /pages/ae64b9/
+categories: 
+  - 随笔
 ---
 
 # 介绍

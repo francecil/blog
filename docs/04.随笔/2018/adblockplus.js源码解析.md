@@ -1,7 +1,11 @@
 ---
 title: adblockplus.js源码解析
-date: 2018-9-15 10:18:32
-categories: 大前端
+date: 2018-09-15 10:18:32
+permalink: /pages/b0d61f/
+categories: 
+  - 随笔
+tags: 
+  - 
 ---
 
 # 前言

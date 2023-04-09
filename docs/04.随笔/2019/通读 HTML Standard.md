@@ -1,9 +1,11 @@
 ---
 title: 通读 HTML Standard
 date: 2019/12/11 01:00:00
-categories: 大前端
 tags: 
   - HTML
+permalink: /pages/7d9673/
+categories: 
+  - 随笔
 ---
 
 ## 前言

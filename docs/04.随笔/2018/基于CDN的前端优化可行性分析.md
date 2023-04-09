@@ -1,10 +1,12 @@
 ---
 title: 基于CDN的前端优化可行性分析
 date: 2018/05/14 01:00:00
-categories: 大前端
 tags: 
   - CDN
   - 前端优化
+permalink: /pages/f1c102/
+categories: 
+  - 随笔
 ---
 
 # 前言

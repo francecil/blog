@@ -1,9 +1,11 @@
 ---
 title: 浅谈 Canvas 性能分析与渲染优化
 date: 2020/03/16 10:00:00
-categories: 大前端
 tags: 
   - Canvas
+permalink: /pages/878e10/
+categories: 
+  - 随笔
 ---
 
 # 前言

@@ -1,8 +1,12 @@
 ---
 title: npm 发包过程
 date: 2019/07/01 00:00:00
-categories: 随笔
 tags: 
+  - npm
+permalink: /pages/3a61a9/
+categories: 
+  - 大前端
+  - 工程化
   - npm
 ---
 

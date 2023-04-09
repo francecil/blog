@@ -1,9 +1,11 @@
 ---
 title: macOS 上使用 lldb 和 gdb
 date: 2020-06-22 11:12:40
-categories: 随笔
 tags: 
   - V8
+permalink: /pages/26ca79/
+categories: 
+  - 随笔
 ---
 
 ## 背景

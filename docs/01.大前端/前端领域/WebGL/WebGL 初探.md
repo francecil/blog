@@ -1,8 +1,12 @@
 ---
 title: WebGL 初探
 date: 2020/03/05 03:00:00
-categories: 大前端
 tags: 
+  - WebGL
+permalink: /pages/e3806a/
+categories: 
+  - 大前端
+  - 前端领域
   - WebGL
 ---
 

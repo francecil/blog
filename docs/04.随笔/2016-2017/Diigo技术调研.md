@@ -1,9 +1,12 @@
 ---
 title: Diigo技术调研
 date: 2016/10/21 11:00:00
-categories: 大前端
 tags: 
   - HTML
+permalink: /pages/000186/
+categories: 
+  - 随笔
+  - 2016-2017
 ---
 
 # 简介：

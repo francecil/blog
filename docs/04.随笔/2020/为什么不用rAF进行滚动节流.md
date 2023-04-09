@@ -1,9 +1,11 @@
 ---
 title: 为什么不用rAF进行滚动节流
 date: 2020-01-07 11:12:40
-categories: 大前端
 tags: 
   - 长列表
+permalink: /pages/e52f03/
+categories: 
+  - 随笔
 ---
 
 ## 前言

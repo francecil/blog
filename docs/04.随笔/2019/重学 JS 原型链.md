@@ -1,9 +1,11 @@
 ---
 title: 重学 JS 原型链
 date: 2019/12/31 00:00:00
-categories: 大前端
 tags: 
   - ECMAScript
+permalink: /pages/cc7c92/
+categories: 
+  - 随笔
 ---
 
 ## 前言

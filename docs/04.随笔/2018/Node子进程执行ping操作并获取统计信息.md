@@ -1,9 +1,11 @@
 ---
 title: Node子进程执行ping操作并获取统计信息
 date: 2018-03-09 11:12:40
-categories: 大前端
 tags: 
   - nodejs
+permalink: /pages/6c5984/
+categories: 
+  - 随笔
 ---
 
 

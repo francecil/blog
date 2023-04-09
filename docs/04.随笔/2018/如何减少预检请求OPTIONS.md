@@ -1,10 +1,12 @@
 ---
 title: 如何减少预检请求OPTIONS
 date: 2018-12-16 10:18:32
-categories: 大前端
-tags:
+tags: 
   - HTTP
   - 跨域
+permalink: /pages/2f7a20/
+categories: 
+  - 随笔
 ---
 
 ## 前言

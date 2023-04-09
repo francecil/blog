@@ -1,9 +1,11 @@
 ---
 title: 从输入url后浏览器发生了什么
 date: 2019/12/14 01:00:00
-categories: 大前端
 tags: 
   - HTML
+permalink: /pages/8f0553/
+categories: 
+  - 随笔
 ---
 
 ## 面试答题模板

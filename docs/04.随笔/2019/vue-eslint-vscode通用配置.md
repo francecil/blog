@@ -1,9 +1,11 @@
 ---
 title: vue-eslint-vscode 通用配置
 date: 2019/01/20 01:00:00
-categories: 大前端
 tags: 
   - VSCode
+permalink: /pages/da3ae7/
+categories: 
+  - 随笔
 ---
 
 ## 前言

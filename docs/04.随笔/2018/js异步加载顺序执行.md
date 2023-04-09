@@ -1,9 +1,11 @@
 ---
 title: 如何实现 script 并行异步加载顺序执行
-date: 2018-8-10 10:18:32
-categories: 大前端
-tags:
+date: 2018-08-10 10:18:32
+tags: 
   - 前端优化
+permalink: /pages/b599db/
+categories: 
+  - 随笔
 ---
 
 # 前言

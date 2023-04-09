@@ -1,10 +1,12 @@
 ---
 title: Chrome v84 固定视区新特性，列表「加载更多」功能将出问题
 date: 2020-08-03 10:12:40
-categories: 大前端
 tags: 
   - Chromium
   - HTML
+permalink: /pages/04ff1c/
+categories: 
+  - 随笔
 ---
 
 ## 背景

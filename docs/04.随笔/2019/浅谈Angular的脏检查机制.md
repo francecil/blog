@@ -1,9 +1,11 @@
 ---
 title: 浅谈Angular的脏检查机制
 date: 2019/12/31 00:00:00
-categories: 大前端
 tags: 
   - Angular
+permalink: /pages/4a309c/
+categories: 
+  - 随笔
 ---
 
 

@@ -1,10 +1,13 @@
 ---
 title: Ubuntu 14下ffmpeg2.6编译和剪裁(librtmp,h264,aac) 及Android开发
 date: 2016/07/10 11:00:00
-categories: 流媒体
 tags: 
   - ffmpeg
   - Android
+permalink: /pages/a17f40/
+categories: 
+  - 通用技术
+  - 流媒体
 ---
 
 ## 前言

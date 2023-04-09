@@ -1,9 +1,11 @@
 ---
 title: Edge 浏览器在亚像素宽度计算的表现差异
 date: 2020-09-04 10:12:40
-categories: 大前端
 tags: 
   - CSS
+permalink: /pages/ccb393/
+categories: 
+  - 随笔
 ---
 # 前言
 

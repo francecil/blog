@@ -1,9 +1,11 @@
 ---
 title: Angular1.x学习
 date: 2018-11-10 10:18:32
-categories: 大前端
-tags:
+tags: 
   - Angular1.x
+permalink: /pages/09b80f/
+categories: 
+  - 随笔
 ---
 
 ## 简介

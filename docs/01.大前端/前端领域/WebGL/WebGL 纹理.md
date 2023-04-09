@@ -1,8 +1,12 @@
 ---
 title: WebGL 纹理
 date: 2020/03/18 11:00:00
-categories: 大前端
 tags: 
+  - WebGL
+permalink: /pages/accdac/
+categories: 
+  - 大前端
+  - 前端领域
   - WebGL
 ---
 

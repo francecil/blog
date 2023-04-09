@@ -1,9 +1,11 @@
 ---
 title: 面试官问：什么是 canvas 污染
 date: 2020/03/08 20:00:00
-categories: 大前端
 tags: 
   - Canvas
+permalink: /pages/467d6a/
+categories: 
+  - 随笔
 ---
 
 

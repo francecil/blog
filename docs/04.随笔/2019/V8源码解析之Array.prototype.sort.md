@@ -1,10 +1,12 @@
 ---
 title: V8源码解析之Array.prototype.sort
 date: 2019/07/04 00:00:00
-categories: 大前端
 tags: 
   - ECMAScript
   - V8
+permalink: /pages/223f25/
+categories: 
+  - 随笔
 ---
 
 ## 前言

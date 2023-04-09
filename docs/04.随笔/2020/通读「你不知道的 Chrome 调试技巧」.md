@@ -1,9 +1,11 @@
 ---
 title: 通读「你不知道的 Chrome 调试技巧」
 date: 2020-08-31 10:12:40
-categories: 大前端
 tags: 
   - Devtools
+permalink: /pages/98ef3e/
+categories: 
+  - 随笔
 ---
 
 # 前言

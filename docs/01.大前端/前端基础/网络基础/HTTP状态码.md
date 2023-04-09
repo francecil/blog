@@ -1,9 +1,13 @@
 ---
 title: HTTP状态码
 date: 2020/01/02 03:00:00
-categories: Web
 tags: 
   - HTTP
+permalink: /pages/58bfaf/
+categories: 
+  - 大前端
+  - 前端基础
+  - 网络基础
 ---
 
 ## 前言

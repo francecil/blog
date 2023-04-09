@@ -1,9 +1,11 @@
 ---
 title: Antd Table 自适应和省略号
 date: 2019/04/20 01:00:00
-categories: 大前端
 tags: 
   - ant-design
+permalink: /pages/6edcdb/
+categories: 
+  - 随笔
 ---
 
 ## 前言

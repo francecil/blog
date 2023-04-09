@@ -1,9 +1,12 @@
 ---
 title: Android模拟触控解决方案
 date: 2016/11/18 11:00:00
-categories: Android
 tags: 
   - 多点触控
+permalink: /pages/e33d3a/
+categories: 
+  - 随笔
+  - 2016-2017
 ---
 
 # 前言

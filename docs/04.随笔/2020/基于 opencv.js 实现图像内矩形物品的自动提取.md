@@ -1,9 +1,11 @@
 ---
 title: 基于 opencv.js 实现图像内矩形物品的自动提取
 date: 2020/01/17 00:00:00
-categories: 大前端
 tags: 
   - OpenCV
+permalink: /pages/ae4e49/
+categories: 
+  - 随笔
 ---
 
 ## 前言

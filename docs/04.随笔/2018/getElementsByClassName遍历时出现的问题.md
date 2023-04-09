@@ -1,9 +1,11 @@
 ---
 title: getElementsByClassName遍历时出现的问题
-date: 2018-7-15 10:18:32
-categories: 大前端
-tags:
+date: 2018-07-15 10:18:32
+tags: 
   - HTML
+permalink: /pages/a68c5f/
+categories: 
+  - 随笔
 ---
 
 ## 前言

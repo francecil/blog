@@ -1,9 +1,12 @@
 ---
-title: H5音频直播—探索历程、aurora.js源码解析、音频编码基本原理 
+title: H5音频直播—探索历程、aurora.js源码解析、音频编码基本原理
 date: 2016/08/23 11:00:00
-categories: 流媒体
 tags: 
   - HTML
+permalink: /pages/0a6a26/
+categories: 
+  - 通用技术
+  - 流媒体
 ---
 
 上次讲解了H5的视频直播，这次我们要讲的就是H5的音频直播啦.有没有很期待= =

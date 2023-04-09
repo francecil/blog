@@ -1,10 +1,12 @@
 ---
 title: vscode配置同步及拓展批量离线安装
 date: 2019/07/01 02:00:00
-categories: 随笔
 tags: 
   - vscode
   - shell
+permalink: /pages/3036b4/
+categories: 
+  - 随笔
 ---
 
 ## 前言

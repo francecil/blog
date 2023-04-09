@@ -1,9 +1,11 @@
 ---
 title: Vue之从零编写一个ContextMenu(右键菜单)插件
 date: 2019/07/03 03:00:00
-categories: 大前端
 tags: 
   - Vue
+permalink: /pages/d78c0d/
+categories: 
+  - 随笔
 ---
 
 ## 前言

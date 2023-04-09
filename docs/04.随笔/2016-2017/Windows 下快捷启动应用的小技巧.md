@@ -1,7 +1,12 @@
 ---
 title: Windows 下快捷启动应用的小技巧
 date: 2016/07/05 11:00:00
-categories: 随笔
+permalink: /pages/fb63da/
+categories: 
+  - 随笔
+  - 2016-2017
+tags: 
+  - 
 ---
 
 测试： Win 7

@@ -1,9 +1,12 @@
 ---
 title: adb控制avd
 date: 2016/07/13 11:00:00
-categories: Android
 tags: 
   - adb
+permalink: /pages/841da0/
+categories: 
+  - 随笔
+  - 2016-2017
 ---
 
 ## 1.显示所有avd

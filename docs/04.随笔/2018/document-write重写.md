@@ -1,9 +1,11 @@
 ---
 title: document-write重写
-date: 2018-11-1 10:18:32
-categories: 大前端
-tags:
+date: 2018-11-01 10:18:32
+tags: 
   - HTML
+permalink: /pages/17b154/
+categories: 
+  - 随笔
 ---
 
 ## 前言

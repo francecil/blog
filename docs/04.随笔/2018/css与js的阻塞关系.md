@@ -1,9 +1,11 @@
 ---
 title: css与js的阻塞关系
-date: 2018-10-1 10:18:32
-categories: 大前端
-tags:
+date: 2018-10-01 10:18:32
+tags: 
   - HTML
+permalink: /pages/d1ea01/
+categories: 
+  - 随笔
 ---
 
 在 html 的解析过程中，样式文件和脚本文件之间是否有依赖关系呢？

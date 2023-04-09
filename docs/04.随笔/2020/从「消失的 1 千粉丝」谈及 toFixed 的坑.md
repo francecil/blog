@@ -1,10 +1,12 @@
 ---
 title: 从「消失的 1 千粉丝」谈及 toFixed 的坑
 date: 2020/06/14 10:00:00
-categories: 大前端
 tags: 
   - ECMAScript
   - JavaScriptCore
+permalink: /pages/fdca7f/
+categories: 
+  - 随笔
 ---
 
 ## 故事是这样的

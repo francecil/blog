@@ -1,8 +1,13 @@
 ---
 title: about
 date: 2019-12-11 19:57:08
-type: "about"
+type: about
 comments: false
+permalink: /pages/b885ed/
+categories: 
+  - about
+tags: 
+  - 
 ---
 
 ## 关于我

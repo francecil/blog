@@ -1,8 +1,12 @@
 ---
 title: useEffect 如何处理 async
 date: 2020-08-26 15:12:40
-categories: 大前端
 tags: 
+  - React
+permalink: /pages/2fe673/
+categories: 
+  - 大前端
+  - 前端框架
   - React
 ---
 
