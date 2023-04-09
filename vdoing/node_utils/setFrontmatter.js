@@ -8,13 +8,14 @@ const { type, repairDate, dateFormat } = require('./modules/fn');
 const log = console.log
 const path = require('path');
 const os = require('os');
+const { execSync } = require('child_process');
 
 const PREFIX = '/pages/'
 
 /**
  * 给 .md 文件设置 frontmatter(标题、日期、永久链接等数据)
  */
-function setFrontmatter(sourceDir, themeConfig) {
+async function setFrontmatter(sourceDir, themeConfig) {
   const { category: isCategory, tag: isTag, categoryText = '随笔', extendFrontmatter, patterns, ignoreCategories = [] } = themeConfig
   const files = readFileList(sourceDir, patterns) // 读取所有md文件数据
   // 扩展自定义生成frontmatter
@@ -23,16 +24,13 @@ function setFrontmatter(sourceDir, themeConfig) {
       .replace(/\n\s{2}/g, "\n")
       .replace(/"|---\n/g, "")
     : '';
-  files.forEach(file => {
+  for (const file of files) {
     let dataStr = fs.readFileSync(file.filePath, 'utf8');// 读取每个md文件内容
     const fileMatterObj = matter(dataStr, {});
 
     if (Object.keys(fileMatterObj.data).length === 0) { // 未定义FrontMatter数据
-      const stat = fs.statSync(file.filePath);
       // 文件的创建时间
-      const dateStr = dateFormat(
-        getBirthtime(stat)
-      ); 
+      const dateStr = dateFormat(getFileBirthtime(file.filePath));
       const categories = getCategories(
         file,
         categoryText,
@@ -69,8 +67,7 @@ function setFrontmatter(sourceDir, themeConfig) {
       }
 
       if (!matterData.hasOwnProperty('date')) { // 日期
-        const stat = fs.statSync(file.filePath);
-        matterData.date = dateFormat(getBirthtime(stat));
+        matterData.date = dateFormat(getFileBirthtime(file.filePath));
         hasChange = true;
       }
 
@@ -115,7 +112,8 @@ function setFrontmatter(sourceDir, themeConfig) {
       }
 
     }
-  })
+  }
+
 }
 
 // 获取分类数据
@@ -146,11 +144,11 @@ function getCategories(file, categoryText, ignoreCategories) {
       categories.push(categoryText)
     }
   }
-  return categories.filter((cg=> !ignoreCategories.some(ignReg => ignReg.test(cg))))
+  return categories.filter((cg => !ignoreCategories.some(ignReg => ignReg.test(cg))))
 }
 
-// 获取文件创建时间
-function getBirthtime(stat) {
+// 获取系统文件创建时间
+function getSystemBirthtime(stat) {
   // 在一些系统下无法获取birthtime属性的正确时间，使用atime代替
   return stat.birthtime.getFullYear() != 1970 ? stat.birthtime : stat.atime
 }
@@ -158,6 +156,18 @@ function getBirthtime(stat) {
 // 定义永久链接数据
 function getPermalink() {
   return `${PREFIX + (Math.random() + Math.random()).toString(16).slice(2, 8)}/`
+}
+
+/** 获取文件创建时间 */
+function getFileBirthtime(filePath) {
+  const gitFileInitTime = execSync(`git log --follow --format=%ad -- ${filePath} | tail -1`, {
+    encoding: 'utf8'
+  })
+  if (gitFileInitTime) {
+    return new Date(gitFileInitTime)
+  }
+  const stat = fs.statSync(filePath);
+  return getSystemBirthtime(stat)
 }
 
 
