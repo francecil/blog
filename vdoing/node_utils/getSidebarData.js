@@ -114,6 +114,10 @@ function mapTocToSidebar(root, collapsable, prefix = '') {
     if (filename === '.DS_Store') { // 过滤.DS_Store文件
       return
     }
+    // 不处理草稿文件(夹)
+    if(filename.startsWith('_') || filename.startsWith('README')) {
+      return
+    }
 
     const fileNameArr = filename.split('.')
     const isDir = stat.isDirectory()
