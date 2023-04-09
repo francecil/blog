@@ -1,6 +1,6 @@
 ---
 title: nginx配置HOST请求头及与webpack-dev-server proxy的区别
-date: 2023-04-09 22:57:12
+date: 2019-04-09 22:57:12
 permalink: /pages/27c0b7/
 categories:
   - 服务端

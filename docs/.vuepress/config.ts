@@ -22,6 +22,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
       description: 'Web 前端技术博客。包括大前端、服务端、通用技术',
     }
   },
+  patterns: ['**/*.vue', '*.md', '**/!(_)*/!(_*|README).md'],
   // base: '/', // 默认'/'。如果你想将你的网站部署到如 https://foo.github.io/bar/，那么 base 应该被设置成 "/bar/",（否则页面将失去样式等文件）
   // 主题配置
   themeConfig: {
@@ -96,7 +97,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
     // docsBranch: 'master', // 编辑的文件所在分支，默认master。 注意：如果你的分支是main则修改为main
     editLinks: true, // 启用编辑
     editLinkText: '编辑',
-    ignoreCategories: [/^\d+$/, /(source)/], // 忽略自动生成的分类名
+    ignoreCategories: [/(source)/], // 忽略自动生成的分类名
 
     //*** 以下是Vdoing主题相关配置，文档：https://doc.xugaoyi.com/pages/a20ce8/ ***//
 

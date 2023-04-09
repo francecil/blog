@@ -20,6 +20,7 @@ tags:
 2. 需要获取文件的首次和最新的 git 提交时间
 3. 命令尽可能高效，获取 100 个文件的时间需要在 1s 内完成
 
+<!-- more -->
 # git log 命令
 
 [git log 命令](https://git-scm.com/docs/git-log/zh_HANS-CN) 可以用于显示提交日志
