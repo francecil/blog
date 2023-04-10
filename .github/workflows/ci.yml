@@ -46,7 +46,7 @@ jobs:
           user_email=`git log -1 --pretty=format:'%ae'`
           git config user.name ${user_name}
           git config user.email ${user_email}
-
+          exit 0
           # 提交当前仓库变更
           yarn
           yarn build
@@ -58,6 +58,8 @@ jobs:
             git remote set-url origin https://${user_name}:${ACCESS_TOKEN}@github.com:${{github.repository}}.git
             git push origin HEAD:${CURRENT_BRANCH} # 将当前变更推送
           fi
+      - name: Deploy
+        run: echo "Deploy"
       # 推送至 github page
       # - name: Deploy
       #   uses: JamesIves/github-pages-deploy-action@releases/v3
