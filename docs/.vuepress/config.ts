@@ -290,8 +290,8 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
           clientID: '5c2a2bb4f2d2936f93cb',
           clientSecret: 'a889b19b7b97609e2de9e446f7f9f6219417aa90',
           repo: 'blog-gitalk-comment', // GitHub 仓库
-          owner: 'zhengjiaxing.gahing', // GitHub仓库所有者
-          admin: ['zhengjiaxing.gahing'], // 对仓库有写权限的人
+          owner: 'francecil', // GitHub仓库所有者
+          admin: ['francecil'], // 对仓库有写权限的人
           // distractionFreeMode: true,
           pagerDirection: 'last', // 'first'正序 | 'last'倒序
           id: '<%- (frontmatter.permalink || frontmatter.to.path).slice(-16) %>', //  页面的唯一标识,长度不能超过50
