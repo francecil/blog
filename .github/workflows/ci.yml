@@ -13,7 +13,7 @@ env: # 设置环境变量
   TZ: Asia/Shanghai # 时区（设置时区可使页面中的`最近更新时间`使用该时区时间）
 
 jobs:
-  build: # 自定义名称
+  buildAndDeploy: # 自定义名称
     runs-on: ubuntu-latest # 运行在虚拟机环境ubuntu-latest
 
     strategy:
@@ -40,6 +40,7 @@ jobs:
         run: |
           if [[ "${{ github.event.head_commit.message }}" == "ci:"* ]]; then  
             echo "CI 提交，跳过处理"
+            echo "abort=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi 
           commit_info=`git describe --all --always --long`
@@ -47,11 +48,11 @@ jobs:
           user_email=`git log -1 --pretty=format:'%ae'`
           git config user.name ${user_name}
           git config user.email ${user_email}
-          echo "abort=true" >> "$GITHUB_OUTPUT"
-          exit 0
+
           # 提交当前仓库变更
           yarn
           yarn build
+          
           if test -z "$(git status -uno --porcelain | cut -c4-)"; then
             echo "无文件变更"
           else
@@ -60,10 +61,10 @@ jobs:
             git remote set-url origin https://${user_name}:${ACCESS_TOKEN}@github.com:${{github.repository}}.git
             git push origin HEAD:${CURRENT_BRANCH} # 将当前变更推送
           fi
+      # 推送至 github page
       - name: Deploy
         if: ${{ steps.build.outputs.abort != 'true' }} 
         run: echo "Deploy"
-      # 推送至 github page
       # - name: Deploy
       #   uses: JamesIves/github-pages-deploy-action@releases/v3
       #   with:
