@@ -52,13 +52,13 @@ jobs:
           # 提交当前仓库变更
           yarn
           yarn build
-          
+
           if test -z "$(git status -uno --porcelain | cut -c4-)"; then
             echo "无文件变更"
           else
             git status
             git commit -am "ci: auto update files, $commit_info"
-            git remote set-url origin https://${user_name}:${ACCESS_TOKEN}@github.com:${{github.repository}}.git
+            git remote set-url origin https://${user_name}:${{secrets.GITHUB_TOKEN}}@github.com:${{github.repository}}.git
             git push origin HEAD:${CURRENT_BRANCH} # 将当前变更推送
           fi
       # 推送至 github page
