@@ -58,7 +58,7 @@ jobs:
           else
             git status
             git commit -am "ci: auto update files, $commit_info"
-            git remote set-url origin https://${user_name}:${{secrets.GITHUB_TOKEN}}@github.com:${{github.repository}}.git
+            git remote set-url origin https://francecil:${{secrets.GITHUB_TOKEN}}@github.com:francecil/blog.git
             git push origin HEAD:${CURRENT_BRANCH} # 将当前变更推送
           fi
       # 推送至 github page
