@@ -47,7 +47,7 @@ jobs:
           user_email=`git log -1 --pretty=format:'%ae'`
           git config user.name ${user_name}
           git config user.email ${user_email}
-          echo "abort=1" >> "$GITHUB_OUTPUT"
+          echo "abort=true" >> "$GITHUB_OUTPUT"
           exit 0
           # 提交当前仓库变更
           yarn
@@ -61,7 +61,7 @@ jobs:
             git push origin HEAD:${CURRENT_BRANCH} # 将当前变更推送
           fi
       - name: Deploy
-        if: ${{ steps.build.outputs.abort }} == 0
+        if: ${{ steps.build.outputs.abort != 'true' }} 
         run: echo "Deploy"
       # 推送至 github page
       # - name: Deploy
