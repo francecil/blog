@@ -27,12 +27,18 @@ jobs:
         uses: actions/setup-node@v3 # 作用：安装nodejs
         with:
           node-version: ${{ matrix.node-version }} # 版本
+      - name: Dump GitHub context
+        id: github_context_step
+        run: echo '${{ toJSON(github) }}'
       - name: Build # 步骤3
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           CURRENT_BRANCH: ${{ github.ref_name }}
         run: |
-          echo '${{ toJSON(github) }}'
+          if [[ "${{ github.event.head_commit.message }}" == "ci:"* ]]; then  
+            echo "CI 提交，跳过处理"
+            exit 0
+          fi 
           commit_info=`git describe --all --always --long`
           user_name=`git log -1 --pretty=format:'%an'`
           user_email=`git log -1 --pretty=format:'%ae'`
