@@ -4,7 +4,7 @@
 set -e
 
 
-push_addr=`git@github.com:francecil/francecil.github.io.git`
+push_addr=git@github.com:francecil/francecil.github.io.git
 commit_info=`git describe --all --always --long`
 dist_path=docs/.vuepress/dist # 打包生成的文件夹路径
 push_branch=master # 推送的分支
