@@ -61,7 +61,7 @@ jobs:
             git push origin HEAD:${CURRENT_BRANCH} # 将当前变更推送
           fi
       - name: Deploy
-        if: ${{ steps.build.outputs.abort }} != 1
+        if: ${{ steps.build.outputs.abort }} == 0
         run: echo "Deploy"
       # 推送至 github page
       # - name: Deploy
