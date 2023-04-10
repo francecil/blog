@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: Checkout # 步骤1
-        uses: actions/checkout@v2 # v2 解决了 push 问题
+        uses: actions/checkout@v3 # v2 解决了 push 问题
       - name: Use Node.js ${{ matrix.node-version }} # 步骤2
         uses: actions/setup-node@v3 # 作用：安装nodejs
         with:
@@ -63,9 +63,9 @@ jobs:
       # 推送至 github page
       - name: Deploy
         if: ${{ steps.build.outputs.abort != 'true' }} 
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+        uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          REPOSITORY_NAME: francecil/francecil.github.io
-          BRANCH: master
-          FOLDER: docs/.vuepress/dist 
+          token: ${{ secrets.ACCESS_TOKEN }}
+          repository-name: francecil/francecil.github.io
+          branch: master
+          folder: docs/.vuepress/dist 
