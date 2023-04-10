@@ -63,11 +63,9 @@ jobs:
       # 推送至 github page
       - name: Deploy
         if: ${{ steps.build.outputs.abort != 'true' }} 
-        run: echo "Deploy"
-      # - name: Deploy
-      #   uses: JamesIves/github-pages-deploy-action@releases/v3
-      #   with:
-      #     ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-      #     REPOSITORY_NAME: francecil/francecil.github.io
-      #     BRANCH: master
-      #     FOLDER: docs/.vuepress/dist 
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          REPOSITORY_NAME: francecil/francecil.github.io
+          BRANCH: master
+          FOLDER: docs/.vuepress/dist 
