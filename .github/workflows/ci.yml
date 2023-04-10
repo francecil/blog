@@ -32,6 +32,7 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           CURRENT_BRANCH: ${{ github.ref_name }}
         run: |
+          echo '${{ toJSON(github) }}'
           commit_info=`git describe --all --always --long`
           user_name=`git log -1 --pretty=format:'%an'`
           user_email=`git log -1 --pretty=format:'%ae'`
@@ -44,8 +45,9 @@ jobs:
           if test -z "$(git status -uno --porcelain | cut -c4-)"; then
             echo "无文件变更"
           else
+            git status
             git commit -am "ci: auto update files, $commit_info"
-            git push # 将当前变更推送
+            git push origin HEAD:${CURRENT_BRANCH} # 将当前变更推送
           fi
       # 推送至 github page
       # - name: Deploy
