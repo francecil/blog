@@ -45,7 +45,6 @@ jobs:
             echo "无文件变更"
           else
             git commit -am "ci: auto update files, $commit_info"
-            git remote add origin https://${user_name}:${ACCESS_TOKEN}@github.com:francecil/blog.git
             git push origin HEAD:$CURRENT_BRANCH # 将当前变更推送至当前分支
           fi
       # 推送至 github page
