@@ -24,10 +24,13 @@ jobs:
       - name: Checkout # 步骤1
         uses: actions/checkout@v1 # 使用的动作。格式：userName/repoName。作用：检出仓库，获取源码。 官方actions库：https://github.com/actions
       - name: Use Node.js ${{ matrix.node-version }} # 步骤2
-        uses: actions/setup-node@v1 # 作用：安装nodejs
+        uses: actions/setup-node@v3 # 作用：安装nodejs
         with:
           node-version: ${{ matrix.node-version }} # 版本
-      - name: Build-and-deploy # 步骤3
+      - name: Build # 步骤3
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          CURRENT_BRANCH: ${{ github.ref_name }}
         run: |
           commit_info=`git describe --all --always --long`
           user_name=`git log -1 --pretty=format:'%an'`
@@ -41,7 +44,15 @@ jobs:
           if test -z "$(git status -uno --porcelain | cut -c4-)"; then
             echo "无文件变更"
           else
-            git commit -am "chore: auto update files, $commit_info"
-            git remote add origin https://${user_name}:${{secrets.GITHUB_TOKEN}}@github.com:francecil/blog.git
-            git push origin HEAD:$deploy_branch # 推送到github $deploy_branch分支
+            git commit -am "ci: auto update files, $commit_info"
+            git remote add origin https://${user_name}:${ACCESS_TOKEN}@github.com:francecil/blog.git
+            git push origin HEAD:$CURRENT_BRANCH # 将当前变更推送至当前分支
           fi
+      # 推送至 github page
+      # - name: Deploy
+      #   uses: JamesIves/github-pages-deploy-action@releases/v3
+      #   with:
+      #     ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      #     REPOSITORY_NAME: francecil/francecil.github.io
+      #     BRANCH: master
+      #     FOLDER: docs/.vuepress/dist 
