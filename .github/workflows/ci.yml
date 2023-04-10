@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: Checkout # 步骤1
-        uses: actions/checkout@v1 # 使用的动作。格式：userName/repoName。作用：检出仓库，获取源码。 官方actions库：https://github.com/actions
+        uses: actions/checkout@v2 # v2 解决了 push 问题
       - name: Use Node.js ${{ matrix.node-version }} # 步骤2
         uses: actions/setup-node@v3 # 作用：安装nodejs
         with:
@@ -46,8 +46,8 @@ jobs:
           commit_info=`git describe --all --always --long`
           user_name=`git log -1 --pretty=format:'%an'`
           user_email=`git log -1 --pretty=format:'%ae'`
-          git config user.name ${user_name}
-          git config user.email ${user_email}
+          git config --global user.name ${user_name}
+          git config --global user.email ${user_email}
 
           # 提交当前仓库变更
           yarn
@@ -58,8 +58,7 @@ jobs:
           else
             git status
             git commit -am "ci: auto update files, $commit_info"
-            git remote set-url origin https://francecil:${{secrets.GITHUB_TOKEN}}@github.com:francecil/blog.git
-            git push origin HEAD:${CURRENT_BRANCH} # 将当前变更推送
+            git push
           fi
       # 推送至 github page
       - name: Deploy
