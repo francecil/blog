@@ -4,9 +4,10 @@ date: 2020/03/16 15:00:00
 tags: 
   - 随笔
 permalink: /pages/651653/
+sidebar: auto
 categories: 
   - 随笔
-sidebar: auto
+  - 2020
 ---
 
 ## 前言

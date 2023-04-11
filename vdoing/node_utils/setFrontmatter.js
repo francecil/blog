@@ -139,7 +139,7 @@ function getCategories(file, categoryText, ignoreCategories) {
     const resultArr = resultStr.split('/').filter(Boolean)
 
     if (resultArr.length) {
-      categories.push(...resultArr)
+      categories.push(categoryText, ...resultArr)
     } else {
       categories.push(categoryText)
     }
@@ -160,7 +160,7 @@ function getPermalink() {
 
 /** 获取文件创建时间 */
 function getFileBirthtime(filePath) {
-  const gitFileInitTime = execSync(`git log --follow --format=%ad -- ${filePath} | tail -1`, {
+  const gitFileInitTime = execSync(`git log --follow --format=%ad -- "${filePath.replace(/"/g, '\\"')}" | tail -1`, {
     encoding: 'utf8'
   })
   if (gitFileInitTime) {
