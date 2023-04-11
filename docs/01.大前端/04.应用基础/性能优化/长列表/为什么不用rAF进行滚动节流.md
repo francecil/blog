@@ -4,6 +4,11 @@ date: 2020-01-07 11:12:40
 tags: 
   - 长列表
 permalink: /pages/e52f03/
+categories: 
+  - 大前端
+  - 应用基础
+  - 性能优化
+  - 长列表
 ---
 
 ## 前言

@@ -4,6 +4,10 @@ date: 2018-03-09 11:12:40
 tags: 
   - nodejs
 permalink: /pages/6c5984/
+categories: 
+  - 服务端
+  - 编程语言
+  - js
 ---
 
 

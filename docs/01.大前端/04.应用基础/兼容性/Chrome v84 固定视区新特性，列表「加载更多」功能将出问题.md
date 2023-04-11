@@ -5,6 +5,10 @@ tags:
   - Chromium
   - HTML
 permalink: /pages/04ff1c/
+categories: 
+  - 大前端
+  - 应用基础
+  - 兼容性
 ---
 
 ## 背景

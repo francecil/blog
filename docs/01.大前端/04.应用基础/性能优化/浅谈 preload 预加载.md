@@ -4,6 +4,10 @@ date: 2018-07-10 10:18:32
 tags: 
   - 前端优化
 permalink: /pages/f2d605/
+categories: 
+  - 大前端
+  - 应用基础
+  - 性能优化
 ---
 
 # preload简介

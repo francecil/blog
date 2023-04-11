@@ -4,7 +4,9 @@ date: 2016/11/18 11:00:00
 tags: 
   - 多点触控
 permalink: /pages/e33d3a/
-
+categories: 
+  - 客户端
+  - Android
 ---
 
 # 前言

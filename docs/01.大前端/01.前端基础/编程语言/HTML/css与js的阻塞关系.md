@@ -4,6 +4,11 @@ date: 2018-10-01 10:18:32
 tags: 
   - HTML
 permalink: /pages/d1ea01/
+categories: 
+  - 大前端
+  - 前端基础
+  - 编程语言
+  - HTML
 ---
 
 在 html 的解析过程中，样式文件和脚本文件之间是否有依赖关系呢？

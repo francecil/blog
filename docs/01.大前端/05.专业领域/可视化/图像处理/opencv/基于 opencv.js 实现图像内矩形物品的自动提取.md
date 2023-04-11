@@ -4,6 +4,12 @@ date: 2020/01/17 00:00:00
 tags: 
   - OpenCV
 permalink: /pages/ae4e49/
+categories: 
+  - 大前端
+  - 专业领域
+  - 可视化
+  - 图像处理
+  - opencv
 ---
 
 ## 前言

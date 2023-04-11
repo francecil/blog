@@ -4,6 +4,11 @@ date: 2019/05/01 01:00:00
 tags: 
   - TypeScript
 permalink: /pages/df8030/
+categories: 
+  - 大前端
+  - 前端基础
+  - 编程语言
+  - TypeScript
 ---
 
 # 前言

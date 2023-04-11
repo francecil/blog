@@ -4,6 +4,9 @@ date: 2019/12/10 00:00:00
 tags: 
   - Docker
 permalink: /pages/829400/
+categories: 
+  - 更多
+  - 服务搭建
 ---
 
 ## 背景

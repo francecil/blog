@@ -4,6 +4,11 @@ date: 2019/12/31 00:00:00
 tags: 
   - ECMAScript
 permalink: /pages/cc7c92/
+categories: 
+  - 大前端
+  - 前端基础
+  - 编程语言
+  - JavaScript
 ---
 
 ## 前言

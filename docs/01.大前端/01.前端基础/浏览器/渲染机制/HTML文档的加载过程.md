@@ -4,6 +4,11 @@ date: 2019/12/14 01:00:00
 tags: 
   - HTML
 permalink: /pages/8f0553/
+categories: 
+  - 大前端
+  - 前端基础
+  - 浏览器
+  - 渲染机制
 ---
 
 ## 面试答题模板

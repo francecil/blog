@@ -5,7 +5,11 @@ tags:
   - ECMAScript
   - JavaScriptCore
 permalink: /pages/fdca7f/
-
+categories: 
+  - 大前端
+  - 前端基础
+  - 执行引擎
+  - V8
 ---
 
 ## 故事是这样的

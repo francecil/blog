@@ -5,6 +5,11 @@ tags:
   - vscode
   - shell
 permalink: /pages/3036b4/
+categories: 
+  - 大前端
+  - 前端基础
+  - 开发工具
+  - VSCode
 ---
 
 ## 前言

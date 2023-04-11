@@ -5,7 +5,10 @@ tags:
   - React
   - 换肤
 permalink: /pages/bc4496/
-
+categories: 
+  - 大前端
+  - 应用基础
+  - 换肤
 ---
 
 ## 前言

@@ -5,6 +5,11 @@ tags:
   - ECMAScript
   - V8
 permalink: /pages/223f25/
+categories: 
+  - 大前端
+  - 前端基础
+  - 执行引擎
+  - V8
 ---
 
 ## 前言

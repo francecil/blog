@@ -4,6 +4,11 @@ date: 2019/12/11 01:00:00
 tags: 
   - HTML
 permalink: /pages/7d9673/
+categories: 
+  - 大前端
+  - 前端基础
+  - 编程语言
+  - HTML
 ---
 
 ## 前言

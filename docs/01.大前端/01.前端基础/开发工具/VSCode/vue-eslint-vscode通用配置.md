@@ -4,6 +4,11 @@ date: 2019/01/20 01:00:00
 tags: 
   - VSCode
 permalink: /pages/da3ae7/
+categories: 
+  - 大前端
+  - 前端基础
+  - 开发工具
+  - VSCode
 ---
 
 ## 前言

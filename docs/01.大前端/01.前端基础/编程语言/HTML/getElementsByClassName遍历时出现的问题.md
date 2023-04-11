@@ -4,6 +4,11 @@ date: 2018-07-15 10:18:32
 tags: 
   - HTML
 permalink: /pages/a68c5f/
+categories: 
+  - 大前端
+  - 前端基础
+  - 编程语言
+  - HTML
 ---
 
 ## 前言

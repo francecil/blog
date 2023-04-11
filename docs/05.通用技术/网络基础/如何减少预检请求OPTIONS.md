@@ -5,6 +5,9 @@ tags:
   - HTTP
   - 跨域
 permalink: /pages/2f7a20/
+categories: 
+  - 通用技术
+  - 网络基础
 ---
 
 ## 前言

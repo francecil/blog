@@ -4,6 +4,11 @@ date: 2018-11-10 10:18:32
 tags: 
   - Angular1.x
 permalink: /pages/09b80f/
+categories: 
+  - 大前端
+  - 应用框架
+  - UI 框架
+  - Angular
 ---
 
 ## 简介

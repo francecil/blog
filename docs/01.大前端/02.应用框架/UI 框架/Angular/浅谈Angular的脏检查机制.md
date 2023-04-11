@@ -4,6 +4,11 @@ date: 2019/12/31 00:00:00
 tags: 
   - Angular
 permalink: /pages/4a309c/
+categories: 
+  - 大前端
+  - 应用框架
+  - UI 框架
+  - Angular
 ---
 
 

@@ -4,7 +4,9 @@ date: 2016/07/13 11:00:00
 tags: 
   - adb
 permalink: /pages/841da0/
-
+categories: 
+  - 客户端
+  - Android
 ---
 
 ## 1.显示所有avd

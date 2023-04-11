@@ -5,6 +5,12 @@ tags:
   - puppeteer
   - 前端测试
 permalink: /pages/ae64b9/
+categories: 
+  - 大前端
+  - 工程能力
+  - 前端测试
+  - E2E
+  - Puppeteer
 ---
 
 # 介绍

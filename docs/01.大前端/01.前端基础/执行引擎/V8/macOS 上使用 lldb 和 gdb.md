@@ -4,6 +4,11 @@ date: 2020-06-22 11:12:40
 tags: 
   - V8
 permalink: /pages/26ca79/
+categories: 
+  - 大前端
+  - 前端基础
+  - 执行引擎
+  - V8
 ---
 
 ## 背景

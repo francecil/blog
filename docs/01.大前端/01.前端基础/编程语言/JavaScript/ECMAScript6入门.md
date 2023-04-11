@@ -4,6 +4,11 @@ date: 2018-01-07 11:12:40
 tags: 
   - ECMAScript
 permalink: /pages/2e58d1/
+categories: 
+  - 大前端
+  - 前端基础
+  - 编程语言
+  - JavaScript
 ---
 
 # let 和 const

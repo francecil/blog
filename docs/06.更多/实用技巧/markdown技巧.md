@@ -4,6 +4,9 @@ date: 2018-10-16 12:18:32
 tags: 
   - markdown
 permalink: /pages/d3622e/
+categories: 
+  - 更多
+  - 实用技巧
 ---
 
 ## 1. 文本删除线效果

@@ -4,6 +4,11 @@ date: 2019/07/03 03:00:00
 tags: 
   - Vue
 permalink: /pages/d78c0d/
+categories: 
+  - 大前端
+  - 应用框架
+  - UI 框架
+  - Vue
 ---
 
 ## 前言

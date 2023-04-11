@@ -4,7 +4,10 @@ date: 2018/05/10 01:00:00
 tags: 
   - 前端优化
 permalink: /pages/de4baf/
-
+categories: 
+  - 大前端
+  - 应用基础
+  - 性能优化
 ---
 
 # 前言

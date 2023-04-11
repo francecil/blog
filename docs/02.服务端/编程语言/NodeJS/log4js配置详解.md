@@ -4,6 +4,10 @@ date: 2018/04/14 01:00:00
 tags: 
   - nodejs
 permalink: /pages/b950eb/
+categories: 
+  - 服务端
+  - 编程语言
+  - js
 ---
 
 ## 前言

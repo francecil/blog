@@ -5,7 +5,12 @@ tags:
   - 多点触控
   - HTML
 permalink: /pages/384f11/
-
+categories: 
+  - 大前端
+  - 专业领域
+  - 多媒体
+  - 业务场景
+  - 云游戏
 ---
 
 # 基本知识

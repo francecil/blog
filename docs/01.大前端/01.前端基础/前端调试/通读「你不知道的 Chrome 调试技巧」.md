@@ -4,6 +4,10 @@ date: 2020-08-31 10:12:40
 tags: 
   - Devtools
 permalink: /pages/98ef3e/
+categories: 
+  - 大前端
+  - 前端基础
+  - 前端调试
 ---
 
 # 前言

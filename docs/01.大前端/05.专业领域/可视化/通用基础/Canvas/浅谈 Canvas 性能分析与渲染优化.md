@@ -4,6 +4,12 @@ date: 2020/03/16 10:00:00
 tags: 
   - Canvas
 permalink: /pages/878e10/
+categories: 
+  - 大前端
+  - 专业领域
+  - 可视化
+  - 通用基础
+  - Canvas
 ---
 
 # 前言

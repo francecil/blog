@@ -4,6 +4,11 @@ date: 2018-11-01 10:18:32
 tags: 
   - HTML
 permalink: /pages/17b154/
+categories: 
+  - 大前端
+  - 前端基础
+  - 编程语言
+  - HTML
 ---
 
 ## 前言
