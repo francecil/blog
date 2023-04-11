@@ -7,15 +7,15 @@ bannerBg: /img/bg.jpeg # auto => 网格纹背景(有bodyBgImg时无背景)，默
 
 features: # 可选的
   - title: 大前端
-    details: 前端基础、前端框架、前端知识体系
+    details: 前端基础、应用框架、工程能力、专业领域
     link: /web/ # 可选
     imgUrl: /img/web.png # 可选
   - title: 服务端
-    details: 缓存、数据库、消息队列、部署
+    details: 编程语言、中间件、数据库、服务部署
     link: /server/
     imgUrl: /img/server.png
   - title: 通用技术
-    details: 技术文档、教程、技巧、总结等文章
+    details: 编程范式、计算机基础、常用技术的教程和技巧
     link: /technology/
     imgUrl: /img/other.png
 
