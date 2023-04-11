@@ -4,9 +4,6 @@ date: 2020-06-22 11:12:40
 tags: 
   - V8
 permalink: /pages/26ca79/
-categories: 
-  - 随笔
-sidebar: auto
 ---
 
 ## 背景
