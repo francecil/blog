@@ -4,8 +4,6 @@ date: 2016/07/13 11:00:00
 tags: 
   - adb
 permalink: /pages/841da0/
-categories: 
-  - 随笔
 
 ---
 

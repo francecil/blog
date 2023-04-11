@@ -2,10 +2,6 @@
 title: Windows 下快捷启动应用的小技巧
 date: 2016/07/05 11:00:00
 permalink: /pages/fb63da/
-categories: 
-  - 随笔
-tags: 
-  - null
 
 ---
 

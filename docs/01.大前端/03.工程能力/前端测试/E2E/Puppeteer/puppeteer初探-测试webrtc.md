@@ -5,8 +5,6 @@ tags:
   - puppeteer
   - 前端测试
 permalink: /pages/ae64b9/
-categories: 
-  - 随笔
 ---
 
 # 介绍

@@ -2,10 +2,6 @@
 title: Android监听屏幕旋转
 date: 2016/10/18 11:00:00
 permalink: /pages/347b8f/
-categories: 
-  - 随笔
-tags: 
-  - null
 
 ---
 

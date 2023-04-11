@@ -5,8 +5,6 @@ tags:
   - React
   - 换肤
 permalink: /pages/bc4496/
-categories: 
-  - 随笔
 
 ---
 
