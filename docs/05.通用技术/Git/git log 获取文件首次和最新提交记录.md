@@ -106,5 +106,9 @@ function getSystemBirthtime(stat) {
   return stat.birthtime.getFullYear() != 1970 ? stat.birthtime : stat.atime
 }
 ```
+- 文件路径中可能含有空格等需转义字符，故执行 shell 时需要前置处理下文件路径，将 `"` 字符进行转义，外部再包上 `""` ，shell 将忽略双引号内部的转义字符
+```js
+execSync(`git log --follow --format=%ad -- "${filePath.replace(/"/g, '\\"')}" | tail -1`)
+```
 # 参考文档
 - [How to retrieve the last modification date of all files in a git repository](https://serverfault.com/questions/401437/how-to-retrieve-the-last-modification-date-of-all-files-in-a-git-repository/401450#401450)：介绍了如何获取 git 仓库中，如何获取提交记录的最早和最新修改时间。
