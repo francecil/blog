@@ -6,7 +6,9 @@ tags:
 permalink: /pages/accdac/
 categories: 
   - 大前端
-  - 前端领域
+  - 专业领域
+  - 可视化
+  - 通用基础
   - WebGL
 ---
 

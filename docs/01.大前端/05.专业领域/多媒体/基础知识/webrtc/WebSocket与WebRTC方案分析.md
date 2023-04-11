@@ -6,8 +6,11 @@ tags:
   - ffmpeg
 permalink: /pages/bd3255/
 categories: 
-  - 通用技术
-  - 流媒体
+  - 大前端
+  - 专业领域
+  - 多媒体
+  - 基础知识
+  - webrtc
 ---
 
 # WebSocket

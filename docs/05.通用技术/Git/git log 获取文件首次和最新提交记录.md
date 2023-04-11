@@ -2,12 +2,11 @@
 title: git log 获取文件首次和最新提交记录
 date: 2023-04-09 22:57:12
 permalink: /pages/090a90/
-categories:
+tags: 
+  - null
+categories: 
   - 通用技术
   - Git
-tags:
-  - 
-
 ---
 # 需求背景
 

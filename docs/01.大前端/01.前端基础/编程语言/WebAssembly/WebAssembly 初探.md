@@ -1,10 +1,14 @@
 ---
 title: WebAssembly 初探
 date: 2020/01/10 00:00:00
-categories: 大前端
 tags: 
   - WebAssembly
 permalink: /pages/25ca35/
+categories: 
+  - 大前端
+  - 前端基础
+  - 编程语言
+  - WebAssembly
 ---
 
 ## 前言

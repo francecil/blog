@@ -6,7 +6,8 @@ tags:
 permalink: /pages/b57f9e/
 categories: 
   - 大前端
-  - 工程化
+  - 工程能力
+  - 工程管理
   - npm
 ---
 

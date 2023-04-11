@@ -7,7 +7,7 @@ permalink: /pages/b950eb/
 categories: 
   - 服务端
   - 编程语言
-  - js
+  - NodeJS
 ---
 
 ## 前言

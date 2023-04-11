@@ -6,7 +6,8 @@ tags:
 permalink: /pages/2fe673/
 categories: 
   - 大前端
-  - 前端框架
+  - 应用框架
+  - UI 框架
   - React
 ---
 

@@ -2,11 +2,11 @@
 title: Windows 下快捷启动应用的小技巧
 date: 2016/07/05 11:00:00
 permalink: /pages/fb63da/
+tags: 
+  - null
 categories: 
   - 更多
   - 实用技巧
-tags: 
-  - 
 ---
 
 测试： Win 7

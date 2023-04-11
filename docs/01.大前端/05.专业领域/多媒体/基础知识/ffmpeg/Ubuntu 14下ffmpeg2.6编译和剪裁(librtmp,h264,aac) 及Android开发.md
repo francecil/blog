@@ -6,8 +6,11 @@ tags:
   - Android
 permalink: /pages/a17f40/
 categories: 
-  - 通用技术
-  - 流媒体
+  - 大前端
+  - 专业领域
+  - 多媒体
+  - 基础知识
+  - ffmpeg
 ---
 
 ## 前言

@@ -4,9 +4,10 @@ date: 2020/03/08 20:00:00
 tags: 
   - Canvas
 permalink: /pages/467d6a/
+sidebar: auto
 categories: 
   - 随笔
-sidebar: auto
+  - 2020
 ---
 
 

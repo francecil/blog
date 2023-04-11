@@ -2,13 +2,13 @@
 title: 趣味js-只用特殊字符生成任意字符串
 date: 2018-01-07 11:12:40
 permalink: /pages/13c750/
+tags: 
+  - null
 categories: 
   - 大前端
   - 前端基础
   - 编程语言
   - JavaScript
-tags: 
-  - 
 ---
 
 **180306更新**：发现有个`http://www.jsfuck.com/` ,上面就做了我想做的东西。也找到了C的生成方法

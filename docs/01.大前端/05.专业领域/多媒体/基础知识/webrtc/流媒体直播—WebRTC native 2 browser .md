@@ -6,8 +6,11 @@ tags:
   - ffmpeg
 permalink: /pages/55fbcc/
 categories: 
-  - 通用技术
-  - 流媒体
+  - 大前端
+  - 专业领域
+  - 多媒体
+  - 基础知识
+  - webrtc
 ---
 
 ## 前言

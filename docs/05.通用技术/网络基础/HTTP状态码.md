@@ -5,8 +5,7 @@ tags:
   - HTTP
 permalink: /pages/58bfaf/
 categories: 
-  - 大前端
-  - 前端基础
+  - 通用技术
   - 网络基础
 ---
 

@@ -139,7 +139,7 @@ function getCategories(file, categoryText, ignoreCategories) {
     const resultArr = resultStr.split('/').filter(Boolean)
 
     if (resultArr.length) {
-      categories.push(...resultArr)
+      categories.push(categoryText, ...resultArr)
     } else {
       categories.push(categoryText)
     }
