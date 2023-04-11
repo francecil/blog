@@ -7,7 +7,7 @@ tags:
 permalink: /pages/bc4496/
 categories: 
   - 随笔
-sidebar: auto
+
 ---
 
 ## 前言

@@ -6,7 +6,7 @@ categories:
   - 随笔
 tags: 
   - null
-sidebar: auto
+
 ---
 
 测试： Win 7

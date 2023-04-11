@@ -7,7 +7,6 @@ tags:
 permalink: /pages/ae64b9/
 categories: 
   - 随笔
-sidebar: auto
 ---
 
 # 介绍

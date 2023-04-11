@@ -1,6 +1,14 @@
 ---
 title: BFC
-tags:
+tags: null
+date: 2019-12-12 17:36:39
+permalink: /pages/58276a/
+article: false
+categories: 
+  - 大前端
+  - 前端基础
+  - 编程语言
+  - CSS
 ---
 
 ## 介绍

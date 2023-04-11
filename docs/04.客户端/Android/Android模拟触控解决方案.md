@@ -6,7 +6,7 @@ tags:
 permalink: /pages/e33d3a/
 categories: 
   - 随笔
-sidebar: auto
+
 ---
 
 # 前言

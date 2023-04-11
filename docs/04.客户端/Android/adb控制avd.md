@@ -6,7 +6,7 @@ tags:
 permalink: /pages/841da0/
 categories: 
   - 随笔
-sidebar: auto
+
 ---
 
 ## 1.显示所有avd

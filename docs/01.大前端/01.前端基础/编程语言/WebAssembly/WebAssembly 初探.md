@@ -4,6 +4,7 @@ date: 2020/01/10 00:00:00
 categories: 大前端
 tags: 
   - WebAssembly
+permalink: /pages/25ca35/
 ---
 
 ## 前言

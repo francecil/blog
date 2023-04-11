@@ -1,3 +1,16 @@
+---
+title: puppeteer优化实践
+date: 2023-04-10 00:37:26
+permalink: /pages/032018/
+categories:
+  - 大前端
+  - 工程能力
+  - 前端测试
+  - E2E
+tags:
+  - 
+
+---
 
 # 前言
 
