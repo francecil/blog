@@ -5,9 +5,7 @@ tags:
   - ECMAScript
   - JavaScriptCore
 permalink: /pages/fdca7f/
-categories: 
-  - 随笔
-sidebar: auto
+
 ---
 
 ## 故事是这样的

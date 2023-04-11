@@ -4,9 +4,7 @@ date: 2018-08-10 10:18:32
 tags: 
   - 前端优化
 permalink: /pages/b599db/
-categories: 
-  - 随笔
-sidebar: auto
+
 ---
 
 # 前言

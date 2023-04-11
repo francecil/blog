@@ -4,9 +4,7 @@ date: 2018/05/10 01:00:00
 tags: 
   - 前端优化
 permalink: /pages/de4baf/
-categories: 
-  - 随笔
-sidebar: auto
+
 ---
 
 # 前言

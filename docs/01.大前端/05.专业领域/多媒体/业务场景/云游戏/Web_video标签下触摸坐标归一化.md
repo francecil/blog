@@ -5,9 +5,7 @@ tags:
   - 多点触控
   - HTML
 permalink: /pages/384f11/
-categories: 
-  - 随笔
-sidebar: auto
+
 ---
 
 # 基本知识
