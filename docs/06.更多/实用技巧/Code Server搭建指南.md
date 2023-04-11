@@ -4,9 +4,6 @@ date: 2019/12/10 00:00:00
 tags: 
   - Docker
 permalink: /pages/829400/
-categories: 
-  - 随笔
-sidebar: auto
 ---
 
 ## 背景
