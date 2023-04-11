@@ -43,11 +43,8 @@ test2~~
 
 test2~~</s>
 ```
-效果如下：
 
-<s>test1
 
-test2</s>
 
 ## 2. 区块引用的换行
 
@@ -103,10 +100,9 @@ content
 ```
 效果如下:
 
-<details>
-<summary>点击展开</summary>
+::: details 点击展开
 我是内容详情
-</details>
+:::
 
 ## 4. 页内跳转
 

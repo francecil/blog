@@ -491,8 +491,7 @@ function onClick3(){
 }
 ```
 
-<details>
-  <summary>Answer</summary>
+::: details Answer
 
 onClick21 onClick23 onClick3 会输出
 
@@ -525,6 +524,6 @@ history 跳转是一个 Task，因此它会在本次同步代码执行完毕后�
 总结： `window.open` 和 `location.href` 不属于 Web API 的范畴，也就不走 event loop 那一套
 
 
-</details>
+:::
 
 未完待续...

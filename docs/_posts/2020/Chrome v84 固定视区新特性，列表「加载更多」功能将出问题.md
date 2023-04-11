@@ -322,8 +322,7 @@ export default function List() {
 
 > 异步执行的 state 变更，会同步执行 useLayoutEffect 和 re-render：这句话说的是，在 promise 或 定时器等不受 react 控制的异步代码中，执行状态变更方法之后，内部直接进行 diff 并重新 render，并不会等到所有状态变更方法执行之后才更新。
 
-<details>
-<summary>更多相关例子</summary>
+::: details 更多相关例子
 
 ```js
   useLayoutEffect(() => {
@@ -353,7 +352,7 @@ useLayoutEffect
 useLayoutEffect 
 3
 ```
-</details>
+:::
 
 
 对于同步函数来说，`setList` 执行是异步的，所以不能马上进行 `window.scrollTo`

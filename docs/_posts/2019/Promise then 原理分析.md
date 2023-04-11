@@ -260,12 +260,11 @@ new Promise(resolve => {
 console.log(2)
 ```
 
-<details>
-<summary>答案</summary>
+::: details 答案
 
 1243 
 
-</details>
+:::
 
 ```js
 Promise.resolve().then(() => {
@@ -277,11 +276,10 @@ Promise.resolve().then(() => {
 console.log(2)
 ```
 
-<details>
-<summary>答案</summary>
+::: details 答案
 
 2143 
-</details>
+:::
 
 ```js
 new Promise((r) => {
@@ -309,11 +307,10 @@ promise.then(() => {
 })
 
 ```
-<details>
-<summary>答案</summary>
+::: details 答案
 
 【1,2,11,21,24,27,28,12,22,25,13,23,26,29】
-</details>
+:::
 
 ## 如何测试
 
