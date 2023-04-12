@@ -33,11 +33,33 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
         text: '前端',
         link: '/fe/', //目录页链接，此处link是 vdoing 主题新增的配置项，有二级导航时，可以点击一级导航跳到目录页
         items: [
-          // 说明：以下所有link的值只是在相应md文件头部定义的永久链接（不是什么特殊编码）。另外，注意结尾是有斜杠的
           {
-            text: '前端文章',
+            text: '前端基础',
             items: [
-              { text: 'JavaScript', link: '/pages/8143cc480faf9a11/' },
+              { text: 'JavaScript', link: '/pages/2e58d1/' },
+              { text: 'HTML', link: '/pages/7d9673/' },
+              { text: 'CSS', link: '/pages/c1c6f3/' },
+              { text: 'TypeScript', link: '/pages/df8030/' },
+              { text: 'WebAssembly', link: '/pages/25ca35/' }
+            ],
+          },
+          {
+            text: 'UI 框架',
+            items: [
+              { text: 'React', link: '/pages/b4d8a3/' },
+              { text: 'Vue', link: '/pages/b5decb/' },
+            ],
+          },
+        ],
+      },
+      {
+        text: '服务端',
+        link: '/server/',
+        items: [
+          {
+            text: '中间件',
+            items: [
+              { text: 'Redis', link: '/pages/c29f00/' },
             ],
           },
         ],
@@ -45,27 +67,47 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
       {
         text: '通用技术',
         link: '/technology/',
+        items: [
+          {
+            text: 'Git',
+            link: '/pages/703e88/'
+          },
+          {
+            text: '网络基础',
+            link: '/pages/58bfaf/'
+          },
+          {
+            text: '算法与数据结构',
+            link: '/pages/eca777/'
+          },
+        ],
       },
       {
         text: '更多',
         link: '/more/',
         items: [
-          { text: '学习', link: '/pages/f2a556/' },
-          { text: '面试', link: '/pages/aea6571b7a8bae86/' },
-          { text: '心情杂货', link: '/pages/2d615df9a36a98ed/' },
+          { text: '面试', link: '/pages/c70629/' },
+          { text: '人生总结', link: '/pages/f00c67/' },
           { text: '实用技巧', link: '/pages/baaa02/' },
-          { text: '友情链接', link: '/friends/' },
+          { text: '软素质', link: '/categories/?category=软素质' },
+          {
+            text: '实用技巧', items: [{
+              text: 'markdown 技巧', link: '/pages/d3622e/'
+            }]
+          },
+          {
+            text: '知识科普', items: [{
+              text: '地理坐标系', link: '/pages/d3f796/'
+            }]
+          },
         ],
       },
       { text: '关于', link: '/about/' },
       {
         text: '收藏',
-        link: '/pages/beb6c0bd8a66cea6/',
-        // items: [
-        //   { text: '网站', link: '/pages/beb6c0bd8a66cea6/' },
-        //   { text: '资源', link: '/pages/eee83a9211a70f9d/' },
-        //   { text: 'Vue资源', link: '/pages/12df8ace52d493f6/' },
-        // ],
+        items: [
+          { text: '网站', link: '/pages/f06636/' },
+        ],
       },
       {
         text: '索引',
