@@ -19,7 +19,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
     '/': {
       lang: 'zh-CN',
       title: "Gahing's blog",
-      description: 'Web 前端技术博客。包括大前端、服务端、通用技术',
+      description: '前端技术博客。包括大前端、服务端、通用技术',
     }
   },
   patterns: ['**/*.vue', '*.md', '**/!(_)*/!(_*|README).md'],
@@ -40,20 +40,11 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
               { text: 'JavaScript', link: '/pages/8143cc480faf9a11/' },
             ],
           },
-          {
-            text: '学习笔记',
-            items: [
-              { text: '《JavaScript教程》', link: '/note/javascript/' },
-            ],
-          },
         ],
       },
       {
-        text: '技术杂谈',
+        text: '通用技术',
         link: '/technology/',
-        items: [
-          { text: 'Nodejs', link: '/pages/117708e0af7f0bd9/' },
-        ],
       },
       {
         text: '更多',

@@ -1,17 +1,4 @@
----
-title: inline-block空内容最小高度的问题
-date: 2022-05-06 20:40:35
-permalink: /pages/9ce6e7/
-article: false
-categories:
-  - 大前端
-  - 前端基础
-  - 编程语言
-  - CSS
-tags:
-  - 
 
----
 
 默认字体的原因，父容器设置 font-size 0px 即可
 

@@ -1,17 +1,4 @@
----
-title: 监听 stick 状态
-date: 2022-05-06 20:40:35
-permalink: /pages/5216b4/
-article: false
-categories:
-  - 大前端
-  - 前端基础
-  - 编程语言
-  - CSS
-tags:
-  - 
 
----
 ## 示例: sticky 状态的导航栏加阴影
 
 ### 方式1：借助 IntersectionObserver
