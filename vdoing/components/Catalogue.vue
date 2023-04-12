@@ -48,16 +48,29 @@
                     <a :href="`#${anchorText}`" class="header-anchor">#</a>
                     {{ `${index + 1}-${i + 1}. ${c.title}` }}
                   </div>
-                  <router-link
-                    v-for="(cc, ii) in c.children"
-                    :to="cc[2]"
-                    :key="`${index + 1}-${i + 1}-${ii + 1}`"
-                  >
-                    {{ `${index + 1}-${i + 1}-${ii + 1}. ${cc[1]}` }}
-                    <span class="title-tag" v-if="cc[3]">
-                      {{ cc[3] }}
-                    </span>
-                  </router-link>
+                  <template v-for="(cc, ii) in c.children">
+                    <router-link
+                      v-if="cc.title"
+                      :to="`${
+                        cc.children && cc.children[0] && !cc.children[0].title
+                          ? cc.children[0][2]
+                          : '/categories/?category=' + cc.title
+                      }`"
+                      :key="`${index + 1}-${i + 1}-${ii + 1}`"
+                    >
+                      {{ `${index + 1}-${i + 1}-${ii + 1}. ${cc.title}` }}
+                    </router-link>
+                    <router-link
+                      v-else
+                      :to="cc[2]"
+                      :key="`${index + 1}-${i + 1}-${ii + 1}`"
+                    >
+                      {{ `${index + 1}-${i + 1}-${ii + 1}. ${cc[1]}` }}
+                      <span class="title-tag" v-if="cc[3]">
+                        {{ cc[3] }}
+                      </span>
+                    </router-link>
+                  </template>
                 </div>
               </template>
             </dd>
@@ -111,6 +124,7 @@ export default {
       if (!catalogueList) {
         console.error('未获取到目录数据，请查看front matter中设置的path是否正确。')
       }
+      console.log({catalogueList})
       return catalogueList
     },
     type(o) { // 数据类型检查
