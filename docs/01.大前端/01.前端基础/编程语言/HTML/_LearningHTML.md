@@ -1,17 +1,4 @@
----
-title: LearningHTML
-date: 2017-02-14 17:11:23
-permalink: /pages/588be4/
-article: false
-categories:
-  - 大前端
-  - 前端基础
-  - 编程语言
-  - HTML
-tags:
-  - 
 
----
 # 标签
 
 可以在 `<abbr>` 标签中使用全局的 title 属性，这样就能够在鼠标指针移动到 `<abbr>` 元素上时显示出简称/缩写的完整版本
