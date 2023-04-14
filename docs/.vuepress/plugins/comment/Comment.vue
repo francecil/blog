@@ -3,87 +3,95 @@
 </template>
 
 <script>
-import {
-  provider,
-  renderConfig,
-  loadScript,
-} from './util'
+import { provider, renderConfig, loadScript } from "./util";
 
-const commentDomID = 'vuepress-plugin-comment' 
-let timer = null
+const commentDomID = "vuepress-plugin-comment";
+let timer = null;
 
 export default {
-  mounted () {
+  mounted() {
     timer = setTimeout(() => {
       const frontmatter = {
         to: {},
         from: {},
-        ...this.$frontmatter
-      }
-      clear() && needComment(frontmatter) && renderComment(frontmatter)
-    }, 1000)
+        ...this.$frontmatter,
+      };
+      clear() && needComment(frontmatter) && renderComment(frontmatter);
+    }, 1000);
 
     this.$router.afterEach((to, from) => {
       if (to && from && to.path === from.path) {
-        return
+        return;
       }
       const frontmatter = {
         to,
         from,
-        ...this.$frontmatter
-      }
-      clear() && needComment(frontmatter) && renderComment(frontmatter)
-    })
-  }
-}
+        ...this.$frontmatter,
+      };
+      clear() && needComment(frontmatter) && renderComment(frontmatter);
+    });
+  },
+};
 
 /**
  * Clear last page comment dom
  */
-function clear (frontmatter) {
+function clear(frontmatter) {
   switch (COMMENT_CHOOSEN) {
-    case 'gitalk': 
-      return provider.gitalk.clear(commentDomID)
-    case 'valine': 
-      let el = COMMENT_OPTIONS.el || commentDomID
-      if (el.startsWith('#')) {
-        el = el.slice(1)
+    case "gitalk": {
+      return provider.gitalk.clear(commentDomID);
+    }
+
+    case "valine":
+    case "utterances": {
+      let el = COMMENT_OPTIONS.el || commentDomID;
+      if (el.startsWith("#")) {
+        el = el.slice(1);
       }
-      console.log(el)
-      return provider.valine.clear(el)
-    default: return false
+      console.log(el);
+      return provider[COMMENT_CHOOSEN].clear(el);
+    }
+
+    default:
+      return false;
   }
 }
 
 /**
  * Check if current page needs render comment
  */
-function needComment (frontmatter) {
-  return frontmatter.comment !== false && frontmatter.comments !== false
+function needComment(frontmatter) {
+  return frontmatter.comment !== false && frontmatter.comments !== false;
 }
 
 /**
  * Render comment dom and append it to container
  */
-function renderComment (frontmatter) {
-  clearTimeout(timer)
+function renderComment(frontmatter) {
+  clearTimeout(timer);
 
-  const parentDOM = document.querySelector(COMMENT_CONTAINER)
+  const parentDOM = document.querySelector(COMMENT_CONTAINER);
   if (!parentDOM) {
-    timer = setTimeout(() => renderComment(frontmatter), 200)
-    return 
+    timer = setTimeout(() => renderComment(frontmatter), 200);
+    return;
   }
 
   switch (COMMENT_CHOOSEN) {
-    case 'gitalk': 
-      return provider.gitalk.render(frontmatter, commentDomID)
-    case 'valine': 
-      let el = COMMENT_OPTIONS.el || commentDomID
-      if (el.startsWith('#')) {
-        el = el.slice(1)
+    case "gitalk": {
+      return provider.gitalk.render(frontmatter, commentDomID);
+    }
+
+    case "valine":
+    case "utterances": {
+      let el = COMMENT_OPTIONS.el || commentDomID;
+      if (el.startsWith("#")) {
+        el = el.slice(1);
       }
-      return provider.valine.render(frontmatter, el)
-    default: return false
+      return provider[COMMENT_CHOOSEN].render(frontmatter, el);
+    }
+
+    default:
+      return false;
   }
 }
 </script>

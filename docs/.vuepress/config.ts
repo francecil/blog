@@ -319,25 +319,26 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
     [
       commonPlugin,
       {
-        choosen: 'gitalk',
+        choosen: 'utterances',
         options: {
-          // repo: 'francecil-public/blog-comments-utterances',
-          // theme: 'github-light',
-          // issueTerm: 'pathname',
-          clientID: '5c2a2bb4f2d2936f93cb',
-          clientSecret: 'a889b19b7b97609e2de9e446f7f9f6219417aa90',
-          repo: 'blog-gitalk-comment', // GitHub 仓库
-          owner: 'francecil', // GitHub仓库所有者
-          admin: ['francecil'], // 对仓库有写权限的人
-          // gitalk 跨域代理问题可以看这个帖子 https://prohibitorum.top/7cc2c97a15b4.html
-          proxy: 'https://safe-cors-server.vercel.app//github_access_token',
-          // distractionFreeMode: true,
-          pagerDirection: 'last', // 'first'正序 | 'last'倒序
-          id: '<%- (frontmatter.permalink || frontmatter.to.path).slice(-16) %>', //  页面的唯一标识,长度不能超过50
-          title: '「评论」<%- frontmatter.title %>', // GitHub issue 的标题
-          labels: ['Gitalk', 'Comment'], // GitHub issue 的标签
-          body:
-            '页面：<%- window.location.origin + (frontmatter.to.path || window.location.pathname) %>', // GitHub issue 的内容
+          repo: 'francecil-public/blog-comments-beaudar',
+          theme: 'preferred-color-scheme',
+          issueTerm: 'pathname',
+          service: 'beaudar'
+          // clientID: '5c2a2bb4f2d2936f93cb',
+          // clientSecret: 'a889b19b7b97609e2de9e446f7f9f6219417aa90',
+          // repo: 'blog-gitalk-comment', // GitHub 仓库
+          // owner: 'francecil', // GitHub仓库所有者
+          // admin: ['francecil'], // 对仓库有写权限的人
+          // // gitalk 跨域代理问题可以看这个帖子 https://prohibitorum.top/7cc2c97a15b4.html
+          // proxy: 'https://safe-cors-server.vercel.app//github_access_token',
+          // // distractionFreeMode: true,
+          // pagerDirection: 'last', // 'first'正序 | 'last'倒序
+          // id: '<%- (frontmatter.permalink || frontmatter.to.path).slice(-16) %>', //  页面的唯一标识,长度不能超过50
+          // title: '「评论」<%- frontmatter.title %>', // GitHub issue 的标题
+          // labels: ['Gitalk', 'Comment'], // GitHub issue 的标签
+          // body:
+          //   '页面：<%- window.location.origin + (frontmatter.to.path || window.location.pathname) %>', // GitHub issue 的内容
         },
       },
     ],

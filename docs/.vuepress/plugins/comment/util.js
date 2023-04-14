@@ -1,6 +1,6 @@
 import ejs from 'ejs'
 
-let Gitalk, Valine
+let Gitalk, Valine;
 loadScript(COMMENT_CHOOSEN)
 
 /**
@@ -8,14 +8,16 @@ loadScript(COMMENT_CHOOSEN)
  * 
  * @param {String} name 
  */
-export function loadScript (name) {
+export function loadScript(name) {
   if (name === 'valine') {
     // import('valine')
     // .then(pkg => Valine = pkg.default)
   } else if (name === 'gitalk') {
     import('gitalk/dist/gitalk.css')
-    .then(() => import('gitalk'))
-    .then(pkg => Gitalk = pkg.default)
+      .then(() => import('gitalk'))
+      .then(pkg => Gitalk = pkg.default)
+  } else if (name === 'utterances') {
+    console.log('nothing')
   }
 }
 
@@ -25,7 +27,7 @@ export function loadScript (name) {
  * @param {Object} config 
  * @param {Object} data 
  */
-export function renderConfig (config, data) {
+export function renderConfig(config, data) {
   const result = {}
 
   Reflect.ownKeys(config)
@@ -42,7 +44,7 @@ export function renderConfig (config, data) {
         result[key] = config[key]
       }
     })
-  
+
   return result
 }
 
@@ -51,17 +53,17 @@ export function renderConfig (config, data) {
  */
 export const provider = {
   gitalk: {
-    render (frontmatter, commentDomID) {
+    render(frontmatter, commentDomID) {
       const commentDOM = document.createElement('div')
       commentDOM.id = commentDomID
 
       const parentDOM = document.querySelector(COMMENT_CONTAINER)
       parentDOM.appendChild(commentDOM)
-      
+
       const gittalk = new Gitalk(renderConfig(COMMENT_OPTIONS, { frontmatter }))
       gittalk.render(commentDomID)
     },
-    clear (commentDomID) {
+    clear(commentDomID) {
       const last = document.querySelector(`#${commentDomID}`)
       if (last) {
         last.remove()
@@ -70,7 +72,7 @@ export const provider = {
     }
   },
   valine: {
-    render (frontmatter, commentDomID) {
+    render(frontmatter, commentDomID) {
       const commentDOM = document.createElement('div')
       commentDOM.id = commentDomID
 
@@ -82,7 +84,43 @@ export const provider = {
         el: `#${commentDomID}`
       })
     },
-    clear (commentDomID) {
+    clear(commentDomID) {
+      const last = document.querySelector(`#${commentDomID}`)
+      if (last) {
+        last.remove()
+      }
+      return true
+    }
+  },
+  utterances: {
+    render(frontmatter, commentDomID) {
+      const commentDOM = document.createElement('div')
+      commentDOM.id = commentDomID
+
+      const parentDOM = document.querySelector(COMMENT_CONTAINER)
+      parentDOM.appendChild(commentDOM)
+
+      const utterances = document.createElement('script')
+      utterances.type = 'text/javascript'
+      utterances.async = true
+      utterances.setAttribute('issue-term', COMMENT_OPTIONS.issueTerm)
+      utterances.setAttribute('issue-label', COMMENT_OPTIONS.issueTerm)
+      utterances.setAttribute('theme', COMMENT_OPTIONS.theme)
+      utterances.setAttribute('repo', COMMENT_OPTIONS.repo)
+      utterances.setAttribute('comment-order', COMMENT_OPTIONS.commentOrder || 'desc')
+      utterances.setAttribute('input-position', COMMENT_OPTIONS.inputPosition || 'top')
+      utterances.setAttribute('loading', COMMENT_OPTIONS.loading || 'false')
+      utterances.crossorigin = 'anonymous'
+      utterances.src =
+        COMMENT_OPTIONS.service === 'beaudar'
+          ? 'https://beaudar.lipk.org/client.js'
+          : 'https://utteranc.es/client.js'
+      if (commentDOM.hasChildNodes()) {
+        commentDOM.innerHTML = ''
+      }
+      commentDOM.appendChild(utterances)
+    },
+    clear(commentDomID) {
       const last = document.querySelector(`#${commentDomID}`)
       if (last) {
         last.remove()
