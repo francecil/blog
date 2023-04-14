@@ -7,6 +7,7 @@ import { VdoingThemeConfig } from 'vuepress-theme-vdoing/types'
 import dayjs from 'dayjs'
 import baiduCode from './config/baiduCode' // 百度统计hm码
 import htmlModules from './config/htmlModules' // 自定义插入的html块
+import commonPlugin from './plugins/comment'
 
 const DOMAIN_NAME = 'gahing.top' // 域名 (不带https)
 const WEB_SITE = `https://${DOMAIN_NAME}` // 网址
@@ -316,10 +317,13 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
       },
     ],
     [
-      'vuepress-plugin-comment', // 评论
+      commonPlugin,
       {
         choosen: 'gitalk',
         options: {
+          // repo: 'francecil-public/blog-comments-utterances',
+          // theme: 'github-light',
+          // issueTerm: 'pathname',
           clientID: '5c2a2bb4f2d2936f93cb',
           clientSecret: 'a889b19b7b97609e2de9e446f7f9f6219417aa90',
           repo: 'blog-gitalk-comment', // GitHub 仓库
