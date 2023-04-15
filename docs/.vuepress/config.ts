@@ -81,16 +81,26 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
             text: '算法与数据结构',
             link: '/pages/eca777/'
           },
+          {
+            text: '其他技术领域',
+            items: [{
+              text: '客户端',
+              link: '/app/',
+            }]
+          },
         ],
       },
       {
         text: '更多',
         link: '/more/',
         items: [
+          {
+            text: '产品设计',
+            link: '/product/',
+          },
           { text: '面试', link: '/pages/c70629/' },
           { text: '人生总结', link: '/pages/f00c67/' },
-          { text: '实用技巧', link: '/pages/baaa02/' },
-          { text: '软素质', link: '/categories/?category=软素质' },
+          { text: '软素质', link: '/soft-quality/' },
           {
             text: '实用技巧', items: [{
               text: 'markdown 技巧', link: '/pages/d3622e/'
@@ -101,15 +111,15 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
               text: '地理坐标系', link: '/pages/d3f796/'
             }]
           },
+          {
+            text: '收藏夹',
+            items: [
+              { text: '网站', link: '/pages/f06636/' },
+            ],
+          },
         ],
       },
       { text: '关于', link: '/about/' },
-      {
-        text: '收藏',
-        items: [
-          { text: '网站', link: '/pages/f06636/' },
-        ],
-      },
       {
         text: '索引',
         link: '/archives/',
