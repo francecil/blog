@@ -110,6 +110,7 @@ export const provider = {
       utterances.setAttribute('comment-order', COMMENT_OPTIONS.commentOrder || 'desc')
       utterances.setAttribute('input-position', COMMENT_OPTIONS.inputPosition || 'top')
       utterances.setAttribute('loading', COMMENT_OPTIONS.loading || 'false')
+      utterances.setAttribute('branch', COMMENT_OPTIONS.branch || 'master')
       utterances.crossorigin = 'anonymous'
       utterances.src =
         COMMENT_OPTIONS.service === 'beaudar'

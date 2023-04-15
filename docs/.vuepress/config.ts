@@ -321,10 +321,11 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
       {
         choosen: 'utterances',
         options: {
-          repo: 'francecil-public/blog-comments-beaudar',
+          repo: 'francecil-public/blog-comments-utterances',
           theme: 'preferred-color-scheme',
           issueTerm: 'pathname',
-          service: 'beaudar'
+          // service: 'beaudar',
+          branch: "main",
           // clientID: '5c2a2bb4f2d2936f93cb',
           // clientSecret: 'a889b19b7b97609e2de9e446f7f9f6219417aa90',
           // repo: 'blog-gitalk-comment', // GitHub 仓库

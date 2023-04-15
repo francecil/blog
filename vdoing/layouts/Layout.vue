@@ -341,15 +341,15 @@ export default {
       } else {
         this.themeMode = key;
         // beaudar 评论框换肤
-        const beaudarIframe = document.querySelector("iframe");
-        if (beaudarIframe) {
+        const iframe = document.querySelector("iframe.beaudar-frame") || document.querySelector("iframe.utterances-frame");
+        if (iframe) {
           // 与 beaudar 通信
-          beaudarIframe.contentWindow.postMessage(
+          iframe.contentWindow.postMessage(
             {
               type: "set-theme",
               theme: `github-${this.themeMode}`,
             },
-            "https://beaudar.lipk.org"
+            "*"
           );
         }
       }
