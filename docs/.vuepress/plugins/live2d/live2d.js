@@ -4,7 +4,8 @@ export default () => {
         if(window.innerWidth <= 800) {
             return;
         }
-        setTimeout(() => {
+        // 页面 load 后再加载
+        window.addEventListener('load', () => {
             const model = LIVE2D_MODEL
             const canvas = document.createElement('canvas')
             canvas.id = "live2d"
@@ -20,6 +21,6 @@ export default () => {
                 window.loadlive2d("live2d", `https://cdn.jsdelivr.net/gh/francecil-public/live2dDemo/assets/${model}/${model}.model.json`);
             }
             document.body.appendChild(script)
-        }, 3000)
+        })
     }
 }

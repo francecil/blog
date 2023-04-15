@@ -3,21 +3,21 @@
 </template>
 
 <script>
-import { provider, renderConfig, loadScript } from "./util";
+import { provider } from "./util";
 
 const commentDomID = "vuepress-plugin-comment";
 let timer = null;
 
 export default {
   mounted() {
-    timer = setTimeout(() => {
+    window.addEventListener("load", () => {
       const frontmatter = {
         to: {},
         from: {},
         ...this.$frontmatter,
       };
-      clear() && needComment(frontmatter) && renderComment(frontmatter);
-    }, 1000);
+      this.initComment(frontmatter);
+    });
 
     this.$router.afterEach((to, from) => {
       if (to && from && to.path === from.path) {
@@ -28,8 +28,13 @@ export default {
         from,
         ...this.$frontmatter,
       };
-      clear() && needComment(frontmatter) && renderComment(frontmatter);
+      this.initComment(frontmatter);
     });
+  },
+  methods: {
+    initComment: function (frontmatter) {
+      clear() && needComment(frontmatter) && renderComment(frontmatter);
+    },
   },
 };
 
@@ -48,7 +53,6 @@ function clear(frontmatter) {
       if (el.startsWith("#")) {
         el = el.slice(1);
       }
-      console.log(el);
       return provider[COMMENT_CHOOSEN].clear(el);
     }
 

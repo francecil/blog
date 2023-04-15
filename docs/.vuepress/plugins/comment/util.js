@@ -1,7 +1,6 @@
 import ejs from 'ejs'
 
 let Gitalk, Valine;
-loadScript(COMMENT_CHOOSEN)
 
 /**
  * Lazy load pkg
@@ -17,7 +16,7 @@ export function loadScript(name) {
       .then(() => import('gitalk'))
       .then(pkg => Gitalk = pkg.default)
   } else if (name === 'utterances') {
-    console.log('nothing')
+    // nothing todo
   }
 }
 
