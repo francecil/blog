@@ -16,12 +16,13 @@ tags:
 
 但是手机上的白屏怎么调？以及远程用户手机上的白屏又该怎么调？ 这时候就需要使用**远程调试**的技术了。
 
+<!-- more -->
+
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f43b57b757874127bdbc8aae21aa4eab~tplv-k3u1fbpfcp-zoom-1.image)
 
 
 本文将对**远程调试**这个话题进行探讨，并给出最佳实践。
 
-<!-- more -->
 
 
 ## 谁适合阅读本文档

@@ -16,10 +16,10 @@ tags:
 
 新来的实习生妹子问了一个问题：「你看 Chrome 的 Devtools 调试工具，代码写一半还没运行下面就会提示输出结果，这个咋做到的？」
 
+<!-- more -->
 
 ![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5451e0a8a07e459baa85330e57224caf~tplv-k3u1fbpfcp-watermark.image?)
 
-<!-- more -->
 
 咋做的？对于 Devtools 的内部执行逻辑，咱不了解，但咱也不能直说，**先上一套方法论（5W1H）：**
 
