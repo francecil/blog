@@ -8,6 +8,7 @@ import dayjs from 'dayjs'
 import baiduCode from './config/baiduCode' // 百度统计hm码
 import htmlModules from './config/htmlModules' // 自定义插入的html块
 import commonPlugin from './plugins/comment'
+import live2dPlugin from './plugins/live2d'
 
 const DOMAIN_NAME = 'gahing.top' // 域名 (不带https)
 const WEB_SITE = `https://${DOMAIN_NAME}` // 网址
@@ -352,6 +353,14 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
           //   '页面：<%- window.location.origin + (frontmatter.to.path || window.location.pathname) %>', // GitHub issue 的内容
         },
       },
+    ],
+    [
+      live2dPlugin,
+      {
+        options: {
+          model: 'hijiki'
+        }
+      }
     ],
     [
       '@vuepress/last-updated', // "上次更新"时间格式
