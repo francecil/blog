@@ -240,7 +240,9 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
         content: '前端博客',
       },
     ],
-    ['meta', { name: 'theme-color', content: '#11a8cd' }], // 移动浏览器主题颜色
+    // 移动浏览器主题颜色
+    ['meta', { name: 'theme-color', media: "(prefers-color-scheme: light)", content: '#d1fbf9e6' }], 
+    ['meta', { name: 'theme-color', media: "(prefers-color-scheme: dark)", content: '#1e1e22cc' }], 
   ],
 
 
