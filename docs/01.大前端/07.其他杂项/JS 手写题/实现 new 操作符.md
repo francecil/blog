@@ -1,3 +1,16 @@
+---
+title: 实现 new 操作符
+date: 2019-10-21 16:58:00
+permalink: /pages/85c45e/
+article: false
+categories:
+  - 大前端
+  - 其他杂项
+  - JS 手写题
+tags:
+  - 
+
+---
 实现 _new，达到如下效果
 ```js
 function A(){ this.name = "test" }

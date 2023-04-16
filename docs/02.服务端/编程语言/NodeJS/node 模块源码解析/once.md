@@ -1,3 +1,17 @@
+---
+title: once
+date: 2018-02-24 15:55:46
+permalink: /pages/2426fe/
+article: false
+categories:
+  - 服务端
+  - 编程语言
+  - NodeJS
+  - node 模块源码解析
+tags:
+  - 
+
+---
 ## 介绍
 
 传入一个函数，返回一个包装过的函数，多次运行该函数只生效第一次

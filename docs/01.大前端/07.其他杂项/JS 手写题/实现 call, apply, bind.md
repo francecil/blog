@@ -1,3 +1,16 @@
+---
+title: 实现 call, apply, bind
+date: 2019-10-22 22:04:33
+permalink: /pages/44d44e/
+article: false
+categories:
+  - 大前端
+  - 其他杂项
+  - JS 手写题
+tags:
+  - 
+
+---
 ## 背景
 
 要求实现 call, apply, bind。主要目的是熟悉 es5 的规范,以及 es6 上的修改。
