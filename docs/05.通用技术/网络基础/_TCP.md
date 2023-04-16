@@ -1,3 +1,14 @@
+---
+title: TCP
+date: 2019-12-14 21:38:09
+permalink: /pages/f16f21/
+categories: 
+  - 通用技术
+  - 网络基础
+tags: 
+  - 
+titleTag: 草稿
+---
 
 ## TCP
 

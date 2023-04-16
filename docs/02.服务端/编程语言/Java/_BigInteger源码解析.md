@@ -1,3 +1,15 @@
+---
+title: BigInteger源码解析
+date: 2020-06-29 22:18:37
+permalink: /pages/d649a1/
+categories: 
+  - 服务端
+  - 编程语言
+  - Java
+tags: 
+  - 
+titleTag: 草稿
+---
 今天偶然看到BigInteger里面有一些有意思的函数。特意看了下源码
 
 

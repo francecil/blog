@@ -1,3 +1,15 @@
+---
+title: WebPerformanceApi踩坑记录
+date: 2018-06-04 10:39:26
+permalink: /pages/fa651f/
+sidebar: auto
+categories: 
+  - 随笔
+  - 2018
+tags: 
+  - 
+titleTag: 草稿
+---
 ## 介绍：
 https://w3c.github.io/resource-timing/
 

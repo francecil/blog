@@ -1,3 +1,14 @@
+---
+title: curl命令
+date: 2021-12-30 22:53:58
+permalink: /pages/948de7/
+categories: 
+  - 通用技术
+  - Linux
+tags: 
+  - 
+titleTag: 草稿
+---
 
 
 

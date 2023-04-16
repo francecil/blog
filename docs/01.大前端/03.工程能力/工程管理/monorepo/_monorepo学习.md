@@ -1,3 +1,16 @@
+---
+title: monorepo学习
+date: 2022-05-06 20:40:35
+permalink: /pages/d2e57e/
+categories: 
+  - 大前端
+  - 工程能力
+  - 工程管理
+  - monorepo
+tags: 
+  - 
+titleTag: 草稿
+---
 https://mp.weixin.qq.com/s/PIdmJ2cHmq9QBj6MBJ9ygQ
 
 

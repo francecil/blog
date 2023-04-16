@@ -1,3 +1,16 @@
+---
+title: svg笔记
+date: 2019-02-21 17:23:00
+permalink: /pages/e7b448/
+categories: 
+  - 大前端
+  - 前端基础
+  - 编程语言
+  - HTML
+tags: 
+  - 
+titleTag: 草稿
+---
 ## svg坐标系统
 
 

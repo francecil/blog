@@ -1,3 +1,14 @@
+---
+title: Web安全
+date: 2019-12-15 13:48:12
+permalink: /pages/d20d8d/
+categories: 
+  - 通用技术
+  - 网络基础
+tags: 
+  - 
+titleTag: 草稿
+---
 # xss 
 
 根据拼接html的处理方分为两类

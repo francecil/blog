@@ -1,3 +1,16 @@
+---
+title: 你不知道的JavaScript(上)
+date: 2018-02-01 14:50:28
+permalink: /pages/e3944e/
+categories: 
+  - 大前端
+  - 前端基础
+  - 编程语言
+  - JavaScript
+tags: 
+  - 
+titleTag: 草稿
+---
 # 前言
 
 本篇为 《你不知道的JavaScript（上）》 的读书笔记。

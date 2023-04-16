@@ -1,3 +1,15 @@
+---
+title: 小技巧：Chrome 在线调试 Node
+date: 2021-09-21 21:02:37
+permalink: /pages/edaf1d/
+categories: 
+  - 服务端
+  - 编程语言
+  - NodeJS
+tags: 
+  - 
+titleTag: 草稿
+---
 ## 背景
 
 我们经常会

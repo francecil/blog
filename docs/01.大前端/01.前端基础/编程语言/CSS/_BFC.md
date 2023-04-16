@@ -1,3 +1,16 @@
+---
+title: BFC
+date: 2019-12-12 17:36:39
+permalink: /pages/49c89a/
+categories: 
+  - 大前端
+  - 前端基础
+  - 编程语言
+  - CSS
+tags: 
+  - 
+titleTag: 草稿
+---
 
 
 ## 介绍

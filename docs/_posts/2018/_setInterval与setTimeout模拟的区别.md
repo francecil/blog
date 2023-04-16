@@ -1,3 +1,15 @@
+---
+title: setInterval与setTimeout模拟的区别
+date: 2019-09-02 19:36:21
+permalink: /pages/7dab3a/
+sidebar: auto
+categories: 
+  - 随笔
+  - 2018
+tags: 
+  - 
+titleTag: 草稿
+---
 ## 前言
 
 本文先通过 setTimeout 模拟 setInterval ，分析两者的效果差异，

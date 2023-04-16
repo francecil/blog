@@ -1,6 +1,15 @@
 ---
 title: vue 中 updated 的执行时机
 date: 2020/01/15 00:00:00
+permalink: /pages/1dd883/
+titleTag: 草稿
+categories: 
+  - 大前端
+  - 应用框架
+  - UI 框架
+  - Vue
+tags: 
+  - 
 ---
 
 ## 背景

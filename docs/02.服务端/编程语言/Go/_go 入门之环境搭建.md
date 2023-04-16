@@ -1,3 +1,15 @@
+---
+title: go 入门之环境搭建
+date: 2021-09-21 21:02:37
+permalink: /pages/44103f/
+categories: 
+  - 服务端
+  - 编程语言
+  - Go
+tags: 
+  - 
+titleTag: 草稿
+---
 ## 安装
 
 ```

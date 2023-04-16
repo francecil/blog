@@ -1,3 +1,16 @@
+---
+title: Vue问题记录
+date: 2018-04-18 15:52:24
+permalink: /pages/092b57/
+categories: 
+  - 大前端
+  - 应用框架
+  - UI 框架
+  - Vue
+tags: 
+  - 
+titleTag: 草稿
+---
 # 1. element ui 创建多行表单
 
 将 form 设置成 inline ，每一行用 el-form-item 包装

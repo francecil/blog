@@ -1,3 +1,15 @@
+---
+title: ThreadLocal
+date: 2020-06-29 22:18:37
+permalink: /pages/3ebd5c/
+categories: 
+  - 服务端
+  - 编程语言
+  - Java
+tags: 
+  - 
+titleTag: 草稿
+---
 >源码未看完，先占坑
 
 

@@ -1,3 +1,16 @@
+---
+title: 如何用好Babel
+date: 2019-10-08 10:31:49
+permalink: /pages/4a5805/
+categories: 
+  - 大前端
+  - 工程能力
+  - 编译构建
+  - babel
+tags: 
+  - 
+titleTag: 草稿
+---
 ## 前言
 
 Babel 是什么？

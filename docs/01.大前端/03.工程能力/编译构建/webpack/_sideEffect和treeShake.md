@@ -1,3 +1,16 @@
+---
+title: sideEffect和treeShake
+date: 2023-04-05 16:02:39
+permalink: /pages/682baa/
+categories: 
+  - 大前端
+  - 工程能力
+  - 编译构建
+  - webpack
+tags: 
+  - 
+titleTag: 草稿
+---
 纯粹的 esm 可以很方便的进行  tree-shake ，去除无用代码。
 
 但实际应用时，很难分析一个模块是否完全没有副作用（现在可以自动分析一部分了么？）。因此需要借助 sideEffects 配置来显式声明是否存在副作用

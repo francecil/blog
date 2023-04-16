@@ -1,3 +1,17 @@
+---
+title: WebGL 笔记
+date: 2020-03-11 20:43:59
+permalink: /pages/e4246c/
+categories: 
+  - 大前端
+  - 专业领域
+  - 可视化
+  - 通用基础
+  - WebGL
+tags: 
+  - 
+titleTag: 草稿
+---
 ## gl.drawArrays 与 gl.drawElements 区别
 
 传入顶点索引

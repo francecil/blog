@@ -1,3 +1,16 @@
+---
+title: VSCode 调试 V8 源码
+date: 2020-07-12 04:45:20
+permalink: /pages/9f42be/
+categories: 
+  - 大前端
+  - 前端基础
+  - 执行引擎
+  - V8
+tags: 
+  - 
+titleTag: 草稿
+---
 ## hint
 
 发现 linux or macos 上调试 v8 较麻烦，后面直接调试 JavaScriptCore 了

@@ -1,3 +1,15 @@
+---
+title: Web Worker 与高效交换名片
+date: 2021-09-21 21:02:37
+permalink: /pages/23326d/
+sidebar: auto
+categories: 
+  - 随笔
+  - 2020
+tags: 
+  - 
+titleTag: 草稿
+---
 b 站视频，是一个交换名片广告
 
 抽象，一个实体能同时取两个数据，发2个数据

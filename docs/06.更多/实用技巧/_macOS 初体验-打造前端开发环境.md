@@ -1,3 +1,14 @@
+---
+title: macOS 初体验-打造前端开发环境
+date: 2020-04-01 23:55:17
+permalink: /pages/c5fa7e/
+categories: 
+  - 更多
+  - 实用技巧
+tags: 
+  - 
+titleTag: 草稿
+---
 ## 前言
 
 之前都在 win10 上进行前端开发，没有玩过 macOS 。最近入职新公司发了 mbp15 ，在此对 macOS 的使用做个记录。

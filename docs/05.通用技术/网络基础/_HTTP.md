@@ -1,3 +1,14 @@
+---
+title: HTTP
+date: 2020-03-13 19:23:26
+permalink: /pages/3b39e7/
+categories: 
+  - 通用技术
+  - 网络基础
+tags: 
+  - 
+titleTag: 草稿
+---
 ## 请求方法
 
 ### HEAD 

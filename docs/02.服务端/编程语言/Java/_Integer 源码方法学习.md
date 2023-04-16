@@ -1,3 +1,15 @@
+---
+title: Integer 源码方法学习
+date: 2020-06-29 22:18:37
+permalink: /pages/f661cb/
+categories: 
+  - 服务端
+  - 编程语言
+  - Java
+tags: 
+  - 
+titleTag: 草稿
+---
 ## 求 32位无符号整数 前导0个数
 #### 注意使用场景，一般会用该方法的前导0个数不会少
 #### 汇编中逻辑右移可直接用指令 `SHR reg/men ,n` 即物理上 a>>2 比 (a>>1)>>1 快

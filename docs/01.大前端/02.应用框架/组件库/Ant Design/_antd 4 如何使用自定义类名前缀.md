@@ -1,3 +1,16 @@
+---
+title: antd 4 如何使用自定义类名前缀
+date: 2021-09-21 21:02:37
+permalink: /pages/7286a1/
+categories: 
+  - 大前端
+  - 应用框架
+  - 组件库
+  - Ant Design
+tags: 
+  - 
+titleTag: 草稿
+---
 
 ## 1. 使用 ConfigProvider 组件配置
 https://ant.design/components/config-provider-cn/

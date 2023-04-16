@@ -1,3 +1,16 @@
+---
+title: Webpack之libraryExport
+date: 2019-08-19 14:09:25
+permalink: /pages/f64cb9/
+categories: 
+  - 大前端
+  - 工程能力
+  - 编译构建
+  - webpack
+tags: 
+  - 
+titleTag: 草稿
+---
 
 
 看 element 代码有个不太清楚的点，

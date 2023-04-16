@@ -1,3 +1,14 @@
+---
+title: resume@2023
+date: 2022-08-23 15:42:37
+permalink: /pages/b17fca/
+categories: 
+  - 更多
+  - 面试经验
+tags: 
+  - 
+titleTag: 草稿
+---
 # 个人信息
 - 姓名: gahing
 - 邮箱: france.zjx@gmail.com

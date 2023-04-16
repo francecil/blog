@@ -1,3 +1,15 @@
+---
+title: Java IO
+date: 2020-06-29 22:18:37
+permalink: /pages/e8bd58/
+categories: 
+  - 服务端
+  - 编程语言
+  - Java
+tags: 
+  - 
+titleTag: 草稿
+---
 # Java IO
 ## `java.io.File`类用于表示文件（目录）
 File类只用于表示文件（目录）的信息（名称、大小等），不能用于文件内容的访问

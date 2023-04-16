@@ -1,3 +1,16 @@
+---
+title: 精读<react fiber>
+date: 2021-09-21 21:02:37
+permalink: /pages/ce01d6/
+categories: 
+  - 大前端
+  - 应用框架
+  - UI 框架
+  - React
+tags: 
+  - 
+titleTag: 草稿
+---
 中断的执行单元? 不是单元内暂停，而是已经执行完了，准备执行下一个执行单元时中断。
 
 每个虚拟dom是一个fiber单元，构成链表

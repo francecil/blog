@@ -1,3 +1,17 @@
+---
+title: puppeteer笔记
+date: 2022-05-06 20:40:35
+permalink: /pages/f39bda/
+categories: 
+  - 大前端
+  - 工程能力
+  - 前端测试
+  - E2E
+  - Puppeteer
+tags: 
+  - 
+titleTag: 草稿
+---
 ## 嵌套 iframe 如何寻找
 
 1. 直接在所有的 frames 里进行寻找

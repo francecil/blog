@@ -1,3 +1,14 @@
+---
+title: LearningLinux
+date: 2017-02-14 17:11:23
+permalink: /pages/ee0cfb/
+categories: 
+  - 通用技术
+  - Linux
+tags: 
+  - 
+titleTag: 草稿
+---
 [TOC]
 
 # 基本指令

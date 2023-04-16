@@ -1,3 +1,15 @@
+---
+title: node小bug记录
+date: 2020-03-22 13:35:02
+permalink: /pages/278908/
+categories: 
+  - 服务端
+  - 编程语言
+  - NodeJS
+tags: 
+  - 
+titleTag: 草稿
+---
 ## 1.使用exec命名，中文输出乱码
 
 使用 `iconv-lite`

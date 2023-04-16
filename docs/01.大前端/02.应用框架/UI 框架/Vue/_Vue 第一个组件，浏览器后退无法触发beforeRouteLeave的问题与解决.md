@@ -1,3 +1,16 @@
+---
+title: Vue 第一个组件，浏览器后退无法触发beforeRouteLeave的问题与解决
+date: 2020-06-29 22:18:37
+permalink: /pages/cce291/
+categories: 
+  - 大前端
+  - 应用框架
+  - UI 框架
+  - Vue
+tags: 
+  - 
+titleTag: 草稿
+---
 ~~已提issue: https://github.com/vuejs/vue-router/issues/1951~~
 
 ## 现象

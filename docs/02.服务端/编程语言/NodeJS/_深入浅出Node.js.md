@@ -1,3 +1,15 @@
+---
+title: 深入浅出Node.js
+date: 2018-02-24 15:55:46
+permalink: /pages/159088/
+categories: 
+  - 服务端
+  - 编程语言
+  - NodeJS
+tags: 
+  - 
+titleTag: 草稿
+---
 # 2.模块机制
 
 ## CommonJS规范

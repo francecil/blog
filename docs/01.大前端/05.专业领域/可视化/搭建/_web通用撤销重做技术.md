@@ -2,6 +2,10 @@
 title: web通用撤销重做技术
 date: 2018-10-07 11:12:40
 categories: 大前端
+permalink: /pages/f07b5e/
+titleTag: 草稿
+tags: 
+  - 
 ---
 
 ## 前言

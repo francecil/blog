@@ -1,3 +1,15 @@
+---
+title: Android Binder学习笔记
+date: 2020-06-29 22:18:37
+permalink: /pages/7d6e79/
+categories: 
+  - 服务端
+  - 编程语言
+  - Java
+tags: 
+  - 
+titleTag: 草稿
+---
 > Ref:http://blog.csdn.net/universus/article/details/6211589
 
 ## **出现Binder的原因：**

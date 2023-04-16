@@ -1,3 +1,15 @@
+---
+title: win10+docker 测试多个版本chrome
+date: 2019-07-21 17:31:39
+permalink: /pages/c7b05a/
+categories: 
+  - 服务端
+  - 服务部署
+  - Docker
+tags: 
+  - 
+titleTag: 草稿
+---
 ## 前言
 
 在某个chrome版本遇到了一个bug，需要复现

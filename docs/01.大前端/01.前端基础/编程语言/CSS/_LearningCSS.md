@@ -1,3 +1,16 @@
+---
+title: LearningCSS
+date: 2017-02-14 17:11:23
+permalink: /pages/68abf6/
+categories: 
+  - 大前端
+  - 前端基础
+  - 编程语言
+  - CSS
+tags: 
+  - 
+titleTag: 草稿
+---
 
 # 1.background属性
 ## background-image 设置的背景图默认会填充整个所在布局，

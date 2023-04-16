@@ -1,3 +1,17 @@
+---
+title: Chrome 拓展开发笔记
+date: 2022-05-06 20:40:35
+permalink: /pages/9ce6c1/
+categories: 
+  - 大前端
+  - 前端基础
+  - 浏览器
+  - 浏览器生态
+  - Extension
+tags: 
+  - 
+titleTag: 草稿
+---
 content-scripts, background 代码更新，需要到拓展详情页刷新下
 
 content-scripts 代码的输出，在页面的 console 面板下查看，可以理解为注入到页面中的代码
