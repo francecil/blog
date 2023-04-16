@@ -2,7 +2,7 @@
 title: once
 date: 2018-02-24 15:55:46
 permalink: /pages/2426fe/
-article: false
+subject: true
 categories:
   - 服务端
   - 编程语言

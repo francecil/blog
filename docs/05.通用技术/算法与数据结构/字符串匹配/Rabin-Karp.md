@@ -2,7 +2,7 @@
 title: Rabin-Karp
 date: 2020-03-24 22:26:15
 permalink: /pages/b566df/
-article: false
+subject: true
 categories:
   - 通用技术
   - 算法与数据结构

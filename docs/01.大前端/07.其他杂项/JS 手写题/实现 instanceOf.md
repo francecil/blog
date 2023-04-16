@@ -2,7 +2,7 @@
 title: 实现 instanceOf
 date: 2019-12-31 13:04:10
 permalink: /pages/e7241a/
-article: false
+subject: true
 categories:
   - 大前端
   - 其他杂项
