@@ -2,7 +2,7 @@
 title: yallist
 date: 2018-02-24 15:55:46
 permalink: /pages/2d739a/
-subject: true
+titleTag: 专题
 categories:
   - 服务端
   - 编程语言

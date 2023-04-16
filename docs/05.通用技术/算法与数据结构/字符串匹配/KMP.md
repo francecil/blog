@@ -2,7 +2,7 @@
 title: KMP
 date: 2020-03-24 22:26:15
 permalink: /pages/595c9b/
-subject: true
+titleTag: 专题
 categories:
   - 通用技术
   - 算法与数据结构

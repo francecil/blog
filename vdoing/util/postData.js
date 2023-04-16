@@ -6,9 +6,9 @@ import { type, compareDate } from './index'
  */
 export function filterPosts(posts) {
   posts = posts.filter(item => {
-    const { frontmatter: { pageComponent, article, home, draft, subject } } = item
+    const { frontmatter: { pageComponent, article, home, titleTag } } = item
     // 过滤存在页面组件、非文章页 (article 字段为false)、首页 、非专题页、草稿页
-    return !(pageComponent || article === false || home === true || subject === true || draft === true)
+    return !(pageComponent || article === false || home === true || titleTag === '专题' || titleTag === '草稿')
   })
   return posts
 }

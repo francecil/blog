@@ -2,7 +2,7 @@
 title: 实现 new 操作符
 date: 2019-10-21 16:58:00
 permalink: /pages/85c45e/
-subject: true
+titleTag: 专题
 categories:
   - 大前端
   - 其他杂项

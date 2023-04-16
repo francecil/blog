@@ -2,7 +2,7 @@
 title: 实现 call, apply, bind
 date: 2019-10-22 22:04:33
 permalink: /pages/44d44e/
-subject: true
+titleTag: 专题
 categories:
   - 大前端
   - 其他杂项
