@@ -12,7 +12,7 @@ const { globSync } = require('glob');
  * @param {*} patterns 
  * @returns 
  */
-function readFileList(dir = docsRoot, patterns = ["**/!(_)*/!(_*|README).md"]) {
+function readFileList(dir = docsRoot, patterns = ["**/!(_)*/!(README).md"]) {
   const files = globSync(patterns, { cwd: dir, ignore: ['node_modules/**', '.vuepress/**', '@pages/**'] }).map((_filePath) => {
     const filePath = path.join(dir, _filePath)
     const filename = path.basename(filePath)

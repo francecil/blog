@@ -114,13 +114,21 @@ function mapTocToSidebar(root, collapsable, prefix = '') {
     if (filename === '.DS_Store') { // 过滤.DS_Store文件
       return
     }
-    // 不处理草稿文件(夹)
-    if(filename.startsWith('_') || filename.startsWith('README')) {
-      return
+
+    const isDir = stat.isDirectory()
+
+    // 忽略 README 文件
+    if (/^README\.md$/i.test(filename)) {
+      return;
+    }
+    // 忽略临时文件夹
+    if (filename.startsWith('_') && isDir) {
+      return;
     }
 
+
+
     const fileNameArr = filename.split('.')
-    const isDir = stat.isDirectory()
     const order = /^\d+$/.test(fileNameArr[0]) ? Number(fileNameArr.shift()) : fileIndex;
     const type = isDir ? '' : fileNameArr.pop();
     let title = fileNameArr.join('.')
