@@ -1,3 +1,16 @@
+---
+title: react学习
+date: 2019-03-01 11:05:13
+permalink: /pages/a0d8df/
+categories: 
+  - 大前端
+  - 应用框架
+  - UI 框架
+  - React
+tags: 
+  - 
+titleTag: 草稿
+---
 ## redux-thunk 中间件
  将store.dispatch方法中的参数  由对象变成支持函数
 

@@ -2,9 +2,11 @@
 title: 浅谈 Web 动画
 date: 2020-02-05 14:10:47
 categories: 大前端
-tags:
+tags: 
   - 动画
   - 前端基础
+permalink: /pages/746d52/
+titleTag: 草稿
 ---
 
 ## 前言

@@ -1,3 +1,14 @@
+---
+title: http2
+date: 2019-12-15 21:22:34
+permalink: /pages/b50a84/
+categories: 
+  - 通用技术
+  - 网络基础
+tags: 
+  - 
+titleTag: 草稿
+---
 # 新特性
 
 ## 二进制分帧

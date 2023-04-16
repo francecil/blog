@@ -1,3 +1,16 @@
+---
+title: 通读「PWA 应用实战」
+date: 2021-09-21 21:02:37
+permalink: /pages/4e9aec/
+categories: 
+  - 大前端
+  - 专业领域
+  - 跨端技术
+  - PWA
+tags: 
+  - 
+titleTag: 草稿
+---
 ## sw 注册过程
 
 ### 作用域

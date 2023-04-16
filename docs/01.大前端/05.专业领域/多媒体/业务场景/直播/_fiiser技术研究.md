@@ -1,3 +1,17 @@
+---
+title: fiiser技术研究
+date: 2017-02-14 17:11:23
+permalink: /pages/02e53b/
+categories: 
+  - 大前端
+  - 专业领域
+  - 多媒体
+  - 业务场景
+  - 直播
+tags: 
+  - 
+titleTag: 草稿
+---
 # 手势
 注意保证 保证PC web端和APP端 的兼容性
 fiiser 通过wss传输 [x,y,isTouched] 

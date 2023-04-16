@@ -1,3 +1,15 @@
+---
+title: 浅谈DOM DIFF
+date: 2022-05-06 20:40:35
+permalink: /pages/bd467e/
+categories: 
+  - 大前端
+  - 应用框架
+  - UI 框架
+tags: 
+  - 
+titleTag: 草稿
+---
 ## 前置说明
 
 - 操作 dom 的成本比纯计算的成本高很多

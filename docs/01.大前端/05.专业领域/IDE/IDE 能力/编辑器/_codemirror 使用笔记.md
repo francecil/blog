@@ -1,3 +1,17 @@
+---
+title: codemirror 使用笔记
+date: 2020-09-07 18:10:06
+permalink: /pages/732362/
+categories: 
+  - 大前端
+  - 专业领域
+  - IDE
+  - IDE 能力
+  - 编辑器
+tags: 
+  - 
+titleTag: 草稿
+---
 
 ```js
 import CodeMirror from "@uiw/react-codemirror";

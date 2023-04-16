@@ -27,8 +27,11 @@ async function setFrontmatter(sourceDir, themeConfig) {
   for (const file of files) {
     let dataStr = fs.readFileSync(file.filePath, 'utf8');// 读取每个md文件内容
     const fileMatterObj = matter(dataStr, {});
+    // 是否为草稿文件
+    const isDraft = file.name.startsWith('_');
 
-    if (Object.keys(fileMatterObj.data).length === 0) { // 未定义FrontMatter数据
+    // 未定义FrontMatter数据
+    if (Object.keys(fileMatterObj.data).length === 0) {
       // 文件的创建时间
       const dateStr = dateFormat(getFileBirthtime(file.filePath));
       const categories = getCategories(
@@ -37,22 +40,34 @@ async function setFrontmatter(sourceDir, themeConfig) {
         ignoreCategories
       );
 
-      let cateLabelStr = '';
-      categories.forEach(item => {
-        cateLabelStr += os.EOL + '  - ' + item
-      });
-
-      let cateStr = '';
+      const fmArray = [
+        ['title', isDraft ? file.name.slice(1) : file.name],
+        ['date', dateStr],
+        ['permalink', getPermalink()]
+      ]
+      if (file.filePath.indexOf('_posts') > -1) {
+        fmArray.push(['sidebar', 'auto'])
+      }
       if (!(isCategory === false)) {
-        cateStr = os.EOL + 'categories:' + cateLabelStr
+        fmArray.push(['categories', categories.reduce((pre, cur) => pre + os.EOL + '  - ' + cur, '')])
       };
+      if (!(isTag === false)) {
+        fmArray.push(['tags', `${os.EOL}  - `])
+      }
+      if (isDraft) {
+        fmArray.push(['titleTag', '草稿'])
+      }
 
-      // 注意下面这些反引号字符串的格式会映射到文件
-      const tagsStr = isTag === false ? '' : `${os.EOL}tags:${os.EOL}  - ${os.EOL}`;
+      let fmData = fmArray.reduce((pre, [key, val]) => {
+        return pre + (pre ? os.EOL : '') + `${key}: ${val}`
+      }, '')
+      if(extendFrontmatterStr) {
+        fmData += os.EOL + extendFrontmatterStr
+      }
 
-      const fmData = `---${os.EOL}title: ${file.name}${os.EOL}date: ${dateStr}${os.EOL}permalink: ${getPermalink()}${file.filePath.indexOf('_posts') > -1 ? os.EOL + 'sidebar: auto' : ''}${cateStr}${tagsStr}${extendFrontmatterStr}${os.EOL}---`;
+      const finalFmData = `---${os.EOL}${fmData}${os.EOL}---`
 
-      fs.writeFileSync(file.filePath, `${fmData}${os.EOL}${fileMatterObj.content}`); // 写入
+      fs.writeFileSync(file.filePath, `${finalFmData}${os.EOL}${fileMatterObj.content}`); // 写入
       log(chalk.blue('tip ') + chalk.green(`write frontmatter(写入frontmatter)：${file.filePath} `))
 
     } else {
@@ -78,6 +93,16 @@ async function setFrontmatter(sourceDir, themeConfig) {
 
       if (file.filePath.indexOf('_posts') > -1 && !matterData.hasOwnProperty('sidebar')) { // auto侧边栏，_posts文件夹特有
         matterData.sidebar = "auto";
+        hasChange = true;
+      }
+
+      // 草稿特殊处理
+      if(isDraft && matterData.titleTag !== '草稿') {
+        hasChange = true;
+        matterData.titleTag = "草稿"
+      } 
+      if(!isDraft && matterData.titleTag === "草稿") {
+        delete matterData.titleTag
         hasChange = true;
       }
 

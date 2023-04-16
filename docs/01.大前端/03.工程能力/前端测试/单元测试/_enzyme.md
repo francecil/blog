@@ -1,3 +1,16 @@
+---
+title: enzyme
+date: 2021-09-21 21:02:37
+permalink: /pages/fbf48d/
+categories: 
+  - 大前端
+  - 工程能力
+  - 前端测试
+  - 单元测试
+tags: 
+  - 
+titleTag: 草稿
+---
 ## enzyme
 
 有几种用法渲染组件

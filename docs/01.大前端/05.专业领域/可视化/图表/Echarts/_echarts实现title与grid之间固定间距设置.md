@@ -1,3 +1,17 @@
+---
+title: echarts实现title与grid之间固定间距设置
+date: 2019-08-05 14:19:37
+permalink: /pages/310bcb/
+categories: 
+  - 大前端
+  - 专业领域
+  - 可视化
+  - 图表
+  - Echarts
+tags: 
+  - 
+titleTag: 草稿
+---
 ## 前言
 
 今天在使用某平台图表控件可视化配置时，看到有个参数是：标题与绘图区距离

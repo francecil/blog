@@ -1,3 +1,16 @@
+---
+title: Jest
+date: 2021-09-21 21:02:37
+permalink: /pages/a1afa0/
+categories: 
+  - 大前端
+  - 工程能力
+  - 前端测试
+  - 单元测试
+tags: 
+  - 
+titleTag: 草稿
+---
 
 
 # Jest

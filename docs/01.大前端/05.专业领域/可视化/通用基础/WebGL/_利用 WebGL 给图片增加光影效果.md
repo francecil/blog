@@ -4,6 +4,8 @@ date: 2020/03/09 03:00:00
 categories: 大前端
 tags: 
   - WebGL
+permalink: /pages/9ff70b/
+titleTag: 草稿
 ---
 
 如何使用纹理

@@ -2,15 +2,14 @@
 title: LearningJS
 date: 2017-02-14 17:11:23
 permalink: /pages/8b553a/
-article: false
-categories:
+categories: 
   - 大前端
   - 前端基础
   - 编程语言
   - JavaScript
-tags:
-  - 
-
+tags: 
+  - null
+titleTag: 草稿
 ---
 [TOC]
 

@@ -1,3 +1,16 @@
+---
+title: htmlparser实现
+date: 2018-11-02 18:16:42
+permalink: /pages/9d8a6c/
+categories: 
+  - 大前端
+  - 前端基础
+  - 编程语言
+  - HTML
+tags: 
+  - 
+titleTag: 草稿
+---
 ## 方法1 全局开闭标签栈
 
 忽略 `script` 和 `textarea` 中的内容 不处理

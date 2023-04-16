@@ -1,3 +1,16 @@
+---
+title: flex布局笔记
+date: 2018-05-16 20:25:31
+permalink: /pages/382218/
+categories: 
+  - 大前端
+  - 前端基础
+  - 编程语言
+  - CSS
+tags: 
+  - 
+titleTag: 草稿
+---
 flex 容器布局:
 flex-flow:[flex-direction] [flex-wrap]
 justify-content:左右居中两端：水平对齐

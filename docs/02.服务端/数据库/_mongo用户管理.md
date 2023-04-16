@@ -1,3 +1,14 @@
+---
+title: mongo用户管理
+date: 2018-05-16 20:25:31
+permalink: /pages/a5dfe6/
+categories: 
+  - 服务端
+  - 数据库
+tags: 
+  - 
+titleTag: 草稿
+---
 mongod --dbpath d:/mongodb/data  开启服务是不带权限验证的
 
 通过mongo进入后 用show dbs 显示数据库

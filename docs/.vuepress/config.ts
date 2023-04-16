@@ -24,7 +24,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
       description: '前端技术博客。包括大前端、服务端、通用技术',
     }
   },
-  patterns: ['**/*.vue', '*.md', '**/!(_)*/!(_*|README).md'],
+  patterns: ['**/*.vue', '*.md', '**/!(_)*/!(README).md'],
   // base: '/', // 默认'/'。如果你想将你的网站部署到如 https://foo.github.io/bar/，那么 base 应该被设置成 "/bar/",（否则页面将失去样式等文件）
   // 主题配置
   themeConfig: {
@@ -131,7 +131,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
         ],
       },
     ],
-    patterns: ["**/!(_)*/!(_*|README).md"], // 需要解析的文件
+    patterns: ["**/!(_)*/!(README).md"], // 需要解析的文件
     sidebarDepth: 2, // 侧边栏显示深度，默认1，最大2（显示到h3标题）
     logo: '/img/logo.png', // 导航栏logo
     repo: 'francecil/blog', // 导航栏右侧生成Github链接

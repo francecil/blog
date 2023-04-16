@@ -1,3 +1,16 @@
+---
+title: React「 Refs 转发 」初探
+date: 2019-06-25 16:22:51
+permalink: /pages/807d1c/
+categories: 
+  - 大前端
+  - 应用框架
+  - UI 框架
+  - React
+tags: 
+  - 
+titleTag: 草稿
+---
 ## 前言
 
 Refs 转发：将父组件创建的 ref 传递给子组件的某个dom元素（或组件）。让父组件可以直接操作该dom元素（或组件）

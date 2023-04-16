@@ -1,3 +1,16 @@
+---
+title: JS技巧
+date: 2018-02-01 14:50:28
+permalink: /pages/a198a9/
+categories: 
+  - 大前端
+  - 前端基础
+  - 编程语言
+  - JavaScript
+tags: 
+  - 
+titleTag: 草稿
+---
 js 小技巧
 ========= 
 

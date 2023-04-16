@@ -1,3 +1,15 @@
+---
+title: 通过docker-selenium进行浏览器测试
+date: 2019-11-18 14:29:19
+permalink: /pages/5c0f74/
+categories: 
+  - 服务端
+  - 服务部署
+  - Docker
+tags: 
+  - 
+titleTag: 草稿
+---
 
 ## 需求
 

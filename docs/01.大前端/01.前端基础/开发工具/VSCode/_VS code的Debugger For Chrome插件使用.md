@@ -1,3 +1,16 @@
+---
+title: VS code的Debugger For Chrome插件使用
+date: 2018-01-10 11:31:06
+permalink: /pages/f9ddbd/
+categories: 
+  - 大前端
+  - 前端基础
+  - 开发工具
+  - VSCode
+tags: 
+  - 
+titleTag: 草稿
+---
 
 配置例子
 

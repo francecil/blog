@@ -1,3 +1,17 @@
+---
+title: flv格式说明
+date: 2018-09-11 17:17:12
+permalink: /pages/8bbb2d/
+categories: 
+  - 大前端
+  - 专业领域
+  - 多媒体
+  - 基础知识
+  - flv
+tags: 
+  - 
+titleTag: 草稿
+---
 ## 总体结构
 说明：`举例` 表示值为不固定，仅举例一个符合取值范围的值
 

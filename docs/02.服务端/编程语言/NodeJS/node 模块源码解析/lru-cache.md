@@ -1,3 +1,17 @@
+---
+title: lru-cache
+date: 2018-02-24 15:55:46
+permalink: /pages/b64fdf/
+titleTag: 专题
+categories:
+  - 服务端
+  - 编程语言
+  - NodeJS
+  - node 模块源码解析
+tags:
+  - 
+
+---
 ## 介绍
 
 least-recently-used items

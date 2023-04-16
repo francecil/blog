@@ -1,3 +1,14 @@
+---
+title: websocket
+date: 2022-05-06 20:40:35
+permalink: /pages/a8af65/
+categories: 
+  - 通用技术
+  - 网络基础
+tags: 
+  - 
+titleTag: 草稿
+---
 
 断开原因：
 - 一段时间不传递数据，会自动断开；（和服务器配置有关）；如果不想断开可以通过定时发送 ping/pong 解决

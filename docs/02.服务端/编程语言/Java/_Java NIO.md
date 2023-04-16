@@ -1,3 +1,15 @@
+---
+title: Java NIO
+date: 2020-06-29 22:18:37
+permalink: /pages/0a38aa/
+categories: 
+  - 服务端
+  - 编程语言
+  - Java
+tags: 
+  - 
+titleTag: 草稿
+---
 # 简介
 [Java IO文章][1]我们讲诉了Java IO的大部分用法。
 ## 那么 Java NIO又是什么呢?

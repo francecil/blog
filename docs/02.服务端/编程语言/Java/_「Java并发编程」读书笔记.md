@@ -1,3 +1,15 @@
+---
+title: 「Java并发编程」读书笔记
+date: 2020-06-29 22:18:37
+permalink: /pages/1dd710/
+categories: 
+  - 服务端
+  - 编程语言
+  - Java
+tags: 
+  - 
+titleTag: 草稿
+---
 # 1.synchronized 基础
 
 ## 1.1[synchronized 实例方法与静态方法的区别][1]

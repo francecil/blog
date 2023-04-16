@@ -1,3 +1,16 @@
+---
+title: typescript与aop
+date: 2021-05-08 10:58:59
+permalink: /pages/2b6493/
+categories: 
+  - 大前端
+  - 前端基础
+  - 编程语言
+  - TypeScript
+tags: 
+  - 
+titleTag: 草稿
+---
 ## 前言
 
 需要对 puppeteer api 的执行进行日志打点，尽量不要影响到原始方法执行逻辑

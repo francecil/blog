@@ -1,3 +1,17 @@
+---
+title: chrome.storage 的表升级和索引
+date: 2022-05-06 20:40:35
+permalink: /pages/2d1787/
+categories: 
+  - 大前端
+  - 前端基础
+  - 浏览器
+  - 浏览器生态
+  - Extension
+tags: 
+  - 
+titleTag: 草稿
+---
 ## 前言
 
 本文探讨了 `chrome.storage` 的优缺点，简单介绍了 IndexedDB 技术，并通过一个案例探讨 `chrome.storage` 应该如何进行上层封装以支持复杂场景

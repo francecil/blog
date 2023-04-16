@@ -1,3 +1,15 @@
+---
+title: NDK-JNI开发笔记
+date: 2020-06-29 22:18:37
+permalink: /pages/c655ca/
+categories: 
+  - 服务端
+  - 编程语言
+  - Java
+tags: 
+  - 
+titleTag: 草稿
+---
 ## **2016/04/13**
 ## hello-jni项目(基于android studio 2.0) 
 *(as2.2+ 可以用cmake 其实现,非常简单 不用.h文件

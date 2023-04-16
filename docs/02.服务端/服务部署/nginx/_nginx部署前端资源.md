@@ -1,3 +1,15 @@
+---
+title: nginx部署前端资源
+date: 2019-03-01 11:05:13
+permalink: /pages/c472ea/
+categories: 
+  - 服务端
+  - 服务部署
+  - nginx
+tags: 
+  - 
+titleTag: 草稿
+---
 
 1. 在 /usr/local 下新建 xxx 文件夹
 ```bash

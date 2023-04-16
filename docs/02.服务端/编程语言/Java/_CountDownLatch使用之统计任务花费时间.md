@@ -1,3 +1,15 @@
+---
+title: CountDownLatch使用之统计任务花费时间
+date: 2020-06-29 22:18:37
+permalink: /pages/e928eb/
+categories: 
+  - 服务端
+  - 编程语言
+  - Java
+tags: 
+  - 
+titleTag: 草稿
+---
 CountDownLatch是一种闭锁，延迟线程的进度直到终止状态
 包括一个计数器，初始化一个正数，表示需要等待的事件数量。
 

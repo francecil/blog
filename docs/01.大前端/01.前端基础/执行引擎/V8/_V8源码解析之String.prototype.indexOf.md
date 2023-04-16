@@ -5,6 +5,8 @@ categories: 大前端
 tags: 
   - ECMAScript
   - V8
+permalink: /pages/8c69ac/
+titleTag: 草稿
 ---
 
 ## 前言

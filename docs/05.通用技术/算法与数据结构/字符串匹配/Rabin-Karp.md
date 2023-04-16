@@ -1,3 +1,16 @@
+---
+title: Rabin-Karp
+date: 2020-03-24 22:26:15
+permalink: /pages/b566df/
+titleTag: 专题
+categories:
+  - 通用技术
+  - 算法与数据结构
+  - 字符串匹配
+tags:
+  - 
+
+---
 ## Rabin-Karp
 
 > 先进行名词的说明:源串(S1)长度为n,子串(S2)长度为m

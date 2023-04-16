@@ -1,3 +1,15 @@
+---
+title: commonjs与esmodule
+date: 2021-09-21 21:02:37
+permalink: /pages/95bf2e/
+categories: 
+  - 大前端
+  - 工程能力
+  - 模块化
+tags: 
+  - 
+titleTag: 草稿
+---
 ## CommonJS
 
 node 中对文件进行加载，使用自己的一套包装机制（底层还是用的 es5 js 那套，没有新语法糖）

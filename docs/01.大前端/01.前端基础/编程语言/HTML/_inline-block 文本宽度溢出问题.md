@@ -1,3 +1,16 @@
+---
+title: inline-block 文本宽度溢出问题
+date: 2022-05-06 20:40:35
+permalink: /pages/71997f/
+categories: 
+  - 大前端
+  - 前端基础
+  - 编程语言
+  - HTML
+tags: 
+  - 
+titleTag: 草稿
+---
 
 ## 故事是这样的...
 

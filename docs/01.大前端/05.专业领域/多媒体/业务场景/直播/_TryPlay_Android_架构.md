@@ -1,3 +1,17 @@
+---
+title: TryPlay_Android_架构
+date: 2017-03-09 18:06:44
+permalink: /pages/1ab3c6/
+categories: 
+  - 大前端
+  - 专业领域
+  - 多媒体
+  - 业务场景
+  - 直播
+tags: 
+  - 
+titleTag: 草稿
+---
 
 
 ##主流程

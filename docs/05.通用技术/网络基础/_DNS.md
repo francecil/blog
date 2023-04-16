@@ -1,3 +1,14 @@
+---
+title: DNS
+date: 2022-05-06 20:40:35
+permalink: /pages/dcd57c/
+categories: 
+  - 通用技术
+  - 网络基础
+tags: 
+  - 
+titleTag: 草稿
+---
 
 解析过程：
 

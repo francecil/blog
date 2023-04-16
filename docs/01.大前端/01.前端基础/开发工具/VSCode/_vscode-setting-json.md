@@ -1,3 +1,16 @@
+---
+title: vscode-setting-json
+date: 2019-02-21 17:23:00
+permalink: /pages/9d29b8/
+categories: 
+  - 大前端
+  - 前端基础
+  - 开发工具
+  - VSCode
+tags: 
+  - 
+titleTag: 草稿
+---
 ```json
 // 将设置放入此文件中以覆盖默认设置
 {

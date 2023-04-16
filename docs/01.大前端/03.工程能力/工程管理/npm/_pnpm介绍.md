@@ -1,3 +1,16 @@
+---
+title: pnpm介绍
+date: 2022-05-06 20:40:35
+permalink: /pages/cb086f/
+categories: 
+  - 大前端
+  - 工程能力
+  - 工程管理
+  - npm
+tags: 
+  - 
+titleTag: 草稿
+---
 
 ## store 目录
 
