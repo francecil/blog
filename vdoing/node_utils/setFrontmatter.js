@@ -96,9 +96,15 @@ async function setFrontmatter(sourceDir, themeConfig) {
         hasChange = true;
       }
 
+      // 草稿特殊处理
       if(isDraft && matterData.titleTag !== '草稿') {
+        hasChange = true;
         matterData.titleTag = "草稿"
       } 
+      if(!isDraft && matterData.titleTag === "草稿") {
+        delete matterData.titleTag
+        hasChange = true;
+      }
 
       if (!matterData.hasOwnProperty('pageComponent') && matterData.article !== false) { // 是文章页才添加分类和标签
         if (isCategory !== false && !matterData.hasOwnProperty('categories')) { // 分类
