@@ -10,6 +10,7 @@ import htmlModules from './config/htmlModules' // 自定义插入的html块
 import commonPlugin from './plugins/comment'
 import live2dPlugin from './plugins/live2d'
 import webVitalsPlugin from './plugins/web-vitals'
+import audiencesPlugin from './plugins/audiences'
 
 const DOMAIN_NAME = 'gahing.top' // 域名 (不带https)
 const WEB_SITE = `https://${DOMAIN_NAME}` // 网址
@@ -373,6 +374,9 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
           debug: process.env.NODE_ENV !== 'production'
         }
       }
+    ],
+    [
+      audiencesPlugin
     ],
     [
       '@vuepress/last-updated', // "上次更新"时间格式

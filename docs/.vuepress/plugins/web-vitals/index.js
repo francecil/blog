@@ -1,5 +1,8 @@
 import path from 'path';
 
+/**
+ * 收集性能数据并上报 vercel
+ */
 export default (opts, ctx) => ({
     define() {
         return {

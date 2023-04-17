@@ -29,6 +29,7 @@
     "yamljs": "^0.3.0"
   },
   "dependencies": {
+    "@vercel/analytics": "^0.1.11",
     "web-vitals": "^3.3.1"
   }
 }
