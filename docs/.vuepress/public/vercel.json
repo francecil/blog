@@ -1,15 +1,6 @@
 {
     "headers": [
       {
-        "source": "(*.html)",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, s-maxage=600, max-age=600"
-          }
-        ]
-      },
-      {
         "source": "(.*)",
         "headers": [
           {
