@@ -1,0 +1,22 @@
+{
+    "headers": [
+      {
+        "source": "(*.html)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, s-maxage=600, max-age=600"
+          }
+        ]
+      },
+      {
+        "source": "(.*)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, s-maxage=86400, max-age=86400"
+          }
+        ]
+      }
+    ]
+  }
