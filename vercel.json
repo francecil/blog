@@ -1,0 +1,31 @@
+{
+  "headers": [
+    {
+      "source": "/service-worker.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, maxage=600, s-maxage=600, stale-while-revalidate=1200"
+        }
+      ]
+    },
+    {
+      "source": "/(assets|img)/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, maxage=2592000, s-maxage=2592000, stale-while-revalidate=31536000"
+        }
+      ]
+    }
+  ]
+}
