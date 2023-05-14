@@ -98,6 +98,10 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
           { text: '面试', link: '/pages/c70629/' },
           { text: '人生总结', link: '/pages/f00c67/' },
           {
+            text: '灵感碎碎念',
+            link: '/pages/ideas/',
+          },
+          {
             text: '实用技巧', items: [{
               text: 'markdown 技巧', link: '/pages/d3622e/'
             }]
@@ -113,6 +117,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
               { text: '网站', link: '/pages/f06636/' },
             ],
           },
+
         ],
       },
       { text: '关于', link: '/about/' },
