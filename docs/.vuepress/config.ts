@@ -58,19 +58,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
         ],
       },
       {
-        text: '服务端',
-        link: '/server/',
-        items: [
-          {
-            text: '中间件',
-            items: [
-              { text: 'Redis', link: '/pages/c29f00/' },
-            ],
-          },
-        ],
-      },
-      {
-        text: '通用技术',
+        text: '技术',
         link: '/technology/',
         items: [
           {
@@ -86,10 +74,14 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
             link: '/pages/eca777/'
           },
           {
-            text: '其他技术领域',
+            text: '其他领域',
             items: [{
               text: '客户端',
               link: '/app/',
+            },
+            {
+              text: '服务端',
+              link: '/server/',
             }]
           },
         ],
@@ -244,8 +236,8 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
       },
     ],
     // 移动浏览器主题颜色
-    ['meta', { name: 'theme-color', media: "(prefers-color-scheme: light)", content: '#d1fbf9e6' }], 
-    ['meta', { name: 'theme-color', media: "(prefers-color-scheme: dark)", content: '#1e1e22cc' }], 
+    ['meta', { name: 'theme-color', media: "(prefers-color-scheme: light)", content: '#d1fbf9e6' }],
+    ['meta', { name: 'theme-color', media: "(prefers-color-scheme: dark)", content: '#1e1e22cc' }],
   ],
 
 
