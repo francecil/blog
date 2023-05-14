@@ -33,8 +33,9 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
     // 导航配置
     nav: [
       { text: '首页', link: '/' },
+      { text: '知识地图', link: '/knowledgemaps/' },
       {
-        text: '前端',
+        text: '大前端',
         link: '/fe/', //目录页链接，此处link是 vdoing 主题新增的配置项，有二级导航时，可以点击一级导航跳到目录页
         items: [
           {
@@ -57,19 +58,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
         ],
       },
       {
-        text: '服务端',
-        link: '/server/',
-        items: [
-          {
-            text: '中间件',
-            items: [
-              { text: 'Redis', link: '/pages/c29f00/' },
-            ],
-          },
-        ],
-      },
-      {
-        text: '通用技术',
+        text: '技术',
         link: '/technology/',
         items: [
           {
@@ -85,14 +74,19 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
             link: '/pages/eca777/'
           },
           {
-            text: '其他技术领域',
+            text: '其他领域',
             items: [{
               text: '客户端',
               link: '/app/',
+            },
+            {
+              text: '服务端',
+              link: '/server/',
             }]
           },
         ],
       },
+      { text: '软素质', link: '/soft-quality/' },
       {
         text: '更多',
         link: '/more/',
@@ -103,7 +97,6 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
           },
           { text: '面试', link: '/pages/c70629/' },
           { text: '人生总结', link: '/pages/f00c67/' },
-          { text: '软素质', link: '/soft-quality/' },
           {
             text: '实用技巧', items: [{
               text: 'markdown 技巧', link: '/pages/d3622e/'
@@ -243,8 +236,8 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
       },
     ],
     // 移动浏览器主题颜色
-    ['meta', { name: 'theme-color', media: "(prefers-color-scheme: light)", content: '#d1fbf9e6' }], 
-    ['meta', { name: 'theme-color', media: "(prefers-color-scheme: dark)", content: '#1e1e22cc' }], 
+    ['meta', { name: 'theme-color', media: "(prefers-color-scheme: light)", content: '#d1fbf9e6' }],
+    ['meta', { name: 'theme-color', media: "(prefers-color-scheme: dark)", content: '#1e1e22cc' }],
   ],
 
 
