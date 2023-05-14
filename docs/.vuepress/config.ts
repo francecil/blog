@@ -33,8 +33,9 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
     // 导航配置
     nav: [
       { text: '首页', link: '/' },
+      { text: '知识地图', link: '/knowledgemaps/' },
       {
-        text: '前端',
+        text: '大前端',
         link: '/fe/', //目录页链接，此处link是 vdoing 主题新增的配置项，有二级导航时，可以点击一级导航跳到目录页
         items: [
           {
@@ -93,6 +94,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
           },
         ],
       },
+      { text: '软素质', link: '/soft-quality/' },
       {
         text: '更多',
         link: '/more/',
@@ -103,7 +105,6 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
           },
           { text: '面试', link: '/pages/c70629/' },
           { text: '人生总结', link: '/pages/f00c67/' },
-          { text: '软素质', link: '/soft-quality/' },
           {
             text: '实用技巧', items: [{
               text: 'markdown 技巧', link: '/pages/d3622e/'
