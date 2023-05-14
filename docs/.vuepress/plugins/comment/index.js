@@ -1,5 +1,10 @@
 import path from 'path';
 
+/**
+ * fork from https://github.com/dongyuanxin/vuepress-plugin-comment
+ * new feature:
+ * - support utterances
+ */
 export default (opts, ctx) => ({
     define() {
         return {
