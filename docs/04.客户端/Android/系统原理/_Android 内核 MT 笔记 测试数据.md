@@ -2,12 +2,13 @@
 title: Android 内核 MT 笔记 测试数据
 date: 2020-06-29 22:18:37
 permalink: /pages/225cd1/
+tags: 
+  - null
+titleTag: 草稿
 categories: 
   - 客户端
   - Android
-tags: 
-  - 
-titleTag: 草稿
+  - 系统原理
 ---
 ## getevent/sendevent
 

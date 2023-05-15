@@ -7,6 +7,7 @@ permalink: /pages/e33d3a/
 categories: 
   - 客户端
   - Android
+  - 应用开发
 ---
 
 # 前言

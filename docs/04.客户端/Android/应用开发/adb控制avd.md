@@ -7,6 +7,7 @@ permalink: /pages/841da0/
 categories: 
   - 客户端
   - Android
+  - 应用开发
 ---
 
 ## 1.显示所有avd

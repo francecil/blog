@@ -2,12 +2,13 @@
 title: mongo用户管理
 date: 2018-05-16 20:25:31
 permalink: /pages/a5dfe6/
+tags: 
+  - null
+titleTag: 草稿
 categories: 
   - 服务端
   - 数据库
-tags: 
-  - 
-titleTag: 草稿
+  - NoSQL数据库
 ---
 mongod --dbpath d:/mongodb/data  开启服务是不带权限验证的
 

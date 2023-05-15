@@ -7,6 +7,7 @@ tags:
 categories: 
   - 客户端
   - Android
+  - 应用开发
 ---
 
 ## 需求

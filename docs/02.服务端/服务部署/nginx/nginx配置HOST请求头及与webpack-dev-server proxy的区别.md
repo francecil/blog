@@ -7,7 +7,7 @@ tags:
 categories: 
   - 服务端
   - 服务部署
-  - nginx
+  - Nginx
 ---
 ## 前言
 

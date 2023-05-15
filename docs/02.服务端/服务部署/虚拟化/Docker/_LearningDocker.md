@@ -2,13 +2,14 @@
 title: LearningDocker
 date: 2019-09-05 23:56:45
 permalink: /pages/399c46/
+tags: 
+  - null
+titleTag: 草稿
 categories: 
   - 服务端
   - 服务部署
+  - 虚拟化
   - Docker
-tags: 
-  - 
-titleTag: 草稿
 ---
 
 ## Q

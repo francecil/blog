@@ -2,13 +2,14 @@
 title: win10+docker 测试多个版本chrome
 date: 2019-07-21 17:31:39
 permalink: /pages/c7b05a/
+tags: 
+  - null
+titleTag: 草稿
 categories: 
   - 服务端
   - 服务部署
+  - 虚拟化
   - Docker
-tags: 
-  - 
-titleTag: 草稿
 ---
 ## 前言
 

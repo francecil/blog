@@ -2,13 +2,13 @@
 title: nginx部署前端资源
 date: 2019-03-01 11:05:13
 permalink: /pages/c472ea/
+tags: 
+  - null
+titleTag: 草稿
 categories: 
   - 服务端
   - 服务部署
-  - nginx
-tags: 
-  - 
-titleTag: 草稿
+  - Nginx
 ---
 
 1. 在 /usr/local 下新建 xxx 文件夹
