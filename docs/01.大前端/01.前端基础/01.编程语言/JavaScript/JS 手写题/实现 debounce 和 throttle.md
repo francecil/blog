@@ -3,13 +3,14 @@ title: 实现 debounce 和 throttle
 date: 2019-10-24 17:29:14
 permalink: /pages/e4965f/
 titleTag: 专题
-categories:
+categories: 
   - 大前端
-  - 其他杂项
+  - 前端基础
+  - 编程语言
+  - JavaScript
   - JS 手写题
-tags:
+tags: 
   - 
-
 ---
 ## 前言
 

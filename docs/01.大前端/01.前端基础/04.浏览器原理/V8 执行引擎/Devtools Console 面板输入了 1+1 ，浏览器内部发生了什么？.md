@@ -2,14 +2,13 @@
 title: Devtools Console 面板输入了 1+1 ，浏览器内部发生了什么？
 date: 2022-09-19 10:29:58
 permalink: /pages/9d2a81/
-categories:
+categories: 
   - 大前端
   - 前端基础
-  - 执行引擎
-  - V8
-tags:
+  - 浏览器原理
+  - V8 执行引擎
+tags: 
   - 
-
 ---
 
 # 背景

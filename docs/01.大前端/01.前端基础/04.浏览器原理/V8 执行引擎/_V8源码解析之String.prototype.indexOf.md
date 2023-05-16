@@ -1,7 +1,11 @@
 ---
 title: V8源码解析之String.prototype.indexOf
 date: 2020/03/24 00:00:00
-categories: 大前端
+categories: 
+  - 大前端
+  - 前端基础
+  - 浏览器原理
+  - V8 执行引擎
 tags: 
   - ECMAScript
   - V8

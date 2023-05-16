@@ -5,7 +5,7 @@ permalink: /pages/95bf2e/
 categories: 
   - 大前端
   - 工程能力
-  - 模块化
+  - JS 模块化
 tags: 
   - 
 titleTag: 草稿

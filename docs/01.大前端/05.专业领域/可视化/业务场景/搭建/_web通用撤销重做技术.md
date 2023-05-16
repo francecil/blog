@@ -1,7 +1,12 @@
 ---
 title: web通用撤销重做技术
 date: 2018-10-07 11:12:40
-categories: 大前端
+categories: 
+  - 大前端
+  - 专业领域
+  - 可视化
+  - 业务场景
+  - 搭建
 permalink: /pages/f07b5e/
 titleTag: 草稿
 tags: 

@@ -3,13 +3,14 @@ title: 实现 instanceOf
 date: 2019-12-31 13:04:10
 permalink: /pages/e7241a/
 titleTag: 专题
-categories:
+categories: 
   - 大前端
-  - 其他杂项
+  - 前端基础
+  - 编程语言
+  - JavaScript
   - JS 手写题
-tags:
+tags: 
   - 
-
 ---
 
 ## 背景

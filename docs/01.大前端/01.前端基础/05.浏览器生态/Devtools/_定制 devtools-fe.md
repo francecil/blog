@@ -5,7 +5,6 @@ permalink: /pages/f2a57f/
 categories: 
   - 大前端
   - 前端基础
-  - 浏览器
   - 浏览器生态
   - Devtools
 tags: 

@@ -3,13 +3,14 @@ title: 实现 call, apply, bind
 date: 2019-10-22 22:04:33
 permalink: /pages/44d44e/
 titleTag: 专题
-categories:
+categories: 
   - 大前端
-  - 其他杂项
+  - 前端基础
+  - 编程语言
+  - JavaScript
   - JS 手写题
-tags:
+tags: 
   - 
-
 ---
 ## 背景
 

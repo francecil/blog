@@ -3,13 +3,14 @@ title: 实现 new 操作符
 date: 2019-10-21 16:58:00
 permalink: /pages/85c45e/
 titleTag: 专题
-categories:
+categories: 
   - 大前端
-  - 其他杂项
+  - 前端基础
+  - 编程语言
+  - JavaScript
   - JS 手写题
-tags:
+tags: 
   - 
-
 ---
 实现 _new，达到如下效果
 ```js

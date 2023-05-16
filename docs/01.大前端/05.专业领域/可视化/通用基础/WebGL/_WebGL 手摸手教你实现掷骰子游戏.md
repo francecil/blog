@@ -1,7 +1,12 @@
 ---
 title: 喝酒没骰子？手摸手教你实现基于 WebGL 的掷骰子游戏
 date: 2020/03/11 11:00:00
-categories: 大前端
+categories: 
+  - 大前端
+  - 专业领域
+  - 可视化
+  - 通用基础
+  - WebGL
 tags: 
   - WebGL
 permalink: /pages/586637/

@@ -7,8 +7,8 @@ permalink: /pages/26ca79/
 categories: 
   - 大前端
   - 前端基础
-  - 执行引擎
-  - V8
+  - 浏览器原理
+  - V8 执行引擎
 ---
 
 ## 背景

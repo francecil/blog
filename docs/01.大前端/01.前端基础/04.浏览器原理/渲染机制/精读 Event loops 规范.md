@@ -7,7 +7,7 @@ permalink: /pages/0e87bb/
 categories: 
   - 大前端
   - 前端基础
-  - 浏览器
+  - 浏览器原理
   - 渲染机制
 ---
 

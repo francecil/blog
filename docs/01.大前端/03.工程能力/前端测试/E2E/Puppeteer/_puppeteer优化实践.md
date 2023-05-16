@@ -7,6 +7,7 @@ categories:
   - 工程能力
   - 前端测试
   - E2E
+  - Puppeteer
 tags: 
   - 
 titleTag: 草稿

@@ -5,8 +5,6 @@ permalink: /pages/732362/
 categories: 
   - 大前端
   - 专业领域
-  - IDE
-  - IDE 能力
   - 编辑器
 tags: 
   - 

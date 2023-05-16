@@ -3,13 +3,12 @@ title: Rabin-Karp
 date: 2020-03-24 22:26:15
 permalink: /pages/b566df/
 titleTag: 专题
-categories:
+categories: 
   - 通用技术
-  - 算法与数据结构
+  - 算法
   - 字符串匹配
-tags:
+tags: 
   - 
-
 ---
 ## Rabin-Karp
 
