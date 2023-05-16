@@ -2,6 +2,7 @@
  * 批量添加和修改front matter ，需要配置 ./config.yml 文件。
  */
 const fs = require('fs'); // 文件模块
+const os = require('os');
 const path = require('path'); // 路径模块
 const matter = require('gray-matter'); // front matter解析器 https://github.com/jonschlinkert/gray-matter
 const jsonToYaml = require('json2yaml')
@@ -96,7 +97,7 @@ async function main() {
         // 修复 tag 格式
         matterData.tags = matterData.tags.map(v => v === null ? '' : v)
       }
-      const newData = jsonToYaml.stringify(matterData).replace(/\n\s{2}/g, "\n").replace(/"/g, "") + '---\r\n' + fileMatterObj.content;
+      const newData = jsonToYaml.stringify(matterData).replace(/\n\s{2}/g, "\n").replace(/"/g, "") + '---' + os.EOL + fileMatterObj.content;
       fs.writeFileSync(file.filePath, newData); // 写入
       log(chalk.green(`update frontmatter：${file.filePath} `))
     }
