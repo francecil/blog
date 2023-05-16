@@ -3,7 +3,7 @@ title: 趣味js-只用特殊字符生成任意字符串
 date: 2018-01-07 11:12:40
 permalink: /pages/13c750/
 tags: 
-  - null
+  - 
 categories: 
   - 大前端
   - 前端基础
