@@ -1,3 +1,16 @@
+---
+title: WebIDE 业务介绍
+date: 2023-05-17 01:35:37
+permalink: /pages/238dc0/
+categories: 
+  - 大前端
+  - 专业领域
+  - Web IDE
+  - 业务场景
+tags: 
+  - 
+titleTag: 草稿
+---
 产品类型主要分为两类：
 ## 纯浏览器端
 

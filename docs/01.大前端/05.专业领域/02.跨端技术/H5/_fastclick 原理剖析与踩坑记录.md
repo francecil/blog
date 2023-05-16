@@ -1,3 +1,16 @@
+---
+title: fastclick 原理剖析与踩坑记录
+date: 2021-09-21 21:02:37
+permalink: /pages/36300d/
+categories: 
+  - 大前端
+  - 专业领域
+  - 跨端技术
+  - H5
+tags: 
+  - 
+titleTag: 草稿
+---
 
 1. 解决 click 300ms 问题
 2. 解决点击穿透问题

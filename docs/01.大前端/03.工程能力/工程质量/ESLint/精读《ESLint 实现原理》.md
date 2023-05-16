@@ -1,3 +1,15 @@
+---
+title: 精读《ESLint 实现原理》
+date: 2023-05-16 23:29:11
+permalink: /pages/4945e8/
+categories: 
+  - 大前端
+  - 工程能力
+  - 工程质量
+  - ESLint
+tags: 
+  - 
+---
 本次精读的文章是：[Eslint 的实现原理，其实挺简单 - 掘金](https://juejin.cn/post/7025256331120476197)
 
 # 引言
