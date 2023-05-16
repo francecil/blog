@@ -145,7 +145,14 @@ async function setFrontmatter(sourceDir, themeConfig) {
 
 }
 
-// 获取分类数据
+// 
+/**
+ * 获取分类数据
+ * @param {*} file 
+ * @param {*} categoryText 碎片化文章分类名
+ * @param {*} ignoreCategories 忽略的分类名
+ * @returns 
+ */
 function getCategories(file, categoryText, ignoreCategories) {
   let categories = []
   if (file.filePath.indexOf('_posts') === -1) {
@@ -201,3 +208,4 @@ function getFileBirthtime(filePath) {
 
 
 module.exports = setFrontmatter;
+module.exports.getCategories = getCategories

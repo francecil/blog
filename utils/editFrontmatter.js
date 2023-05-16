@@ -9,7 +9,8 @@ const yamlToJs = require('yamljs')
 const inquirer = require('inquirer') // 命令行操作
 const chalk = require('chalk') // 命令行打印美化
 const readFileList = require('./modules/readFileList');
-const { type, repairDate} = require('./modules/fn');
+const { type, repairDate } = require('./modules/fn');
+const { getCategories } = require('../vdoing/node_utils/setFrontmatter')
 const log = console.log
 
 const configPath = path.join(__dirname, 'config.yml') // 配置文件的路径
@@ -32,11 +33,14 @@ async function main() {
     edit = answers.edit
   })
 
-  if(!edit) { // 退出操作
+  if (!edit) { // 退出操作
     return
   }
-  
+
   const config = yamlToJs.load(configPath) // 解析配置文件的数据转为js对象
+
+
+  console.log({ config })
 
   if (type(config.path) !== 'array') {
     log(chalk.red('路径配置有误，path字段应该是一个数组'))
@@ -55,12 +59,12 @@ async function main() {
     let dataStr = fs.readFileSync(file.filePath, 'utf8');// 读取每个md文件的内容
     const fileMatterObj = matter(dataStr) // 解析md文件的front Matter。 fileMatterObj => {content:'剔除frontmatter后的文件内容字符串', data:{<frontmatter对象>}, ...}
     let matterData = fileMatterObj.data; // 得到md文件的front Matter
-    
+
     let mark = false
     // 删除操作
     if (config.delete) {
-      if( type(config.delete) !== 'array' ) {
-        log(chalk.yellow('未能完成删除操作，delete字段的值应该是一个数组！'))
+      if (type(config.delete) !== 'array') {
+        log(chalk.yellow('未能完成删除操作， delete 字段的值应该是一个数组！'))
       } else {
         config.delete.forEach(item => {
           if (matterData[item]) {
@@ -68,8 +72,13 @@ async function main() {
             mark = true
           }
         })
-        
+
       }
+    }
+    // 更新分类信息
+    if (config.updateCategories && matterData.categories) {
+      matterData.categories = getCategories(file, '随笔', [])
+      mark = true
     }
 
     // 添加、修改操作
@@ -77,13 +86,17 @@ async function main() {
       Object.assign(matterData, config.data) // 将配置数据合并到front Matter对象
       mark = true
     }
-    
+
     // 有操作时才继续
     if (mark) {
-      if(matterData.date && type(matterData.date) === 'date') {
+      if (matterData.date && type(matterData.date) === 'date') {
         matterData.date = repairDate(matterData.date) // 修复时间格式
       }
-      const newData = jsonToYaml.stringify(matterData).replace(/\n\s{2}/g,"\n").replace(/"/g,"")  + '---\r\n' + fileMatterObj.content;
+      if (Array.isArray(matterData.tags) && matterData.tags.includes(null)) {
+        // 修复 tag 格式
+        matterData.tags = matterData.tags.map(v => v === null ? '' : v)
+      }
+      const newData = jsonToYaml.stringify(matterData).replace(/\n\s{2}/g, "\n").replace(/"/g, "") + '---\r\n' + fileMatterObj.content;
       fs.writeFileSync(file.filePath, newData); // 写入
       log(chalk.green(`update frontmatter：${file.filePath} `))
     }

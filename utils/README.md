@@ -5,4 +5,4 @@
 
 ## 调整博客目录后需要重新调整分类
 
-`npm run editFm` 删除分类信息，然后重新执行 `npm run dev` 生成分类信息
+`config.yml` 的 updateCategories 字段配置 true ，然后执行 `npm run editFm` 即可更新分类信息
