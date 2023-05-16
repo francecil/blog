@@ -18,6 +18,8 @@ ESLint 是前端最流行的代码校验工具，它提供了许多插件 (plugi
 
 以 `eslint-config-airbnb`（最流行的可共享配置之一）为例，除了安装 `eslint-config-airbnb` 外，还需要安装众多对等依赖（peerDependencies），比如 `eslint-plugin-import`、`eslint-plugin-jsx-a11y` 、`eslint-plugin-react`、`eslint-plugin-react-hooks` 等等。
 
+<!-- more -->
+
 你是否会疑惑，为什么要额外装这些依赖，为何 `eslint-config-airbnb` 不把这些依赖作为直接依赖（dependencies）？
 
 也有同学疑惑，安装 `@antfu/eslint-config` 时并不需要额外安装 plugin 依赖，这又是为什么？
@@ -29,8 +31,6 @@ ESLint 是前端最流行的代码校验工具，它提供了许多插件 (plugi
 
 
 对于大多数人来说，并不需要知道这些知识点。但是当你构建自己的 ESLint 插件或可共享配置时，它会变得非常有用。
-
-<!-- more -->
 
 > **摘要 / TL;DR** ：如果觉得文章太长，也可以直接看结论：
 > -   在安装 ESLint Config 时，若包含 ESLint Plugin ，通常还需要安装这些 Plugin 依赖。
