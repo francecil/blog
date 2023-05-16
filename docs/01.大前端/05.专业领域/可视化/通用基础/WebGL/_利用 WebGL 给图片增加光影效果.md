@@ -1,7 +1,12 @@
 ---
 title: 利用 WebGL 给图片增加光影效果
 date: 2020/03/09 03:00:00
-categories: 大前端
+categories: 
+  - 大前端
+  - 专业领域
+  - 可视化
+  - 通用基础
+  - WebGL
 tags: 
   - WebGL
 permalink: /pages/9ff70b/

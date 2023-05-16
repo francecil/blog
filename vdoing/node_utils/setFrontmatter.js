@@ -131,6 +131,10 @@ async function setFrontmatter(sourceDir, themeConfig) {
         if (matterData.date && type(matterData.date) === 'date') {
           matterData.date = repairDate(matterData.date) // 修复时间格式
         }
+        if(Array.isArray(matterData.tags) && matterData.tags.includes(null)) {
+          // 修复 tag 格式
+          matterData.tags = matterData.tags.map(v => v === null ? '' : v)
+        }
         const newData = jsonToYaml.stringify(matterData).replace(/\n\s{2}/g, "\n").replace(/"/g, "") + '---' + os.EOL + fileMatterObj.content;
         fs.writeFileSync(file.filePath, newData); // 写入
         log(chalk.blue('tip ') + chalk.green(`write frontmatter(写入frontmatter)：${file.filePath} `))
@@ -141,7 +145,14 @@ async function setFrontmatter(sourceDir, themeConfig) {
 
 }
 
-// 获取分类数据
+// 
+/**
+ * 获取分类数据
+ * @param {*} file 
+ * @param {*} categoryText 碎片化文章分类名
+ * @param {*} ignoreCategories 忽略的分类名
+ * @returns 
+ */
 function getCategories(file, categoryText, ignoreCategories) {
   let categories = []
   if (file.filePath.indexOf('_posts') === -1) {
@@ -197,3 +208,4 @@ function getFileBirthtime(filePath) {
 
 
 module.exports = setFrontmatter;
+module.exports.getCategories = getCategories

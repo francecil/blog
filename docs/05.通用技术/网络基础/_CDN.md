@@ -1,7 +1,9 @@
 ---
 title: CDN
 date: 2020/04/01 00:00:00
-categories: 大前端
+categories: 
+  - 通用技术
+  - 网络基础
 tags: 
   - CDN
 permalink: /pages/98f4c4/
