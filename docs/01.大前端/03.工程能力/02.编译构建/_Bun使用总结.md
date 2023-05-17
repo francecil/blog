@@ -1,5 +1,5 @@
 ---
-title: Bun使用总结 copy
+title: Bun使用总结
 date: 2018-02-01 14:50:28
 permalink: /pages/456b2b/
 categories: 
