@@ -4,31 +4,21 @@
             <h1 class="header-title">知识体系：知识地图 x 观测维度</h1>
             <p class="header-desc">
                 个人知识体系由
-                <span style="font-weight: bold;">角色领域、基础技能和最佳实践</span>
+                <span style="font-weight: bold;">角色、基础技能和最佳实践</span>
                 三个维度构成，维度中的每个子项是一个独立的知识地图
                 <span style="font-style:italic;">（知识地图间亦有交叉</span>）
-                ，点击查看具体内容。
+                ，点击查看详情。
             </p>
         </div>
         <div class="km__body">
-            <div class="container">
+            <div class="container" :key="index" v-for="(config, index) in knowledgeConfigs">
                 <div class="container-header">
-                    <span>角色领域</span>
+                    <span>{{ config.name }}</span>
                 </div>
                 <div class="blocks">
-                    <KnowledgeMapBlock name="前端"
-                        desc="包含前端基础、asdsdadasdsdsdasdsdsdsd、工程能力、应用基础、专业领域、业务场景等方向包含前端基础、应用框架、工包含前端基础、应用框架、工程能力、应用基础、专业领域、业务场景等方向程能力、应用基础、专业领域、业务场景等方向 "
-                        link="/fe/"></KnowledgeMapBlock>
-                    <KnowledgeMapBlock name="服务端" desc="111" link="1"></KnowledgeMapBlock>
-                    <KnowledgeMapBlock name="服务端" desc="111" link="1"></KnowledgeMapBlock>
-                </div>
-            </div>
-            <div class="container">
-                <div class="container-header">
-                    <span>基础技能</span>
-                </div>
-                <div class="blocks">
-                    <KnowledgeMapBlock name="前端" desc="111" link="1"></KnowledgeMapBlock>
+                    <KnowledgeMapBlock v-for="(block, index) in config.children" :title="block.title" :key="index"
+                        :desc="block.frontmatter.pageComponent.data.description || ''" :link="block.path">
+                    </KnowledgeMapBlock>
                 </div>
             </div>
         </div>
@@ -45,21 +35,39 @@
 </template>
 
 <script>
-
+const cataloguePrefix = '00.目录页'
 export default {
+    name: "KnowledgeSystem",
     data() {
         return {
-
         }
     },
     created() {
-
     },
     mounted() {
-
+        console.log('knowledgeConfigs', this.$site, this.knowledgeConfigs)
     },
     methods: {
 
+    },
+    computed: {
+        // 目录页
+        catalogues() {
+            return this.$site.pages.filter(d => d.relativePath.startsWith(cataloguePrefix))
+        },
+        knowledgeConfigs() {
+            const configs = [{
+                name: '角色',
+            }, {
+                name: '基础技能',
+            }, {
+                name: '最佳实践',
+            }]
+            configs.forEach((config, index) => {
+                config.children = this.catalogues.filter(d => new RegExp(`^${cataloguePrefix}\/${index}.*$`).test(d.relativePath))
+            })
+            return configs
+        }
     }
 }
 </script>

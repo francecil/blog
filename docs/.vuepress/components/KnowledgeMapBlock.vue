@@ -1,6 +1,6 @@
 <template>
     <div class="block" @click="handleClick">
-        <div class="title">{{ this.name }}</div>
+        <div class="title">{{ this.title }}</div>
         <div class="desc">{{ this.desc }} </div>
     </div>
 </template>
@@ -8,8 +8,9 @@
 <script>
 
 export default {
+    name: "KnowledgeMapBlock",
     props: {
-        name: String,
+        title: String,
         desc: String,
         link: String,
     },
@@ -29,6 +30,7 @@ export default {
     cursor: pointer;
     padding: 8px;
 }
+
 .block:hover {
     box-shadow: 0 0 12px var(--shadowColor)
 }
