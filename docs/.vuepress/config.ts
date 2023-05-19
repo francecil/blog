@@ -88,8 +88,8 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
       },
       { text: '软素质', link: '/soft-quality/' },
       {
-        text: '更多',
-        link: '/more/',
+        text: '生活',
+        link: '/life/',
         items: [
           {
             text: '产品设计',

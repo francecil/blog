@@ -3,7 +3,7 @@ title: resume@2023
 date: 2022-08-23 15:42:37
 permalink: /pages/b17fca/
 categories: 
-  - 更多
+  - 闲言碎语
   - 面试经验
 tags: 
   - 

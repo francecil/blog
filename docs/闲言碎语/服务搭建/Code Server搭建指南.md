@@ -5,7 +5,7 @@ tags:
   - Docker
 permalink: /pages/829400/
 categories: 
-  - 更多
+  - 闲言碎语
   - 服务搭建
 ---
 

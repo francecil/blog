@@ -4,7 +4,7 @@
             <h1 class="header-title">知识体系：知识地图 x 观测维度</h1>
             <p class="header-desc">
                 个人知识体系由
-                <span style="font-weight: bold;">领域知识、基础技能和最佳实践</span>
+                <span style="font-weight: bold;">角色领域、基础技能和最佳实践</span>
                 三个维度构成，维度中的每个子项是一个独立的知识地图
                 <span style="font-style:italic;">（知识地图间亦有交叉</span>）
                 ，点击查看具体内容。
@@ -13,7 +13,7 @@
         <div class="km__body">
             <div class="container">
                 <div class="container-header">
-                    <span>领域知识</span>
+                    <span>角色领域</span>
                 </div>
                 <div class="blocks">
                     <KnowledgeMapBlock name="前端"

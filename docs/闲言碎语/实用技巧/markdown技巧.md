@@ -5,7 +5,7 @@ tags:
   - markdown
 permalink: /pages/d3622e/
 categories: 
-  - 更多
+  - 闲言碎语
   - 实用技巧
 ---
 

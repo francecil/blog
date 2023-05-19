@@ -3,7 +3,7 @@ title: macOS 初体验-打造前端开发环境
 date: 2020-04-01 23:55:17
 permalink: /pages/c5fa7e/
 categories: 
-  - 更多
+  - 闲言碎语
   - 实用技巧
 tags: 
   - 
