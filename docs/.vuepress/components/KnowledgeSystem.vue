@@ -132,8 +132,3 @@ export default {
         grid-template-columns repeat(2, 1fr)
 
 </style>
-<style lang="css">
-.content-wrapper:has(.km)>h1 {
-    display: none;
-}
-</style>

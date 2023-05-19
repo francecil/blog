@@ -73,7 +73,7 @@ export default {
       return this.updateBarConfig && this.updateBarConfig.showToArticle === false ? false : true
     },
     showTitle() {
-      return !this.$frontmatter.pageComponent
+      return this.$frontmatter.showTitle !== false && !this.$frontmatter.pageComponent
     },
     showRightMenu() {
       const { $frontmatter, $themeConfig, $page } = this
