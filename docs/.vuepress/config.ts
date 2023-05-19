@@ -33,7 +33,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
     // 导航配置
     nav: [
       { text: '首页', link: '/' },
-      { text: '知识地图', link: '/knowledgemaps/' },
+      { text: '知识体系', link: '/knowledge/' },
       {
         text: '大前端',
         link: '/fe/', //目录页链接，此处link是 vdoing 主题新增的配置项，有二级导航时，可以点击一级导航跳到目录页
@@ -88,8 +88,8 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
       },
       { text: '软素质', link: '/soft-quality/' },
       {
-        text: '更多',
-        link: '/more/',
+        text: '生活',
+        link: '/life/',
         items: [
           {
             text: '产品设计',
