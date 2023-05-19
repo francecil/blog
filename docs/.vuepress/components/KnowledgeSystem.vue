@@ -7,7 +7,7 @@
                 <span style="font-weight: bold;">领域知识、基础技能和最佳实践</span>
                 三个维度构成，维度中的每个子项是一个独立的知识地图
                 <span style="font-style:italic;">（知识地图间亦有交叉</span>）
-                ，可以点击进入查看具体内容。
+                ，点击查看具体内容。
             </p>
         </div>
         <div class="km__body">
@@ -15,8 +15,10 @@
                 <div class="container-header">
                     <span>领域知识</span>
                 </div>
-                <div class="list">
-                    <KnowledgeMapBlock name="前端" desc="111" link="1"></KnowledgeMapBlock>
+                <div class="blocks">
+                    <KnowledgeMapBlock name="前端"
+                        desc="包含前端基础、asdsdadasdsdsdasdsdsdsd、工程能力、应用基础、专业领域、业务场景等方向包含前端基础、应用框架、工包含前端基础、应用框架、工程能力、应用基础、专业领域、业务场景等方向程能力、应用基础、专业领域、业务场景等方向 "
+                        link="/fe/"></KnowledgeMapBlock>
                     <KnowledgeMapBlock name="服务端" desc="111" link="1"></KnowledgeMapBlock>
                     <KnowledgeMapBlock name="服务端" desc="111" link="1"></KnowledgeMapBlock>
                 </div>
@@ -25,7 +27,7 @@
                 <div class="container-header">
                     <span>基础技能</span>
                 </div>
-                <div class="list">
+                <div class="blocks">
                     <KnowledgeMapBlock name="前端" desc="111" link="1"></KnowledgeMapBlock>
                 </div>
             </div>
@@ -72,9 +74,11 @@ export default {
     color: transparent;
     background-image: linear-gradient(rgb(255, 251, 235), rgb(95 60 95));
 }
+
 .header-desc {
     font-size: 14px;
 }
+
 .km__body {
     margin: 48px 0px;
 }
@@ -88,6 +92,7 @@ export default {
     flex-wrap: wrap;
     margin-bottom: 48px;
 }
+
 .container-header {
     height: 30px;
     width: 100%;
@@ -96,7 +101,8 @@ export default {
     align-items: center;
     transform: translateY(-15px);
 }
-.container-header > span {
+
+.container-header>span {
     border: 1px var(--borderColor) solid;
     background-color: var(--customBlockBg);
     border-radius: 8px;
@@ -105,6 +111,17 @@ export default {
     font-weight: 500;
 }
 
+.blocks {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 24px;
+}
+</style>
+<style lang="stylus" scoped>
+@media (max-width $MQMobile) 
+    .blocks 
+        grid-template-columns repeat(2, 1fr)
 
 </style>
 <style lang="css">
