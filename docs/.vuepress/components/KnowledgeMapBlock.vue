@@ -1,8 +1,8 @@
 <template>
-    <div class="block" @click="handleClick">
+    <router-link tag="div" class="block" :to="this.link">
         <div class="title">{{ this.title }}</div>
         <div class="desc">{{ this.desc }} </div>
-    </div>
+    </router-link>
 </template>
 
 <script>
@@ -14,11 +14,6 @@ export default {
         desc: String,
         link: String,
     },
-    methods: {
-        handleClick() {
-            location.href = this.link
-        }
-    }
 }
 </script>
 

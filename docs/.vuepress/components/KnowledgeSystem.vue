@@ -45,7 +45,7 @@ export default {
     created() {
     },
     mounted() {
-        console.log('knowledgeConfigs', this.$site, this.knowledgeConfigs)
+        // console.log('knowledgeConfigs', this.$site, this.knowledgeConfigs)
     },
     methods: {
 
