@@ -17,65 +17,79 @@
           </li>
         </ul>
       </div>
-      <div class="catalogue-title">目录</div>
-      <div class="catalogue-content">
-        <template v-for="(item, index) in getCatalogueList()">
-          <dl v-if="type(item) === 'array'" :key="index" class="inline">
-            <dt>
-              <router-link :to="item[2]">{{ `${index + 1}. ${item[1]}` }}
-                <span class="title-tag" v-if="item[3]">
-                  {{ item[3] }}
-                </span>
-              </router-link>
-            </dt>
-          </dl>
-          <dl v-else-if="type(item) === 'object'" :key="index">
-            <!-- 一级目录 -->
-            <dt :id="(anchorText = item.title)">
-              <a :href="`#${anchorText}`" class="header-anchor">#</a>
-              {{ `${index + 1}. ${item.title}` }}
-            </dt>
-            <dd>
-              <!-- 二级目录 -->
-              <template v-for="(c, i) in item.children">
-                <template v-if="type(c) === 'array'">
-                  <router-link :to="c[2]" :key="i">{{ `${index + 1}-${i + 1}. ${c[1]}` }}
-                    <span class="title-tag" v-if="c[3]">
-                      {{ c[3] }}
+      <transition v-if="!loading" name="fade">
+        <div v-show="activeTab === 0">
+
+          <div class="catalogue-title">目录</div>
+          <div class="catalogue-content">
+            <template v-for="(item, index) in getCatalogueList()">
+              <dl v-if="type(item) === 'array'" :key="index" class="inline">
+                <dt>
+                  <router-link :to="item[2]">{{ `${index + 1}. ${item[1]}` }}
+                    <span class="title-tag" v-if="item[3]">
+                      {{ item[3] }}
                     </span>
                   </router-link>
-                </template>
-                <!-- 三级目录 -->
-                <div v-else-if="type(c) === 'object'" :key="i" class="sub-cat-wrap">
-                  <div :id="(anchorText = c.title)" class="sub-title">
-                    <a :href="`#${anchorText}`" class="header-anchor">#</a>
-                    {{ `${index + 1}-${i + 1}. ${c.title}` }}
-                  </div>
-                  <template v-for="(cc, ii) in c.children">
-                    <router-link v-if="cc.title" :to="`${cc.children && cc.children[0] && !cc.children[0].title
-                      ? cc.children[0][2]
-                      : '/categories/?category=' + cc.title
-                      }`" :key="`${index + 1}-${i + 1}-${ii + 1}`">
-                      {{ `${index + 1}-${i + 1}-${ii + 1}. ${cc.title}` }}
-                    </router-link>
-                    <router-link v-else :to="cc[2]" :key="`${index + 1}-${i + 1}-${ii + 1}`">
-                      {{ `${index + 1}-${i + 1}-${ii + 1}. ${cc[1]}` }}
-                      <span class="title-tag" v-if="cc[3]">
-                        {{ cc[3] }}
-                      </span>
-                    </router-link>
+                </dt>
+              </dl>
+              <dl v-else-if="type(item) === 'object'" :key="index">
+                <!-- 一级目录 -->
+                <dt :id="(anchorText = item.title)">
+                  <a :href="`#${anchorText}`" class="header-anchor">#</a>
+                  {{ `${index + 1}. ${item.title}` }}
+                </dt>
+                <dd>
+                  <!-- 二级目录 -->
+                  <template v-for="(c, i) in item.children">
+                    <template v-if="type(c) === 'array'">
+                      <router-link :to="c[2]" :key="i">{{ `${index + 1}-${i + 1}. ${c[1]}` }}
+                        <span class="title-tag" v-if="c[3]">
+                          {{ c[3] }}
+                        </span>
+                      </router-link>
+                    </template>
+                    <!-- 三级目录 -->
+                    <div v-else-if="type(c) === 'object'" :key="i" class="sub-cat-wrap">
+                      <div :id="(anchorText = c.title)" class="sub-title">
+                        <a :href="`#${anchorText}`" class="header-anchor">#</a>
+                        {{ `${index + 1}-${i + 1}. ${c.title}` }}
+                      </div>
+                      <template v-for="(cc, ii) in c.children">
+                        <router-link v-if="cc.title" :to="`${cc.children && cc.children[0] && !cc.children[0].title
+                          ? cc.children[0][2]
+                          : '/categories/?category=' + cc.title
+                          }`" :key="`${index + 1}-${i + 1}-${ii + 1}`">
+                          {{ `${index + 1}-${i + 1}-${ii + 1}. ${cc.title}` }}
+                        </router-link>
+                        <router-link v-else :to="cc[2]" :key="`${index + 1}-${i + 1}-${ii + 1}`">
+                          {{ `${index + 1}-${i + 1}-${ii + 1}. ${cc[1]}` }}
+                          <span class="title-tag" v-if="cc[3]">
+                            {{ cc[3] }}
+                          </span>
+                        </router-link>
+                      </template>
+                    </div>
                   </template>
-                </div>
-              </template>
-            </dd>
-          </dl>
-        </template>
-      </div>
+                </dd>
+              </dl>
+            </template>
+          </div>
+        </div>
+      </transition>
+      <transition v-if="!loading" name="fade">
+        <div v-show="activeTab === 1">
+          这个是脑图。。。
+        </div>
+      </transition>
+
     </div>
   </div>
 </template>
 
 <script>
+
+const MOBILE_DESKTOP_BREAKPOINT = 720 // refer to config.styl
+
 export default {
   data() {
     return {
@@ -88,6 +102,7 @@ export default {
         label: '脑图模式',
       }],
       activeTab: 0,
+      loading: true
     }
   },
   created() {
@@ -96,6 +111,13 @@ export default {
     if (!sidebar || sidebar === 'auto') {
       this.isStructuring = false
       console.error("目录页数据依赖于结构化的侧边栏数据，请在主题设置中将侧边栏字段设置为'structuring'，否则无法获取目录数据。")
+    }
+  },
+  mounted() {
+    // PC 默认选择脑图模式
+    if (document.documentElement.clientWidth > MOBILE_DESKTOP_BREAKPOINT) {
+      this.activeTab = 1
+      this.loading = false
     }
   },
   methods: {
@@ -283,7 +305,7 @@ dl, dd
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 0.2s;
 }
 
 .fade-enter,
