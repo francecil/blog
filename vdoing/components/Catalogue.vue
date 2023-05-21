@@ -1,3 +1,4 @@
+<!-- 目录页 -->
 <template>
   <div class="theme-vdoing-content">
     <div class="column-wrapper">
@@ -8,13 +9,20 @@
       </dl>
     </div>
     <div class="catalogue-wrapper" v-if="isStructuring">
+      <div class="tabs-wrapper">
+        <ul class="tabs">
+          <li v-for="(tab, index) in tabs" :key="index" :class="['tab', { active: activeTab === index }]"
+            @click="changeTab(index)">
+            {{ tab.label }}
+          </li>
+        </ul>
+      </div>
       <div class="catalogue-title">目录</div>
       <div class="catalogue-content">
         <template v-for="(item, index) in getCatalogueList()">
           <dl v-if="type(item) === 'array'" :key="index" class="inline">
             <dt>
-              <router-link :to="item[2]"
-                >{{ `${index + 1}. ${item[1]}` }}
+              <router-link :to="item[2]">{{ `${index + 1}. ${item[1]}` }}
                 <span class="title-tag" v-if="item[3]">
                   {{ item[3] }}
                 </span>
@@ -31,40 +39,26 @@
               <!-- 二级目录 -->
               <template v-for="(c, i) in item.children">
                 <template v-if="type(c) === 'array'">
-                  <router-link :to="c[2]" :key="i"
-                    >{{ `${index + 1}-${i + 1}. ${c[1]}` }}
+                  <router-link :to="c[2]" :key="i">{{ `${index + 1}-${i + 1}. ${c[1]}` }}
                     <span class="title-tag" v-if="c[3]">
                       {{ c[3] }}
                     </span>
                   </router-link>
                 </template>
                 <!-- 三级目录 -->
-                <div
-                  v-else-if="type(c) === 'object'"
-                  :key="i"
-                  class="sub-cat-wrap"
-                >
+                <div v-else-if="type(c) === 'object'" :key="i" class="sub-cat-wrap">
                   <div :id="(anchorText = c.title)" class="sub-title">
                     <a :href="`#${anchorText}`" class="header-anchor">#</a>
                     {{ `${index + 1}-${i + 1}. ${c.title}` }}
                   </div>
                   <template v-for="(cc, ii) in c.children">
-                    <router-link
-                      v-if="cc.title"
-                      :to="`${
-                        cc.children && cc.children[0] && !cc.children[0].title
-                          ? cc.children[0][2]
-                          : '/categories/?category=' + cc.title
-                      }`"
-                      :key="`${index + 1}-${i + 1}-${ii + 1}`"
-                    >
+                    <router-link v-if="cc.title" :to="`${cc.children && cc.children[0] && !cc.children[0].title
+                      ? cc.children[0][2]
+                      : '/categories/?category=' + cc.title
+                      }`" :key="`${index + 1}-${i + 1}-${ii + 1}`">
                       {{ `${index + 1}-${i + 1}-${ii + 1}. ${cc.title}` }}
                     </router-link>
-                    <router-link
-                      v-else
-                      :to="cc[2]"
-                      :key="`${index + 1}-${i + 1}-${ii + 1}`"
-                    >
+                    <router-link v-else :to="cc[2]" :key="`${index + 1}-${i + 1}-${ii + 1}`">
                       {{ `${index + 1}-${i + 1}-${ii + 1}. ${cc[1]}` }}
                       <span class="title-tag" v-if="cc[3]">
                         {{ cc[3] }}
@@ -87,7 +81,13 @@ export default {
     return {
       pageData: null,
       isStructuring: true,
-      appointDir: {}
+      appointDir: {},
+      tabs: [{
+        label: '大纲模式',
+      }, {
+        label: '脑图模式',
+      }],
+      activeTab: 0,
     }
   },
   created() {
@@ -99,6 +99,7 @@ export default {
     }
   },
   methods: {
+    // 目录页基本数据
     getPageData() {
       const pageComponent = this.$frontmatter.pageComponent
       if (pageComponent && pageComponent.data) {
@@ -124,7 +125,7 @@ export default {
       if (!catalogueList) {
         console.error('未获取到目录数据，请查看front matter中设置的path是否正确。')
       }
-      console.log({catalogueList})
+      console.log({ catalogueList })
       return catalogueList
     },
     type(o) { // 数据类型检查
@@ -152,6 +153,9 @@ export default {
       }
       return this.appointDir.children;
     },
+    changeTab(index) {
+      this.activeTab = index
+    }
   },
   watch: {
     '$route.path'() {
@@ -197,7 +201,7 @@ dl, dd
 .catalogue-wrapper
   .catalogue-title
     font-size 1.45rem
-    margin 2rem 0
+    margin-bottom 2rem
   .catalogue-content
     dl
       margin-bottom 1.8rem
@@ -243,4 +247,47 @@ dl, dd
         &:hover
           .header-anchor
             opacity 1
+</style>
+<style lang="css" scoped>
+.tabs-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin: 12px;
+}
+
+.tabs {
+  border-radius: 5px;
+  background: var(--customBlockBg);
+  color: var(--textSecondaryColor);
+  padding: 1px;
+  border: 1px solid var(--borderSecondaryColor);
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tab {
+  display: inline-block;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  list-style: none;
+  font-size: 12px;
+}
+
+.tab.active {
+  background: var(--mainBg);
+  font-weight: 500;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>
