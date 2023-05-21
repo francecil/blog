@@ -114,8 +114,8 @@ export default {
     border: 1px var(--borderColor) solid;
     background-color: var(--customBlockBg);
     border-radius: 8px;
-    padding: 4px 8px;
-    font-size: 18px;
+    padding: 2px 8px;
+    font-size: 16px;
     font-weight: 500;
 }
 

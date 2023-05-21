@@ -1,3 +1,4 @@
+<!-- 目录页 -->
 <template>
   <div class="theme-vdoing-content">
     <div class="column-wrapper">
@@ -8,98 +9,144 @@
       </dl>
     </div>
     <div class="catalogue-wrapper" v-if="isStructuring">
-      <div class="catalogue-title">目录</div>
-      <div class="catalogue-content">
-        <template v-for="(item, index) in getCatalogueList()">
-          <dl v-if="type(item) === 'array'" :key="index" class="inline">
-            <dt>
-              <router-link :to="item[2]"
-                >{{ `${index + 1}. ${item[1]}` }}
-                <span class="title-tag" v-if="item[3]">
-                  {{ item[3] }}
-                </span>
-              </router-link>
-            </dt>
-          </dl>
-          <dl v-else-if="type(item) === 'object'" :key="index">
-            <!-- 一级目录 -->
-            <dt :id="(anchorText = item.title)">
-              <a :href="`#${anchorText}`" class="header-anchor">#</a>
-              {{ `${index + 1}. ${item.title}` }}
-            </dt>
-            <dd>
-              <!-- 二级目录 -->
-              <template v-for="(c, i) in item.children">
-                <template v-if="type(c) === 'array'">
-                  <router-link :to="c[2]" :key="i"
-                    >{{ `${index + 1}-${i + 1}. ${c[1]}` }}
-                    <span class="title-tag" v-if="c[3]">
-                      {{ c[3] }}
+      <div class="tabs-wrapper">
+        <ul class="tabs">
+          <li v-for="(tab, index) in tabs" :key="index" :class="['tab', { active: activeTab === index }]"
+            @click="changeTab(index)">
+            {{ tab.label }}
+          </li>
+        </ul>
+      </div>
+      <transition v-if="!loading" name="fade">
+        <div v-show="activeTab === 0">
+
+          <div class="catalogue-title">目录</div>
+          <div class="catalogue-content">
+            <template v-for="(item, index) in catalogueList">
+              <dl v-if="type(item) === 'array'" :key="index" class="inline">
+                <dt>
+                  <router-link :to="item[2]">{{ `${index + 1}. ${item[1]}` }}
+                    <span class="title-tag" v-if="item[3]">
+                      {{ item[3] }}
                     </span>
                   </router-link>
-                </template>
-                <!-- 三级目录 -->
-                <div
-                  v-else-if="type(c) === 'object'"
-                  :key="i"
-                  class="sub-cat-wrap"
-                >
-                  <div :id="(anchorText = c.title)" class="sub-title">
-                    <a :href="`#${anchorText}`" class="header-anchor">#</a>
-                    {{ `${index + 1}-${i + 1}. ${c.title}` }}
-                  </div>
-                  <template v-for="(cc, ii) in c.children">
-                    <router-link
-                      v-if="cc.title"
-                      :to="`${
-                        cc.children && cc.children[0] && !cc.children[0].title
+                </dt>
+              </dl>
+              <dl v-else-if="type(item) === 'object'" :key="index">
+                <!-- 一级目录 -->
+                <dt :id="(anchorText = item.title)">
+                  <a :href="`#${anchorText}`" class="header-anchor">#</a>
+                  {{ `${index + 1}. ${item.title}` }}
+                </dt>
+                <dd>
+                  <!-- 二级目录 -->
+                  <template v-for="(c, i) in item.children">
+                    <template v-if="type(c) === 'array'">
+                      <router-link :to="c[2]" :key="i">{{ `${index + 1}-${i + 1}. ${c[1]}` }}
+                        <span class="title-tag" v-if="c[3]">
+                          {{ c[3] }}
+                        </span>
+                      </router-link>
+                    </template>
+                    <!-- 三级目录 -->
+                    <div v-else-if="type(c) === 'object'" :key="i" class="sub-cat-wrap">
+                      <div :id="(anchorText = c.title)" class="sub-title">
+                        <a :href="`#${anchorText}`" class="header-anchor">#</a>
+                        {{ `${index + 1}-${i + 1}. ${c.title}` }}
+                      </div>
+                      <template v-for="(cc, ii) in c.children">
+                        <router-link v-if="cc.title" :to="`${cc.children && cc.children[0] && !cc.children[0].title
                           ? cc.children[0][2]
                           : '/categories/?category=' + cc.title
-                      }`"
-                      :key="`${index + 1}-${i + 1}-${ii + 1}`"
-                    >
-                      {{ `${index + 1}-${i + 1}-${ii + 1}. ${cc.title}` }}
-                    </router-link>
-                    <router-link
-                      v-else
-                      :to="cc[2]"
-                      :key="`${index + 1}-${i + 1}-${ii + 1}`"
-                    >
-                      {{ `${index + 1}-${i + 1}-${ii + 1}. ${cc[1]}` }}
-                      <span class="title-tag" v-if="cc[3]">
-                        {{ cc[3] }}
-                      </span>
-                    </router-link>
+                          }`" :key="`${index + 1}-${i + 1}-${ii + 1}`">
+                          {{ `${index + 1}-${i + 1}-${ii + 1}. ${cc.title}` }}
+                        </router-link>
+                        <router-link v-else :to="cc[2]" :key="`${index + 1}-${i + 1}-${ii + 1}`">
+                          {{ `${index + 1}-${i + 1}-${ii + 1}. ${cc[1]}` }}
+                          <span class="title-tag" v-if="cc[3]">
+                            {{ cc[3] }}
+                          </span>
+                        </router-link>
+                      </template>
+                    </div>
                   </template>
-                </div>
-              </template>
-            </dd>
-          </dl>
-        </template>
-      </div>
+                </dd>
+              </dl>
+            </template>
+          </div>
+        </div>
+      </transition>
+      <transition v-if="!loading" name="fade">
+        <div v-show="activeTab === 1" class="mindmap-wrapper">
+          <svg ref="mindmapRef"></svg>
+        </div>
+      </transition>
+
     </div>
   </div>
 </template>
 
 <script>
+import { Transformer } from 'markmap-lib';
+import { Markmap } from 'markmap-view/dist/index.esm';
+
+import { getScopedCatalogueList, getMdContent } from '../util/catalogue'
+
+const MOBILE_DESKTOP_BREAKPOINT = 720 // refer to config.styl
+const transformer = new Transformer();
+
 export default {
   data() {
     return {
       pageData: null,
       isStructuring: true,
-      appointDir: {}
+      catalogueList: [],
+      tabs: [{
+        label: '大纲模式',
+      }, {
+        label: '脑图模式',
+      }],
+      activeTab: 0,
+      loading: true,
+      // markmap 内部状态
+      mmState: {},
+      // 首次渲染时 svg 的宽高
+      svgHeight: 0,
+      svgWidth: 0,
     }
   },
   created() {
-    this.getPageData()
+    this.initPageData()
+    this.initCatalogueList()
     const sidebar = this.$themeConfig.sidebar
     if (!sidebar || sidebar === 'auto') {
       this.isStructuring = false
       console.error("目录页数据依赖于结构化的侧边栏数据，请在主题设置中将侧边栏字段设置为'structuring'，否则无法获取目录数据。")
     }
   },
+  mounted() {
+    // PC 默认选择脑图模式
+    if (document.documentElement.clientWidth > MOBILE_DESKTOP_BREAKPOINT) {
+      this.activeTab = 1
+      this.loading = false
+    }
+    this.$nextTick(() => {
+      this.mm = Markmap.create(this.$refs.mindmapRef, {
+        /** 初始展开层级 */
+        initialExpandLevel: 2,
+        /** 节点展开动画时间 */
+        duration: 100,
+        /** 是否开启平移 */
+        pan: false
+      });
+      this.initMarkData()
+      this.watchMmState()
+    })
+
+  },
   methods: {
-    getPageData() {
+    // 目录页基本数据
+    initPageData() {
       const pageComponent = this.$frontmatter.pageComponent
       if (pageComponent && pageComponent.data) {
         this.pageData = {
@@ -110,54 +157,77 @@ export default {
         console.error('请在front matter中设置pageComponent和pageComponent.data数据')
       }
     },
-    getCatalogueList() {
+    initCatalogueList() {
       const { sidebar } = this.$site.themeConfig
       const { data } = this.$frontmatter.pageComponent
       const key = data.path || data.key
-      let keyArray = key.split('/');
-      let catalogueList = (sidebar[`/${keyArray[0]}/`]);
-      if (keyArray.length > 1) {
-        // 删除第一个元素，并修改原数组
-        keyArray.shift();
-        catalogueList = this.appointDirDeal(0, keyArray, catalogueList);
-      }
-      if (!catalogueList) {
-        console.error('未获取到目录数据，请查看front matter中设置的path是否正确。')
-      }
-      console.log({catalogueList})
-      return catalogueList
+      this.catalogueList = getScopedCatalogueList(key, sidebar)
+    },
+    async initMarkData() {
+      const mdContent = getMdContent(this.pageData.title, this.catalogueList);
+      const { root } = transformer.transform(mdContent)
+      console.log({ mdContent, root, mm: this.mm })
+      this.mm.setData(root);
+      const svgEl = this.$refs.mindmapRef
+      // 设定容器初始高度
+      await this.mm.rescale(1)
+      const { minX, maxX, minY, maxY } = this.mm.state
+      const svgHeight = maxX - minX + 10
+      this.svgHeight = svgHeight
+      this.svgWidth = maxY - minY
+      svgEl.parentElement.style.height = svgHeight + "px";
+      svgEl.style.height = '100%'
+      svgEl.style.width = '100%'
+      this.$nextTick(() => {
+        this.mm.fit();
+      })
+
+    },
+    watchMmState() {
+      const tmpData = { ...this.mm.state }
+      Object.defineProperties(this.mm.state, ['minX', 'maxX', 'minY', 'maxY'].reduce((obj, prop) => {
+        obj[prop] = {
+          get() {
+            return tmpData[prop]
+          },
+          set: (val) => {
+            if (val === tmpData[prop]) {
+              return
+            }
+            tmpData[prop] = val
+            this.fitSvgStyle(tmpData)
+          }
+        }
+        return obj
+      }, {}))
+    },
+    /* svg 宽高自适应 */
+    fitSvgStyle({ minX, maxX, minY, maxY }) {
+      console.log('fitSvgStyle', minX, maxX, minY, maxY)
+      const svgHeight = maxX - minX + 10
+      const svgWidth = maxY - minY
+      const svgEl = this.$refs.mindmapRef
+      // svg 宽高只增补减
+      svgEl.style.width = Math.max(this.svgWidth, svgWidth) + 'px'
+      svgEl.style.height = Math.max(this.svgHeight, svgHeight) + 'px'
+      this.$nextTick(() => {
+        this.mm.fit();
+      })
     },
     type(o) { // 数据类型检查
       return Object.prototype.toString.call(o).match(/\[object (.*?)\]/)[1].toLowerCase()
     },
-    /**
-     * 指定目录页配置处理
-     * @param index 目录数组的下标
-     * @param dirKeyArray 目录名称数组
-     * @param catalogueList 目录对象列表
-     * @returns {*}
-     */
-    appointDirDeal(index, dirKeyArray, catalogueList) {
-      let dirKey = dirKeyArray[index];
-      if (dirKey !== undefined && dirKey.indexOf(".") !== -1) {
-        dirKey = dirKey.substring(dirKey.indexOf('.') + 1);
-      }
-      for (let i = 0; i < catalogueList.length; i++) {
-        if (catalogueList[i].title === dirKey) {
-          this.appointDir = catalogueList[i];
-          if (index < dirKeyArray.length - 1) {
-            this.appointDirDeal(index + 1, dirKeyArray, catalogueList[i].children);
-          }
-        }
-      }
-      return this.appointDir.children;
-    },
+    changeTab(index) {
+      this.activeTab = index
+    }
   },
   watch: {
     '$route.path'() {
-      this.getPageData()
-    }
-  }
+      this.initPageData()
+      this.initCatalogueList()
+      this.initMarkData()
+    },
+  },
 }
 </script>
 
@@ -197,7 +267,7 @@ dl, dd
 .catalogue-wrapper
   .catalogue-title
     font-size 1.45rem
-    margin 2rem 0
+    margin-bottom 2rem
   .catalogue-content
     dl
       margin-bottom 1.8rem
@@ -243,4 +313,62 @@ dl, dd
         &:hover
           .header-anchor
             opacity 1
+</style>
+<style lang="css" scoped>
+.tabs-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin: 12px;
+}
+
+.tabs {
+  border-radius: 5px;
+  background: var(--customBlockBg);
+  color: var(--textSecondaryColor);
+  padding: 1px;
+  border: 1px solid var(--borderSecondaryColor);
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tab {
+  display: inline-block;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  list-style: none;
+  font-size: 12px;
+}
+
+.tab.active {
+  background: var(--mainBg);
+  font-weight: 500;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.mindmap-wrapper {
+  width: 100%;
+  min-height: 1em;
+  overflow: auto;
+  border: 1px solid rgba(150, 150, 150, 0.25);
+  border-radius: 8px;
+  box-sizing: content-box;
+}
+
+.mindmap-wrapper>svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 </style>

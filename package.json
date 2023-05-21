@@ -25,11 +25,11 @@
     "vuepress-plugin-sitemap": "^2.3.1",
     "vuepress-plugin-thirdparty-search": "^1.0.2",
     "vuepress-plugin-zooming": "^1.1.7",
-    "vuepress-theme-vdoing": "^1.12.8",
     "yamljs": "^0.3.0"
   },
   "dependencies": {
     "@vercel/analytics": "^0.1.11",
+    "vuepress-theme-vdoing": "./vdoing",
     "web-vitals": "^3.3.1"
   }
 }

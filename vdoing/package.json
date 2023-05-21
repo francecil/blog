@@ -44,7 +44,10 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "vuepress-plugin-container": "^2.0.2",
-    "vuepress-plugin-smooth-scroll": "^0.0.3"
+    "vuepress-plugin-smooth-scroll": "^0.0.3",
+    "markmap-view": "0.14.4",
+    "markmap-lib": "0.14.4",
+    "markmap-common": "0.14.2"
   },
   "devDependencies": {
     "@vuepress/types": "^1.9.5"
