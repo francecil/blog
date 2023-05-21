@@ -107,7 +107,12 @@ export default {
         label: '脑图模式',
       }],
       activeTab: 0,
-      loading: true
+      loading: true,
+      // markmap 内部状态
+      mmState: {},
+      // 首次渲染时 svg 的宽高
+      svgHeight: 0,
+      svgWidth: 0,
     }
   },
   created() {
@@ -128,13 +133,14 @@ export default {
     this.$nextTick(() => {
       this.mm = Markmap.create(this.$refs.mindmapRef, {
         /** 初始展开层级 */
-        initialExpandLevel: 3,
+        initialExpandLevel: 2,
         /** 节点展开动画时间 */
         duration: 100,
         /** 是否开启平移 */
         pan: false
       });
       this.initMarkData()
+      this.watchMmState()
     })
 
   },
@@ -160,12 +166,50 @@ export default {
     async initMarkData() {
       const mdContent = getMdContent(this.pageData.title, this.catalogueList);
       const { root } = transformer.transform(mdContent)
-      // console.log({ mdContent, root, mm: this.mm })
+      console.log({ mdContent, root, mm: this.mm })
       this.mm.setData(root);
       const svgEl = this.$refs.mindmapRef
-      // 设定初始宽高
+      // 设定容器初始高度
       await this.mm.rescale(1)
-      svgEl.parentElement.style.height = (svgEl.getBBox().height + 10) + "px";
+      const { minX, maxX, minY, maxY } = this.mm.state
+      const svgHeight = maxX - minX + 10
+      this.svgHeight = svgHeight
+      this.svgWidth = maxY - minY
+      svgEl.parentElement.style.height = svgHeight + "px";
+      svgEl.style.height = '100%'
+      svgEl.style.width = '100%'
+      this.$nextTick(() => {
+        this.mm.fit();
+      })
+
+    },
+    watchMmState() {
+      const tmpData = { ...this.mm.state }
+      Object.defineProperties(this.mm.state, ['minX', 'maxX', 'minY', 'maxY'].reduce((obj, prop) => {
+        obj[prop] = {
+          get() {
+            return tmpData[prop]
+          },
+          set: (val) => {
+            if (val === tmpData[prop]) {
+              return
+            }
+            tmpData[prop] = val
+            this.fitSvgStyle(tmpData)
+          }
+        }
+        return obj
+      }, {}))
+    },
+    /* svg 宽高自适应 */
+    fitSvgStyle({ minX, maxX, minY, maxY }) {
+      console.log('fitSvgStyle', minX, maxX, minY, maxY)
+      const svgHeight = maxX - minX + 10
+      const svgWidth = maxY - minY
+      const svgEl = this.$refs.mindmapRef
+      // svg 宽高只增补减
+      svgEl.style.width = Math.max(this.svgWidth, svgWidth) + 'px'
+      svgEl.style.height = Math.max(this.svgHeight, svgHeight) + 'px'
       this.$nextTick(() => {
         this.mm.fit();
       })
@@ -319,6 +363,7 @@ dl, dd
   overflow: auto;
   border: 1px solid rgba(150, 150, 150, 0.25);
   border-radius: 8px;
+  box-sizing: content-box;
 }
 
 .mindmap-wrapper>svg {
