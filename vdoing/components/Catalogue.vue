@@ -77,8 +77,8 @@
         </div>
       </transition>
       <transition v-if="!loading" name="fade">
-        <div v-show="activeTab === 1">
-          <svg class="mindmap" ref="mindmapRef"></svg>
+        <div v-show="activeTab === 1" class="mindmap-wrapper">
+          <svg ref="mindmapRef"></svg>
         </div>
       </transition>
 
@@ -127,7 +127,12 @@ export default {
     }
     this.$nextTick(() => {
       this.mm = Markmap.create(this.$refs.mindmapRef, {
-        initialExpandLevel: 3
+        /** 初始展开层级 */
+        initialExpandLevel: 3,
+        /** 节点展开动画时间 */
+        duration: 100,
+        /** 是否开启平移 */
+        pan: false
       });
       this.initMarkData()
     })
@@ -152,12 +157,18 @@ export default {
       const key = data.path || data.key
       this.catalogueList = getScopedCatalogueList(key, sidebar)
     },
-    initMarkData() {
+    async initMarkData() {
       const mdContent = getMdContent(this.pageData.title, this.catalogueList);
       const { root } = transformer.transform(mdContent)
-      console.log({mdContent, root})
+      // console.log({ mdContent, root, mm: this.mm })
       this.mm.setData(root);
-      // this.mm.fit();
+      const svgEl = this.$refs.mindmapRef
+      // 设定初始宽高
+      await this.mm.rescale(1)
+      svgEl.parentElement.style.height = (svgEl.getBBox().height + 10) + "px";
+      this.$nextTick(() => {
+        this.mm.fit();
+      })
     },
     type(o) { // 数据类型检查
       return Object.prototype.toString.call(o).match(/\[object (.*?)\]/)[1].toLowerCase()
@@ -301,8 +312,18 @@ dl, dd
 .fade-leave-to {
   opacity: 0;
 }
-.mindmap {
+
+.mindmap-wrapper {
   width: 100%;
-  height: 1000px;
+  min-height: 1em;
+  overflow: auto;
+  border: 1px solid rgba(150, 150, 150, 0.25);
+  border-radius: 8px;
+}
+
+.mindmap-wrapper>svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 </style>
