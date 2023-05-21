@@ -15,7 +15,7 @@ export default () => {
             document.body.appendChild(canvas)
             
             const script = document.createElement('script')
-            script.src = 'https://cdn.jsdelivr.net/gh/francecil-public/live2dDemo/live2d.js'
+            script.src = 'https://cdn.jsdelivr.net/gh/francecil-public/live2dDemo@latest/live2d.js'
             script.async = true
             script.onload = () => {
                 window.loadlive2d("live2d", `https://cdn.jsdelivr.net/gh/francecil-public/live2dDemo/assets/${model}/${model}.model.json`);

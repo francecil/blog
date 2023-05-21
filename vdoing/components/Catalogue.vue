@@ -166,7 +166,7 @@ export default {
     async initMarkData() {
       const mdContent = getMdContent(this.pageData.title, this.catalogueList);
       const { root } = transformer.transform(mdContent)
-      console.log({ mdContent, root, mm: this.mm })
+      // console.log({ mdContent, root, mm: this.mm })
       this.mm.setData(root);
       const svgEl = this.$refs.mindmapRef
       // 设定容器初始高度
@@ -203,7 +203,7 @@ export default {
     },
     /* svg 宽高自适应 */
     fitSvgStyle({ minX, maxX, minY, maxY }) {
-      console.log('fitSvgStyle', minX, maxX, minY, maxY)
+      // console.log('fitSvgStyle', minX, maxX, minY, maxY)
       const svgHeight = maxX - minX + 10
       const svgWidth = maxY - minY
       const svgEl = this.$refs.mindmapRef
