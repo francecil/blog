@@ -63,7 +63,7 @@
                         </router-link>
                         <router-link v-else :to="cc[2]" :key="`${index + 1}-${i + 1}-${ii + 1}`">
                           {{ `${index + 1}-${i + 1}-${ii + 1}. ${cc[1]}` }}
-                          <span class="title-tag" v-if="cc[3]">
+                          <span class="catalogue__title-tag" v-if="cc[3]">
                             {{ cc[3] }}
                           </span>
                         </router-link>
@@ -237,17 +237,6 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
 .theme-vdoing-content
   margin-bottom $navbarHeight
-.title-tag
-  // height 1.1rem
-  // line-height 1.1rem
-  border 1px solid $activeColor
-  color $activeColor
-  font-size 0.8rem
-  padding 0 0.35rem
-  border-radius 0.2rem
-  margin-left 0rem
-  transform translate(0, -0.05rem)
-  display inline-block
 dl, dd
   margin 0
 .column-wrapper
@@ -375,4 +364,25 @@ dl, dd
   width: 100%;
   height: 100%;
 }
+</style>
+<style lang="stylus">
+.catalogue__title-tag
+  // height 1.1rem
+  // line-height 1.1rem
+  border 1px solid $activeColor
+  color $activeColor
+  font-size 0.8rem
+  padding 0 0.35rem
+  border-radius 0.2rem
+  margin-left 0rem
+  transform translate(0, -0.05rem)
+  display inline-block
+
+.m-markmap-pagenode
+  &:hover
+    color: $activeColor!important;
+    text-decoration: none!important;
+
+.m-markmap-dirnode
+  // cursor pointer
 </style>
