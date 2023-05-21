@@ -178,8 +178,10 @@ export default {
       svgEl.parentElement.style.height = svgHeight + "px";
       svgEl.style.height = '100%'
       svgEl.style.width = '100%'
-      this.$nextTick(() => {
-        this.mm.fit();
+      svgEl.style.opacity = 0
+      this.$nextTick(async () => {
+        await this.mm.fit();
+        svgEl.style.opacity = 1
       })
 
     },
