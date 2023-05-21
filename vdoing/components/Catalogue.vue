@@ -9,7 +9,7 @@
       </dl>
     </div>
     <div class="catalogue-wrapper" v-if="isStructuring">
-      <div class="tabs-wrapper">
+      <div v-if="this.isPC" class="tabs-wrapper">
         <ul class="tabs">
           <li v-for="(tab, index) in tabs" :key="index" :class="['tab', { active: activeTab === index }]"
             @click="changeTab(index)">
@@ -106,13 +106,14 @@ export default {
       }, {
         label: '脑图模式',
       }],
+      // 大纲模式
       activeTab: 0,
       loading: true,
       // markmap 内部状态
       mmState: {},
-      // 首次渲染时 svg 的宽高
-      svgHeight: 0,
-      svgWidth: 0,
+      // 首次渲染时 svg 的高度
+      initialSvgHeight: 0,
+      isPC: true,
     }
   },
   created() {
@@ -126,22 +127,24 @@ export default {
   },
   mounted() {
     // PC 默认选择脑图模式
-    if (document.documentElement.clientWidth > MOBILE_DESKTOP_BREAKPOINT) {
+    this.isPC = document.documentElement.clientWidth > MOBILE_DESKTOP_BREAKPOINT
+    this.loading = false
+    if (this.isPC) {
       this.activeTab = 1
-      this.loading = false
+      this.$nextTick(() => {
+        this.mm = Markmap.create(this.$refs.mindmapRef, {
+          /** 初始展开层级 */
+          initialExpandLevel: 2,
+          /** 节点展开动画时间 */
+          duration: 100,
+          /** 是否开启平移 */
+          pan: false
+        });
+        this.initMarkData()
+        this.watchMmState()
+      })
     }
-    this.$nextTick(() => {
-      this.mm = Markmap.create(this.$refs.mindmapRef, {
-        /** 初始展开层级 */
-        initialExpandLevel: 2,
-        /** 节点展开动画时间 */
-        duration: 100,
-        /** 是否开启平移 */
-        pan: false
-      });
-      this.initMarkData()
-      this.watchMmState()
-    })
+
 
   },
   methods: {
@@ -164,6 +167,9 @@ export default {
       this.catalogueList = getScopedCatalogueList(key, sidebar)
     },
     async initMarkData() {
+      if (!this.isPC) {
+        return
+      }
       const mdContent = getMdContent(this.pageData.title, this.catalogueList);
       const { root } = transformer.transform(mdContent)
       // console.log({ mdContent, root, mm: this.mm })
@@ -171,13 +177,9 @@ export default {
       const svgEl = this.$refs.mindmapRef
       // 设定容器初始高度
       await this.mm.rescale(1)
-      const { minX, maxX, minY, maxY } = this.mm.state
-      const svgHeight = maxX - minX + 10
-      this.svgHeight = svgHeight
-      this.svgWidth = maxY - minY
-      svgEl.parentElement.style.height = svgHeight + "px";
-      svgEl.style.height = '100%'
-      svgEl.style.width = '100%'
+      // svg 元素的初始宽高
+      this.initialSvgHeight = this.mm.state.maxX - this.mm.state.minX + 10
+      svgEl.style.height = this.initialSvgHeight + "px";
       svgEl.style.opacity = 0
       this.$nextTick(async () => {
         await this.mm.fit();
@@ -209,9 +211,8 @@ export default {
       const svgHeight = maxX - minX + 10
       const svgWidth = maxY - minY
       const svgEl = this.$refs.mindmapRef
-      // svg 宽高只增补减
-      svgEl.style.width = Math.max(this.svgWidth, svgWidth) + 'px'
-      svgEl.style.height = Math.max(this.svgHeight, svgHeight) + 'px'
+      // svg 高度只增不减
+      svgEl.style.height = Math.max(this.initialSvgHeight, svgHeight) + 'px'
       this.$nextTick(() => {
         this.mm.fit();
       })
@@ -366,6 +367,7 @@ dl, dd
   border: 1px solid rgba(150, 150, 150, 0.25);
   border-radius: 8px;
   box-sizing: content-box;
+  display: flex;
 }
 
 .mindmap-wrapper>svg {
