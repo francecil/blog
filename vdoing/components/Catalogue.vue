@@ -22,7 +22,7 @@
 
           <div class="catalogue-title">目录</div>
           <div class="catalogue-content">
-            <template v-for="(item, index) in getCatalogueList()">
+            <template v-for="(item, index) in catalogueList">
               <dl v-if="type(item) === 'array'" :key="index" class="inline">
                 <dt>
                   <router-link :to="item[2]">{{ `${index + 1}. ${item[1]}` }}
@@ -78,7 +78,7 @@
       </transition>
       <transition v-if="!loading" name="fade">
         <div v-show="activeTab === 1">
-          这个是脑图。。。
+          <svg class="mindmap" ref="mindmapRef"></svg>
         </div>
       </transition>
 
@@ -87,15 +87,20 @@
 </template>
 
 <script>
+import { Transformer } from 'markmap-lib';
+import { Markmap } from 'markmap-view/dist/index.esm';
+
+import { getScopedCatalogueList, getMdContent } from '../util/catalogue'
 
 const MOBILE_DESKTOP_BREAKPOINT = 720 // refer to config.styl
+const transformer = new Transformer();
 
 export default {
   data() {
     return {
       pageData: null,
       isStructuring: true,
-      appointDir: {},
+      catalogueList: [],
       tabs: [{
         label: '大纲模式',
       }, {
@@ -106,7 +111,8 @@ export default {
     }
   },
   created() {
-    this.getPageData()
+    this.initPageData()
+    this.initCatalogueList()
     const sidebar = this.$themeConfig.sidebar
     if (!sidebar || sidebar === 'auto') {
       this.isStructuring = false
@@ -119,10 +125,17 @@ export default {
       this.activeTab = 1
       this.loading = false
     }
+    this.$nextTick(() => {
+      this.mm = Markmap.create(this.$refs.mindmapRef, {
+        initialExpandLevel: 3
+      });
+      this.initMarkData()
+    })
+
   },
   methods: {
     // 目录页基本数据
-    getPageData() {
+    initPageData() {
       const pageComponent = this.$frontmatter.pageComponent
       if (pageComponent && pageComponent.data) {
         this.pageData = {
@@ -133,47 +146,21 @@ export default {
         console.error('请在front matter中设置pageComponent和pageComponent.data数据')
       }
     },
-    getCatalogueList() {
+    initCatalogueList() {
       const { sidebar } = this.$site.themeConfig
       const { data } = this.$frontmatter.pageComponent
       const key = data.path || data.key
-      let keyArray = key.split('/');
-      let catalogueList = (sidebar[`/${keyArray[0]}/`]);
-      if (keyArray.length > 1) {
-        // 删除第一个元素，并修改原数组
-        keyArray.shift();
-        catalogueList = this.appointDirDeal(0, keyArray, catalogueList);
-      }
-      if (!catalogueList) {
-        console.error('未获取到目录数据，请查看front matter中设置的path是否正确。')
-      }
-      console.log({ catalogueList })
-      return catalogueList
+      this.catalogueList = getScopedCatalogueList(key, sidebar)
+    },
+    initMarkData() {
+      const mdContent = getMdContent(this.pageData.title, this.catalogueList);
+      const { root } = transformer.transform(mdContent)
+      console.log({mdContent, root})
+      this.mm.setData(root);
+      // this.mm.fit();
     },
     type(o) { // 数据类型检查
       return Object.prototype.toString.call(o).match(/\[object (.*?)\]/)[1].toLowerCase()
-    },
-    /**
-     * 指定目录页配置处理
-     * @param index 目录数组的下标
-     * @param dirKeyArray 目录名称数组
-     * @param catalogueList 目录对象列表
-     * @returns {*}
-     */
-    appointDirDeal(index, dirKeyArray, catalogueList) {
-      let dirKey = dirKeyArray[index];
-      if (dirKey !== undefined && dirKey.indexOf(".") !== -1) {
-        dirKey = dirKey.substring(dirKey.indexOf('.') + 1);
-      }
-      for (let i = 0; i < catalogueList.length; i++) {
-        if (catalogueList[i].title === dirKey) {
-          this.appointDir = catalogueList[i];
-          if (index < dirKeyArray.length - 1) {
-            this.appointDirDeal(index + 1, dirKeyArray, catalogueList[i].children);
-          }
-        }
-      }
-      return this.appointDir.children;
     },
     changeTab(index) {
       this.activeTab = index
@@ -181,9 +168,11 @@ export default {
   },
   watch: {
     '$route.path'() {
-      this.getPageData()
-    }
-  }
+      this.initPageData()
+      this.initCatalogueList()
+      this.initMarkData()
+    },
+  },
 }
 </script>
 
@@ -311,5 +300,9 @@ dl, dd
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+.mindmap {
+  width: 100%;
+  height: 1000px;
 }
 </style>
