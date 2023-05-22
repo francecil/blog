@@ -25,7 +25,7 @@ export const getScopedCatalogueList = (catalogueKey, sidebar) => {
 
 const getMdNodeContent = (catalogue) => {
     if (Array.isArray(catalogue)) {
-        return `<a class="m-markmap-pagenode" href="${catalogue[2]}">${catalogue[1]}<a>`
+        return `<a class="m-markmap-pagenode" target="_blank" href="${catalogue[2]}">${catalogue[1]} 📄${catalogue[3] ? `  <span class="catalogue__title-tag">${catalogue[3]}</span>` : ''}<a>`
     } else {
         return `<div class="m-markmap-dirnode">${catalogue.title}</div>`
     }
