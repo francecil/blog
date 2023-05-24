@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="body-bg"
-    :style="`background: url(${bgImg}) center center / cover no-repeat;opacity:${opacity}`"
-  ></div>
+  <div class="body-bg" :style="`background: url(${bgImg}) center center / cover no-repeat;opacity:${opacity}`"></div>
 </template>
 
 <script>
@@ -14,8 +11,18 @@ export default {
       opacity: 0.5
     }
   },
-  mounted() {
-    let { bodyBgImg, bodyBgImgOpacity, bodyBgImgInterval = 15 } = this.$themeConfig
+  async mounted() {
+    let { bodyBgImg, bodyBgImgOpacity, bodyBgImgInterval = 15, bodyBgPreviewImg } = this.$themeConfig
+
+    if (bodyBgPreviewImg) {
+      this.bgImg = bodyBgPreviewImg
+      await new Promise((resolve, reject) => {
+        const image = new Image()
+        image.onload = resolve
+        image.onerror = reject
+        image.src = bodyBgPreviewImg
+      })
+    }
 
     if (type(bodyBgImg) === 'string') {
       this.bgImg = bodyBgImg
