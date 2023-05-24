@@ -33,8 +33,8 @@
 
 TL;DR:
 - 按目录自动生成分类
-- frontMatter 的 article 标识为 false ，则页面仅在「导航栏目录页」中展示
-- frontMatter 的 titleTag 标识为「专题」或「草稿」 ，则页面不在「文章列表页」中展示，同时以 `_` 开头的 Markdown 文件会被自动视为草稿文章
+- frontMatter 的 article 取值 false ，则页面仅在「导航栏目录页」中展示
+- frontMatter 的 titleTag 取值「专题」或者 「草稿」 ，则页面不在「文章列表页」中展示，同时以 `_` 开头的 Markdown 文件会被自动视为草稿文章
 
 ### 1. 分类设计
 
