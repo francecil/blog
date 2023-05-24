@@ -24,10 +24,10 @@
 <script>
 export default {
   computed: {
-    blogger () {
+    blogger() {
       return this.$themeConfig.blogger
     },
-    social () {
+    social() {
       return this.$themeConfig.social
     }
   }
@@ -42,6 +42,10 @@ export default {
   overflow hidden
   .avatar
     width 100%
+    height 100%
+    position relative
+    padding-top 100%
+    background-color rgba(0,0,0,0.04)
     // height 235px
     overflow hidden
     @media (max-width 900px)
@@ -50,6 +54,12 @@ export default {
     img
       width 100%
       height 100%
+      object-fit cover
+      position absolute
+      top 0px
+      left 0px
+      transform-origin center
+      transition transform .3s ease
   .icons
     // border 1px solid var(--borderColor)
     border-top none
