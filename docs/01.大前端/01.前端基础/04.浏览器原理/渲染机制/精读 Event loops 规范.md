@@ -3,6 +3,7 @@ title: 精读 Event loops 规范
 date: 2019/12/10 00:00:00
 tags: 
   - HTML
+  - 精读
 permalink: /pages/0e87bb/
 categories: 
   - 大前端

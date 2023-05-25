@@ -8,7 +8,7 @@ categories:
   - 工程质量
   - ESLint
 tags: 
-  - 
+  - 精读
 ---
 本次精读的文章是：[Eslint 的实现原理，其实挺简单 - 掘金](https://juejin.cn/post/7025256331120476197)
 
