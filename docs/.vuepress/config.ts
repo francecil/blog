@@ -93,7 +93,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
         items: [
           {
             text: '产品设计',
-            link: '/product/',
+            link: '/design/',
           },
           { text: '面试', link: '/pages/c70629/' },
           { text: '人生总结', link: '/pages/f00c67/' },

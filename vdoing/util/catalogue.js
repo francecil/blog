@@ -14,7 +14,8 @@ export const getScopedCatalogueList = (catalogueKey, sidebar) => {
     for (const currentKey of keyArray) {
         // 如有数字前置则进行过滤
         const dirKey = currentKey.match(/(\d+\.)?(.*)/)[2]
-        currentCatalogueList = currentCatalogueList.find(cata => cata.title === dirKey)
+         const currentCatalogue = currentCatalogueList.find(cata => cata.title === dirKey)
+         currentCatalogueList = currentCatalogue && currentCatalogue.children
     }
 
     if (!currentCatalogueList) {
