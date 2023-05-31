@@ -19,61 +19,8 @@
       </div>
       <transition v-if="!loading" name="fade">
         <div v-show="activeTab === 0">
-
           <div class="catalogue-title">目录</div>
-          <div class="catalogue-content">
-            <template v-for="(item, index) in catalogueList">
-              <dl v-if="type(item) === 'array'" :key="index" class="inline">
-                <dt>
-                  <router-link :to="item[2]">{{ `${index + 1}. ${item[1]}` }}
-                    <span class="title-tag" v-if="item[3]">
-                      {{ item[3] }}
-                    </span>
-                  </router-link>
-                </dt>
-              </dl>
-              <dl v-else-if="type(item) === 'object'" :key="index">
-                <!-- 一级目录 -->
-                <dt :id="(anchorText = item.title)">
-                  <a :href="`#${anchorText}`" class="header-anchor">#</a>
-                  {{ `${index + 1}. ${item.title}` }}
-                </dt>
-                <dd>
-                  <!-- 二级目录 -->
-                  <template v-for="(c, i) in item.children">
-                    <template v-if="type(c) === 'array'">
-                      <router-link :to="c[2]" :key="i">{{ `${index + 1}-${i + 1}. ${c[1]}` }}
-                        <span class="title-tag" v-if="c[3]">
-                          {{ c[3] }}
-                        </span>
-                      </router-link>
-                    </template>
-                    <!-- 三级目录 -->
-                    <div v-else-if="type(c) === 'object'" :key="i" class="sub-cat-wrap">
-                      <div :id="(anchorText = c.title)" class="sub-title">
-                        <a :href="`#${anchorText}`" class="header-anchor">#</a>
-                        {{ `${index + 1}-${i + 1}. ${c.title}` }}
-                      </div>
-                      <template v-for="(cc, ii) in c.children">
-                        <router-link v-if="cc.title" :to="`${cc.children && cc.children[0] && !cc.children[0].title
-                          ? cc.children[0][2]
-                          : '/categories/?category=' + cc.title
-                          }`" :key="`${index + 1}-${i + 1}-${ii + 1}`">
-                          {{ `${index + 1}-${i + 1}-${ii + 1}. ${cc.title}` }}
-                        </router-link>
-                        <router-link v-else :to="cc[2]" :key="`${index + 1}-${i + 1}-${ii + 1}`">
-                          {{ `${index + 1}-${i + 1}-${ii + 1}. ${cc[1]}` }}
-                          <span class="catalogue__title-tag" v-if="cc[3]">
-                            {{ cc[3] }}
-                          </span>
-                        </router-link>
-                      </template>
-                    </div>
-                  </template>
-                </dd>
-              </dl>
-            </template>
-          </div>
+          <CatalogueTree :list="catalogueList"></CatalogueTree>
         </div>
       </transition>
       <transition v-if="!loading" name="fade">
@@ -89,7 +36,7 @@
 <script>
 import { Transformer } from 'markmap-lib';
 import { Markmap } from 'markmap-view/dist/index.esm';
-
+import CatalogueTree from './CatalogueTree.vue';
 import { getScopedCatalogueList, getMdContent } from '../util/catalogue'
 
 const MOBILE_DESKTOP_BREAKPOINT = 720 // refer to config.styl
@@ -115,6 +62,9 @@ export default {
       initialSvgHeight: 0,
       isPC: true,
     }
+  },
+  components: {
+    CatalogueTree,
   },
   created() {
     this.initPageData()
@@ -260,51 +210,6 @@ dl, dd
   .catalogue-title
     font-size 1.45rem
     margin-bottom 2rem
-  .catalogue-content
-    dl
-      margin-bottom 1.8rem
-      &.inline
-        display inline-block
-        width 50%
-        margin-bottom 1rem
-        @media (max-width $MQMobileNarrow)
-          width 100%
-        a
-          width 100%
-      &:not(.inline)
-        dt
-          margin-top -($navbarHeight)
-          padding-top $navbarHeight
-      dt
-        font-size 1.1rem
-        &:hover .header-anchor
-          opacity 1
-      dd
-        margin-top 0.7rem
-        margin-left 1rem
-        a:not(.header-anchor)
-          margin-bottom 0.5rem
-          display inline-block
-          width 50%
-          &:hover
-            color $activeColor
-            text-decoration none
-          @media (max-width 720px)
-            width 100%
-      .sub-cat-wrap
-        margin 5px 0 8px 0
-        font-size 0.95rem
-        &> a
-          padding-left 1rem
-          box-sizing border-box
-        .sub-title
-          margin-top -($navbarHeight)
-          padding-top $navbarHeight
-          margin-bottom 6px
-          font-size 1rem
-        &:hover
-          .header-anchor
-            opacity 1
 </style>
 <style lang="css" scoped>
 .tabs-wrapper {

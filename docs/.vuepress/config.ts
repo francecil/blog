@@ -402,5 +402,29 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
   extraWatchFiles: [
     '.vuepress/config.ts',
     '.vuepress/config/htmlModules.ts',
-  ]
+  ],
+
+  chainWebpack(config, isServer) {
+    // fix antdv 使用高版本 core-js 导致报错的问题 https://github.com/zpfz/vuepress-theme-antdocs/issues/5
+    config.resolve.alias.set('core-js/library/fn', 'core-js/features');
+    // 按需加载
+    config.module
+      .rule("js") // Find the rule.
+      .use("babel-loader") // Find the loader
+      .tap((options) =>
+        Object.assign(options, {
+          // Modifying options
+          plugins: [
+            [
+              "import",
+              {
+                libraryName: "ant-design-vue",
+                libraryDirectory: "es",
+                style: "css",
+              },
+            ],
+          ],
+        })
+      );
+  }
 })
