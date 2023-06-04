@@ -2,12 +2,12 @@
 import Vue from 'vue'
 import CodeBlock from "@theme/global-components/CodeBlock.vue"
 import CodeGroup from "@theme/global-components/CodeGroup.vue"
-import { Tree, Icon } from 'ant-design-vue';
+import { Tree, Icon, Input } from 'ant-design-vue';
 
 // Register the Vue global component
 Vue.component(CodeBlock)
 Vue.component(CodeGroup)
-const AntdComps = [Tree, Icon]
+const AntdComps = [Tree, Icon, Input]
 //  注：此文件在浏览器端运行
 import postsMixin from '@theme/mixins/posts'
 export default ({

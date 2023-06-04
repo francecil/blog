@@ -43,7 +43,7 @@ export const convertTreeData = (currentCatalogueList, keyLevel = "") => {
       item.scopedSlots = {
         title: "leftCustom",
       };
-      item.selectable = false
+      item.selectable = false;
     } else {
       // 目录节点
       item.scopedSlots = {
@@ -99,4 +99,24 @@ export const getMdContent = (title, catalogueTreeData) => {
     dfsCatalogue(catalogue, 2);
   });
   return content;
+};
+
+/**
+ * 获取包含搜索关键字的父节点
+ * @param {*} keyword
+ * @param {*} tree
+ */
+export const getParentKeysContainKeywork = (keyword, tree) => {
+  const keys = [];
+  if (tree.children && tree.children.length > 0) {
+    if (tree.children.some((sub) => sub.title.includes(keyword))) {
+      keys.push(tree.key);
+    }
+    const childrenKeys = tree.children.reduce((pre, cur) => {
+      return [...pre, ...getParentKeysContainKeywork(keyword, cur)]
+    }, [])
+    
+    keys.push(...childrenKeys);
+  }
+  return keys;
 };

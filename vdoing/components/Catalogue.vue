@@ -18,26 +18,43 @@
         </ul>
       </div>
       <transition v-if="!loading" name="fade">
-        <div v-show="activeTab === 0" class="catalogue__main-point">
-          <div class="catalogue-title">目录</div>
-          <a-tree class="catalogue-tree" :tree-data="catalogueTreeData" expandAction="click" :defaultExpandedKeys="['1']" show-line show-icon @select="onTreeNodeSelect">
+        <div v-show="activeTab === TAB_MAIN_POINT" class="catalogue__main-point">
+          <div class="catalogue__header">
+            <div class="catalogue__title">目录</div>
+            <a-input-search v-if="isPC" v-model="searchValue" class="catalogue__search" placeholder="搜索目录或文章"
+              @change="onInputChange" />
+          </div>
+          <a-tree ref="catalogueTree" class="catalogue-tree" :auto-expand-parent="autoExpandParent" :tree-data="catalogueTreeData"
+            :expanded-keys="expandedKeys" show-line show-icon @select="onTreeNodeSelect" @expand="onExpand">
             <template slot="leftCustom" slot-scope="{ title, extra }">
               <a :title="title" target="_blank" :href="extra.link" class="leftnode--link">
-                <span>{{ title }}</span>
+                <span v-if="searchValue && title.indexOf(searchValue) > -1">
+                  {{ title.substr(0, title.indexOf(searchValue)) }}
+                  <span class="leftnode--active">{{ searchValue }}</span>
+                  {{ title.substr(title.indexOf(searchValue) + searchValue.length) }}
+                </span>
+                <span v-else>{{ title }}</span>
+
                 <span class="catalogue__title-tag" v-if="extra.titleTag">{{ extra.titleTag }}</span>
               </a>
             </template>
             <template slot="dirCustom" slot-scope="{ title, key }">
               <span :id="title" :title="title" class="dirnode">
-                <span>{{ key }}. {{ title }}</span>
-                <a :href="`#${title}`" class="dirnode__header-anchor">#</a>
+                <span>{{ key }}.</span>
+                <span v-if="searchValue && title.indexOf(searchValue) > -1">
+                  {{ title.substr(0, title.indexOf(searchValue)) }}
+                  <span class="leftnode--active">{{ searchValue }}</span>
+                  {{ title.substr(title.indexOf(searchValue) + searchValue.length) }}
+                </span>
+                <span v-else>{{ title }}</span>
+                <a :href="`#${title}`" v-on:click.capture.stop class="dirnode__header-anchor">#</a>
               </span>
             </template>
           </a-tree>
         </div>
       </transition>
       <transition v-if="!loading" name="fade">
-        <div v-show="activeTab === 1" class="mindmap-wrapper">
+        <div v-show="activeTab === TAB_MINDMAP" class="mindmap-wrapper">
           <svg ref="mindmapRef"></svg>
         </div>
       </transition>
@@ -49,10 +66,16 @@
 <script>
 import { Transformer } from 'markmap-lib';
 import { Markmap } from 'markmap-view/dist/index.esm'
-import { getScopedCatalogueTreeData, getMdContent } from '../util/catalogue'
+import { getScopedCatalogueTreeData, getMdContent, getParentKeysContainKeywork } from '../util/catalogue'
+import { getQuery, setQuery } from '../util/url'
+import { tickStep } from 'd3-array';
 
 const MOBILE_DESKTOP_BREAKPOINT = 720 // refer to config.styl
 const transformer = new Transformer();
+
+const TAB_MAIN_POINT = 0
+const TAB_MINDMAP = 1
+const QUERY_KEY_TAB = 'tab'
 
 export default {
   data() {
@@ -65,17 +88,21 @@ export default {
       }, {
         label: '脑图模式',
       }],
-      // 大纲模式
-      activeTab: 0,
+      activeTab: TAB_MAIN_POINT,
       loading: true,
       // markmap 内部状态
       mmState: {},
       // 首次渲染时 svg 的高度
       initialSvgHeight: 0,
       isPC: true,
+      searchValue: '',
+      expandedKeys: ['1'],
+      autoExpandParent: true
     }
   },
   created() {
+    this.TAB_MAIN_POINT = TAB_MAIN_POINT
+    this.TAB_MINDMAP = TAB_MINDMAP
     this.initPageData()
     this.initCatalogueList()
     const sidebar = this.$themeConfig.sidebar
@@ -89,7 +116,8 @@ export default {
     this.isPC = document.documentElement.clientWidth > MOBILE_DESKTOP_BREAKPOINT
     this.loading = false
     if (this.isPC) {
-      this.activeTab = 1
+      const queryTab = getQuery(QUERY_KEY_TAB)
+      this.activeTab = queryTab ? Number(queryTab) : TAB_MINDMAP
       this.$nextTick(() => {
         this.mm = Markmap.create(this.$refs.mindmapRef, {
           /** 初始展开层级 */
@@ -179,8 +207,25 @@ export default {
     type(o) { // 数据类型检查
       return Object.prototype.toString.call(o).match(/\[object (.*?)\]/)[1].toLowerCase()
     },
+    resetState() {
+      this.searchValue = ''
+      this.expandedKeys = ['1']
+    },
     changeTab(index) {
       this.activeTab = index
+      setQuery(QUERY_KEY_TAB, index)
+    },
+    onExpand(expandedKeys) {
+      this.expandedKeys = expandedKeys;
+      this.autoExpandParent = false;
+    },
+    onInputChange(e) {
+      // 找到所有含有 searchValue 的父节点
+      const expandedKeys = this.searchValue ? this.catalogueTreeData.reduce((pre, cur) => {
+        return [...pre, ...getParentKeysContainKeywork(this.searchValue, cur)]
+      }, []) : []
+      this.expandedKeys = expandedKeys
+      this.autoExpandParent = true
     },
     onTreeNodeSelect(selectedKeys, { node }) {
       node.onExpand()
@@ -188,6 +233,7 @@ export default {
   },
   watch: {
     '$route.path'() {
+      this.resetState()
       this.initPageData()
       this.initCatalogueList()
       this.initMarkData()
@@ -218,21 +264,30 @@ dl, dd
       color var(--textColor)
       opacity 0.8
       margin 0.5rem 0
-.catalogue-wrapper
-  .catalogue-title
+    
+.catalogue__header 
+  margin-bottom 1rem
+  display flex
+  justify-content space-between
+  .catalogue__title
     font-size 1.45rem
-    margin-bottom 1rem
+  .catalogue__search
+    width 200px
 .leftnode--link
   &:hover
     text-decoration: none!important;
-
+.leftnode--active
+  color $activeColor
+  opacity 0.6
 .dirnode 
   display flex
   color var(--textColor)
+  &:hover
+    .dirnode__header-anchor
+      opacity 1
   &__header-anchor
     opacity 0
-    &:hover
-      opacity 1
+    padding-left 4px
 </style>
 <style lang="css" scoped>
 .tabs-wrapper {
@@ -319,4 +374,6 @@ dl, dd
     .ant-tree-switcher
       background-color var(--mainBg) 
       color var(--textColor)
+    .ant-tree-node-selected
+      background-color var(--mainBg) 
 </style>
