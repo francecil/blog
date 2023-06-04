@@ -109,10 +109,15 @@ export default {
       this.isStructuring = false
       console.error("目录页数据依赖于结构化的侧边栏数据，请在主题设置中将侧边栏字段设置为'structuring'，否则无法获取目录数据。")
     }
+  },
+  beforeMount() {
     // PC 默认选择脑图模式
     this.isPC = document.documentElement.clientWidth > MOBILE_DESKTOP_BREAKPOINT
-    const queryTab = getQuery(QUERY_KEY_TAB)
-    this.activeTab = queryTab ? Number(queryTab) : TAB_MINDMAP
+    if (this.isPC) {
+      const queryTab = getQuery(QUERY_KEY_TAB)
+      this.activeTab = queryTab ? Number(queryTab) : TAB_MINDMAP
+    }
+
   },
   async mounted() {
     if (this.isPC) {
@@ -360,6 +365,7 @@ dl, dd
 
 .mindmap-wrapper>svg {
   display: block;
+  opacity: 0;
   width: 100%;
   height: 100%;
 }
