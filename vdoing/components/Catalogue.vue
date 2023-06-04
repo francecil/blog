@@ -20,7 +20,20 @@
       <transition v-if="!loading" name="fade">
         <div v-show="activeTab === 0">
           <div class="catalogue-title">目录</div>
-          <CatalogueTree :list="catalogueList"></CatalogueTree>
+          <a-tree :tree-data="catalogueTreeData" :defaultExpandedKeys="['0']" show-icon>
+            <template slot="leftCustom" slot-scope="{ title, extra }">
+              <a :title="title" target="_blank" :href="extra.link" class="leftnode--link">
+                <span>📄 {{ title }}</span>
+                <span class="catalogue__title-tag" v-if="extra.titleTag">{{ extra.titleTag }}</span>
+              </a>
+            </template>
+            <template slot="dirCustom" slot-scope="{ title, key }">
+              <span :id="title" :title="title" class="dirnode">
+                <span>{{ key }}. {{ title }}</span>
+                <a :href="`#${title}`" class="dirnode__header-anchor">#</a>
+              </span>
+            </template>
+          </a-tree>
         </div>
       </transition>
       <transition v-if="!loading" name="fade">
@@ -35,9 +48,8 @@
 
 <script>
 import { Transformer } from 'markmap-lib';
-import { Markmap } from 'markmap-view/dist/index.esm';
-import CatalogueTree from './CatalogueTree.vue';
-import { getScopedCatalogueList, getMdContent } from '../util/catalogue'
+import { Markmap } from 'markmap-view/dist/index.esm'
+import { getScopedCatalogueTreeData, getMdContent } from '../util/catalogue'
 
 const MOBILE_DESKTOP_BREAKPOINT = 720 // refer to config.styl
 const transformer = new Transformer();
@@ -47,7 +59,7 @@ export default {
     return {
       pageData: null,
       isStructuring: true,
-      catalogueList: [],
+      catalogueTreeData: [],
       tabs: [{
         label: '大纲模式',
       }, {
@@ -62,9 +74,6 @@ export default {
       initialSvgHeight: 0,
       isPC: true,
     }
-  },
-  components: {
-    CatalogueTree,
   },
   created() {
     this.initPageData()
@@ -114,13 +123,13 @@ export default {
       const { sidebar } = this.$site.themeConfig
       const { data } = this.$frontmatter.pageComponent
       const key = data.path || data.key
-      this.catalogueList = getScopedCatalogueList(key, sidebar)
+      this.catalogueTreeData = getScopedCatalogueTreeData(key, sidebar)
     },
     async initMarkData() {
       if (!this.isPC) {
         return
       }
-      const mdContent = getMdContent(this.pageData.title, this.catalogueList);
+      const mdContent = getMdContent(this.pageData.title, this.catalogueTreeData);
       const { root } = transformer.transform(mdContent)
       // console.log({ mdContent, root, mm: this.mm })
       this.mm.setData(root);
@@ -172,7 +181,13 @@ export default {
     },
     changeTab(index) {
       this.activeTab = index
-    }
+    },
+    onSelect(selectedKeys, info) {
+      console.log('selected', selectedKeys, info);
+    },
+    onCheck(checkedKeys, info) {
+      console.log('onCheck', checkedKeys, info);
+    },
   },
   watch: {
     '$route.path'() {
@@ -209,7 +224,18 @@ dl, dd
 .catalogue-wrapper
   .catalogue-title
     font-size 1.45rem
-    margin-bottom 2rem
+    margin-bottom 1rem
+.leftnode--link
+  &:hover
+    color: $activeColor;
+    text-decoration: none!important;
+
+.dirnode 
+  display flex
+  &__header-anchor
+    opacity 0
+    &:hover
+      opacity 1
 </style>
 <style lang="css" scoped>
 .tabs-wrapper {
