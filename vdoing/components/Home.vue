@@ -365,6 +365,7 @@ export default {
         h1
           margin 0
           font-size 3.2rem
+          color $bannerTextColor
         .description, .action
           margin 1.5rem auto
         .description

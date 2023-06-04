@@ -2,10 +2,12 @@
 import Vue from 'vue'
 import CodeBlock from "@theme/global-components/CodeBlock.vue"
 import CodeGroup from "@theme/global-components/CodeGroup.vue"
+import { Tree, Icon, Input, Spin } from 'ant-design-vue';
+
 // Register the Vue global component
 Vue.component(CodeBlock)
 Vue.component(CodeGroup)
-
+const AntdComps = [Tree, Icon, Input, Spin]
 //  注：此文件在浏览器端运行
 import postsMixin from '@theme/mixins/posts'
 export default ({
@@ -14,6 +16,7 @@ export default ({
   router, // 当前应用的路由实例
   siteData // 站点元数据
 }) => {
+  AntdComps.forEach(com => Vue.use(com))
   // 修复ISO8601时间格式为普通时间格式，以及添加作者信息
   siteData.pages.map(item => {
     const { frontmatter: { date, author } } = item

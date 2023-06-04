@@ -17,106 +17,91 @@
           </li>
         </ul>
       </div>
-      <transition v-if="!loading" name="fade">
-        <div v-show="activeTab === 0">
-
-          <div class="catalogue-title">目录</div>
-          <div class="catalogue-content">
-            <template v-for="(item, index) in catalogueList">
-              <dl v-if="type(item) === 'array'" :key="index" class="inline">
-                <dt>
-                  <router-link :to="item[2]">{{ `${index + 1}. ${item[1]}` }}
-                    <span class="title-tag" v-if="item[3]">
-                      {{ item[3] }}
-                    </span>
-                  </router-link>
-                </dt>
-              </dl>
-              <dl v-else-if="type(item) === 'object'" :key="index">
-                <!-- 一级目录 -->
-                <dt :id="(anchorText = item.title)">
-                  <a :href="`#${anchorText}`" class="header-anchor">#</a>
-                  {{ `${index + 1}. ${item.title}` }}
-                </dt>
-                <dd>
-                  <!-- 二级目录 -->
-                  <template v-for="(c, i) in item.children">
-                    <template v-if="type(c) === 'array'">
-                      <router-link :to="c[2]" :key="i">{{ `${index + 1}-${i + 1}. ${c[1]}` }}
-                        <span class="title-tag" v-if="c[3]">
-                          {{ c[3] }}
-                        </span>
-                      </router-link>
-                    </template>
-                    <!-- 三级目录 -->
-                    <div v-else-if="type(c) === 'object'" :key="i" class="sub-cat-wrap">
-                      <div :id="(anchorText = c.title)" class="sub-title">
-                        <a :href="`#${anchorText}`" class="header-anchor">#</a>
-                        {{ `${index + 1}-${i + 1}. ${c.title}` }}
-                      </div>
-                      <template v-for="(cc, ii) in c.children">
-                        <router-link v-if="cc.title" :to="`${cc.children && cc.children[0] && !cc.children[0].title
-                          ? cc.children[0][2]
-                          : '/categories/?category=' + cc.title
-                          }`" :key="`${index + 1}-${i + 1}-${ii + 1}`">
-                          {{ `${index + 1}-${i + 1}-${ii + 1}. ${cc.title}` }}
-                        </router-link>
-                        <router-link v-else :to="cc[2]" :key="`${index + 1}-${i + 1}-${ii + 1}`">
-                          {{ `${index + 1}-${i + 1}-${ii + 1}. ${cc[1]}` }}
-                          <span class="catalogue__title-tag" v-if="cc[3]">
-                            {{ cc[3] }}
-                          </span>
-                        </router-link>
-                      </template>
-                    </div>
-                  </template>
-                </dd>
-              </dl>
-            </template>
-          </div>
+      <div v-show="activeTab === TAB_MAIN_POINT" class="catalogue__main-point">
+        <div class="catalogue__header">
+          <div class="catalogue__title">目录</div>
+          <a-input-search v-if="isPC" v-model="searchValue" class="catalogue__search" placeholder="搜索目录或文章"
+            @change="onInputChange" />
         </div>
-      </transition>
-      <transition v-if="!loading" name="fade">
-        <div v-show="activeTab === 1" class="mindmap-wrapper">
+        <a-tree ref="catalogueTree" class="catalogue-tree" :auto-expand-parent="autoExpandParent"
+          :tree-data="catalogueTreeData" :expanded-keys="expandedKeys" show-line show-icon @select="onTreeNodeSelect"
+          @expand="onExpand">
+          <template slot="leftCustom" slot-scope="{ title, extra }">
+            <a :title="title" target="_blank" :href="extra.link" class="leftnode--link">
+              <span v-if="searchValue && title.indexOf(searchValue) > -1">
+                {{ title.substr(0, title.indexOf(searchValue)) }}
+                <span class="leftnode--active">{{ searchValue }}</span>
+                {{ title.substr(title.indexOf(searchValue) + searchValue.length) }}
+              </span>
+              <span v-else>{{ title }}</span>
+
+              <span class="catalogue__title-tag" v-if="extra.titleTag">{{ extra.titleTag }}</span>
+            </a>
+          </template>
+          <template slot="dirCustom" slot-scope="{ title, key }">
+            <span :id="title" :title="title" class="dirnode">
+              <span>{{ key }}.</span>
+              <span v-if="searchValue && title.indexOf(searchValue) > -1">
+                {{ title.substr(0, title.indexOf(searchValue)) }}
+                <span class="leftnode--active">{{ searchValue }}</span>
+                {{ title.substr(title.indexOf(searchValue) + searchValue.length) }}
+              </span>
+              <span v-else>{{ title }}</span>
+              <a :href="`#${title}`" v-on:click.capture.stop class="dirnode__header-anchor">#</a>
+            </span>
+          </template>
+        </a-tree>
+      </div>
+      <a-spin v-show="activeTab === TAB_MINDMAP" :spinning="loading">
+        <div class="mindmap-wrapper">
           <svg ref="mindmapRef"></svg>
         </div>
-      </transition>
-
+      </a-spin>
     </div>
+
   </div>
 </template>
 
 <script>
 import { Transformer } from 'markmap-lib';
-import { Markmap } from 'markmap-view/dist/index.esm';
-
-import { getScopedCatalogueList, getMdContent } from '../util/catalogue'
+import { Markmap } from 'markmap-view/dist/index.esm'
+import { getScopedCatalogueTreeData, getMdContent, getParentKeysContainKeywork } from '../util/catalogue'
+import { getQuery, setQuery } from '../util/url'
 
 const MOBILE_DESKTOP_BREAKPOINT = 720 // refer to config.styl
 const transformer = new Transformer();
+
+const TAB_MAIN_POINT = 0
+const TAB_MINDMAP = 1
+const QUERY_KEY_TAB = 'tab'
 
 export default {
   data() {
     return {
       pageData: null,
       isStructuring: true,
-      catalogueList: [],
+      catalogueTreeData: [],
       tabs: [{
         label: '大纲模式',
       }, {
         label: '脑图模式',
       }],
-      // 大纲模式
-      activeTab: 0,
+      activeTab: TAB_MAIN_POINT,
+      // 数据是否未完成加载和解析
       loading: true,
       // markmap 内部状态
       mmState: {},
       // 首次渲染时 svg 的高度
       initialSvgHeight: 0,
       isPC: true,
+      searchValue: '',
+      expandedKeys: ['1'],
+      autoExpandParent: true
     }
   },
   created() {
+    this.TAB_MAIN_POINT = TAB_MAIN_POINT
+    this.TAB_MINDMAP = TAB_MINDMAP
     this.initPageData()
     this.initCatalogueList()
     const sidebar = this.$themeConfig.sidebar
@@ -124,27 +109,30 @@ export default {
       this.isStructuring = false
       console.error("目录页数据依赖于结构化的侧边栏数据，请在主题设置中将侧边栏字段设置为'structuring'，否则无法获取目录数据。")
     }
-  },
-  mounted() {
     // PC 默认选择脑图模式
     this.isPC = document.documentElement.clientWidth > MOBILE_DESKTOP_BREAKPOINT
-    this.loading = false
+    const queryTab = getQuery(QUERY_KEY_TAB)
+    this.activeTab = queryTab ? Number(queryTab) : TAB_MINDMAP
+  },
+  async mounted() {
     if (this.isPC) {
-      this.activeTab = 1
-      this.$nextTick(() => {
-        this.mm = Markmap.create(this.$refs.mindmapRef, {
-          /** 初始展开层级 */
-          initialExpandLevel: 2,
-          /** 节点展开动画时间 */
-          duration: 100,
-          /** 是否开启平移 */
-          pan: false
-        });
-        this.initMarkData()
-        this.watchMmState()
-      })
+      this.mm = Markmap.create(this.$refs.mindmapRef, {
+        /** 初始展开层级 */
+        initialExpandLevel: 2,
+        /** 节点展开动画时间 */
+        duration: 100,
+        /** 是否开启平移 */
+        pan: false
+      });
+      this.initMarkData()
+      if (this.activeTab === TAB_MINDMAP) {
+        await this.renderMarkData()
+        this.loading = false
+      }
+      this.watchMmState()
+    } else {
+      this.loading = false
     }
-
 
   },
   methods: {
@@ -164,16 +152,15 @@ export default {
       const { sidebar } = this.$site.themeConfig
       const { data } = this.$frontmatter.pageComponent
       const key = data.path || data.key
-      this.catalogueList = getScopedCatalogueList(key, sidebar)
+      this.catalogueTreeData = getScopedCatalogueTreeData(key, sidebar)
     },
-    async initMarkData() {
-      if (!this.isPC) {
-        return
-      }
-      const mdContent = getMdContent(this.pageData.title, this.catalogueList);
+    initMarkData() {
+      const mdContent = getMdContent(this.pageData.title, this.catalogueTreeData);
       const { root } = transformer.transform(mdContent)
-      // console.log({ mdContent, root, mm: this.mm })
-      this.mm.setData(root);
+      this.mmData = root
+    },
+    async renderMarkData() {
+      this.mm.setData(this.mmData);
       const svgEl = this.$refs.mindmapRef
       // 设定容器初始高度
       await this.mm.rescale(1)
@@ -181,11 +168,13 @@ export default {
       this.initialSvgHeight = this.mm.state.maxX - this.mm.state.minX + 10
       svgEl.style.height = this.initialSvgHeight + "px";
       svgEl.style.opacity = 0
-      this.$nextTick(async () => {
-        await this.mm.fit();
-        svgEl.style.opacity = 1
+      await new Promise((resolve) => {
+        this.$nextTick(async () => {
+          await this.mm.fit();
+          svgEl.style.opacity = 1
+          resolve()
+        })
       })
-
     },
     watchMmState() {
       const tmpData = { ...this.mm.state }
@@ -220,15 +209,50 @@ export default {
     type(o) { // 数据类型检查
       return Object.prototype.toString.call(o).match(/\[object (.*?)\]/)[1].toLowerCase()
     },
-    changeTab(index) {
+    resetState() {
+      this.loading = true
+      this.searchValue = ''
+      this.expandedKeys = ['1']
+    },
+    async changeTab(index) {
       this.activeTab = index
-    }
+      setQuery(QUERY_KEY_TAB, index)
+      // 渲染知识地图
+      if (index === TAB_MINDMAP && this.loading) {
+        await this.renderMarkData()
+        this.loading = false
+      }
+    },
+    onExpand(expandedKeys) {
+      this.expandedKeys = expandedKeys;
+      this.autoExpandParent = false;
+    },
+    onInputChange(e) {
+      // 找到所有含有 searchValue 的父节点
+      const expandedKeys = this.searchValue ? this.catalogueTreeData.reduce((pre, cur) => {
+        return [...pre, ...getParentKeysContainKeywork(this.searchValue, cur)]
+      }, []) : []
+      this.expandedKeys = expandedKeys
+      this.autoExpandParent = true
+    },
+    onTreeNodeSelect(selectedKeys, { node }) {
+      node.onExpand()
+    },
   },
   watch: {
-    '$route.path'() {
+    async '$route.path'() {
+      this.resetState()
       this.initPageData()
       this.initCatalogueList()
-      this.initMarkData()
+      if (this.isPC) {
+        this.initMarkData()
+        if (this.activeTab === TAB_MINDMAP) {
+          await this.renderMarkData()
+          this.loading = false
+        }
+      } else {
+        this.loading = false
+      }
     },
   },
 }
@@ -256,55 +280,30 @@ dl, dd
       color var(--textColor)
       opacity 0.8
       margin 0.5rem 0
-.catalogue-wrapper
-  .catalogue-title
+    
+.catalogue__header 
+  margin-bottom 1rem
+  display flex
+  justify-content space-between
+  .catalogue__title
     font-size 1.45rem
-    margin-bottom 2rem
-  .catalogue-content
-    dl
-      margin-bottom 1.8rem
-      &.inline
-        display inline-block
-        width 50%
-        margin-bottom 1rem
-        @media (max-width $MQMobileNarrow)
-          width 100%
-        a
-          width 100%
-      &:not(.inline)
-        dt
-          margin-top -($navbarHeight)
-          padding-top $navbarHeight
-      dt
-        font-size 1.1rem
-        &:hover .header-anchor
-          opacity 1
-      dd
-        margin-top 0.7rem
-        margin-left 1rem
-        a:not(.header-anchor)
-          margin-bottom 0.5rem
-          display inline-block
-          width 50%
-          &:hover
-            color $activeColor
-            text-decoration none
-          @media (max-width 720px)
-            width 100%
-      .sub-cat-wrap
-        margin 5px 0 8px 0
-        font-size 0.95rem
-        &> a
-          padding-left 1rem
-          box-sizing border-box
-        .sub-title
-          margin-top -($navbarHeight)
-          padding-top $navbarHeight
-          margin-bottom 6px
-          font-size 1rem
-        &:hover
-          .header-anchor
-            opacity 1
+  .catalogue__search
+    width 200px
+.leftnode--link
+  &:hover
+    text-decoration: none!important;
+.leftnode--active
+  color $activeColor
+  opacity 0.6
+.dirnode 
+  display flex
+  color var(--textColor)
+  &:hover
+    .dirnode__header-anchor
+      opacity 1
+  &__header-anchor
+    opacity 0
+    padding-left 4px
 </style>
 <style lang="css" scoped>
 .tabs-wrapper {
@@ -339,7 +338,7 @@ dl, dd
   font-weight: 500;
 }
 
-.fade-enter-active,
+/* .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s;
 }
@@ -347,7 +346,7 @@ dl, dd
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
-}
+} */
 
 .mindmap-wrapper {
   width: 100%;
@@ -371,7 +370,8 @@ dl, dd
   // line-height 1.1rem
   border 1px solid $activeColor
   color $activeColor
-  font-size 0.8rem
+  font-size 0.6rem
+  line-height 1.5
   padding 0 0.35rem
   border-radius 0.2rem
   margin-left 0rem
@@ -385,4 +385,11 @@ dl, dd
 
 .m-markmap-dirnode
   // cursor pointer
+.catalogue__main-point
+  .catalogue-tree.ant-tree
+    .ant-tree-switcher
+      background-color var(--mainBg) 
+      color var(--textColor)
+    .ant-tree-node-selected
+      background-color var(--mainBg) 
 </style>
