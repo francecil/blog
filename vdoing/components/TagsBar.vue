@@ -84,6 +84,7 @@ export default {
     margin 0 -0.5rem -0.5rem -0.5rem
     a
       opacity 0.8
+      box-sizing content-box
       display inline-block
       padding 0.2rem 0.4rem
       transition all 0.4s

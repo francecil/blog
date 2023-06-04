@@ -154,6 +154,7 @@ export default {
     a
       margin 0 0.8rem 0.5rem 0
       display inline-block
+      box-sizing content-box
       color var(--textLightenColor)
       padding 0.2rem 0.7rem
       font-size 0.9em
