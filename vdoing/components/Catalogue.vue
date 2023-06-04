@@ -18,9 +18,9 @@
         </ul>
       </div>
       <transition v-if="!loading" name="fade">
-        <div v-show="activeTab === 0">
+        <div v-show="activeTab === 0" class="catalogue__main-point">
           <div class="catalogue-title">目录</div>
-          <a-tree :tree-data="catalogueTreeData" :defaultExpandedKeys="['0']" show-line show-icon :selectable="false">
+          <a-tree class="catalogue-tree" :tree-data="catalogueTreeData" expandAction="click" :defaultExpandedKeys="['1']" show-line show-icon @select="onTreeNodeSelect">
             <template slot="leftCustom" slot-scope="{ title, extra }">
               <a :title="title" target="_blank" :href="extra.link" class="leftnode--link">
                 <span>{{ title }}</span>
@@ -182,11 +182,8 @@ export default {
     changeTab(index) {
       this.activeTab = index
     },
-    onSelect(selectedKeys, info) {
-      console.log('selected', selectedKeys, info);
-    },
-    onCheck(checkedKeys, info) {
-      console.log('onCheck', checkedKeys, info);
+    onTreeNodeSelect(selectedKeys, { node }) {
+      node.onExpand()
     },
   },
   watch: {
@@ -231,6 +228,7 @@ dl, dd
 
 .dirnode 
   display flex
+  color var(--textColor)
   &__header-anchor
     opacity 0
     &:hover
@@ -316,4 +314,9 @@ dl, dd
 
 .m-markmap-dirnode
   // cursor pointer
+.catalogue__main-point
+  .catalogue-tree.ant-tree
+    .ant-tree-switcher
+      background-color var(--mainBg) 
+      color var(--textColor)
 </style>

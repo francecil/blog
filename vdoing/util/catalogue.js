@@ -43,6 +43,7 @@ export const convertTreeData = (currentCatalogueList, keyLevel = "") => {
       item.scopedSlots = {
         title: "leftCustom",
       };
+      item.selectable = false
     } else {
       // 目录节点
       item.scopedSlots = {
