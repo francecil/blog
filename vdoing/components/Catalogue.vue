@@ -20,10 +20,10 @@
       <transition v-if="!loading" name="fade">
         <div v-show="activeTab === 0">
           <div class="catalogue-title">目录</div>
-          <a-tree :tree-data="catalogueTreeData" :defaultExpandedKeys="['0']" show-icon>
+          <a-tree :tree-data="catalogueTreeData" :defaultExpandedKeys="['0']" show-line show-icon :selectable="false">
             <template slot="leftCustom" slot-scope="{ title, extra }">
               <a :title="title" target="_blank" :href="extra.link" class="leftnode--link">
-                <span>📄 {{ title }}</span>
+                <span>{{ title }}</span>
                 <span class="catalogue__title-tag" v-if="extra.titleTag">{{ extra.titleTag }}</span>
               </a>
             </template>
@@ -227,7 +227,6 @@ dl, dd
     margin-bottom 1rem
 .leftnode--link
   &:hover
-    color: $activeColor;
     text-decoration: none!important;
 
 .dirnode 
@@ -302,7 +301,8 @@ dl, dd
   // line-height 1.1rem
   border 1px solid $activeColor
   color $activeColor
-  font-size 0.8rem
+  font-size 0.6rem
+  line-height 1.5
   padding 0 0.35rem
   border-radius 0.2rem
   margin-left 0rem

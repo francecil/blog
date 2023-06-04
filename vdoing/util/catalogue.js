@@ -33,8 +33,6 @@ export const convertTreeData = (currentCatalogueList, keyLevel = "") => {
       key: keyLevel ? `${keyLevel}-${index + 1}` : `${index + 1}`,
       title: Array.isArray(cur) ? cur[1] : cur.title,
     };
-    // 不可选择，供 treeData 组件使用
-    item.selectable = false;
     // 叶子节点
     if (Array.isArray(cur)) {
       item.isLeaf = true;
@@ -61,7 +59,7 @@ export const convertTreeData = (currentCatalogueList, keyLevel = "") => {
 
 const getMdNodeContent = (catalogue) => {
   if (catalogue.isLeaf) {
-    return `<a class="m-markmap-pagenode leftnode--link" target="_blank" href="${
+    return `<a class="m-markmap-pagenode" target="_blank" href="${
       catalogue.extra.link
     }">📄 ${catalogue.title} ${
       catalogue.extra.titleTag
