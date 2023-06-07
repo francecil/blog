@@ -96,7 +96,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
             link: '/design/',
           },
           { text: '面试', link: '/pages/c70629/' },
-          { text: '人生总结', link: '/pages/f00c67/' },
+          { text: '人生总结', link: '/life-summary/' },
           {
             text: '灵感碎碎念',
             link: '/pages/ideas/',
