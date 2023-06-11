@@ -104,6 +104,8 @@ brew install node
 - [Sourcetree](https://www.sourcetreeapp.com/): Git 可视化工具
 - [Hoppscotch](https://github.com/hoppscotch/hoppscotch): API 开发工具，支持 [PWA](https://hoppscotch.io/)
 - [oh-my-zsh](https://ohmyz.sh/): zsh 的插件管理方案，插件可以从[这边](https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins)找，后面整理一个常用的
+- [whistle](http://wproxy.org/whistle/)
+
 
 ## 开发
 
