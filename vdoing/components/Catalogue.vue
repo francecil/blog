@@ -114,6 +114,12 @@ export default {
     // PC 默认选择脑图模式
     this.isPC = document.documentElement.clientWidth > MOBILE_DESKTOP_BREAKPOINT
     if (this.isPC) {
+      // 有 hash 直接展示大纲
+      if(location.hash) {
+        this.activeTab = TAB_MAIN_POINT
+        return
+      }
+      // 根据不同的 query 展示
       const queryTab = getQuery(QUERY_KEY_TAB)
       this.activeTab = queryTab ? Number(queryTab) : TAB_MINDMAP
     }
