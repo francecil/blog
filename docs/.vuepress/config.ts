@@ -95,21 +95,17 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
             text: '产品设计',
             link: '/design/',
           },
-          { text: '面试', link: '/pages/c70629/' },
+          { text: '面试经验', link: '/interviews/' },
           { text: '人生总结', link: '/life-summary/' },
           {
-            text: '灵感碎碎念',
+            text: '灵感记录',
             link: '/pages/ideas/',
           },
           {
-            text: '实用技巧', items: [{
-              text: 'markdown 技巧', link: '/pages/d3622e/'
-            }]
+            text: '实用技巧', link: '/practical-tips/'
           },
           {
-            text: '知识科普', items: [{
-              text: '地理坐标系', link: '/pages/d3f796/'
-            }]
+            text: '知识科普', link: '/knowledge-popularization/'
           },
           {
             text: '收藏夹',
