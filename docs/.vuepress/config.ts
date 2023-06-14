@@ -67,15 +67,31 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
         items: [
           {
             text: 'Git',
-            link: '/pages/703e88/'
+            link: '/git/'
           },
           {
             text: '网络基础',
-            link: '/pages/58bfaf/'
+            link: '/network/'
           },
           {
-            text: '算法与数据结构',
-            link: '/pages/eca777/'
+            text: '算法',
+            link: '/algorithm/'
+          },
+          {
+            text: '数据结构',
+            link: '/data-structure/'
+          },
+          {
+            text: '编程范式',
+            link: '/programming-paradigm/'
+          },
+          {
+            text: '编解码',
+            link: '/codec/'
+          },
+          {
+            text: 'Linux',
+            link: '/linux/'
           },
           {
             text: '其他领域',
