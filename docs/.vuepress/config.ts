@@ -39,6 +39,10 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
         link: '/fe/', //目录页链接，此处link是 vdoing 主题新增的配置项，有二级导航时，可以点击一级导航跳到目录页
         items: [
           {
+            text: '优质前端信息源',
+            link: 'https://itoutiao.feishu.cn/docx/SAdidmcozohUmlxp29wcQtTXn2b',
+          },
+          {
             text: '前端基础',
             items: [
               { text: 'JavaScript', link: '/pages/2e58d1/' },
@@ -51,8 +55,8 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
           {
             text: 'UI 框架',
             items: [
-              { text: 'React', link: '/pages/b4d8a3/' },
-              { text: 'Vue', link: '/pages/b5decb/' },
+              { text: 'React', link: '/react/' },
+              { text: 'Vue', link: '/vue/' },
             ],
           },
         ],
@@ -106,6 +110,9 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
           },
           {
             text: '知识科普', link: '/knowledge-popularization/'
+          },
+          {
+            text: '美食推荐', link: 'https://itoutiao.feishu.cn/base/COJCbzvJ5axnrTsOSIvcTYY7nmc'
           },
           {
             text: '收藏夹',
