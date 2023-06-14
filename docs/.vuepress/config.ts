@@ -102,6 +102,10 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
             {
               text: '服务端',
               link: '/server/',
+            },
+            {
+              text: '产品设计',
+              link: '/design/',
             }]
           },
         ],
@@ -111,10 +115,6 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
         text: '生活',
         link: '/life/',
         items: [
-          {
-            text: '产品设计',
-            link: '/design/',
-          },
           { text: '面试经验', link: '/interviews/' },
           { text: '人生总结', link: '/life-summary/' },
           {
