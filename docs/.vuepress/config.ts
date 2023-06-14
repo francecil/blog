@@ -39,6 +39,10 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
         link: '/fe/', //目录页链接，此处link是 vdoing 主题新增的配置项，有二级导航时，可以点击一级导航跳到目录页
         items: [
           {
+            text: '优质前端信息源',
+            link: 'https://itoutiao.feishu.cn/docx/SAdidmcozohUmlxp29wcQtTXn2b',
+          },
+          {
             text: '前端基础',
             items: [
               { text: 'JavaScript', link: '/pages/2e58d1/' },
@@ -51,8 +55,8 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
           {
             text: 'UI 框架',
             items: [
-              { text: 'React', link: '/pages/b4d8a3/' },
-              { text: 'Vue', link: '/pages/b5decb/' },
+              { text: 'React', link: '/react/' },
+              { text: 'Vue', link: '/vue/' },
             ],
           },
         ],
@@ -63,15 +67,35 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
         items: [
           {
             text: 'Git',
-            link: '/pages/703e88/'
+            link: '/git/'
           },
           {
             text: '网络基础',
-            link: '/pages/58bfaf/'
+            link: '/network/'
           },
           {
-            text: '算法与数据结构',
-            link: '/pages/eca777/'
+            text: '算法',
+            link: '/algorithm/'
+          },
+          {
+            text: '数据结构',
+            link: '/data-structure/'
+          },
+          {
+            text: '编程范式',
+            link: '/programming-paradigm/'
+          },
+          {
+            text: '编解码',
+            link: '/codec/'
+          },
+          {
+            text: 'Linux',
+            link: '/linux/'
+          },
+          {
+            text: 'AIGC',
+            link: '/aigc/'
           },
           {
             text: '其他领域',
@@ -82,6 +106,10 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
             {
               text: '服务端',
               link: '/server/',
+            },
+            {
+              text: '产品设计',
+              link: '/design/',
             }]
           },
         ],
@@ -91,10 +119,6 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
         text: '生活',
         link: '/life/',
         items: [
-          {
-            text: '产品设计',
-            link: '/design/',
-          },
           { text: '面试经验', link: '/interviews/' },
           { text: '人生总结', link: '/life-summary/' },
           {
@@ -106,6 +130,9 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
           },
           {
             text: '知识科普', link: '/knowledge-popularization/'
+          },
+          {
+            text: '美食推荐', link: 'https://itoutiao.feishu.cn/base/COJCbzvJ5axnrTsOSIvcTYY7nmc'
           },
           {
             text: '收藏夹',
