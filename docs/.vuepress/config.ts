@@ -94,6 +94,10 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
             link: '/linux/'
           },
           {
+            text: 'AIGC',
+            link: '/aigc/'
+          },
+          {
             text: '其他领域',
             items: [{
               text: '客户端',
