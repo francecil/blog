@@ -1,4 +1,7 @@
 {
     "[markdown]": {
+    },
+    "markdown.copyFiles.destination": {
+        "/docs/**/*": "${documentWorkspaceFolder}/docs/@assets/img/image.${fileName/(.*)\\.(.*)$/$2/}"
     }
 }
