@@ -12,7 +12,7 @@ const DOMAIN = process.argv.splice(2)[0]; // 获取命令行传入的参数
 if (DOMAIN) {
   main();
 } else {
-  console.log(chalk.red('请在运行此文件时指定一个你要进行百度推送的域名参数，例：node utils/baiduPush.js https://gahing.top'))
+  console.log(chalk.red('请在运行此文件时指定一个你要进行百度推送的域名参数，例：node utils/baiduPush.js https://www.gahing.top'))
 }
 
 /**
