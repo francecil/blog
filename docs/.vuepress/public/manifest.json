@@ -1,0 +1,14 @@
+{
+    "background_color": "purple",
+    "display": "fullscreen",
+    "icons": [
+      {
+        "src": "img/logo.png",
+        "sizes": "96x96",
+        "type": "image/png"
+      }
+    ],
+    "name": "Gahing's Blog",
+    "short_name": "Gahing",
+    "start_url": "."
+  }

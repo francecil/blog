@@ -10,6 +10,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@vuepress/plugin-pwa": "^1.9.9",
     "babel-plugin-import": "^1.13.6",
     "dayjs": "^1.9.7",
     "ejs": "^2.6.1",
