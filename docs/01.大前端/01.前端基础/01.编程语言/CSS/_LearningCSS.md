@@ -1,5 +1,5 @@
 ---
-title: LearningCSS
+title: CSS 学习笔记
 date: 2017-02-14 17:11:23
 permalink: /pages/68abf6/
 categories: 
@@ -140,7 +140,7 @@ q:lang(no)
 
 下面的例子在每个` <h1>` 元素前面插入一幅图片：
 
-```
+```css
 h1:before
   {
   content:url(logo.gif);
@@ -151,7 +151,7 @@ h1:before
 
 # 高级使用
 display:block - 把链接显示为块元素可使整个链接区域可点击（不仅仅是文本），同时也允许我们规定宽度。
-将 <li> 元素规定为行内元素：display:inline;
+将 `<li>` 元素规定为行内元素：`display:inline;`
 
 # CSS3
 transform 2D 或 3D转换

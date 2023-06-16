@@ -97,12 +97,14 @@ function renderExternal(h, to, text) {
 .sidebar .sidebar-sub-headers
   padding-left 1rem
   font-size 0.95em
+  .level3
+    padding-left 0.5rem
   .level4
-    padding-left 0.2rem
+    padding-left 1rem
   .level5
-    padding-left 0.4rem
+    padding-left 1.5rem
   .level6
-    padding-left 0.6rem
+    padding-left 2rem
 a.sidebar-link
   font-size 1em
   font-weight 400

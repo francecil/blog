@@ -99,8 +99,11 @@ export default {
       white-space nowrap
       text-overflow ellipsis
       position relative
+      &.level1
+        font-size: 0.85rem;
       &.level2
         font-size 0.8rem
+        padding-left 20px
       &.level3
         padding-left 27px
       &.level4

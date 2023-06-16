@@ -73,20 +73,20 @@ IDE:Build->MakeProject 得到class
 
 > E:\AndroidTemp\JNIProject\app\src\main>
 
-执行javah命令，为的是生成的 .h 文件同样是在<Project>\app\src\main路径下(jni下面)，可以在Studio的工程结构中直接看到。
+执行javah命令，为的是生成的 .h 文件同样是在 `<Project>\app\src\main路径下(jni下面)` ，可以在Studio的工程结构中直接看到。
 操作命令：
-
+```
     //-d jni 表示生成名为jni的目录
 
     javah -d jni -classpath <SDK_android.jar>;<APP_classes> <class>
-
+```
  
 即
 
-
+```
     //<SDK_android.jar>看个人存放在哪
     javah -d jni -classpath E:\BaiduYunDownload\adt-bundle-windows-x86_64-20140702\sdk\platforms\android-23\android.jar;..\..\build\intermediates\classes\debug com.france.jniproject.NdkJniUtil
-
+```
 
 
 

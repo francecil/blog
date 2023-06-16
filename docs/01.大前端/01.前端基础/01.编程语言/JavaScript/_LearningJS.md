@@ -1,5 +1,5 @@
 ---
-title: LearningJS
+title: JS 学习笔记
 date: 2017-02-14 17:11:23
 permalink: /pages/8b553a/
 categories: 
@@ -14,13 +14,13 @@ titleTag: 草稿
 [TOC]
 
 
-#基础
+# 基础
 
 以下属性只适合外部脚本
 async="async" 异步下载资源，下载完毕后立刻执行，堵塞dom解析，建议异步的脚本不要进行DOM修改 不能确定谁先谁后，一定会在load事件之前完成
 defer="defer" 等文档解析完再加载
 不存在上面两个属性的，按先后顺序依次对js进行解析
-浏览器在遇到<body>才开始呈现页面内容 所以 一些判断是手机还是pc然后跳转的就可以把js放到head中
+浏览器在遇到 `<body>` 才开始呈现页面内容 所以 一些判断是手机还是pc然后跳转的就可以把js放到head中
 
 https://segmentfault.com/a/1190000006778717
 
@@ -543,10 +543,11 @@ save restore 栈结构用于保存和恢复fillStyle和strokeStyle属性
 
 ### 绘制图像
 
-context.drawImage(<img>元素/<canvas>元素,起点x,起点y,绘制图像宽，绘制图像高)
-
+```js
+context.drawImage(<img>元素 / <canvas>元素,起点x,起点y,绘制图像宽，绘制图像高)
 canvas.toDataURL 输出canvas结果
-
+```
+s
 ### 阴影
 
 ### 渐变
@@ -895,7 +896,7 @@ js中的if判断，一般是让其与应该值比，而不是与不符值比，
 
 如`setTimeout("alert('Hello world')",500)`
 
-###3.最小化语句数
+### 3.最小化语句数
 
 1.多变量声明
 
