@@ -295,6 +295,9 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
         content: "#1e1e22cc",
       },
     ],
+    // 站长统计验证
+    ['meta', { name: 'baidu-site-verification', content: 'codeva-SokyIFDMe9' }],
+    ['meta', { name: 'google-site-verification', content: '4k3G9ZEl7_r-tXh5BDu5MBGg5Yd5DUVfn-6hoynqvZ8' }],
   ],
 
   // 插件配置
