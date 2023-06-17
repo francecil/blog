@@ -136,6 +136,10 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
             link: "/knowledge-popularization/",
           },
           {
+            text: "友情链接",
+            link: "/friends/",
+          },
+          {
             text: "美食推荐",
             link: "https://itoutiao.feishu.cn/base/COJCbzvJ5axnrTsOSIvcTYY7nmc",
           },
