@@ -39,10 +39,6 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
         link: "/fe/", //目录页链接，此处link是 vdoing 主题新增的配置项，有二级导航时，可以点击一级导航跳到目录页
         items: [
           {
-            text: "优质前端信息源",
-            link: "https://itoutiao.feishu.cn/docx/SAdidmcozohUmlxp29wcQtTXn2b",
-          },
-          {
             text: "前端基础",
             items: [
               { text: "JavaScript", link: "/pages/2e58d1/" },
@@ -145,7 +141,13 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
           },
           {
             text: "收藏夹",
-            items: [{ text: "网站", link: "/pages/f06636/" }],
+            // 更新频率高，用在线文档维护
+            items: [
+              {
+                text: "优质前端信息源",
+                link: "https://itoutiao.feishu.cn/docx/SAdidmcozohUmlxp29wcQtTXn2b",
+              }
+            ],
           },
         ],
       },
@@ -454,6 +456,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
 
   markdown: {
     lineNumbers: true,
+    // @ts-ignore
     extractHeaders: ["h1", "h2", "h3", "h4", "h5", "h6"], // 提取标题到侧边栏的级别，默认['h2', 'h3']
   },
 
