@@ -311,8 +311,9 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
     [
       "@vuepress/pwa",
       {
-        serviceWorker: true,
-        updatePopup: true,
+        // 仅做安装， 不做 sw 缓存
+        serviceWorker: false,
+        updatePopup: false,
       },
     ],
     "vuepress-plugin-baidu-autopush", // 百度自动推送
