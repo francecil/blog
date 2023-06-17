@@ -312,7 +312,10 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
       "@vuepress/pwa",
       {
         serviceWorker: true,
-        updatePopup: true,
+        updatePopup: {
+          message: '站点内容发生更新，是否立即刷新？',
+          buttonText: '刷新'
+        },
       },
     ],
     "vuepress-plugin-baidu-autopush", // 百度自动推送
