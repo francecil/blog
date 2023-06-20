@@ -1,6 +1,6 @@
 ## 博客介绍
 
-这是 gahing 的个人博客，记载大学之后的所有笔记。 在线访问：[https://gahing.top](https://gahing.top)
+这是 gahing 的个人博客，记载大学之后的所有笔记。 在线访问：[https://www.gahing.top](https://www.gahing.top)
 
 ### 其他博客
 
