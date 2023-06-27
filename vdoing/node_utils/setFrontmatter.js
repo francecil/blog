@@ -29,7 +29,8 @@ async function setFrontmatter(sourceDir, themeConfig) {
     const fileMatterObj = matter(dataStr, {});
     // 是否为草稿文件
     const isDraft = file.name.startsWith('_');
-
+    // 是否为知识卡片
+    const isCard = file.filePath.includes('docs/知识卡片');
     // 未定义FrontMatter数据
     if (Object.keys(fileMatterObj.data).length === 0) {
       // 文件的创建时间
@@ -45,7 +46,7 @@ async function setFrontmatter(sourceDir, themeConfig) {
         ['date', dateStr],
         ['permalink', getPermalink()]
       ]
-      if (file.filePath.indexOf('_posts') > -1) {
+      if (file.filePath.includes('_posts')) {
         fmArray.push(['sidebar', 'auto'])
       }
       if (!(isCategory === false)) {
@@ -54,7 +55,10 @@ async function setFrontmatter(sourceDir, themeConfig) {
       if (!(isTag === false)) {
         fmArray.push(['tags', `${os.EOL}  - `])
       }
-      if (isDraft) {
+      
+      if (isCard) {
+        fmArray.push(['titleTag', '卡片'])
+      } else if (isDraft) {
         fmArray.push(['titleTag', '草稿'])
       }
 
@@ -104,6 +108,11 @@ async function setFrontmatter(sourceDir, themeConfig) {
       if(!isDraft && matterData.titleTag === "草稿") {
         delete matterData.titleTag
         hasChange = true;
+      }
+
+      if(isCard &&  matterData.titleTag !== "卡片") {
+        hasChange = true;
+        matterData.titleTag = "卡片"
       }
 
       if (!matterData.hasOwnProperty('pageComponent') && matterData.article !== false) { // 是文章页才添加分类和标签

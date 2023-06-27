@@ -12,7 +12,7 @@ import live2dPlugin from "./plugins/live2d";
 import webVitalsPlugin from "./plugins/web-vitals";
 import audiencesPlugin from "./plugins/audiences";
 
-const DOMAIN_NAME = "gahing.top"; // 域名 (不带https)
+const DOMAIN_NAME = "www.gahing.top"; // 域名 (不带https)
 const WEB_SITE = `https://${DOMAIN_NAME}`; // 网址
 
 export default defineConfig4CustomTheme<VdoingThemeConfig>({
@@ -120,6 +120,7 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
           { text: "面试经验", link: "/interviews/" },
           { text: "人生总结", link: "/life-summary/" },
           { text: "个人简历", link: "/resume/" },
+          { text: "知识卡片", link: "/cards/" },
           {
             text: "灵感记录",
             link: "/pages/ideas/",
