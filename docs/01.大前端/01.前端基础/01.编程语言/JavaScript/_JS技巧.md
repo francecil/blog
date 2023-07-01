@@ -365,7 +365,7 @@ var strict = (function(){ return !this;}())
 
 控制台上每一次回车运行后，会清空 strict 设置
 
-## 一行代码实现排序的比较函数
+# 一行代码实现排序的比较函数
 
 ```js
 array.sort(function(a, b) {
@@ -373,7 +373,7 @@ array.sort(function(a, b) {
 });
 ```
 
-## 动态增加属性值
+# 动态增加属性值
 
 
 ```js
@@ -387,3 +387,11 @@ array.sort(function(a, b) {
 ```
 
 当 c 不为 1 时才会有 c 这个属性
+
+# canvas 生成图片
+
+```js
+var dataImg = new Image()
+dataImg.src = canvas.toDataURL('image/png')
+document.body.appendChild(dataImg)
+```
