@@ -1,16 +1,22 @@
 ---
-title: 版本切换
+title: Node.js 版本切换
 date: 2021-09-21 21:02:37
 permalink: /pages/4e0a77/
 tags: 
   - 
-titleTag: 草稿
 categories: 
   - 大前端
   - 专业领域
   - 服务端
-  - js
+  - Node.js
 ---
+
+切换 Node.js 版本的常用工具有 n、nvm、volta 
+
+本文将简单描述下这些工具的安装和使用。
+> PS: 个人目前用的是 nvm
+
+<!-- more -->
 # n
 ```sh
 # 安装
@@ -75,3 +81,11 @@ $ nvm run x.x.x some.js
 # 卸载nvm
 $ rm -rf ~/.nvm
 ```
+
+# volta
+> 尚未体验
+
+一款与项目绑定的 node 版本管理工具。
+
+- 官方文档：[https://volta.sh/](https://volta.sh/)
+- 参考文档：[用Volta管理多个节点版本](https://juejin.cn/post/7084977608160444424)
