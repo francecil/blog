@@ -43,7 +43,7 @@ function readTocs(root) {
   const files = fs.readdirSync(root); // 读取目录,返回数组，成员是root底下所有的目录名 (包含文件夹和文件)
   files.forEach(name => {
     const file = path.resolve(root, name); // 将路径或路径片段的序列解析为绝对路径
-    if (fs.statSync(file).isDirectory() && !['.vuepress', '@pages'].includes(name)) {
+    if (fs.statSync(file).isDirectory() && !['.vuepress', '@pages', '@assets'].includes(name)) {
       result.push(file);
     }
   })

@@ -14,7 +14,7 @@ const { globSync } = require('glob');
  * @returns 
  */
 function readFileList(dir, patterns = ['**/*.md', '**/*.vue']) {
-  const files = globSync(patterns, { cwd: dir, ignore: ['node_modules/**', '.vuepress/**', '@pages/**'] }).map((_filePath) => {
+  const files = globSync(patterns, { cwd: dir, ignore: ['node_modules/**', '.vuepress/**', '@pages/**', '@assets/**'] }).map((_filePath) => {
     const filePath = path.join(dir, _filePath)
     const filename = path.basename(filePath)
     const fileNameArr = filename.split('.')
