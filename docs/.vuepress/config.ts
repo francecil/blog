@@ -40,20 +40,27 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
         items: [
           {
             text: "前端基础",
-            items: [
-              { text: "JavaScript", link: "/pages/2e58d1/" },
-              { text: "HTML", link: "/pages/7d9673/" },
-              { text: "CSS", link: "/pages/c1c6f3/" },
-              { text: "TypeScript", link: "/pages/df8030/" },
-              { text: "WebAssembly", link: "/pages/25ca35/" },
-            ],
+            link: "/fe/basic/",
           },
           {
-            text: "UI 框架",
-            items: [
-              { text: "React", link: "/react/" },
-              { text: "Vue", link: "/vue/" },
-            ],
+            text: "应用框架",
+            link: "/fe/frameworks/",
+          },
+          {
+            text: "工程能力",
+            link: "/fe/engineering/",
+          },
+          {
+            text: "应用基础",
+            link: "/fe/app-fundamentals/",
+          },
+          {
+            text: "专业领域",
+            link: "/fe/specialties/",
+          },
+          {
+            text: "业务场景",
+            link: "/fe/business/",
           },
         ],
       },
