@@ -1,14 +1,14 @@
 ---
 title: Node子进程执行ping操作并获取统计信息
 date: 2018-03-09 11:12:40
-tags: 
-  - nodejs
 permalink: /pages/6c5984/
 categories: 
   - 大前端
   - 专业领域
   - 服务端
-  - js
+  - Node.js
+tags: 
+  - 
 ---
 
 

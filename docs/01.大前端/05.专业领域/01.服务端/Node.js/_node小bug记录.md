@@ -9,7 +9,7 @@ categories:
   - 大前端
   - 专业领域
   - 服务端
-  - js
+  - Node.js
 ---
 ## 1.使用exec命名，中文输出乱码
 

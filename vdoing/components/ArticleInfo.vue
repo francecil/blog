@@ -13,12 +13,8 @@
             item
           }}</router-link>
           <!-- 跳分类页 -->
-          <router-link
-            v-else-if="$themeConfig.category !== false"
-            :to="`/categories/?category=${encodeURIComponent(item)}`"
-            title="分类"
-            >{{ item }}</router-link
-          >
+          <router-link v-else-if="$themeConfig.category !== false"
+            :to="`/categories/?category=${encodeURIComponent(item)}`" title="分类">{{ item }}</router-link>
           <!-- 没有跳转 -->
           <span v-else>{{ item }}</span>
         </li>
@@ -27,36 +23,21 @@
       <!-- 作者&日期 -->
       <div class="info">
         <div class="author iconfont icon-touxiang" title="作者" v-if="author">
-          <a
-            :href="author.href || author.link"
-            v-if="
-              author.href || (author.link && typeof author.link === 'string')
-            "
-            target="_blank"
-            class="beLink"
-            title="作者"
-            >{{ author.name }}</a
-          >
+          <a :href="author.href || author.link" v-if="
+            author.href || (author.link && typeof author.link === 'string')
+          " target="_blank" class="beLink" title="作者">{{ author.name }}</a>
           <a v-else href="javascript:;">{{ author.name || author }}</a>
         </div>
         <div class="date iconfont icon-riqi" title="创建时间" v-if="date">
           <a href="javascript:;">{{ date }}</a>
         </div>
-        <div
-          class="date iconfont icon-wenjian"
-          title="分类"
-          v-if="
-            $themeConfig.category !== false &&
-            !(classify1 && classify1 !== '_posts') &&
-            categories
-          "
-        >
-          <router-link
-            :to="`/categories/?category=${encodeURIComponent(item)}`"
-            v-for="(item, index) in categories"
-            :key="index"
-            >{{ item + ' ' }}</router-link
-          >
+        <div class="date iconfont icon-wenjian" title="分类" v-if="
+          $themeConfig.category !== false &&
+          !(classify1 && classify1 !== '_posts') &&
+          categories
+        ">
+          <router-link :to="`/categories/?category=${encodeURIComponent(item)}`" v-for="(item, index) in categories"
+            :key="index">{{ item + ' ' }}</router-link>
         </div>
       </div>
     </div>
@@ -99,12 +80,11 @@ export default {
         const nameArr = item.split('.')
 
         if (index !== relativePathArr.length - 1) {
-          if (nameArr === 1) {
-            this.classifyList.push(nameArr[0])
-          } else {
-            const firstDotIndex = item.indexOf('.');
-            this.classifyList.push(item.substring(firstDotIndex + 1) || '')
+          // 去除数字前缀
+          if (/^\d+$/.test(nameArr[0]) && nameArr.length > 1) {
+            nameArr.shift()
           }
+          this.classifyList.push(nameArr.join('.'))
         }
       })
 
