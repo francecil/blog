@@ -39,7 +39,7 @@ export default {
 .desc {
     font-size: 12px;
     overflow: hidden;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 3;
     display: -webkit-box;
     word-break: break-all;
     -webkit-box-orient: vertical;
