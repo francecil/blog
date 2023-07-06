@@ -2,11 +2,13 @@
 title: 乐观 UI
 date: 2023-06-26 19:56:39
 permalink: /pages/8d3ada/
-categories: 
-  - 知识卡片
 tags: 
   - 
 titleTag: 卡片
+categories: 
+  - 大前端
+  - 专业领域
+  - 用户体验
 ---
 
 乐观 UI (Optimistic UI)，即对用户交互做出实时反应，而不等待服务响应，认为绝大部分情况下服务都会执行成功。若后续服务出错，则对用户操作回滚。
