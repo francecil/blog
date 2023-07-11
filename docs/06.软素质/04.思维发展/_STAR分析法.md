@@ -1,0 +1,25 @@
+---
+title: STAR分析法
+date: 2023-07-11 14:28:03
+permalink: /pages/a407fe/
+categories: 
+  - 软素质
+  - 思维发展
+tags: 
+  - 方法论
+titleTag: 草稿
+---
+
+按照4个维度，对任务或者场景状态去思考及总结：
+- S: 环境 (Situation)
+- T: 目标 (Task)
+- A: 行动 (Action)
+- R: 成果 (Result)
+
+## 使用场景
+
+## 注意事项
+
+## 示例
+
+## 拓展阅读
