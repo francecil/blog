@@ -6,7 +6,7 @@ categories:
   - 软素质
   - 思维发展
 tags: 
-  - 
+  - 方法论
 titleTag: 草稿
 ---
 
@@ -21,6 +21,12 @@ titleTag: 草稿
 
 不适应的场景：
 
-## 参考资料
+## 使用场景
+
+## 注意事项
+
+## 示例
+
+## 拓展阅读
 
 - [MECE原则](https://zh.wikipedia.org/wiki/MECE%E5%8E%9F%E5%88%99)
