@@ -4,12 +4,12 @@
 
 ### 其他博客
 
-其他博客平台，早期写的文章未完全同步过来 
-
-- [CSDN](https://blog.csdn.net/u011644423/)
-- [cnblogs](https://www.cnblogs.com/france/)
 - [掘金](https://juejin.im/user/59818c62f265da3e3a0bdbf0)
-- [West2Online](https://www.hongweipeng.com/index.php/author/8/)
+- [知乎](https://www.zhihu.com/people/zheng-jia-xing-4)
+- [DEV.to](https://dev.to/francecil)
+- [CSDN](https://blog.csdn.net/u011644423/): 不再更新
+- [cnblogs](https://www.cnblogs.com/france/): 不再更新
+- [West2Online](https://www.hongweipeng.com/index.php/author/8/): 不再更新
 
 ### 微信公众号
 

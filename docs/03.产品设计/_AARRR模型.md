@@ -17,7 +17,7 @@ titleTag: 草稿
 - R（Revenue）- 变现，盈利模式
 - R（Referral）- 推荐，裂变传播
 
-![Alt text](../../@assets/img/image-11.png)
+![Alt text](../@assets/img/image-11.png)
 
 
 ## 使用场景
