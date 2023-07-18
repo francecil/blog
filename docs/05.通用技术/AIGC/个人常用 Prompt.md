@@ -1,3 +1,13 @@
+---
+title: 个人常用 Prompt
+date: 2023-07-14 17:42:58
+permalink: /pages/0182e7/
+categories: 
+  - 通用技术
+  - AIGC
+tags: 
+  - 
+---
 
 # 前言：Prompt 不必学习
 
