@@ -333,6 +333,11 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
       "sitemap", // 网站地图
       {
         hostname: WEB_SITE,
+        dateFormatter: (time) => {
+          // 使用当前时间，让搜索引擎及时更新
+          // 后续再去除该设置
+          return new Date().toISOString()
+        }
       },
     ],
     [
