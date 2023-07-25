@@ -9,6 +9,7 @@ categories:
   - 英文写作
 tags: 
   - 
+titleTag: 专题
 ---
 
 使用翻译软件还是差点意思，同时格式可能会错乱，因此还是建议使用 ChatGPT 。
