@@ -5,7 +5,7 @@ permalink: /pages/6b3a82/
 categories: 
   - 产品设计
   - 设计工具
-  - sketch
+  - Sketch
 tags: 
   - 
 titleTag: 草稿
