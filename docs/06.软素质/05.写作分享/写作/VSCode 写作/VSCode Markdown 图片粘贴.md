@@ -2,12 +2,13 @@
 title: VSCode 1.79 更新，支持 Markdown 中直接粘贴图片！
 date: 2023-06-15 00:16:19
 permalink: /pages/2d7c3a/
-categories: 
-  - 闲言碎语
-  - 服务搭建
-  - 博客
 tags: 
   - 
+categories: 
+  - 软素质
+  - 写作分享
+  - 写作
+  - VSCode 写作
 ---
 
 相信大家在使用 VSCode 处理 Markdown 文档时，可能都遇到了一个共同的问题，就是无法直接添加剪切板图片到Markdown 文档中。

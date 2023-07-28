@@ -2,12 +2,13 @@
 title: 使用 VSCode 管理 Markdown 笔记，还有必要吗？
 date: 2023-06-09 14:21:00
 permalink: /pages/4d9852/
-categories: 
-  - 闲言碎语
-  - 服务搭建
-  - 博客
 tags: 
   - 
+categories: 
+  - 软素质
+  - 写作分享
+  - 写作
+  - VSCode 写作
 ---
 
 在 201x 年的时候，使用 VSCode 编写 Markdown 笔记，是一件很极客很酷的事情。
