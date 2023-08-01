@@ -7,6 +7,7 @@ categories:
   - AIGC
 tags: 
   - 
+titleTag: 专题
 ---
 
 # 前言：Prompt 不必学习
