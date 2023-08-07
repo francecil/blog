@@ -1,6 +1,6 @@
 ---
 title: Figma 技巧汇总（持续更新）
-date: 2023-07-28 11:34:41
+date: 2022-07-28 11:34:41
 permalink: /pages/e5f6fd/
 categories:
   - 产品设计
