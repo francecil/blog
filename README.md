@@ -8,6 +8,7 @@
 - [知乎](https://www.zhihu.com/people/zheng-jia-xing-4)：同掘金，但技术方向只投稿相对硬核的文章；加上各领域回答
 - [DEV.to](https://dev.to/francecil)：英文文章投稿
 - [少数派](https://sspai.com/u/tbdq3sqe/)：科技资讯、软素质类文章投稿
+- [微博](https://weibo.com/u/7385881961)：小GAI说（非私号），科技探索、产品分析。
 - [CSDN](https://blog.csdn.net/u011644423/): 不再更新
 - [cnblogs](https://www.cnblogs.com/france/): 不再更新
 - [West2Online](https://www.hongweipeng.com/index.php/author/8/): 不再更新
