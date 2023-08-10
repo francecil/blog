@@ -7,8 +7,15 @@ categories:
   - 工作方法
 tags: 
   - 
-titleTag: 草稿
+titleTag: 卡片
 ---
+
+## 什么是 OKR
+
+## 和 KPI 的区别
+
+## OKR 
+
 理想：KR 不是 TODO ，更多的目标拆解，完成目标需要得到什么样的状态，达成这些状态需要做什么事情。
 
 自上而下迭代认知，不是 TODO 的搬运工，每个人都学会拆解 OKR。

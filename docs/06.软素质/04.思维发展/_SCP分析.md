@@ -1,0 +1,1 @@
+https://wiki.mbalib.com/wiki/SCP%E5%88%86%E6%9E%90%E6%A8%A1%E5%9E%8B
