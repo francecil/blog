@@ -200,7 +200,6 @@ polyfill.io 根据 ua 对比自动下发差异，提供[开源部署方案](http
 
 当然，要完成这套方案成本较高，可以根据各自公司基建能力和业务诉求来做，最合适的才是最佳的。
 
-# 参考
-
+# 拓展阅读
 1. [Babel学习系列](https://zhuanlan.zhihu.com/p/58624930)
 2. [不要肆无忌惮地在你的项目中使用 ES78910 了](https://juejin.im/post/5d7efbbb6fb9a06b2650c74a)
