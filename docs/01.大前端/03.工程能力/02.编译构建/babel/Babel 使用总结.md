@@ -179,7 +179,46 @@ babel 只处理单文件，因此如果要转译第三方依赖，以及其他�
   - 利用 script 的 module/nomodule 特性差异化加载，现代浏览器走 module 逻辑+剩余差异 Polyfill，传统浏览器走语法转译+Polyfill
   - 优点：优先保证大多数现代浏览器的加载体验，少部分浏览器再走语法编译逻辑
   - 缺点：产物文件较多；少部分版本的浏览器存在 ESM 文件重复加载的问题；发展时间短，可能有隐藏问题
-  - 更多细节可以看这篇文章：[【原理揭秘】Vite 是怎么兼容老旧浏览器的？你以为仅仅依靠 Babel？](https://juejin.cn/post/7217449801633628215)
+  - 更多细节可以看这 2 篇文章：
+    - [【原理揭秘】Vite 是怎么兼容老旧浏览器的？你以为仅仅依靠 Babel？](https://juejin.cn/post/7217449801633628215)
+    - [深入浅出 Vite](https://juejin.cn/book/7050063811973218341/section/7066611951547187214)
+
+## Q: @vitejs/plugin-legacy 方案还会对第三方库进行处理，具体怎么做的？
+
+对现代编译的输出代码再次进行 babel 编译而已。
+
+具体代码在[这](https://github.com/vitejs/vite/blob/main/packages/plugin-legacy/src/index.ts#L433)
+
+```js
+// raw 是现代编译的输出代码
+const result = babel.transform(raw, {
+        babelrc: false,
+        configFile: false,
+        compact: !!config.build.minify,
+        sourceMaps,
+        inputSourceMap: undefined, // sourceMaps ? chunk.map : undefined, `.map` TODO: moved to OutputChunk?
+        presets: [
+          // forcing our plugin to run before preset-env by wrapping it in a
+          // preset so we can catch the injected import statements...
+          [
+            () => ({
+              plugins: [
+                recordAndRemovePolyfillBabelPlugin(legacyPolyfills),
+                replaceLegacyEnvBabelPlugin(),
+                wrapIIFEBabelPlugin(),
+              ],
+            }),
+          ],
+          [
+            (await import('@babel/preset-env')).default,
+            createBabelPresetEnvOptions(targets, {
+              needPolyfills,
+              ignoreBrowserslistConfig: options.ignoreBrowserslistConfig,
+            }),
+          ],
+        ],
+      })
+```
 
 ## Q：部署 polyfill.io 这类方案，需要注意什么？
 
@@ -189,16 +228,29 @@ polyfill.io 根据 ua 对比自动下发差异，提供[开源部署方案](http
 - 异常 UA （比如国产浏览器）无法识别，只能走降级兜底策略
 - 不能处理语法层面
 
+## Q: 有哪些常用的 browserslist 配置
+```
+// .browserslistrc
+// 现代浏览器
+last 2 versions and since 2018 and > 0.5%
+// 兼容低版本 PC 浏览器
+IE >= 11, > 0.5%, not dead
+// 兼容低版本移动端浏览器
+iOS >= 9, Android >= 4.4, last 2 versions, > 0.2%, not dead
+```
+
 # 最佳方案是什么
 
-目标：尽可能快的打包，尽可能少的加载产物，尽可能快的执行代码
+目标：尽可能快的打包，尽可能少的加载产物，尽可能快的执行代码，绝对安全的加载代码（避免第三方依赖语法和 api 缺失的报错问题）
 
 一个终极方案是：
-1. 打包不处理 Polyfill ，走 `polyfill.io` ：尽可能快的打包，尽可能少的加载产物
-2. 业务产物走 script 的 module/nomodule 特性差异化加载方案：尽可能快的执行代码
-3. 线上真机白屏检测卡点：避免第三方依赖语法和 api 缺失的报错问题
+1. 打包不处理 Polyfill ，走 `polyfill.io` ：少掉分析步骤，尽可能快的打包，尽可能少的加载产物
+2. 业务产物走 script 的 module/nomodule 特性差异化加载方案（类 `@vitejs/plugin-legacy` 方案）：尽可能快的执行代码，绝对安全的执行代码
+3. 线上真机白屏检测卡点：绝对安全的执行代码
 
 当然，要完成这套方案成本较高，可以根据各自公司基建能力和业务诉求来做，最合适的才是最佳的。
+
+成本最低效果又不错的方案就是直接使用 `@vitejs/plugin-legacy`：尽可能快的执行代码，绝对安全的加载代码，相对快的打包、相对少的加载产物
 
 # 拓展阅读
 1. [Babel学习系列](https://zhuanlan.zhihu.com/p/58624930)
