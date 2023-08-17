@@ -384,3 +384,4 @@ echo "=================================运行完毕，恭喜您环境已准备�
 
 - [一个常用的mac新机前端开发环境配置指南(带shell脚本)](https://juejin.cn/post/6867457249342652430)
 - [tea.xyz-一款包管理器](https://github.com/teaxyz/cli)
+- [云谦-如何从0开始配置 Mac](https://mp.weixin.qq.com/s/sdBZTSOzm94Zopgr_OijOg)
