@@ -15,3 +15,11 @@ titleTag: 草稿
 - CSS in JS
 - Tailwind CSS
 - CSS 预处理：SASS、LESS、Stylus、Post CSS
+
+## CSS 样式方案的四种粒度
+- style
+- Atomic CSS：Tailwind
+- BEM
+- Component
+
+越往下，颗粒度↑，约束性↑，自由性↓

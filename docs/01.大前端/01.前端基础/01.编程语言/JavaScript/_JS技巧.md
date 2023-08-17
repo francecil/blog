@@ -395,3 +395,8 @@ var dataImg = new Image()
 dataImg.src = canvas.toDataURL('image/png')
 document.body.appendChild(dataImg)
 ```
+
+# 复制 URL 获取标题
+
+- 方案1：剪切板属性读取，event.clipboardData.getData("text/link-preview") 无需发起请求，需要从浏览器处复制
+- 方案2：Open Graph 协议，页面爬取，获取属性。降级：取 title 字段
