@@ -9,10 +9,11 @@ categories:
   - JavaScript
 tags: 
   - 
-titleTag: 草稿
+titleTag: 笔记
 ---
 js 小技巧
-========= 
+
+----
 
 # 文件清空
 

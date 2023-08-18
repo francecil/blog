@@ -9,9 +9,8 @@ categories:
   - JavaScript
 tags: 
   - 
-titleTag: 草稿
+titleTag: 笔记
 ---
-[TOC]
 
 
 # 基础

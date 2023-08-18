@@ -9,7 +9,7 @@ categories:
   - CSS
 tags: 
   - 
-titleTag: 草稿
+titleTag: 笔记
 ---
 
 # 1.background属性
