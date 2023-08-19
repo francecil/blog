@@ -69,6 +69,10 @@ const MyFunctionnalComponent: React.FC = props => {
 };
 ```
 
+## 使用 useAsyncEffect hooks
+
+[useAsyncEffect - ahooks](https://ahooks.js.org/hooks/use-async-effect/)
+
 ## 参考文献
 
 - [How to use async function in React hooks useEffect (Typescript/JS)?](https://medium.com/javascript-in-plain-english/how-to-use-async-function-in-react-hook-useeffect-typescript-js-6204a788a435)

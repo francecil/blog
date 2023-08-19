@@ -30,3 +30,4 @@ titleTag: 草稿
 ## 拓展阅读
 
 - [MECE原则](https://zh.wikipedia.org/wiki/MECE%E5%8E%9F%E5%88%99)
+- [MECE分析法--周全逻辑的思考框架基础](https://zhuanlan.zhihu.com/p/30828074)

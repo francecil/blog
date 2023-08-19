@@ -8,7 +8,7 @@ export function filterPosts(posts) {
   posts = posts.filter(item => {
     const { frontmatter: { pageComponent, article, home, titleTag } } = item
     // 过滤存在页面组件、非文章页 (article 字段为false)、首页 、非专题页、草稿页
-    return !(pageComponent || article === false || home === true || ['专题', '草稿', '卡片', '归档'].includes(titleTag))
+    return !(pageComponent || article === false || home === true || ['专题', '草稿', '卡片', '归档', '笔记'].includes(titleTag))
   })
   return posts
 }

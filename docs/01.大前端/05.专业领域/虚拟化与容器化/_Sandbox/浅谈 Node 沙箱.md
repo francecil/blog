@@ -1,4 +1,8 @@
 
+## 最新补充
+> vm2 不再维护，因为跟不上 node 升级导致的漏洞绕过；推荐改用 isolated-vm
+> 
+> https://github.com/patriksimek/vm2/wiki/vm2-vs-isolated-vm
 
 vm 沙箱
 

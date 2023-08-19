@@ -32,3 +32,7 @@ node_modules/express 里面是个软链接，链接的是 .pnpm 里的地址
 
 
 https://pnpm.io/how-peers-are-resolved
+
+## 其他包管理工具迁移至 pnpm
+
+想要保持依赖的版本不变，可以用这个工具： https://pnpm.io/cli/import
