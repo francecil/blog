@@ -35,3 +35,11 @@
 - [我的 2021 总结](https://www.gahing.top/summary/2021/)
 - [工作三年啦](https://www.gahing.top/pages/358adf/)
 - [毕业2年啦-生活篇](https://www.gahing.top/pages/bfd3af/)
+
+### 更多 | And more
+
+...
+
+更多文章详见[我的博客主页](https://www.gahing.top)，本介绍页更新不及时，请见谅~
+
+喜欢本项目的话，欢迎 star ⭐️
