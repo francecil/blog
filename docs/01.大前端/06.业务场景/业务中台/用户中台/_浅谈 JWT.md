@@ -64,13 +64,34 @@ JWT，即 JSON Web Token ，是目前最流行的用户认证方案之一。
 ## 不可逆加密与 secret
 
 
+### secret 泄露
 
-服务端的 secret 泄露会有什么问题？怎么避免？
+服务端 secret 泄露，意味着可以随意签名，系统不再安全。
+
+泄露可能是内鬼泄露，或者 secret 过于简单。
+
+因此需要通过以下方式降低风险：
+- 不使用默认和简易 secret
+- 不将 secret 以明文方式存在代码仓库
+- 加签系统由单独的系统管控，权限要求较高。
+
+如果发现 secret 泄露了，又该怎么办？
+> 只能立即换 secret 了，虽然会导致所有用户需要重新登录，但还是安全性最重要。
+
+## 过期和续签
+
+用于验证的 jwt 被称为 access token ，频繁用于数据请求验证，为避免泄露导致的安全问题，通常过期时间会设置较短。
+
+为避免用户频繁重新登录，jwt 提供了一套续签机制，提供了另一个较长有效期的 token ，又叫 refresh token ；当 access token 过期时会去重新获取。
+
+refresh token 仅会续签请求时传输，因此泄露的风险较小。如果 refresh token 也泄露了，但风险就很大了。只能通过黑名单机制去限制了。
 
 
-## 过期机制
+## 存放位置（WIP）
 
-## 存放机制
+可以放在 Cookie ，也可以放在 storage 。
+
+适用于不同场景
 
 ## 总结
 
@@ -82,3 +103,4 @@ JWT，即 JSON Web Token ，是目前最流行的用户认证方案之一。
 
 ## 拓展阅读
 - [JSON Web Token 入门教程](https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html)
+- [深入考察JWT攻击](https://www.4hou.com/posts/zlK2)
