@@ -302,6 +302,8 @@ git config --global alias.recent "\!f() { count=\$1; git for-each-ref --count=\$
 
 然后使用 `git recent 3` 可以使用最近的三条分支名
 
+> 也可以使用开源项目 [git-recent](https://github.com/paulirish/git-recent) 解决
+
 ## 所 rebase 的原分支提交重新变化，当前分支应该如何快速重新 rebase
 
 ### 举例：
