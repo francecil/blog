@@ -58,7 +58,7 @@ JWT，即 JSON Web Token ，是目前最流行的用户认证方案之一。
 
 
 
-- 算法描述：为什么又要？
+- 算法描述：为什么需要？
 - 过期信息
 
 ## 不可逆加密与 secret
@@ -85,6 +85,10 @@ JWT，即 JSON Web Token ，是目前最流行的用户认证方案之一。
 为避免用户频繁重新登录，jwt 提供了一套续签机制，提供了另一个较长有效期的 token ，又叫 refresh token ；当 access token 过期时会去重新获取。
 
 refresh token 仅会续签请求时传输，因此泄露的风险较小。如果 refresh token 也泄露了，但风险就很大了。只能通过黑名单机制去限制了。
+
+泄露的情况：
+- 不安全的对外提供 curl
+- http 环境
 
 
 ## 存放位置（WIP）
