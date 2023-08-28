@@ -2,12 +2,13 @@
 title: RFM模型
 date: 2023-07-11 15:53:25
 permalink: /pages/5126aa/
-categories: 
-  - 产品设计
-  - 用户研究
 tags: 
-  - 
+  - 方法论
+  - 电商
 titleTag: 草稿
+categories: 
+  - 软素质
+  - 思维发展
 ---
 
 基于三个维度，分析客户消费行为特征。
