@@ -2,11 +2,13 @@
 title: AARRR模型
 date: 2023-07-11 15:27:26
 permalink: /pages/9eaa6e/
-categories: 
-  - 产品设计
 tags: 
   - 方法论
+  - UG
 titleTag: 草稿
+categories: 
+  - 软素质
+  - 思维发展
 ---
 
 分析获客增长（UG），也叫漏斗模型。
