@@ -304,6 +304,7 @@ if(condition){
 
 
 ## 递归
+```js
 function factorial(num){
 	if(num<=1){
 		return 1;
@@ -314,14 +315,17 @@ function factorial(num){
 var abc=factorial;//用另外一个变量指示该函数
 factorial=null;//原函数引用只剩abc
 console.log(abc(5));//error 找不到factorial
+```
 之前说过可以用arguments.calllee
 return num*factorial(num-1); => return num*arguments.calllee(num-1);
 但是严格模式下不能调用arguments.calllee,访问该属性会出错
 通过函数命名表达式来解决
+```js
 var factorial={function f(num){
 	...
 	return num*f(num-1);
 }}
+```
 即使factorial赋值给其他对象，f仍然有效
 ## 闭包
 
@@ -371,13 +375,13 @@ location.reload(bool) 重新加载，是否从本地缓存获取数据
 ### 检测插件
 
 IE 不可用
-
+```html
 		<script>
 			for(var i=0;i<navigator.plugins.length;i++){
 			console.log(navigator.plugins[i].name);
 		}
 		</script>
-
+```
 
 # 事件
 
@@ -871,6 +875,9 @@ responseXML 值为null 此时可以调用该方法
 # 离线存储
 
 见Diigo技术调研一文
+
+- sessionStorage 无法跨标签页传输，且在标签页关闭时销毁数据
+- localStorage 支持跨标签页传输，且持久化存储
 
 # 最佳实践
 
