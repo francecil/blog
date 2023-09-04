@@ -15,11 +15,21 @@ titleTag: 笔记
 
 # 基础
 
-以下属性只适合外部脚本
-async="async" 异步下载资源，下载完毕后立刻执行，堵塞dom解析，建议异步的脚本不要进行DOM修改 不能确定谁先谁后，一定会在load事件之前完成
-defer="defer" 等文档解析完再加载
-不存在上面两个属性的，按先后顺序依次对js进行解析
-浏览器在遇到 `<body>` 才开始呈现页面内容 所以 一些判断是手机还是pc然后跳转的就可以把js放到head中
+## `<script>` 标签基础
+
+- `async="async"`: 异步下载，尽快执行；
+	- 支持 module script ，将变成尽快执行
+	- 故会堵塞 dom 解析，建议异步的脚本不要进行DOM修改，不能确定谁先谁后
+- `defer="defer"`: 异步下载，DOMContentLoaded 触发前执行；
+	- module script 默认就是 defer 
+> 以上 2 个属性只适合外部脚本
+- `type="module"`: 模块加载
+	- 多个 module 则按序执行
+	- module 引用的模块，会在执行时再进行请求加载
+
+详见：https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/script
+
+浏览器在遇到 `<body>` 才开始呈现页面内容，故一些判断是手机还是pc然后跳转的就可以把js放到 `<head>` 中
 
 https://segmentfault.com/a/1190000006778717
 
