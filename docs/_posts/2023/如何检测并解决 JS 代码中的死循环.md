@@ -361,6 +361,7 @@ while (true) {
       _lastDate2 = Date.now();
     }
   }
+}
 ```
 
 正好满足我们的需求。
