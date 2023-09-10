@@ -15,11 +15,21 @@ titleTag: 笔记
 
 # 基础
 
-以下属性只适合外部脚本
-async="async" 异步下载资源，下载完毕后立刻执行，堵塞dom解析，建议异步的脚本不要进行DOM修改 不能确定谁先谁后，一定会在load事件之前完成
-defer="defer" 等文档解析完再加载
-不存在上面两个属性的，按先后顺序依次对js进行解析
-浏览器在遇到 `<body>` 才开始呈现页面内容 所以 一些判断是手机还是pc然后跳转的就可以把js放到head中
+## `<script>` 标签基础
+
+- `async="async"`: 异步下载，尽快执行；
+	- 支持 module script ，将变成尽快执行
+	- 故会堵塞 dom 解析，建议异步的脚本不要进行DOM修改，不能确定谁先谁后
+- `defer="defer"`: 异步下载，DOMContentLoaded 触发前执行；
+	- module script 默认就是 defer 
+> 以上 2 个属性只适合外部脚本
+- `type="module"`: 模块加载
+	- 多个 module 则按序执行
+	- module 引用的模块，会在执行时再进行请求加载
+
+详见：https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/script
+
+浏览器在遇到 `<body>` 才开始呈现页面内容，故一些判断是手机还是pc然后跳转的就可以把js放到 `<head>` 中
 
 https://segmentfault.com/a/1190000006778717
 
@@ -294,6 +304,7 @@ if(condition){
 
 
 ## 递归
+```js
 function factorial(num){
 	if(num<=1){
 		return 1;
@@ -304,14 +315,17 @@ function factorial(num){
 var abc=factorial;//用另外一个变量指示该函数
 factorial=null;//原函数引用只剩abc
 console.log(abc(5));//error 找不到factorial
+```
 之前说过可以用arguments.calllee
 return num*factorial(num-1); => return num*arguments.calllee(num-1);
 但是严格模式下不能调用arguments.calllee,访问该属性会出错
 通过函数命名表达式来解决
+```js
 var factorial={function f(num){
 	...
 	return num*f(num-1);
 }}
+```
 即使factorial赋值给其他对象，f仍然有效
 ## 闭包
 
@@ -361,13 +375,13 @@ location.reload(bool) 重新加载，是否从本地缓存获取数据
 ### 检测插件
 
 IE 不可用
-
+```html
 		<script>
 			for(var i=0;i<navigator.plugins.length;i++){
 			console.log(navigator.plugins[i].name);
 		}
 		</script>
-
+```
 
 # 事件
 
@@ -861,6 +875,9 @@ responseXML 值为null 此时可以调用该方法
 # 离线存储
 
 见Diigo技术调研一文
+
+- sessionStorage 无法跨标签页传输，且在标签页关闭时销毁数据
+- localStorage 支持跨标签页传输，且持久化存储
 
 # 最佳实践
 
