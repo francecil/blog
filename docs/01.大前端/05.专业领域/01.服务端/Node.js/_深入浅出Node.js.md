@@ -105,7 +105,10 @@ nextTick1
 4
 ```
 
-一轮事件循环的6个阶段,每个阶段都是把当前阶段的函数队列清空，才会执行下个阶段。
+一轮事件循环的6个阶段，每个阶段都是把当前阶段的函数队列清空，才会执行下个阶段。
+> 补充：指的是多个阶段的任务都同时到达，按这个顺序执行
+
+6个阶段结束后，继续下轮循环。
 
 ```
 timers:执行setTimeout() 和 setInterval()中到期的callback
@@ -116,17 +119,16 @@ check: setImmediate
 close callbacks: 一些准备关闭的回调函数，如：socket.on('close', ...)
 ```
 
-每个阶段的结束，都会执行`nextTickQueue（process.nextTick）`和`microTaskQueue（Promise）`（前者都执行完才执行后者），6个阶段结束后，继续下轮循环。
+- 在 node v11 之前，微任务队列执行是在每个阶段结束后统一执行。
+- 而在 v11 之后，阶段中每次宏任务执行完，都会清空微任务队列。
+- 此外，微任务队列包括 `nextTickQueue（process.nextTick）`和`microTaskQueue（Promise）`（前者都执行完才执行后者）
 
 上面这句话是实践加上参考：https://jsblog.insiderattack.net/event-loop-and-the-big-picture-nodejs-event-loop-part-1-1cb67a182810
 
-上面那句话在node v11以上不太对，见下面
-
-20190510补充：
 
 参考：https://jsblog.insiderattack.net/new-changes-to-timers-and-microtasks-from-node-v11-0-0-and-above-68d112743eb3
 
-node v11后，setTimeout, setImmediate, process.nextTick and Promises 的行为发生改变
+
 ```js
 setTimeout(() => console.log('timeout1'));
 setTimeout(() => {
@@ -137,7 +139,7 @@ setTimeout(() => console.log('timeout3'));
 setTimeout(() => console.log('timeout4'));
 //setImmediate(() => console.log(3))
 ```
-此时timer都到时间了，在timer阶段会执行所以到期的callback
+此时timer都到时间了，在timer阶段会执行所有到期的callback
 
 node v11以下是输出：
 ```
@@ -158,7 +160,7 @@ promise resolve
 timeout3
 timeout4
 ```
-每个timer执行结束，都会去执行microTaskQueue，而不是等整个timer阶段结束
+**每个timer执行结束，都会去执行microTaskQueue，而不是等整个timer阶段结束**
 
 
 
