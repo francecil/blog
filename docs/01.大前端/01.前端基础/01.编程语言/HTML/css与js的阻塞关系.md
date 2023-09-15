@@ -18,7 +18,7 @@ categories:
 
 <!--more-->
 
-(引自:<a href="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript?hl=zh-cn">使用 JavaScript 添加交互</a>
+> 引自:<a href="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript?hl=zh-cn">使用 JavaScript 添加交互</a>
 
 简单进行了以下测试
 
@@ -76,7 +76,7 @@ categories:
 又看到这样一句话：
 > Firefox 在样式表加载和解析的过程中，会禁止所有脚本。而对于 WebKit 而言，仅当脚本尝试访问的样式属性可能受尚未加载的样式表影响时，它才会禁止该脚本。
 
-(引自:<a href="https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/#Tree_construction_algorithm">浏览器的工作原理</a>
+> 引自:<a href="https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/#Tree_construction_algorithm">浏览器的工作原理</a>
 
 但测试了ios safari 12(WebKit),发现还是会禁用脚本，脚本还是会被样式阻塞
 
