@@ -103,6 +103,14 @@ name1 与 `arguments[0]` 值一样，可以同时用，并保持单向同步
 
 定义多个 function 即使参数个数不一致，也只会调用最后一个定义的，所以重载只能通过在 function 中判断参数个数和类型来做了
 
+## 常量
+
+### 字符串
+
+js 中的字符串是一个常量，是不可变的
+
+意味着无法直接修改索引下标去改变字符串的值
+
 ## 变量
 
 可以给对象动态的增加属性
@@ -170,7 +178,7 @@ var a3=array1.slice(1,2);//剪裁
 删除：splice(要删除的起始项，要删除的项数)
 插入：splice(要插入的起始项，0，"a","b"...插入的项)
 替换：splice(要替换的起始项，要删除的项数，"a","b"...)
-
+```js
 indexOf(要查找的项，查找起始项的索引);
 lastIndexOf(xx,xx); ###迭代
 every(function(item,index,array){
@@ -185,6 +193,7 @@ reduce//项从左往右执行 function 第一个参数值在第一次运行时�
 reduceRight(function(上一个函数运行的结果，当前项的值，index,array){
 ...
 });
+```
 
 ## Date
 
@@ -192,18 +201,20 @@ var a=new Date();
 Date.now() 获得毫秒数
 
 ## RegExp 用来支持正则
-
+```js
 var expreesion=/ pattern / flags
 var ex2=new RegExp{"[cc]at",i};
+/**
 flags:
 g:全局匹配，而非发现第一个匹配就停止
 i:不区分大小写模式，只找第一个匹配
 gi:全局匹配且不区分大小写
 m:多行模式，到达一行文本末尾会继续查找下一行中的匹配 也就是说不用特地去管换行符，所有行组成一行的概念
-
-ex2.test("adasdasdaskdjlqd");true or false
+*/
+ex2.test("adasdasdaskdjlqd"); // true or false
 var matches=ex2.exec(匹配串)//返回第一个匹配项信息的数组 注意：即使设置为 g 也只会返回第一个但是多次调用会返回下一个
-该数组第一项 matches[0]为与整个模式匹配的字符串,其他项为 matches[0]匹配模式的字符串?
+```
+该数组第一项 `matches[0]` 为与整个模式匹配的字符串,其他项为 `matches[0]` 匹配模式的字符串?
 
 ### 一些长短属性名 使用时查即可
 
@@ -212,12 +223,14 @@ var matches=ex2.exec(匹配串)//返回第一个匹配项信息的数组 注意�
 ## Function
 
 JS 引擎会把函数声明提升到顶部，所以函数调用可以在函数声明之前，但是把函数声明改为函数表达式将报错
-ex:
+```js
+// ex:
 sum(10,10)
 function sum(a,b){return a+b;}
-改为
+// 改为
 sum(10,10)
 var sum=function(a,b){return a+b;};将报错
+```
 
 ### 函数内部属性
 
@@ -264,13 +277,14 @@ var person = {
 ```
 
 ### 数据属性
-
+```js
 Object.defineProperty(person,"name",{
 configurable:false, //默认 true,不能通过 delete 删除属性从而重新定义属性,不能通过访问器属性修改属性
 value:"zjx", //默认 undefine,该属性的值
 wriable:false, //默认 true,数据只读不可写
 Enimerable:true //默认 true,可以通过 for-in 循环返回属性
 });
+```
 在调用该方法时，如果不指定，configurable，wriable，Enimerable 特性的默认值都是 false
 配置
 
