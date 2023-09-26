@@ -2,12 +2,12 @@
 title: 视频创作业务中，关于作者发文反馈的排障 SOP
 date: 2023-03-09 14:28:28
 permalink: /pages/042519/
-categories:
+categories: 
   - 大前端
   - 业务场景
   - 视频内容
   - 视频创作
-tags:
+tags: 
   - SOP
 ---
 

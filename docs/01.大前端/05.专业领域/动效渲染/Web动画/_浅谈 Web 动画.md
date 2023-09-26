@@ -1,17 +1,16 @@
 ---
 title: 浅谈 Web 动画
 date: 2020-02-05 14:10:47
-categories: 
-  - 大前端
-  - 专业领域
-  - 可视化
-  - 通用基础
-  - 动画
 tags: 
   - 动画
   - 前端基础
 permalink: /pages/746d52/
 titleTag: 草稿
+categories: 
+  - 大前端
+  - 专业领域
+  - 动效渲染
+  - Web动画
 ---
 
 ## 前言

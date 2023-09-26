@@ -2,13 +2,13 @@
 title: JS 学习笔记
 date: 2017-02-14 17:11:23
 permalink: /pages/8b553a/
-categories:
+categories: 
   - 大前端
   - 前端基础
   - 编程语言
   - JavaScript
-tags:
-  -
+tags: 
+  - 
 titleTag: 笔记
 ---
 

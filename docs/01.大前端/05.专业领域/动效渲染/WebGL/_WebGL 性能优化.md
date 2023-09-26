@@ -5,8 +5,7 @@ permalink: /pages/a61227/
 categories: 
   - 大前端
   - 专业领域
-  - 可视化
-  - 通用基础
+  - 动效渲染
   - WebGL
 tags: 
   - 

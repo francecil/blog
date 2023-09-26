@@ -4,8 +4,7 @@ date: 2020/03/11 11:00:00
 categories: 
   - 大前端
   - 专业领域
-  - 可视化
-  - 通用基础
+  - 动效渲染
   - WebGL
 tags: 
   - WebGL

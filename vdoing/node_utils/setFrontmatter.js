@@ -164,7 +164,7 @@ async function setFrontmatter(sourceDir, themeConfig) {
  */
 function getCategories(file, categoryText, ignoreCategories) {
   let categories = []
-  if (file.filePath.indexOf('_posts') === -1) {
+  if (!file.filePath.includes('_posts')) {
     // 不在_posts文件夹
     let filePathArr = file.filePath.split(path.sep) // path.sep用于兼容不同系统下的路径斜杠
     filePathArr.pop()
@@ -173,8 +173,12 @@ function getCategories(file, categoryText, ignoreCategories) {
     if (ind !== -1) {
       while (filePathArr[++ind] !== undefined) {
         const item = filePathArr[ind]
-        const firstDotIndex = item.indexOf('.');
-        categories.push(item.substring(firstDotIndex + 1) || '') // 获取分类
+        const fileNameArr = item.split('.')
+        if (/^\d+$/.test(fileNameArr[0])) {
+          fileNameArr.shift();
+        }
+
+        categories.push(fileNameArr.join('.')) // 获取分类
       }
     }
   } else {
