@@ -2,11 +2,11 @@
 title: Figma 技巧汇总（持续更新）
 date: 2022-07-28 11:34:41
 permalink: /pages/e5f6fd/
-categories:
+categories: 
   - 产品设计
   - 设计工具
   - Figma
-tags:
+tags: 
   - 奇技淫巧
 ---
 

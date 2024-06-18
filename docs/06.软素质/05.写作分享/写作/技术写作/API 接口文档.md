@@ -2,12 +2,12 @@
 title: 如何编写一份合格的 API 接口文档
 date: 2023-06-06 12:26:31
 permalink: /pages/1da985/
-categories:
+categories: 
   - 软素质
   - 写作分享
   - 写作
   - 技术写作
-tags:
+tags: 
   - SOP
   - 模板
 ---

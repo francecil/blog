@@ -2,10 +2,10 @@
 title: 去除部分 Chrome 拓展的付费功能限制（持续整理）
 date: 2023-06-29 07:23:39
 permalink: /pages/c5c442/
-categories:
+categories: 
   - 闲言碎语
   - 实用技巧
-tags:
+tags: 
   - 奇技淫巧
 ---
 

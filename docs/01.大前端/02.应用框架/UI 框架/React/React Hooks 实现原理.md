@@ -8,8 +8,8 @@ categories:
   - UI 框架
   - React
 tags: 
-  -
-titleTag: 笔记 
+  - 
+titleTag: 笔记
 ---
 
 核心原理：闭包存储状态、索引维护次序、变更触发渲染

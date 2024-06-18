@@ -2,12 +2,12 @@
 title: kk天涯神贴原文
 date: 2023-07-08 02:04:12
 permalink: /pages/04201a/
-categories:
+categories: 
   - 闲言碎语
   - 理财投资
   - 房地产
-tags:
-  - null
+tags: 
+  - 
 titleTag: 转载
 ---
 

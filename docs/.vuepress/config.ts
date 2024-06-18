@@ -62,6 +62,10 @@ export default defineConfig4CustomTheme<VdoingThemeConfig>({
             text: "业务场景",
             link: "/fe/business/",
           },
+          {
+            text: "前端晋升",
+            link: "https://itoutiao.feishu.cn/docx/PKRndHcLIo2zPaxbzKicZijunwb",
+          },
         ],
       },
       {
