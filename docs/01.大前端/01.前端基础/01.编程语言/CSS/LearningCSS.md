@@ -113,7 +113,7 @@ p:nth-child(n+1)
 使你有能力为不同的语言定义特殊的规则。在下面的例子中，:lang 类为属性值为 no 的 q 元素定义引号的类型
 ```
 
-```
+```html
 <html>
 <head>
 <style type="text/css">
@@ -128,6 +128,36 @@ q:lang(no)
 </body></html>
 ```
 效果：段落中的引用的文字被 ~ 包围
+
+### nth-child(x of selector 语法)
+
+[MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/:nth-child#of_selector_%E8%AF%AD%E6%B3%95)
+
+示例：在一个 div 列表中，对应用 test 类的第三个元素设置背景色红色。
+```html
+<body>
+  <div></div>
+  <div class="test"></div>
+  <div id="item3"></div>
+  <div class="test"></div>
+  <div></div>
+  <div class="test">本元素背景色红色</div>
+</body>
+```
+如果只是简单的写 `.test:nth-child(3){}` ，会错误的匹配到 #item3 元素。
+
+因为 nth-child 的默认匹配规则是：前面选择器匹配到一个元素，再找到该元素兄弟元素列表的某个索引的元素。后面的匹配与前面的选择无关。
+
+如果希望相关，即后面在找兄弟元素列表索引时希望对兄弟列表做个筛选再查，那么可以应用 `nth-child(x of selector 语法)` 语法
+
+示例：
+```css
+.test:nth-child(3 of .test) {
+  background: red;
+}
+```
+
+该语法某些低版本浏览器不支持，可以通过 js 或者调整 html 结构来解决。
 
 ## 伪元素
 :first-line 伪元素用于向文本的首行设置特殊样式。p:first-line{}
