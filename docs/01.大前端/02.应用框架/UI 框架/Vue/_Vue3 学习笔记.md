@@ -1,3 +1,16 @@
+---
+title: Vue3 学习笔记
+date: 2024-09-09 20:35:35
+permalink: /pages/1f84eb/
+categories: 
+  - 大前端
+  - 应用框架
+  - UI 框架
+  - Vue
+tags: 
+  - 
+titleTag: 草稿
+---
 ## vue3 defineExpose 时序问题 
 
 有这么一个场景，父组件修改传递给子组件的 prop 并调用子组件的方法，而在该子组件方法中会读取 props。请问子组件方法中读取的 props 是修改前还是修改后的值？
