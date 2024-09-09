@@ -9,7 +9,6 @@ categories:
   - npm
 tags: 
   - 最佳实践
-sticky: true
 ---
 
 
