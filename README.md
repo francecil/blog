@@ -29,6 +29,8 @@
 - ...
 
 ### 人生总结专题
+- [我的 2024 总结](https://www.gahing.top/summary/2024/)
+- [我的 2023 总结](https://www.gahing.top/summary/2023/)
 - [工作 6 年，我不想再「键政」了](https://www.gahing.top/pages/89dafe/)
 - [我的 2022 总结](https://www.gahing.top/summary/2022/)
 - [我的 2021 总结](https://www.gahing.top/summary/2021/)
