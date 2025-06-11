@@ -15,7 +15,7 @@ tags:
 
 Git 合并冲突，常见的展示形式分为 Current Change （ours, 当前分支的变更）和 Incoming Change （theirs, 目标分支的变更），两者针对的是同一区域的变化。
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a2bf447ca0184b89bfd406e2dbbf0ad8~tplv-k3u1fbpfcp-zoom-1.image)
+![](../../../docs/@assets/img/a2bf447ca0184b89bfd406e2dbbf0ad8.png)
 
 观察上面这个冲突示例，我们并不清楚两个分支各自都发生了什么变化，有两种可能：
 
@@ -25,7 +25,7 @@ Git 合并冲突，常见的展示形式分为 Current Change （ours, 当前分
 实际上这个例子，是第二种情况，两个分支都对 `pkg` 的版本做了改变。
 
 
-![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c00e584c06b242798612b02b474d769c~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../docs/@assets/img/c00e584c06b242798612b02b474d769c.png)
 
   
 
@@ -37,7 +37,7 @@ Git 合并冲突，常见的展示形式分为 Current Change （ours, 当前分
 
 现在，我们可以使用 git 提供的 diff3 选项来调整合并冲突的展示效果
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/69264ba7dc8745c4a2b5e6a8de45c52a~tplv-k3u1fbpfcp-zoom-1.image)
+![](../../../docs/@assets/img/69264ba7dc8745c4a2b5e6a8de45c52a.png)
 
 红框区域（`|||||||` 至 `=======`）表示的就是改动前的上下文，确切的说，**是** **`当前分支`** **和** **`目标合并分支`** **的最近公共祖先节点在该区域的内容。**
 
@@ -140,7 +140,7 @@ stackoverflow 上有人回答了[这个问题](https://stackoverflow.com/questio
 
 举个例子：
 
-![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/25781a3793a14609a57956c677365716~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../docs/@assets/img/25781a3793a14609a57956c677365716.png)
 
 
 使用默认配置，合并冲突展示如下：

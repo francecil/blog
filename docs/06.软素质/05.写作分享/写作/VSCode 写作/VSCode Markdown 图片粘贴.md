@@ -30,7 +30,7 @@ categories:
 VSCode 在 2023.05 发布了 [1.79 版本](https://code.visualstudio.com/updates/v1_79)，提供了一项名为 **[Automatic copy of external files](https://code.visualstudio.com/updates/v1_79#_copy-external-media-files-into-workspace-on-drop-or-paste-for-markdown)** 的新功能，当用户使用拖拽或粘贴将外部媒体文件（比如图片、音视频）放置到 Markdown 文档上时，VSCode 会自动复制一份文件到工作区，并在 Markdown 文档中插入相应的图片引用片段。
 
 以下是一个图片拖拽的例子：
-![Coping-a-file-into-the-workspace-by-drag-and-dropping-it.gif](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3926731cddcf470b8aa30c1aadcbf1bf~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?)
+![Coping-a-file-into-the-workspace-by-drag-and-dropping-it.gif](../../../../../docs/@assets/img/3926731cddcf470b8aa30c1aadcbf1bf.png)
 
 当然，剪贴板图片也同样可用，包括系统复制或者工具截图。你可以在 Markdown 文档中执行粘贴操作，VS Code 将从剪贴板数据中创建一个新的图像文件，并插入一个指定新文件的 Markdown 图像链接。
 

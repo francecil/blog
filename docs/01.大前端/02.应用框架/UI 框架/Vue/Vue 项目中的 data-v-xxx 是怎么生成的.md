@@ -13,7 +13,7 @@ tags:
 
 最近在研究微前端的样式隔离方案，看到了这样一个评论：
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/faad1977ae954375b04d277118ca94ad~tplv-k3u1fbpfcp-jj:0:0:0:0:q75.image#?w=1586&h=218&s=75011&e=png&b=ffffff)
+![](../../../../../docs/@assets/img/faad1977ae954375b04d277118ca94ad.png)
 
 > 来自：[微前端方案 qiankun 的样式隔离能不用就别用吧，比较坑 - 掘金](https://juejin.cn/post/7184419253087535165#comment)
 
@@ -23,7 +23,7 @@ tags:
 <!-- more -->
   
 
-![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ba2e2565867548f5bf2b68c34656b656~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1046&h=328&s=106437&e=png&b=fdfdfd)
+![image.png](../../../../../docs/@assets/img/ba2e2565867548f5bf2b68c34656b656.png)
 
 
 **听起来有点离谱，但事实是这样的么？** 直接看源码：

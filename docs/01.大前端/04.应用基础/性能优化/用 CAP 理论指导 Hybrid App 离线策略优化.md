@@ -19,7 +19,7 @@ tags:
 
 <!-- more -->
 
-![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/896f4fb90a094a5f95cf469035fb5e92~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../../docs/@assets/img/896f4fb90a094a5f95cf469035fb5e92.png)
 
 通过离线包方案，可以优化 **「资源加载」** 这个环节的耗时，降低白屏时间（仅剩资源解析和本地 I/O 耗时，不再受弱网限制，阶段耗时一般不超过 100ms）。
 
@@ -83,7 +83,7 @@ tags:
 
 [CAP 理论](https://zh.wikipedia.org/wiki/CAP%E5%AE%9A%E7%90%86)指出在分布式系统中，不可能同时满足以下三点：一致性(Consistency) 、可用性(Avaliability) 、分区容错性(Partition tolerance)。
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8e3c199531674441a9d6c54743476234~tplv-k3u1fbpfcp-zoom-1.image)
+![](../../../../docs/@assets/img/8e3c199531674441a9d6c54743476234.png)
 
 要理解 CAP ，首先要知道节点和分区的概念：
 
@@ -93,14 +93,14 @@ tags:
 
 
 
-![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d93eb7d9ac04439b9b2be21774f61fd6~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../../docs/@assets/img/d93eb7d9ac04439b9b2be21774f61fd6.png)
 
 如果数据仅在一个节点中保存，那么出现分区后，和这个节点不连通的其他分区将无法访问此节点数据，此时分区是**不可容忍**的。
 
 若把数据复制到多个节点，保证每个分区都有这个数据，那么此时分区就是**容错**的。
 
 
-![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/629defb293314cf984b8b1496aa14f85~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../../docs/@assets/img/629defb293314cf984b8b1496aa14f85.png)
 
   
 
@@ -142,7 +142,7 @@ tags:
 以 HTML 文档不离线为例，节点根据网络状态可以划分为两个分区：
 
 
-![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4060f92e57244a7bbf9003457b4bea61~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../../docs/@assets/img/4060f92e57244a7bbf9003457b4bea61.png)
 
 **假设此时用户出现网络问题**，那么将无法访问`在线分区`的 HTML 节点（分区不可容忍）。
 
@@ -151,7 +151,7 @@ tags:
 但这会引入`一致性`问题，若研发修改了`在线分区` 的 HTML 文档内容，此时用户读取的`离线分区` HTML 文档可能还是旧数据。
 
 
-![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dbe2b1ecbc0f4348af49c2e83f0ce194~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../../docs/@assets/img/dbe2b1ecbc0f4348af49c2e83f0ce194.png)
 
 若想保证`一致性`，需要等待离线 HTML 文档完全写入，或者直接访问在线服务（抛弃`分区容错性`，页面加载失败也属于`一致性`）。这些行为都存在时延，会出现`可用性` 问题。
 
@@ -207,7 +207,7 @@ tags:
 
 对于大部分场景，并无**实时更新**的必要性。参考原生 app 的更新，用户使用的版本经常不是最新的。即使出问题了，只要还能用，滞后更新的影响也不大。
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7c4195294f684d3ea3052af1dc12e245~tplv-k3u1fbpfcp-zoom-1.image)
+![](../../../../docs/@assets/img/7c4195294f684d3ea3052af1dc12e245.png)
 
 对于少部分场景，用户不可用（崩溃、白屏）、或者会给公司带来影响的（资金安全、舆论风险），越快更新影响面越小，事故等级越低。
 

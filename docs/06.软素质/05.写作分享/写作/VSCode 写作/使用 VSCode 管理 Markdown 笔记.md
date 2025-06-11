@@ -72,7 +72,7 @@ categories:
 
 比如让他生成一个表格：
 
-![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a9fe7a986ca842979dae3cd943cc60f1~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../../../docs/@assets/img/a9fe7a986ca842979dae3cd943cc60f1.png)
 
 如果不知道怎么描述，可以先这样问它：
 ```
@@ -86,15 +86,15 @@ categories:
 使用 ChatGPT 进行对话描述，有时候效率太低，我更喜欢使用在线工具
 
 1. [Markdown 表格在线生成](https://www.tablesgenerator.com/markdown_tables)
-![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bba38423b1b44e818542289f7ee8a723~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../../../docs/@assets/img/bba38423b1b44e818542289f7ee8a723.png)
 2. [Markdown 数学公式在线生成](https://editor.codecogs.com/)
-![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e09ced69f31e42ddbfbe07fb58024e5c~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../../../docs/@assets/img/e09ced69f31e42ddbfbe07fb58024e5c.png)
   还提供图片渲染地址，比如 `https://latex.codecogs.com/svg.image?\int_{a}^{b}` ，将渲染为：
 ![](https://latex.codecogs.com/svg.image?\int_{a}^{b})
 3. [mermaid 在线编辑](https://mermaid.live/edit)
-![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/14cfe9b54cba4ec4b47c4718eb233468~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../../../docs/@assets/img/14cfe9b54cba4ec4b47c4718eb233468.png)
 不支持可视化操作，需要了解并编写语法。暂未找到支持可视化编辑 mermaid 图表的工具，因此我更偏好于使用 ChatGPT
-![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f4930a7c9a584095a4dc256b790d2529~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../../../docs/@assets/img/f4930a7c9a584095a4dc256b790d2529.png)
 
 
 # 2. 是否还有使用 VSCode 管理笔记的必要？

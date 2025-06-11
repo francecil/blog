@@ -14,7 +14,7 @@ tags:
 
 > 所谓[双重验证](https://support.apple.com/zh-cn/HT204915)就是还需要提供自动显示在**其他受信任设备上**的六位验证码，或者**受信任电话号码**的手机验证码
 >
-> <img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9f0a0515228f4a409ad135c1dd19204e~tplv-k3u1fbpfcp-zoom-1.image" alt="" width="50%" />
+> <img src="../../../docs/@assets/img/9f0a0515228f4a409ad135c1dd19204e.png" alt="" width="50%" />
 
 你是不是以为这样就高枕无忧了，即使密码泄露了，账号也不会随意出问题？今天这个事，狠狠打了苹果的脸。
 
@@ -36,7 +36,7 @@ tags:
 
 以下为长截图方便大家查看（点击放大查看）。
 
-<img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6a165cfeca0a45abb866e79c8d67f926~tplv-k3u1fbpfcp-zoom-1.image" alt="" width="30%" />
+<img src="../../../docs/@assets/img/6a165cfeca0a45abb866e79c8d67f926.png" alt="" width="30%" />
 
 你是不是会开始疑惑：
 
@@ -62,15 +62,15 @@ tags:
 
 以 iPhone 为例，可以尝试在 Safari （或者其他浏览器、微信）中上打开[苹果官方登录页面](https://appleid.apple.com/)，它会直接唤起 Apple ID 登录。
 
-<img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6b4e2da40ec8453db9a0f64b143a46cd~tplv-k3u1fbpfcp-zoom-1.image" alt="" width="30%" />
+<img src="../../../docs/@assets/img/6b4e2da40ec8453db9a0f64b143a46cd.png" alt="" width="30%" />
 
 乍一看，这个弹窗和钓鱼 App 怎么一模一样。。
 
-<img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0132a8ae735f4a86ac389772e050dfc6~tplv-k3u1fbpfcp-zoom-1.image" alt="" width="30%" />
+<img src="../../../docs/@assets/img/0132a8ae735f4a86ac389772e050dfc6.png" alt="" width="30%" />
 
 而实际上正经的苹果一键登录不长这样，以京东为例：
 
-<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/25d747b4ed7a4d97817f431b0dcf093f~tplv-k3u1fbpfcp-watermark.image" alt="" width="30%" />
+<img src="../../../docs/@assets/img/25d747b4ed7a4d97817f431b0dcf093f.png" alt="" width="30%" />
 
 
 
@@ -90,7 +90,7 @@ tags:
 
 日常使用 iPhone 购买或登录时，经常会遇到人脸识别不通过让输入密码的情况。骗子就是利用这个心理，立即弹出了一个输入密码的弹窗，让你以为是自己没通过验证。
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/53651da329aa4cb7ac62e3bfa20a96f6~tplv-k3u1fbpfcp-zoom-1.image)
+![](../../../docs/@assets/img/53651da329aa4cb7ac62e3bfa20a96f6.png)
 
 > AppLeID 文案。。是它最后的善良。。。
 
@@ -120,7 +120,7 @@ tags:
 
 1.  观察苹果一键登录界面，如果弹窗样式和以下一样，又出现「appleid.apple.com」红框文案，必为诈骗
 
-<img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cc8a18eefa254ade9215c3e04a3b94a2~tplv-k3u1fbpfcp-zoom-1.image" alt="" width="30%" />
+<img src="../../../docs/@assets/img/cc8a18eefa254ade9215c3e04a3b94a2.png" alt="" width="30%" />
 
 2.  如果没注意登录了，又让输入密码，先拒绝再说，宁愿重新回到上一步流程，观察登录弹窗样式
 3.  一旦没注意输入密码，请立即冻结银行卡和微信支付，并联系苹果客户处理
@@ -145,7 +145,7 @@ tags:
 
 看贴主目前是说还在和苹果客服 Battle
 
-![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c8e680e33a7843fbb82c84598976af1c~tplv-k3u1fbpfcp-zoom-1.image)
+![](../../../docs/@assets/img/c8e680e33a7843fbb82c84598976af1c.png)
 
 按理说这个锅，苹果应该占 9 成，就不应该**让内置 Webview 能够使用苹果一键登录，** 期待后续苹果官方的处理吧。
 

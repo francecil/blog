@@ -17,7 +17,7 @@ tags:
 
 <!-- more -->
 
-![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5451e0a8a07e459baa85330e57224caf~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../../../docs/@assets/img/5451e0a8a07e459baa85330e57224caf.png)
 
 
 咋做的？对于 Devtools 的内部执行逻辑，咱不了解，但咱也不能直说，**先上一套方法论（5W1H）：**
@@ -49,7 +49,7 @@ tags:
 「你说的都是套话，所以内部具体是咋执行的？？」，妹子轻语。
 
 
-![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e9cf3f233f3e48d89bd336201af8f44c~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../../../docs/@assets/img/e9cf3f233f3e48d89bd336201af8f44c.png)
 
 看来妹子不吃这套，不服气的我赶紧 Google 了起来，找到了这篇文章，并分享给了妹子。
 
@@ -61,7 +61,7 @@ tags:
 4. 若传递了 throwOnSideEffect ，则表明需要检查代码中是否存在副作用。检查时机在解释器生成字节码之后以及运行时。采用黑白名单的机制可以快速分析出哪些字节码存在副作用，但是部分操作仍不能检测出来，于是需要在运行时检查。此时需要创建一个内存追踪器，追踪本次执行创建的变量内容，字节码运行时若使用的变量无法被此追踪器找到，说明变量是之前创建的，可能存在副作用。
 
 
-![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c68d8d677e4d4230aa72da9b899725b0~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../../../docs/@assets/img/c68d8d677e4d4230aa72da9b899725b0.png)
 
 > PS：故事纯属虚构，如有雷同，纯属巧合
 
@@ -79,7 +79,7 @@ google 上键入 `chrome devtools console evaluate preview`
 
 Live demo: https://youtu.be/mfuE53x4b3k?t=1564
 
-![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fdc44e1fd2ed453a83ab410aa40a811d~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../../../docs/@assets/img/fdc44e1fd2ed453a83ab410aa40a811d.png)
 
 
 在 console 面板上键入代码时，底下会进行结果的预览提示，也可以选择关闭此功能
@@ -130,12 +130,12 @@ function plusWithSideEffects(x, y) {
 `Protocol monitor` 是一个 cdp 协议监控器，会记录当前用户在这个 devtool 面板上产生的所有 CDP 的请求和响应。
 
 
-![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/83fa1316f73a404caaf153905262c535~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../../../docs/@assets/img/83fa1316f73a404caaf153905262c535.png)
 
 如果没找到这个选项，需要先到 Devtools setting 里开启
 
 
-![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7e69c420e5d64ca49741b07d8e86a3d5~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../../../docs/@assets/img/7e69c420e5d64ca49741b07d8e86a3d5.png)
 
 之后 reload devtools 就可以看到了
 
@@ -146,7 +146,7 @@ function plusWithSideEffects(x, y) {
 在 console 面板键入 `1+1` ，会发现发了三次 `Runtime.evaluate` CDP 
 
 
-![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a79fc509ab7f4b27bfd78ea55414a626~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../../../docs/@assets/img/a79fc509ab7f4b27bfd78ea55414a626.png)
 ```
 // 第一次
 // request
@@ -285,7 +285,7 @@ function plusWithSideEffects(x, y) {
 - 打开 devtools 页面可以使用快捷键 Ctrl+Shift+I（Windows）或 Cmd+Opt+I（Mac）
 - devtools 使用独立窗口模式
 
-![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2b2c764f759740a093c3e59d389fe81d~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../../../docs/@assets/img/2b2c764f759740a093c3e59d389fe81d.png)
 - 在调试窗口 A 上，使用快捷键打开调试窗口 B
 
 至此，在调试窗口 B 上就可以调试 A 的代码，使用 devtools 导出的一些模块来进行 cdp 交互
@@ -404,7 +404,7 @@ await Main.MainImpl.sendOverProtocol('Runtime.evaluate', {
 V8 编译一段 JS 代码（字符串）的流程如下：
 
 
-![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4f24b5a81e144c67970058c2eeaa9a05~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../../../docs/@assets/img/4f24b5a81e144c67970058c2eeaa9a05.png)
 
 1. 将源码进行解析（词法分析、语法分析）得到抽象语法树（AST）。AST 是 JavaScript 代码的句法结构的树形表示形式
 2. 使用 Ignition 解释器将 AST 解释为字节码（共100+种），并负责执行，输入是一个字节码序列，输出是执行结果。
@@ -851,7 +851,7 @@ temporary_objects_ 是一个 TemporaryObjectsTracker 实例，在预加载时创
 ## 整体流程
 
 
-![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/24f63826cc4d4aba81e7f2120a2cd903~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](../../../../../docs/@assets/img/24f63826cc4d4aba81e7f2120a2cd903.png)
 
 
 
