@@ -5,7 +5,7 @@ const fs = require('fs'); // 文件模块
 const path = require('path'); // 路径模块
 const chalk = require('chalk') // 命令行打印美化
 const log = console.log;
-const { globSync } = require('glob');
+const glob = require('glob');
 
 /**
  * 获取 blog 文件列表
@@ -14,7 +14,9 @@ const { globSync } = require('glob');
  * @returns 
  */
 function readFileList(dir, patterns = ['**/*.md', '**/*.vue']) {
-  const files = globSync(patterns, { cwd: dir, ignore: ['node_modules/**', '.vuepress/**', '@pages/**', '@assets/**'] }).map((_filePath) => {
+  const opts = { cwd: dir, ignore: ['node_modules/**', '.vuepress/**', '@pages/**', '@assets/**'] }
+  const patternList = Array.isArray(patterns) ? patterns : [patterns]
+  const files = patternList.flatMap(p => glob.sync(p, opts)).map((_filePath) => {
     const filePath = path.join(dir, _filePath)
     const filename = path.basename(filePath)
     const fileNameArr = filename.split('.')
