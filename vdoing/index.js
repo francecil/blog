@@ -195,7 +195,7 @@ function renderCardList(tokens, idx, type) {
     }
 
     if (yamlStr) { // 正确解析出yaml字符串后
-      const dataObj = yaml.safeLoad(yamlStr) // 将yaml字符串解析成js对象
+      const dataObj = yaml.load(yamlStr) // 将yaml字符串解析成js对象
       let dataList = []
       let config = {}
 

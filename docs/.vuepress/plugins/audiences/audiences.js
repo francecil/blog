@@ -1,4 +1,6 @@
 import { inject } from '@vercel/analytics'
 export default () => {
-    inject()
+    if (typeof document !== 'undefined') {
+        inject()
+    }
 }
